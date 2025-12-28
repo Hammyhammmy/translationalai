@@ -5,7 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
     <script>
-        // Route mapping for GitHub Pages
+        // Prevent redirect loops with session storage
+        const redirectKey = 'github_pages_redirect';
+        const maxRedirects = 2;
+        let redirectCount = parseInt(sessionStorage.getItem(redirectKey) || '0', 10);
+
+        // If we've redirected too many times, stop and go to home
+        if (redirectCount >= maxRedirects) {
+            sessionStorage.removeItem(redirectKey);
+            window.location.replace('home.html');
+            return;
+        }
+
+        // Increment counter
+        sessionStorage.setItem(redirectKey, (redirectCount + 1).toString());
+
+        // Route mapping
         const routes = {
             '/home': 'home.html',
             '/lightscribe': 'lightscribe.html',
@@ -15,33 +30,29 @@
             '/team': 'team.html'
         };
 
-        // Get the current path
         const currentPath = window.location.pathname;
-        
-        // Handle GitHub Pages base path (remove /translationalai if present)
         let path = currentPath.replace(/^\/translationalai\//, '/').replace(/^\//, '');
-        
-        // Prevent infinite loops - if we're already on a .html file, don't redirect to itself
+
+        // Don't redirect .html files to themselves
         if (path.endsWith('.html') && path !== '404.html' && path !== 'index.html') {
-            // File should exist, but if we're here it doesn't - redirect to home
+            sessionStorage.removeItem(redirectKey);
             window.location.replace('home.html');
             return;
         }
-        
-        // If path is empty or just '/', redirect to home
+
         if (!path || path === '' || path === 'index.html') {
             window.location.replace('home.html');
             return;
         }
-        
-        // Check if path matches a route
+
         const routeKey = '/' + path;
         if (routes[routeKey]) {
             window.location.replace(routes[routeKey]);
             return;
         }
-        
-        // If no match, redirect to home
+
+        // Fallback
+        sessionStorage.removeItem(redirectKey);
         window.location.replace('home.html');
     </script>
     <style>
