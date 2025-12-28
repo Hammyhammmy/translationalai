@@ -20,7 +20,7 @@
                 <li><a href="team.html" ${currentPage === 'team.html' ? 'class="active"' : ''}>About</a></li>
                 <li class="nav-divider">|</li>
                 <li class="nav-dropdown">
-                    <a href="#" class="nav-dropdown-toggle">Logins <span class="dropdown-arrow">▼</span></a>
+                    <a href="#" class="nav-dropdown-toggle">Logins<span class="dropdown-arrow">▼</span></a>
                     <ul class="nav-dropdown-menu">
                         <li><a href="https://lightscribe-service-260133948622.northamerica-northeast1.run.app/" target="_blank" rel="noopener noreferrer">LightScribe Login</a></li>
                         <li><a href="https://chartprepper-service-cokcye7pwq-nn.a.run.app/" target="_blank" rel="noopener noreferrer">ChartPrepper Login</a></li>
@@ -61,24 +61,25 @@
     // Dropdown functionality
     const dropdownToggle = document.querySelector('.nav-dropdown-toggle');
     const dropdownMenu = document.querySelector('.nav-dropdown-menu');
+    const dropdown = document.querySelector('.nav-dropdown');
     
-    if (dropdownToggle && dropdownMenu) {
+    if (dropdownToggle && dropdownMenu && dropdown) {
         // Desktop: hover to show
-        const dropdown = dropdownToggle.closest('.nav-dropdown');
-        if (dropdown) {
-            dropdown.addEventListener('mouseenter', () => {
-                dropdownMenu.classList.add('show');
-            });
-            
-            dropdown.addEventListener('mouseleave', () => {
-                dropdownMenu.classList.remove('show');
-            });
-        }
+        dropdown.addEventListener('mouseenter', () => {
+            dropdownMenu.classList.add('show');
+            dropdown.classList.add('show');
+        });
+        
+        dropdown.addEventListener('mouseleave', () => {
+            dropdownMenu.classList.remove('show');
+            dropdown.classList.remove('show');
+        });
         
         // Mobile: click to toggle
         dropdownToggle.addEventListener('click', (e) => {
             e.preventDefault();
             dropdownMenu.classList.toggle('show');
+            dropdown.classList.toggle('show');
         });
     }
 })();
