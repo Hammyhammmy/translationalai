@@ -672,6 +672,12 @@ a:hover {
     text-decoration: none;
 }
 
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    text-decoration: none;
+}
+
 /* ===== API Items ===== */
 .api-item {
     margin-bottom: var(--spacing-lg);

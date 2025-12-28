@@ -7,152 +7,142 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-        <script src="nav.js"></script>
-<div class="container">
-  <section class="header">
-    <h1>Partner in Practice</h1>
-    <p class="intro">
-      AI-powered clinical decision support tool created by a doctor for doctors. Delivers evidence-based insights tailored to each patient's unique needs and clinical context. Currently deployed in production and available for pilot use with select clinics and hospitals.
-    </p>
-  </section>
+    <script src="nav.js"></script>
+    <div class="container">
+        <section class="header">
+            <h1>Partner in Practice</h1>
+            <p class="intro">
+                Clinical decision support tools designed by physicians for physicians. AI-assisted creation of evidence-based clinical pathways, rigorously vetted by subject matter experts. Available for educational use at <a href="https://publicprostateland.onrender.com/" target="_blank" rel="noopener noreferrer" style="color: var(--primary-light); font-weight: 600;">publicprostateland.onrender.com</a>.
+            </p>
+            <div style="margin-top: 2rem; text-align: center;">
+                <a href="https://publicprostateland.onrender.com/" target="_blank" rel="noopener noreferrer" class="cta-button" style="display: inline-block; padding: 1rem 2.5rem; background: linear-gradient(135deg, var(--primary-light), var(--primary-lighter)); color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; font-size: 1.1rem; box-shadow: var(--shadow-md); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                    Access Partner in Practice Tool →
+                </a>
+            </div>
+        </section>
 
-  <section class="content">
-    <div class="section">
-      <h2>What It Does</h2>
-      <p>Provides precise recommendations in seconds, ensuring decisions align with the latest medical guidelines. Rigorously refined across numerous fields of medicine, providing structured and comprehensive care instructions for a wide range of clinical scenarios.</p>
-      <p>Patient privacy is safeguarded - PIP does not collect or store any patient-identifying information (PHI).</p>
+        <section class="content">
+            <div class="section">
+                <h2>How It Works</h2>
+                <p>
+                    Partner in Practice uses artificial intelligence to assist in drafting highly verifiable clinical pathways that are explicitly designed for review, refinement, and validation by subject matter experts. Crucially, the AI does not make clinical decisions; rather, it assists in structuring the decision logic.
+                </p>
+                <p>
+                    The final tool is entirely rules-based and deterministic—ensuring that identical patient inputs always yield the same recommendation. This approach combines the speed of AI-assisted pathway generation with the reliability of explicit IF-THEN logic, creating a system that is transparent, testable, and auditable.
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>Clinical Decision Support in Advanced Prostate Cancer</h2>
+                <p>
+                    Our flagship application focuses on the complex landscape of advanced prostate cancer treatment, where the field has rapidly evolved with the introduction of novel androgen receptor pathway inhibitors (ARPIs): abiraterone, enzalutamide, apalutamide, and darolutamide.
+                </p>
+                <p>
+                    Treatment selection for many patients often remains a preference-sensitive, highly complex, and sometimes subjective decision. For example:
+                </p>
+                <ul>
+                    <li><strong>Darolutamide</strong> may be preferred for patients with a history of seizures due to its lower penetration of the blood-brain barrier</li>
+                    <li><strong>Abiraterone</strong> requires careful management of its steroid component in patients with conditions such as diabetes, severe osteoporosis, or poorly controlled heart failure</li>
+                    <li><strong>Enzalutamide</strong> carries a recognized, albeit low, risk of seizures and is associated with an increased incidence of falls and fatigue, making its use unfavorable in frail elderly patients or those with a history of seizure disorders</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>The ARPI Selection Process</h2>
+                <p>
+                    The tool streamlines the selection of ARPIs for prostate cancer by systematically querying the user on three key patient domains:
+                </p>
+                <ol>
+                    <li><strong>Disease Stage and Prior Therapies:</strong> Establishes the appropriate evidence base by confirming disease stage and treatment history</li>
+                    <li><strong>Patient Factors:</strong> Rigorously assesses contraindications and cautions related to ARPIs, including performance status, chemotherapy fitness, cardiovascular risk, history of seizures or falls risk, and financial capacity</li>
+                    <li><strong>Provider and Practical Factors:</strong> Evaluates the need for side-effect monitoring and provides automated assessment of drug-drug interactions (DDIs), essential given the complex metabolic pathways of ARPIs</li>
+                </ol>
+                <p>
+                    By integrating these three domains, the tool processes complex data to yield a clear, tiered recommendation including "Treatment Selection (Recommended)", "Medications to Use with Caution", and "Those Not Recommended", thereby translating conditional guidelines into an immediate, usable clinical action plan.
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>Beyond Prostate Cancer</h2>
+                <p>
+                    Clinical pathway modules are developed not only for ARPI selection, but for several other domains within and outside urologic oncology, from side effects management in ADT, to recurrent UTI management. Other clinical decision tools are showcased even outside of urology altogether, e.g. antihypertensive selection in essential hypertension.
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>Benefits for Healthcare Providers</h2>
+                <ul>
+                    <li>Reduces cognitive burden by providing structured, evidence-based guidance</li>
+                    <li>Improves provider efficiency by reducing time spent cross-referencing complex DDI databases and guidelines</li>
+                    <li>Ensures adherence to current standards of care</li>
+                    <li>Serves an educational role with verifiable structured insights</li>
+                    <li>Makes high-quality patient care more consistent</li>
+                    <li>Supports clinical judgment rather than replacing it</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Transparency and Reliability</h2>
+                <p>
+                    Unlike a chatbot that might generate different answers each time, this framework applies clinical reasoning consistently, making it suitable for real-world use. The tool is not intended to replace clinical judgment, but to support it, serving an educational role with verifiable structured insights.
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>Status and Availability</h2>
+                <p>
+                    The application is available for public review online at <a href="https://publicprostateland.onrender.com/" target="_blank" rel="noopener noreferrer" style="color: var(--primary-light); font-weight: 600;">https://publicprostateland.onrender.com/</a>. At this stage, the tool is for educational purposes exclusively and does not substitute for professional medical advice, diagnosis, or treatment.
+                </p>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h2>Access the Tool</h2>
+            <p>Partner in Practice is available for educational use. The tool provides evidence-based clinical decision support designed to assist healthcare providers in making informed treatment decisions.</p>
+            <div style="margin-top: 1.5rem;">
+                <a href="https://publicprostateland.onrender.com/" target="_blank" rel="noopener noreferrer" class="cta-button" style="display: inline-block; padding: 1rem 2.5rem; background: linear-gradient(135deg, var(--primary-light), var(--primary-lighter)); color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; font-size: 1.1rem; box-shadow: var(--shadow-md); transition: transform 0.3s ease, box-shadow 0.3s ease; margin-right: 1rem;">
+                    Access Partner in Practice →
+                </a>
+            </div>
+            <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-light);">
+                <strong>Medical Disclaimer:</strong> This tool is for educational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult with qualified healthcare professionals for medical decisions. Use at your own risk.
+            </p>
+        </section>
     </div>
-
-    <div class="section">
-      <h2>Benefits</h2>
-      <ul>
-        <li>Reduces wait times by speeding up decision-making</li>
-        <li>Enables primary care providers to handle more cases within their scope</li>
-        <li>Offers quick, evidence-based guidance</li>
-        <li>Ensures care adheres to up-to-date medical standards</li>
-        <li>Supports clinical judgment with reliable insights</li>
-        <li>Serves as an educational tool for residents and new practitioners</li>
-      </ul>
-    </div>
-
-    <div class="section">
-      <h2>Features</h2>
-      <ul>
-        <li>AI-powered - precise, context-aware recommendations within seconds</li>
-        <li>Evidence-based - aligns with latest medical research and guidelines</li>
-        <li>Tested and trusted - proven effective in real-world clinical settings</li>
-        <li>Secure - respects patient privacy by not collecting PHI</li>
-        <li>Compatible across computers and mobile devices</li>
-      </ul>
-    </div>
-
-    <div class="section">
-      <h2>Status</h2>
-      <p>PIP is deployed in real clinical environments, demonstrating the practical value of verifiable AI in clinical decision support. Available for pilot use with select institutions.</p>
-    </div>
-  </section>
-
-  <section class="cta">
-    <h2>Pilot Access</h2>
-    <p>PIP is available for pilot use with select clinics and hospitals. We're seeking research partners to advance verifiable AI in clinical decision support.</p>
-    <p>
-      <a href="mailto:yan+websitesignup@translational.ca">Request Pilot Access</a> | 
-      <a href="mailto:yan+enterpriseAPI@translational.ca">Contact for Collaboration</a>
-    </p>
-  </section>
-</div>
-
-
-
-
-
-<!-- 
-ALTERNATIVE APPROACHES IF CSS/JS DON'T WORK:
-
-1. USE HTML BLOCK instead of CODE BLOCK:
-   - In Squarespace, try adding an "HTML" block instead of "Code" block
-   - HTML blocks sometimes have different width constraints
-
-2. USE EMBED BLOCK:
-   - Try using an "Embed" block and paste the entire HTML
-   - Embed blocks may have more flexible width options
-
-3. SPLIT INTO MULTIPLE BLOCKS:
-   - Break the content into smaller sections
-   - Use multiple blocks to work around width constraints
-
-4. USE SQUARESPACE'S NATIVE BLOCKS:
-   - Recreate the design using Squarespace's native blocks
-   - Add custom CSS in Settings > Advanced > Code Injection
--->
 
     <script>
+        // Force full width by finding and overriding constraining parent elements
+        (function() {
+            function forceFullWidth() {
+                const container = document.querySelector('.container');
+                if (!container) return;
 
-        // Mobile menu toggle
-        const navToggle = document.getElementById('navToggle');
-        const navMenu = document.getElementById('navMenu');
+                let parent = container.parentElement;
+                while (parent && parent !== document.body) {
+                    const computedStyle = window.getComputedStyle(parent);
+                    const maxWidth = computedStyle.maxWidth;
 
-        navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            navToggle.classList.toggle('active');
-        });
+                    if (maxWidth && maxWidth !== 'none' && maxWidth !== '100%') {
+                        parent.style.setProperty('max-width', '100%', 'important');
+                        parent.style.setProperty('width', '100%', 'important');
+                    }
 
-        // Close menu when clicking on a link
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                navToggle.classList.remove('active');
-            });
-        });
+                    parent = parent.parentElement;
+                }
 
-        // Set active link based on current page
-        const currentPage = window.location.pathname.split('/').pop() || 'home.html';
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            if (link.getAttribute('href') === currentPage) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
+                container.style.setProperty('max-width', '100%', 'important');
+                container.style.setProperty('width', '100%', 'important');
             }
-        });
 
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', forceFullWidth);
+            } else {
+                forceFullWidth();
+            }
 
-// Force full width by finding and overriding constraining parent elements
-(function() {
-  function forceFullWidth() {
-    const container = document.querySelector('.container');
-    if (!container) return;
-    
-    // Find all parent elements and remove width constraints
-    let parent = container.parentElement;
-    while (parent && parent !== document.body) {
-      const computedStyle = window.getComputedStyle(parent);
-      const maxWidth = computedStyle.maxWidth;
-      
-      // If parent has a max-width constraint, try to override it
-      if (maxWidth && maxWidth !== 'none' && maxWidth !== '100%') {
-        parent.style.setProperty('max-width', '100%', 'important');
-        parent.style.setProperty('width', '100%', 'important');
-      }
-      
-      parent = parent.parentElement;
-    }
-    
-    // Also ensure container itself is full width
-    container.style.setProperty('max-width', '100%', 'important');
-    container.style.setProperty('width', '100%', 'important');
-  }
-  
-  // Run on load and after a short delay (for Squarespace's dynamic loading)
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', forceFullWidth);
-  } else {
-    forceFullWidth();
-  }
-  
-  setTimeout(forceFullWidth, 100);
-  setTimeout(forceFullWidth, 500);
-})();
-
+            setTimeout(forceFullWidth, 100);
+            setTimeout(forceFullWidth, 500);
+        })();
     </script>
 </body>
 </html>
