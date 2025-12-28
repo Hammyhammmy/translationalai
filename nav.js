@@ -19,8 +19,13 @@
                 <li><a href="partner-in-practice.html" ${currentPage === 'partner-in-practice.html' ? 'class="active"' : ''}>Partner in Practice</a></li>
                 <li><a href="team.html" ${currentPage === 'team.html' ? 'class="active"' : ''}>About</a></li>
                 <li class="nav-divider">|</li>
-                <li><a href="https://lightscribe-service-260133948622.northamerica-northeast1.run.app/" target="_blank" rel="noopener noreferrer">LightScribe Login</a></li>
-                <li><a href="https://chartprepper-service-cokcye7pwq-nn.a.run.app/" target="_blank" rel="noopener noreferrer">ChartPrepper Login</a></li>
+                <li class="nav-dropdown">
+                    <a href="#" class="nav-dropdown-toggle">Logins <span class="dropdown-arrow">▼</span></a>
+                    <ul class="nav-dropdown-menu">
+                        <li><a href="https://lightscribe-service-260133948622.northamerica-northeast1.run.app/" target="_blank" rel="noopener noreferrer">LightScribe Login</a></li>
+                        <li><a href="https://chartprepper-service-cokcye7pwq-nn.a.run.app/" target="_blank" rel="noopener noreferrer">ChartPrepper Login</a></li>
+                    </ul>
+                </li>
             </ul>
             <div class="nav-toggle" id="navToggle">
                 <span></span>
@@ -50,6 +55,30 @@
                 navMenu.classList.remove('active');
                 navToggle.classList.remove('active');
             });
+        });
+    }
+    
+    // Dropdown functionality
+    const dropdownToggle = document.querySelector('.nav-dropdown-toggle');
+    const dropdownMenu = document.querySelector('.nav-dropdown-menu');
+    
+    if (dropdownToggle && dropdownMenu) {
+        // Desktop: hover to show
+        const dropdown = dropdownToggle.closest('.nav-dropdown');
+        if (dropdown) {
+            dropdown.addEventListener('mouseenter', () => {
+                dropdownMenu.classList.add('show');
+            });
+            
+            dropdown.addEventListener('mouseleave', () => {
+                dropdownMenu.classList.remove('show');
+            });
+        }
+        
+        // Mobile: click to toggle
+        dropdownToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            dropdownMenu.classList.toggle('show');
         });
     }
 })();
