@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-        <script src="nav.js"></script>
-<div class="container">
+    <script src="nav.js"></script>
+    <div class="container">
         <section class="hero">
             <h1>TranslationalAI</h1>
             <p class="intro">
-                Clinician-led AI tools powered by LightProof SDK for verifiable, source-anchored AI outputs. Our clinical tools—Partner in Practice, LightScribe, and ChartPrepper—are deployed in production.
+                Clinician-led AI tools powered by LightProof SDK for verifiable, source-anchored AI outputs. Our clinical tools—Partner in Practice, LightScribe, and ChartPrepper—are deployed in production environments.
             </p>
             <p>
                 LightProof SDK enforces provenance during generation. Every model statement is mapped to exact source text positions, and unverifiable spans are rejected. This prevents unverifiable output at generation time, unlike post-hoc validation tools.
@@ -22,30 +22,31 @@
         <section class="products">
             <div class="product">
                 <h2>Partner in Practice</h2>
-                <p>Clinical decision support tool that delivers evidence-based insights tailored to each patient's context.</p>
+                <p>Clinical decision support tool that uses AI-assisted pathway generation, with final tools that are rules-based and deterministic. Designed by physicians for physicians, with pathways vetted by subject matter experts.</p>
                 <ul>
-                    <li>AI-powered recommendations aligned with medical guidelines</li>
-                    <li>Currently in pilot with select clinics and hospitals</li>
+                    <li>Evidence-based clinical pathways for complex treatment decisions</li>
+                    <li>Deterministic outputs—identical inputs yield identical recommendations</li>
+                    <li>Available for educational use at <a href="https://publicprostateland.onrender.com/" target="_blank" rel="noopener noreferrer" style="color: var(--primary-light);">publicprostateland.onrender.com</a></li>
                 </ul>
             </div>
 
             <div class="product">
                 <h2>LightScribe</h2>
-                <p>AI-powered medical scribe deployed in production. Generates consult notes, SOAP notes, and patient summaries.</p>
+                <p>AI-powered medical scribe deployed in production. Generates consult notes, SOAP notes, and patient summaries using verifiable AI with source-anchored outputs.</p>
                 <ul>
-                    <li>Clean summaries without filler</li>
-                    <li>Built for physicians with a simple interface</li>
-                    <li>Currently in pilot with select clinics and hospitals</li>
+                    <li>Simple interface designed for clinical workflows</li>
+                    <li>Verifiable outputs with source attribution</li>
+                    <li>Deployed in real clinical environments</li>
                 </ul>
             </div>
 
             <div class="product">
                 <h2>ChartPrepper</h2>
-                <p>Referral summary tool deployed in production. Processes medical referrals with accurate, complete summaries.</p>
+                <p>Referral summary tool deployed in production. Processes medical referrals to generate accurate, structured summaries that highlight critical clinical information.</p>
                 <ul>
-                    <li>Summarizes referrals quickly and accurately</li>
-                    <li>Ensures critical details are not missed</li>
-                    <li>Available for pilot use with select institutions</li>
+                    <li>Structured summaries with key clinical details highlighted</li>
+                    <li>Reduces cognitive load by removing filler content</li>
+                    <li>Deployed in real clinical environments</li>
                 </ul>
             </div>
         </section>
@@ -54,24 +55,24 @@
             <h2>Approach</h2>
             <div class="benefit-list">
                 <div class="benefit">
-                    <h3>AI-Powered Precision</h3>
-                    <p>Tools deliver concise, actionable outputs tailored to healthcare workflows.</p>
+                    <h3>Verifiable AI</h3>
+                    <p>LightProof SDK ensures every output can be traced to source material, with unverifiable content rejected at generation time.</p>
                 </div>
                 <div class="benefit">
-                    <h3>Seamless Integration</h3>
-                    <p>Solutions integrate with existing clinical workflows and EMR systems.</p>
+                    <h3>Clinical Workflow Integration</h3>
+                    <p>Tools designed to integrate seamlessly into existing clinical workflows without requiring EMR integration.</p>
                 </div>
                 <div class="benefit">
-                    <h3>Security and Compliance</h3>
+                    <h3>Privacy and Security</h3>
                     <p>End-to-end encryption, PHI filtering, and alignment with PIPEDA privacy principles. Self-assessed alignment with HIPAA security protocols (not certified).</p>
                 </div>
                 <div class="benefit">
                     <h3>Canadian Data Sovereignty</h3>
-                    <p>All data stored within Canada.</p>
+                    <p>All data stored and processed within Canada.</p>
                 </div>
                 <div class="benefit">
-                    <h3>Production-Proven</h3>
-                    <p>Tools deployed in real clinical environments, demonstrating practical value.</p>
+                    <h3>Production Deployment</h3>
+                    <p>Tools deployed in real clinical environments, demonstrating practical value in healthcare workflows.</p>
                 </div>
             </div>
             <p class="footer-note">
@@ -90,33 +91,6 @@
     </div>
 
     <script>
-        // Mobile menu toggle
-        const navToggle = document.getElementById('navToggle');
-        const navMenu = document.getElementById('navMenu');
-
-        navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            navToggle.classList.toggle('active');
-        });
-
-        // Close menu when clicking on a link
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                navToggle.classList.remove('active');
-            });
-        });
-
-        // Set active link based on current page
-        const currentPage = window.location.pathname.split('/').pop() || 'home.html';
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            if (link.getAttribute('href') === currentPage) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        });
-
         // Force full width by finding and overriding constraining parent elements
         (function() {
             function forceFullWidth() {
