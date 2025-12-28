@@ -1,85 +1,138 @@
-<div class="container">
-  <section class="hero">
-    <h1>TranslationalAI</h1>
-    <p class="intro">
-      Clinician-led AI tools powered by LightProof SDK for verifiable, source-anchored AI outputs. Our clinical tools—Partner in Practice, LightScribe, and ChartPrepper—are deployed in production.
-    </p>
-    <p>
-      LightProof SDK enforces provenance during generation. Every model statement is mapped to exact source text positions, and unverifiable spans are rejected. This prevents unverifiable output at generation time, unlike post-hoc validation tools.
-    </p>
-  </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TranslationalAI - Home Simple</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <section class="products">
-    <div class="product">
-      <h2>Partner in Practice</h2>
-      <p>Clinical decision support tool that delivers evidence-based insights tailored to each patient's context.</p>
-      <ul>
-        <li>AI-powered recommendations aligned with medical guidelines</li>
-        <li>Currently in pilot with select clinics and hospitals</li>
-      </ul>
-    </div>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #fafbfc;
+        }
 
-    <div class="product">
-      <h2>LightScribe</h2>
-      <p>AI-powered medical scribe deployed in production. Generates consult notes, SOAP notes, and patient summaries.</p>
-      <ul>
-        <li>Clean summaries without filler</li>
-        <li>Built for physicians with a simple interface</li>
-        <li>Currently in pilot with select clinics and hospitals</li>
-      </ul>
-    </div>
+        /* Navigation Bar */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
 
-    <div class="product">
-      <h2>ChartPrepper</h2>
-      <p>Referral summary tool deployed in production. Processes medical referrals with accurate, complete summaries.</p>
-      <ul>
-        <li>Summarizes referrals quickly and accurately</li>
-        <li>Ensures critical details are not missed</li>
-        <li>Available for pilot use with select institutions</li>
-      </ul>
-    </div>
-  </section>
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-  <section class="benefits">
-    <h2>Approach</h2>
-    <div class="benefit-list">
-      <div class="benefit">
-        <h3>AI-Powered Precision</h3>
-        <p>Tools deliver concise, actionable outputs tailored to healthcare workflows.</p>
-      </div>
-      <div class="benefit">
-        <h3>Seamless Integration</h3>
-        <p>Solutions integrate with existing clinical workflows and EMR systems.</p>
-      </div>
-      <div class="benefit">
-        <h3>Security and Compliance</h3>
-        <p>End-to-end encryption, PHI filtering, and alignment with PIPEDA privacy principles. Self-assessed alignment with HIPAA security protocols (not certified).</p>
-      </div>
-      <div class="benefit">
-        <h3>Canadian Data Sovereignty</h3>
-        <p>All data stored within Canada.</p>
-      </div>
-      <div class="benefit">
-        <h3>Production-Proven</h3>
-        <p>Tools deployed in real clinical environments, demonstrating practical value.</p>
-      </div>
-    </div>
-    <p class="footer-note">
-      We're committed to advancing healthcare through rigorous, evidence-based AI development. Our tools are currently in pilot with select clinics and hospitals. We welcome research partnerships and academic collaborations.
-    </p>
-  </section>
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            text-decoration: none;
+            background: linear-gradient(to right, #2563eb, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-  <section class="cta">
-    <h2>Pilot Access and Research Collaboration</h2>
-    <p>Our clinical tools are available for pilot use with select institutions. We're seeking research partners to advance verifiable AI in healthcare.</p>
-    <p>
-      <a href="mailto:yan+websitesignup@translational.ca">Request Pilot Access</a> | 
-      <a href="mailto:yan+enterpriseAPI@translational.ca">Contact for Collaboration</a>
-    </p>
-  </section>
-</div>
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
 
-<style>
+        .nav-menu a {
+            color: #4b5563;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 0;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: #2563eb;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #1e3a8a;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: white;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                padding: 2rem 0;
+                gap: 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu li {
+                width: 100%;
+                padding: 1rem 0;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .nav-menu a {
+                display: block;
+                width: 100%;
+                padding: 0.5rem 2rem;
+            }
+
+            .nav-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .nav-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .nav-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+        }
+
+
 /* Remove Squarespace empty blocks and page container constraints */
 .Main-content,
 #mainContent,
@@ -525,9 +578,165 @@ section.hero {
     grid-template-columns: 1fr;
   }
 }
-</style>
 
-<script>
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="home.html" class="nav-logo">TranslationalAI</a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="lightscribe.html">LightScribe</a></li>
+                <li><a href="chartprepper.html">ChartPrepper</a></li>
+                <li><a href="partner-in-practice.html">Partner in Practice</a></li>
+                <li><a href="api-integration.html">API Integration</a></li>
+                <li><a href="team.html">About</a></li>
+            </ul>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+<div class="container">
+  <section class="hero">
+    <h1>TranslationalAI</h1>
+    <p class="intro">
+      Clinician-led AI tools powered by LightProof SDK for verifiable, source-anchored AI outputs. Our clinical tools—Partner in Practice, LightScribe, and ChartPrepper—are deployed in production.
+    </p>
+    <p>
+      LightProof SDK enforces provenance during generation. Every model statement is mapped to exact source text positions, and unverifiable spans are rejected. This prevents unverifiable output at generation time, unlike post-hoc validation tools.
+    </p>
+  </section>
+
+  <section class="products">
+    <div class="product">
+      <h2>Partner in Practice</h2>
+      <p>Clinical decision support tool that delivers evidence-based insights tailored to each patient's context.</p>
+      <ul>
+        <li>AI-powered recommendations aligned with medical guidelines</li>
+        <li>Currently in pilot with select clinics and hospitals</li>
+      </ul>
+    </div>
+
+    <div class="product">
+      <h2>LightScribe</h2>
+      <p>AI-powered medical scribe deployed in production. Generates consult notes, SOAP notes, and patient summaries.</p>
+      <ul>
+        <li>Clean summaries without filler</li>
+        <li>Built for physicians with a simple interface</li>
+        <li>Currently in pilot with select clinics and hospitals</li>
+      </ul>
+    </div>
+
+    <div class="product">
+      <h2>ChartPrepper</h2>
+      <p>Referral summary tool deployed in production. Processes medical referrals with accurate, complete summaries.</p>
+      <ul>
+        <li>Summarizes referrals quickly and accurately</li>
+        <li>Ensures critical details are not missed</li>
+        <li>Available for pilot use with select institutions</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="benefits">
+    <h2>Approach</h2>
+    <div class="benefit-list">
+      <div class="benefit">
+        <h3>AI-Powered Precision</h3>
+        <p>Tools deliver concise, actionable outputs tailored to healthcare workflows.</p>
+      </div>
+      <div class="benefit">
+        <h3>Seamless Integration</h3>
+        <p>Solutions integrate with existing clinical workflows and EMR systems.</p>
+      </div>
+      <div class="benefit">
+        <h3>Security and Compliance</h3>
+        <p>End-to-end encryption, PHI filtering, and alignment with PIPEDA privacy principles. Self-assessed alignment with HIPAA security protocols (not certified).</p>
+      </div>
+      <div class="benefit">
+        <h3>Canadian Data Sovereignty</h3>
+        <p>All data stored within Canada.</p>
+      </div>
+      <div class="benefit">
+        <h3>Production-Proven</h3>
+        <p>Tools deployed in real clinical environments, demonstrating practical value.</p>
+      </div>
+    </div>
+    <p class="footer-note">
+      We're committed to advancing healthcare through rigorous, evidence-based AI development. Our tools are currently in pilot with select clinics and hospitals. We welcome research partnerships and academic collaborations.
+    </p>
+  </section>
+
+  <section class="cta">
+    <h2>Pilot Access and Research Collaboration</h2>
+    <p>Our clinical tools are available for pilot use with select institutions. We're seeking research partners to advance verifiable AI in healthcare.</p>
+    <p>
+      <a href="mailto:yan+websitesignup@translational.ca">Request Pilot Access</a> | 
+      <a href="mailto:yan+enterpriseAPI@translational.ca">Contact for Collaboration</a>
+    </p>
+  </section>
+</div>
+
+
+
+
+
+<!-- 
+ALTERNATIVE APPROACHES IF CSS/JS DON'T WORK:
+
+1. USE HTML BLOCK instead of CODE BLOCK:
+   - In Squarespace, try adding an "HTML" block instead of "Code" block
+   - HTML blocks sometimes have different width constraints
+
+2. USE EMBED BLOCK:
+   - Try using an "Embed" block and paste the entire HTML
+   - Embed blocks may have more flexible width options
+
+3. SPLIT INTO MULTIPLE BLOCKS:
+   - Break the content into smaller sections
+   - Use multiple blocks to work around width constraints
+
+4. USE SQUARESPACE'S NATIVE BLOCKS:
+   - Recreate the design using Squarespace's native blocks
+   - Add custom CSS in Settings > Advanced > Code Injection
+-->
+
+    <script>
+
+        // Mobile menu toggle
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        });
+
+        // Set active link based on current page
+        const currentPage = window.location.pathname.split('/').pop() || 'home.html';
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            if (link.getAttribute('href') === currentPage) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+
+
 // Force full width by finding and overriding constraining parent elements
 (function() {
   function forceFullWidth() {
@@ -564,25 +773,7 @@ section.hero {
   setTimeout(forceFullWidth, 100);
   setTimeout(forceFullWidth, 500);
 })();
-</script>
 
-<!-- 
-ALTERNATIVE APPROACHES IF CSS/JS DON'T WORK:
-
-1. USE HTML BLOCK instead of CODE BLOCK:
-   - In Squarespace, try adding an "HTML" block instead of "Code" block
-   - HTML blocks sometimes have different width constraints
-
-2. USE EMBED BLOCK:
-   - Try using an "Embed" block and paste the entire HTML
-   - Embed blocks may have more flexible width options
-
-3. SPLIT INTO MULTIPLE BLOCKS:
-   - Break the content into smaller sections
-   - Use multiple blocks to work around width constraints
-
-4. USE SQUARESPACE'S NATIVE BLOCKS:
-   - Recreate the design using Squarespace's native blocks
-   - Add custom CSS in Settings > Advanced > Code Injection
--->
-
+    </script>
+</body>
+</html>
