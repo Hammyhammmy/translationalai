@@ -11,25 +11,26 @@
             '/lightscribe': 'lightscribe.html',
             '/chartprepper': 'chartprepper.html',
             '/partner-in-practice': 'partner-in-practice.html',
-            '/api-integration': 'api-integration.html',
-            '/home-simple': 'home-simple.html',
-            '/lightscribe-simple': 'lightscribe-simple.html',
-            '/chartprepper-simple': 'chartprepper-simple.html',
-            '/partner-in-practice-simple': 'partner-in-practice-simple.html',
             '/pip': 'partner-in-practice.html',
-            '/api-integration-simple': 'api-integration-simple.html',
             '/team': 'team.html'
         };
 
         // Get the current path
         const currentPath = window.location.pathname;
         
-        // Remove leading slash and handle GitHub Pages base path
-        let path = currentPath.replace(/^\//, '');
+        // Handle GitHub Pages base path (remove /translationalai if present)
+        let path = currentPath.replace(/^\/translationalai\//, '/').replace(/^\//, '');
         
-        // If path is empty or just '/', redirect to index
+        // Prevent infinite loops - if we're already on a .html file, don't redirect to itself
+        if (path.endsWith('.html') && path !== '404.html' && path !== 'index.html') {
+            // File should exist, but if we're here it doesn't - redirect to home
+            window.location.replace('home.html');
+            return;
+        }
+        
+        // If path is empty or just '/', redirect to home
         if (!path || path === '' || path === 'index.html') {
-            window.location.replace('index.html');
+            window.location.replace('home.html');
             return;
         }
         
@@ -37,19 +38,11 @@
         const routeKey = '/' + path;
         if (routes[routeKey]) {
             window.location.replace(routes[routeKey]);
-        } else if (routes[currentPath]) {
-            window.location.replace(routes[currentPath]);
-        } else {
-            // If no match, try to find the file directly or redirect to index
-            // This handles cases where someone might access /home.html directly
-            if (path.endsWith('.html')) {
-                // Try to load the file directly
-                window.location.replace(path);
-            } else {
-                // Fallback to index
-                window.location.replace('index.html');
-            }
+            return;
         }
+        
+        // If no match, redirect to home
+        window.location.replace('home.html');
     </script>
     <style>
         body {
