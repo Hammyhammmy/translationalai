@@ -185,6 +185,13 @@ a:hover {
     color: var(--primary-light);
 }
 
+.nav-divider {
+    color: var(--border-light);
+    padding: 0 var(--spacing-xs);
+    pointer-events: none;
+    user-select: none;
+}
+
 .nav-toggle {
     display: none;
     flex-direction: column;
