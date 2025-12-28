@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <script>
+        // Route mapping for GitHub Pages
+        const routes = {
+            '/home': 'home.html',
+            '/lightscribe': 'lightscribe.html',
+            '/chartprepper': 'chartprepper.html',
+            '/partner-in-practice': 'partner-in-practice.html',
+            '/api-integration': 'api-integration.html',
+            '/home-simple': 'home-simple.html',
+            '/lightscribe-simple': 'lightscribe-simple.html',
+            '/chartprepper-simple': 'chartprepper-simple.html',
+            '/partner-in-practice-simple': 'partner-in-practice-simple.html',
+            '/api-integration-simple': 'api-integration-simple.html',
+            '/team': 'team.html'
+        };
+
+        // Get the current path
+        const currentPath = window.location.pathname;
+        
+        // Remove leading slash and handle GitHub Pages base path
+        let path = currentPath.replace(/^\//, '');
+        
+        // If path is empty or just '/', redirect to index
+        if (!path || path === '' || path === 'index.html') {
+            window.location.replace('index.html');
+            return;
+        }
+        
+        // Check if path matches a route
+        const routeKey = '/' + path;
+        if (routes[routeKey]) {
+            window.location.replace(routes[routeKey]);
+        } else if (routes[currentPath]) {
+            window.location.replace(routes[currentPath]);
+        } else {
+            // If no match, try to find the file directly or redirect to index
+            // This handles cases where someone might access /home.html directly
+            if (path.endsWith('.html')) {
+                // Try to load the file directly
+                window.location.replace(path);
+            } else {
+                // Fallback to index
+                window.location.replace('index.html');
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            color: #1e3a8a;
+        }
+        .message {
+            text-align: center;
+            padding: 2rem;
+        }
+        .spinner {
+            border: 3px solid #e0f2fe;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="message">
+        <div class="spinner"></div>
+        <p>Redirecting...</p>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,438 @@
+<div class="container">
+  <section class="header">
+    <h1>ChartPrepper</h1>
+    <p class="intro">
+      Referral summary tool deployed in production. Processes medical referrals with accurate, complete summaries. Currently in pilot with select clinics and hospitals.
+    </p>
+  </section>
+
+  <section class="content">
+    <div class="section">
+      <h2>How It Works</h2>
+      <ol>
+        <li>Input referral data through secure interface</li>
+        <li>AI processes information, identifying key clinical details</li>
+        <li>Receive structured summary with critical information highlighted</li>
+        <li>Transfer summary directly to EMR or practice management system</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2>Features</h2>
+      <ul>
+        <li>Removes filler and reduces cognitive load</li>
+        <li>Ensures no vital details are overlooked</li>
+        <li>Canadian data sovereignty - data stored and processed in Canada</li>
+        <li>End-to-end encryption and healthcare-grade privacy safeguards</li>
+        <li>Seamless EMR integration</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Security and Privacy</h2>
+      <ul>
+        <li>End-to-end encryption for all data in transit and at rest</li>
+        <li>Aligned with PIPEDA privacy principles and provincial privacy requirements</li>
+        <li>Self-assessed alignment with HIPAA security protocols (not certified)</li>
+        <li>All data stored and processed securely in Canada</li>
+        <li>No data used for AI training or shared with third parties</li>
+        <li>Privacy by Design approach - automatically filters PHI while maintaining accuracy</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Status</h2>
+      <p>ChartPrepper is currently deployed in real clinical environments, demonstrating the practical value of verifiable AI in referral workflows. Available for pilot use with select institutions.</p>
+    </div>
+  </section>
+</div>
+
+<style>
+/* Remove Squarespace empty blocks and page container constraints */
+.Main-content,
+#mainContent,
+.sqs-layout,
+.sqs-row,
+.sqs-col,
+.sqs-block,
+.sqs-block-content,
+.sqs-block-html,
+.sqs-block-spacer,
+.sqs-block-empty,
+[class*="sqs-layout"],
+[class*="Main-content"] {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Hide empty Squarespace blocks that disappear on hover */
+.sqs-block-spacer,
+.sqs-block-empty,
+.sqs-col:empty,
+.sqs-row:empty,
+.sqs-layout .sqs-col:empty,
+.sqs-layout .sqs-row:empty,
+div[class*="spacer"]:empty,
+div[class*="empty"]:empty {
+  display: none !important;
+  visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+}
+
+/* Remove Squarespace page padding */
+body #page,
+body #siteWrapper,
+body #canvas {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Make your container full-width within Squarespace */
+.sqs-block-html .container,
+.sqs-block-content .container,
+.Main-content .container,
+#mainContent .container {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Force full width for Squarespace code blocks */
+.sqs-block-code,
+.sqs-block-code .sqs-block-content,
+.sqs-block-code .sqs-block-content > *,
+.sqs-block-html,
+.sqs-block-html .sqs-block-content,
+.sqs-block-html .sqs-block-content > *,
+.sqs-block-embed,
+.sqs-block-embed .sqs-block-content {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Override Squarespace column constraints for code blocks */
+.sqs-layout .sqs-col .sqs-block-code,
+.sqs-layout .sqs-col .sqs-block-html,
+.sqs-layout .sqs-col .sqs-block-embed,
+.sqs-row .sqs-col .sqs-block-code,
+.sqs-row .sqs-col .sqs-block-html,
+.sqs-row .sqs-col .sqs-block-embed {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Ensure container inside code blocks is full width */
+.sqs-block-code .container,
+.sqs-block-html .container,
+.sqs-block-embed .container {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Override any Squarespace content wrapper constraints */
+#siteWrapper .sqs-block-code,
+#siteWrapper .sqs-block-html,
+#siteWrapper .sqs-block-embed,
+#page .sqs-block-code,
+#page .sqs-block-html,
+#page .sqs-block-embed {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Target Squarespace content-wrapper and fluid-engine wrappers */
+.content-wrapper,
+.fluid-engine,
+[class*="content-wrapper"],
+[class*="fluid-engine"],
+[class*="yui_3_17"],
+div[class*="content-wrapper"],
+div[class*="fluid-engine"] {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Override Squarespace page content area constraints */
+#mainContent,
+.Main-content,
+[data-section-id],
+[data-section-id] .content-wrapper,
+[data-section-id] .fluid-engine {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Target any parent containers of code blocks */
+.sqs-block-code,
+.sqs-block-html,
+.sqs-block-embed {
+  position: relative;
+}
+
+.sqs-block-code *,
+.sqs-block-html *,
+.sqs-block-embed * {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Break out of Squarespace's 800px constraint - target ALL possible wrappers */
+body .sqs-block-code .container,
+body .sqs-block-html .container,
+body .sqs-block-embed .container,
+.content-wrapper .container,
+.fluid-engine .container,
+[class*="content-wrapper"] .container,
+[class*="fluid-engine"] .container,
+[class*="yui_"] .container,
+div[class*="content-wrapper"] .container,
+div[class*="fluid-engine"] .container {
+  max-width: none !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Ensure parent wrappers don't constrain - target everything */
+.sqs-block-code,
+.sqs-block-html,
+.sqs-block-embed,
+.content-wrapper,
+.fluid-engine,
+[class*="content-wrapper"],
+[class*="fluid-engine"],
+[class*="yui_"],
+div[class*="content-wrapper"],
+div[class*="fluid-engine"] {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Nuclear option: target any div that might be constraining */
+div[class*="sqs"] .container,
+div[id*="yui"] .container {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Squarespace compatibility fixes */
+.container {
+  /* Remove max-width constraint - let it be responsive to parent */
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  padding: 3rem 2rem !important;
+  padding-top: 3rem !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #fafbfc;
+  min-height: 100vh;
+  box-sizing: border-box;
+  position: relative;
+  overflow: visible;
+}
+
+/* For standalone viewing (not in Squarespace), add a reasonable max-width */
+body:not(.sqs) .container,
+html:not([class*="sqs"]) .container {
+  max-width: 1200px;
+}
+
+.header {
+  margin-top: 0 !important;
+  margin-bottom: 3rem !important;
+  padding: 3rem 2rem !important;
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-radius: 1rem;
+  display: flow-root;
+  position: relative;
+  overflow: visible;
+  box-sizing: border-box;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-top: 0 !important;
+  margin-bottom: 1rem !important;
+  padding-top: 0 !important;
+  color: #1e3a8a;
+  box-sizing: border-box;
+}
+
+.header .intro {
+  font-size: 1.1rem;
+  color: #4b5563;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Override Squarespace section defaults */
+section.header {
+  margin-top: 0 !important;
+  padding-top: 2rem !important;
+}
+
+/* Handle Squarespace wrapper elements */
+.sqs-block-content .container,
+.sqs-layout .container,
+[data-section-id] .container {
+  padding-top: 3rem !important;
+}
+
+.sqs-block-content .header,
+.sqs-layout .header,
+[data-section-id] .header {
+  margin-top: 0 !important;
+  padding-top: 2rem !important;
+}
+
+.content {
+  margin-bottom: 3rem;
+}
+
+.section {
+  margin-bottom: 3rem;
+  padding: 2.5rem;
+  padding-bottom: 2.5rem;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  border-left: 3px solid #3b82f6;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.1);
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  margin-top: 0;
+  color: #1e3a8a;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.section h2::after {
+  content: "";
+  position: absolute;
+  height: 3px;
+  width: 50px;
+  background: #3b82f6;
+  bottom: 0;
+  left: 0;
+  border-radius: 2px;
+}
+
+.section p {
+  font-size: 1rem;
+  color: #4b5563;
+  margin-bottom: 1rem;
+}
+
+.section ul, .section ol {
+  margin-left: 1.5rem;
+  color: #4b5563;
+}
+
+.section li {
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem 1rem;
+  }
+  
+  .header h1 {
+    font-size: 2rem;
+  }
+}
+</style>
+
+<script>
+// Force full width by finding and overriding constraining parent elements
+(function() {
+  function forceFullWidth() {
+    const container = document.querySelector('.container');
+    if (!container) return;
+    
+    // Find all parent elements and remove width constraints
+    let parent = container.parentElement;
+    while (parent && parent !== document.body) {
+      const computedStyle = window.getComputedStyle(parent);
+      const maxWidth = computedStyle.maxWidth;
+      
+      // If parent has a max-width constraint, try to override it
+      if (maxWidth && maxWidth !== 'none' && maxWidth !== '100%') {
+        parent.style.setProperty('max-width', '100%', 'important');
+        parent.style.setProperty('width', '100%', 'important');
+      }
+      
+      parent = parent.parentElement;
+    }
+    
+    // Also ensure container itself is full width
+    container.style.setProperty('max-width', '100%', 'important');
+    container.style.setProperty('width', '100%', 'important');
+  }
+  
+  // Run on load and after a short delay (for Squarespace's dynamic loading)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', forceFullWidth);
+  } else {
+    forceFullWidth();
+  }
+  
+  setTimeout(forceFullWidth, 100);
+  setTimeout(forceFullWidth, 500);
+})();
+</script>
+
+<!-- 
+ALTERNATIVE APPROACHES IF CSS/JS DON'T WORK:
+
+1. USE HTML BLOCK instead of CODE BLOCK:
+   - In Squarespace, try adding an "HTML" block instead of "Code" block
+   - HTML blocks sometimes have different width constraints
+
+2. USE EMBED BLOCK:
+   - Try using an "Embed" block and paste the entire HTML
+   - Embed blocks may have more flexible width options
+
+3. SPLIT INTO MULTIPLE BLOCKS:
+   - Break the content into smaller sections
+   - Use multiple blocks to work around width constraints
+
+4. USE SQUARESPACE'S NATIVE BLOCKS:
+   - Recreate the design using Squarespace's native blocks
+   - Add custom CSS in Settings > Advanced > Code Injection
+-->
+
