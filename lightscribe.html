@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TranslationalAI - LightScribe</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <script src="nav.js"></script>
     <div class="container">
-        <section class="header">
+        <section class="hero">
+
             <h1>LightScribe</h1>
-            <p class="intro">
-                AI-powered medical scribe deployed in production. Designed by a Canadian physician. Generates consult notes, SOAP notes, and patient summaries using verifiable AI with source-anchored outputs.
+            <p class="hero-headline">
+                AI-powered medical scribe deployed in production.<br>
+                Designed by a Canadian physician.
             </p>
+
+
+            <!-- Hero card removed -->
         </section>
 
         <section class="content">
             <div class="section">
                 <h2>How It Works</h2>
                 <p>
-                    LightScribe uses LightProof SDK to generate medical documentation with verifiable source attribution. The tool processes clinical input and produces structured documentation while mapping each statement to source material.
+                    LightScribe uses LightProof SDK to generate medical documentation with verifiable source
+                    attribution. The tool processes clinical input and produces structured documentation while mapping
+                    each statement to source material.
                 </p>
                 <p>
-                    The interface is designed for clinical workflows with three primary actions: Start, Finish, and Copy. A text box allows for private inputs during patient interactions, enabling real-time documentation support.
+                    The interface is designed for clinical workflows with three primary actions: Start, Finish, and
+                    Copy. A text box allows for private inputs during patient interactions, enabling real-time
+                    documentation support.
                 </p>
             </div>
 
@@ -53,14 +64,17 @@
             <div class="section">
                 <h2>Status</h2>
                 <p>
-                    LightScribe is currently deployed in real clinical environments, demonstrating the practical value of verifiable AI in healthcare documentation workflows. Available for pilot use with select institutions.
+                    LightScribe is currently deployed in real clinical environments, demonstrating the practical value
+                    of verifiable AI in healthcare documentation workflows. Available for pilot use with select
+                    institutions.
                 </p>
             </div>
         </section>
 
         <section class="cta">
             <h2>Pilot Access</h2>
-            <p>LightScribe is available for pilot use with select clinics and hospitals. We're seeking research partners to advance verifiable AI in healthcare.</p>
+            <p>LightScribe is available for pilot use with select clinics and hospitals. We're seeking research partners
+                to advance verifiable AI in healthcare.</p>
             <p>
                 <a href="mailto:yan+websitesignup@translational.ca">Request Pilot Access</a> |
                 <a href="mailto:yan+enterpriseAPI@translational.ca">Contact for Collaboration</a>
@@ -70,7 +84,7 @@
 
     <script>
         // Force full width by finding and overriding constraining parent elements
-        (function() {
+        (function () {
             function forceFullWidth() {
                 const container = document.querySelector('.container');
                 if (!container) return;
@@ -103,4 +117,5 @@
         })();
     </script>
 </body>
+
 </html>
