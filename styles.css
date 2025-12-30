@@ -438,9 +438,10 @@ a:hover {
 /* Hero Card - Restored for Homepage Graphic */
 .home-hero .hero-card {
     background: #000000;
-    border-radius: 4rem 4rem 0 0;
+    border-radius: 4rem;
     padding: var(--spacing-2xl);
-    padding-bottom: 8rem;
+    padding-bottom: var(--spacing-2xl);
+    /* Balanced padding */
     color: white;
     position: relative;
     overflow: hidden;
@@ -485,6 +486,25 @@ a:hover {
     line-height: 1.2;
     display: block;
     max-width: 600px;
+}
+
+.home-hero .hero-button {
+    display: inline-block;
+    margin-top: var(--spacing-lg);
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.home-hero .hero-button:hover {
+    background: white;
+    color: #000;
 }
 
 /* Remove Hero Card Styles */
@@ -1021,5 +1041,54 @@ div[id*="yui"] .container {
     .section,
     .product {
         padding: var(--spacing-md);
+    }
+}
+
+/* ===== Footer ===== */
+.site-footer {
+    background: var(--white);
+    border-top: 1px solid var(--border-light);
+    padding: var(--spacing-lg) 0;
+    margin-top: auto;
+    /* Push to bottom if flex container used, though current layout is flow */
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.footer-copy {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: var(--spacing-md);
+    list-style: none;
+}
+
+.footer-links a {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
     }
 }
