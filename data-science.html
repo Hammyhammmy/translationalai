@@ -45,9 +45,9 @@
             <div class="section">
                 <h2>Chart Extraction for Biomedical Research</h2>
                 <div class="screenshot-inline right">
-                    <img src="assets/abstractor1.jpg" alt="Chart Abstractor Dashboard" class="screenshot-thumb-large">
-                    <div class="screenshot-caption">The Chart Abstractor Dashboard provides a streamlined entry point
-                        for new research extractions.</div>
+                    <img src="assets/abstractor3.jpg" alt="Structured Schema Definition" class="screenshot-thumb-large">
+                    <div class="screenshot-caption">Define precise schemas for clinical data extraction with integrated
+                        validation rules.</div>
                 </div>
                 <p>
                     Our primary tool in this suite is designed for high-throughput, high-fidelity chart review.
@@ -82,31 +82,194 @@
             </div>
 
             <div class="section">
-                <h2>The Research Workflow</h2>
-                <div class="screenshot-inline left">
-                    <img src="assets/abstractor3.jpg" alt="Schema Definition" class="screenshot-thumb-large">
-                    <div class="screenshot-caption">Define precise schema requirements with integrated validation rules.
+                <h2>Inside the Pipeline</h2>
+                <p>
+                    TranslationalAI bridges the gap between raw, unstructured clinical data and structured, actionable
+                    research insights using a multi-layered validation architecture.
+                </p>
+
+                <div class="screenshot-inline" style="max-width: 900px; margin: 3rem auto;">
+                    <img src="assets/abstractor4.jpg" alt="Research Workflow Diagram" class="screenshot-thumb-large"
+                        style="padding: 0; border: none; box-shadow: var(--shadow-xl);">
+                    <div class="screenshot-caption">A comprehensive view of the TranslationalAI data extraction
+                        lifecycle.</div>
+                </div>
+
+                <h3>The Hybrid Implementation Journey</h3>
+                <div class="journey-grid">
+                    <div class="journey-step">
+                        <span class="step-label">User Action</span>
+                        <h4>Define Research Objectives</h4>
+                        <p>The user identifies clinical questions and provides sample documents or goals for extraction.
+                        </p>
+                        <span class="status-tag">System is waiting...</span>
+                    </div>
+                    <div class="journey-step">
+                        <span class="step-label">System Logic</span>
+                        <h4>Structure Discovery</h4>
+                        <p>The AI analyzes documents to reveal underlying structure and proposes a logical data schema.
+                        </p>
+                        <span class="status-tag">User monitors status...</span>
+                    </div>
+                    <div class="journey-step">
+                        <span class="step-label">Collaboration</span>
+                        <h4>Schema Refinement</h4>
+                        <p>The system generates Pydantic code. Users refine fields and types to align with protocols.
+                        </p>
+                    </div>
+                    <div class="journey-step">
+                        <span class="step-label">Security Guard</span>
+                        <h4>Structural Integrity Check</h4>
+                        <p>Engine scans code "skeleton" to ensure it is safe, type-safe, and perfectly aligned.</p>
+                    </div>
+                    <div class="journey-step">
+                        <span class="step-label">Final Output</span>
+                        <h4>Verified Data Extraction</h4>
+                        <p>Data extracted with direct links to original text and verified against the integrity guard.
+                        </p>
+                        <span class="status-tag">User receives results...</span>
                     </div>
                 </div>
-                <ol>
-                    <li><strong>Define Schema:</strong> Specify the exact fields and evidence requirements for your
-                        study.</li>
-                    <li><strong>Ingest Data:</strong> Pass in structured or unstructured clinical data.</li>
-                    <li><strong>Verifiable Extraction:</strong> The LightProof engine extracts data with integrated
-                        source citations.</li>
-                    <li><strong>Analyze:</strong> Export high-quality, research-ready datasets for clinical analysis.
-                    </li>
-                </ol>
+            </div>
+
+            <div class="tech-appendix">
+                <h2>Technical Appendix: Logic & Verification</h2>
+
+                <div class="grid-2"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem;">
+                    <div>
+                        <h3>What is "AST"?</h3>
+                        <p>
+                            An Abstract Syntax Tree is a structured, tree-based representation of code that captures its
+                            logical
+                            structure. Whitespace and formatting are irrelevant; only the semantic structure matters.
+                        </p>
+
+                        <h4>Logic Representation</h4>
+                        <div class="code-container">
+                            <span class="code-label">Example Pydantic Code</span>
+                            <pre>class Patient(BaseModel):
+    age: int
+    psa: float | None</pre>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>AST Interpretation</h3>
+                        <div class="ast-tree">
+                            <div class="ast-node">
+                                <span class="ast-node-header">ClassDef:</span> Patient
+                                <div class="ast-node"><span class="ast-node-header">Inherits:</span> BaseModel</div>
+                                <div class="ast-node">
+                                    <span class="ast-node-header">Fields:</span>
+                                    <div class="ast-node">• age → int</div>
+                                    <div class="ast-node">• psa → Optional[float]</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 3rem;">
+                    <h3>Static AST Validation</h3>
+                    <p>
+                        We validate the structure of generated Pydantic models by inspecting their AST without executing
+                        the code.
+                        This allows us to enforce:
+                    </p>
+                    <div class="data-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Layer</th>
+                                    <th>What it checks</th>
+                                    <th>Guards against</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>AST Validation</strong></td>
+                                    <td>Model structure, types, safety</td>
+                                    <td>Logical flaws, unsafe code</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Pydantic Validation</strong></td>
+                                    <td>Data values at runtime</td>
+                                    <td>Invalid patient data, missing fields</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="quote-block">
+                        "AST validation ensures the container is correct before data ever enters it."
+                    </div>
+                </div>
+
+                <div style="margin-top: 3rem;">
+                    <h3>Why AST validation matters</h3>
+                    <div class="features-grid"
+                        style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div class="feature-item">
+                            <p><strong>Determinism:</strong> Schema is structurally verifiable before deployment.</p>
+                        </div>
+                        <div class="feature-item">
+                            <p><strong>Auditability:</strong> Prove models conform to institutional rules.</p>
+                        </div>
+                        <div class="feature-item">
+                            <p><strong>Compatibility:</strong> Detect breaking changes structurally.</p>
+                        </div>
+                        <div class="feature-item">
+                            <p><strong>Safety:</strong> Catch syntactically valid but semantically unsafe code.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-container">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <h3>What is "Structural Integrity Validation"?</h3>
+                    <p>Think of it as a safety blueprint check. While standard checks look at the data itself, we check
+                        the actual "machinery" doing the work. This ensures that the extraction process is structurally
+                        sound and won't produce invalid or broken data models.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Why not just run the code to see if it works?</h3>
+                    <p>Running code generated by an AI can be unpredictable. By using Static Validation, we can "see"
+                        what the code will do without ever actually running it. This is much safer and allows us to
+                        catch errors or security risks before they ever touch your clinical data.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>How does this help my research project?</h3>
+                    <p>It guarantees Data Integrity. In clinical research, a small change in how data is labeled can
+                        break your entire analysis pipeline. Our system ensures that the extraction models remain
+                        perfectly consistent, even if the underlying AI updates or drifts over time.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Is this check automatic?</h3>
+                    <p>Yes. Every time you create or update a pipeline, the system performs these structural checks in
+                        milliseconds. You don't need to be a programmer to benefit from this; the "guardrails" are built
+                        into the platform by default.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What happens if a check fails?</h3>
+                    <p>If the system detects a structural flaw, it will halt the process and provide a clear
+                        explanation. This prevents "broken" data from ever reaching your database, saving you hours of
+                        manual cleanup later.</p>
+                </div>
             </div>
         </section>
 
         <section class="cta">
-            <h2>Collaborate on Your Next Study</h2>
-            <p>Our Data Science tools are currently available for research partnerships and pilot projects.
-                Contact us to discuss how we can accelerate your chart review workflows.</p>
-            <p>
-                <a href="mailto:yan+DSresearch@translational.ca">Request Research Access</a> |
-                <a href="mailto:yan+collaboration@translational.ca">Discuss Partnerships</a>
+            <h2>Ready to automate your extraction?</h2>
+            <p>Our Data Science tools are currently available for research partnerships and pilot projects.</p>
+            <p style="margin-top: 2rem;">
+                <a href="pipelines.html" class="cta-button">Establish Pipeline</a>
+                <a href="recent-jobs.html" class="cta-button secondary"
+                    style="background: white; color: var(--primary) !important; border: 1px solid var(--primary); margin-left: 1rem;">View
+                    Active Pipelines</a>
+            </p>
+            <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-light);">
+                © 2026 TranslationalAI | Chart Abstractor - Biomedical Research Informatics
             </p>
         </section>
     </div>
