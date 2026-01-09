@@ -17,6 +17,7 @@
                 <li><a href="lightscribe.html" ${currentPage === 'lightscribe.html' ? 'class="active"' : ''}>LightScribe</a></li>
                 <li><a href="chartprepper.html" ${currentPage === 'chartprepper.html' ? 'class="active"' : ''}>ChartPrepper</a></li>
                 <li><a href="partner-in-practice.html" ${currentPage === 'partner-in-practice.html' ? 'class="active"' : ''}>Partner in Practice</a></li>
+                <li><a href="data-science.html" ${currentPage === 'data-science.html' ? 'class="active"' : ''}>Data Science</a></li>
                 <li><a href="team.html" ${currentPage === 'team.html' ? 'class="active"' : ''}>About</a></li>
                 <li class="nav-divider">|</li>
                 <li class="nav-dropdown">

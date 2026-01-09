@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TranslationalAI - Data Science</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <script src="nav.js"></script>
+    <div class="container">
+        <section class="hero ds-hero">
+            <h1>Data Science</h1>
+            <p class="hero-headline">
+                TranslationalAI | Chart Abstractor<br>
+                Advanced AI for large-scale chart review research studies.
+            </p>
+        </section>
+
+        <section class="content">
+            <div class="section">
+                <h2>Precision in Research</h2>
+                <p>
+                    Biomedical research demands a level of specificity and accuracy that generic LLMs cannot guarantee.
+                    While standard models are prone to subtle inaccuracies and lack of grounding, our Data Science suite
+                    leverages the LightProof stack to ensure every data point extracted is anchored to its source.
+                </p>
+
+                <div class="highlight-box">
+                    <h3>Why Verifiability Matters</h3>
+                    <p>
+                        In clinical research, a "low hallucination rate" is not enough. To maintain scientific rigor,
+                        extracted data must be <strong>verifiable</strong>. LightProof ensures that:
+                    </p>
+                    <ul>
+                        <li>Every extraction is uniquely tied to a specific line or section in the source document.</li>
+                        <li>Automated validation schemas reject outputs that cannot be definitively proven.</li>
+                        <li>Researchers can audit and trace findings back to the raw clinical text in seconds.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Chart Extraction for Biomedical Research</h2>
+                <p>
+                    Our primary tool in this suite is designed for high-throughput, high-fidelity chart review.
+                    Whether conducting retrospective cohort studies or extracting complex phenotypes, the tool
+                    streamlines the workflow from raw record to structured dataset.
+                </p>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3>Rapid Schema Design</h3>
+                        <p>Using the LightProof stack, we can quickly define custom extraction schemas tailored to
+                            specific clinical questions, supporting diverse data types from lab values to narrative
+                            text.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Scalable Retrospectives</h3>
+                        <p>Process thousands of charts with consistent accuracy, significantly reducing the manual labor
+                            involved in traditional chart reviews.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Domain Specificity</h3>
+                        <p>Unlike generic tools, our extraction is tuned for the nuances of medical terminology and
+                            clinical documentation patterns.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>The Research Workflow</h2>
+                <ol>
+                    <li><strong>Define Schema:</strong> Specify the exact fields and evidence requirements for your
+                        study.</li>
+                    <li><strong>Ingest Data:</strong> Pass in structured or unstructured clinical data.</li>
+                    <li><strong>Verifiable Extraction:</strong> The LightProof engine extracts data with integrated
+                        source citations.</li>
+                    <li><strong>Analyze:</strong> Export high-quality, research-ready datasets for clinical analysis.
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h2>Collaborate on Your Next Study</h2>
+            <p>Our Data Science tools are currently available for research partnerships and pilot projects.
+                Contact us to discuss how we can accelerate your chart review workflows.</p>
+            <p>
+                <a href="mailto:yan+DSresearch@translational.ca">Request Research Access</a> |
+                <a href="mailto:yan+collaboration@translational.ca">Discuss Partnerships</a>
+            </p>
+        </section>
+    </div>
+
+    <script>
+        // Force full width script as used in other pages
+        (function () {
+            function forceFullWidth() {
+                const container = document.querySelector('.container');
+                if (!container) return;
+
+                let parent = container.parentElement;
+                while (parent && parent !== document.body) {
+                    const computedStyle = window.getComputedStyle(parent);
+                    const maxWidth = computedStyle.maxWidth;
+
+                    if (maxWidth && maxWidth !== 'none' && maxWidth !== '100%') {
+                        parent.style.setProperty('max-width', '100%', 'important');
+                        parent.style.setProperty('width', '100%', 'important');
+                    }
+
+                    parent = parent.parentElement;
+                }
+
+                container.style.setProperty('max-width', '100%', 'important');
+                container.style.setProperty('width', '100%', 'important');
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', forceFullWidth);
+            } else {
+                forceFullWidth();
+            }
+
+            setTimeout(forceFullWidth, 100);
+            setTimeout(forceFullWidth, 500);
+        })();
+    </script>
+</body>
+
+</html>

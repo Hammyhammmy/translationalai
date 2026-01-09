@@ -1092,3 +1092,50 @@ div[id*="yui"] .container {
         text-align: center;
     }
 }
+
+/* ===== Data Science Page Specific Styles ===== */
+.highlight-box {
+    background: var(--bg-blue-light);
+    border: 1px solid var(--primary-lighter);
+    border-radius: 0.75rem;
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+}
+
+.highlight-box h3 {
+    color: var(--primary);
+    margin-top: 0;
+}
+
+.highlight-box ul {
+    margin-top: var(--spacing-sm);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.feature-item {
+    padding: var(--spacing-md);
+    background: var(--bg-blue-lighter);
+    border-radius: 0.5rem;
+    border-top: 4px solid var(--primary);
+    transition: transform 0.2s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-4px);
+}
+
+.feature-item h3 {
+    font-size: 1.15rem;
+    color: var(--text-dark);
+}
+
+.feature-item p {
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
