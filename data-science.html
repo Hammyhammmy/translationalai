@@ -20,6 +20,40 @@
         </section>
 
         <section class="content">
+            <!-- New prominent orientation image -->
+            <div class="section" style="text-align: center; padding-bottom: 2rem;">
+                <div class="screenshot-inline" style="max-width: 900px; margin: 0 auto;">
+                    <img src="assets/abstractor_2paths.jpg"
+                        alt="Two Product Paths: Unstructured Extraction and Massive Scale Analysis"
+                        class="screenshot-thumb-large" style="box-shadow: var(--shadow-xl);">
+                    <div class="screenshot-caption" style="font-size: 1rem; margin-top: 1rem;">
+                        TranslationalAI solves two distinct clinical data challenges.
+                    </div>
+                </div>
+
+                <div class="grid-2"
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 900px; margin: 2rem auto 0; text-align: left;">
+                    <div>
+                        <h3 style="font-size: 1.25rem; color: var(--primary); margin-bottom: 0.5rem;">Path 1:
+                            Unstructured to Structured</h3>
+                        <p style="font-size: 0.95rem;">
+                            <strong>The "Paperwork Mountain" Scenario:</strong> Ideal for digitizing questionnaires,
+                            PDFs, or scanned documents. We ingest this unstructured chaos and output a clean
+                            row-and-column database.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 1.25rem; color: var(--primary); margin-bottom: 0.5rem;">Path 2: Massive
+                            Scale Analysis</h3>
+                        <p style="font-size: 0.95rem;">
+                            <strong>The "Messy Database" Scenario:</strong> Perfect for when you have a massive database
+                            with inconsistent fields. We zone in on specific problems to extract and clean only what
+                            matters.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
             <div class="section">
                 <h2>Precision in Research</h2>
                 <p>
@@ -132,97 +166,6 @@
                 </div>
             </div>
 
-            <div class="tech-appendix">
-                <h2>Technical Appendix: Logic & Verification</h2>
-
-                <div class="grid-2"
-                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem;">
-                    <div>
-                        <h3>What is "AST"?</h3>
-                        <p>
-                            An Abstract Syntax Tree is a structured, tree-based representation of code that captures its
-                            logical
-                            structure. Whitespace and formatting are irrelevant; only the semantic structure matters.
-                        </p>
-
-                        <h4>Logic Representation</h4>
-                        <div class="code-container">
-                            <span class="code-label">Example Pydantic Code</span>
-                            <pre>class Patient(BaseModel):
-    age: int
-    psa: float | None</pre>
-                        </div>
-                    </div>
-                    <div>
-                        <h3>AST Interpretation</h3>
-                        <div class="ast-tree">
-                            <div class="ast-node">
-                                <span class="ast-node-header">ClassDef:</span> Patient
-                                <div class="ast-node"><span class="ast-node-header">Inherits:</span> BaseModel</div>
-                                <div class="ast-node">
-                                    <span class="ast-node-header">Fields:</span>
-                                    <div class="ast-node">• age → int</div>
-                                    <div class="ast-node">• psa → Optional[float]</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-top: 3rem;">
-                    <h3>Static AST Validation</h3>
-                    <p>
-                        We validate the structure of generated Pydantic models by inspecting their AST without executing
-                        the code.
-                        This allows us to enforce:
-                    </p>
-                    <div class="data-table-container">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Layer</th>
-                                    <th>What it checks</th>
-                                    <th>Guards against</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>AST Validation</strong></td>
-                                    <td>Model structure, types, safety</td>
-                                    <td>Logical flaws, unsafe code</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Pydantic Validation</strong></td>
-                                    <td>Data values at runtime</td>
-                                    <td>Invalid patient data, missing fields</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="quote-block">
-                        "AST validation ensures the container is correct before data ever enters it."
-                    </div>
-                </div>
-
-                <div style="margin-top: 3rem;">
-                    <h3>Why AST validation matters</h3>
-                    <div class="features-grid"
-                        style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
-                        <div class="feature-item">
-                            <p><strong>Determinism:</strong> Schema is structurally verifiable before deployment.</p>
-                        </div>
-                        <div class="feature-item">
-                            <p><strong>Auditability:</strong> Prove models conform to institutional rules.</p>
-                        </div>
-                        <div class="feature-item">
-                            <p><strong>Compatibility:</strong> Detect breaking changes structurally.</p>
-                        </div>
-                        <div class="feature-item">
-                            <p><strong>Safety:</strong> Catch syntactically valid but semantically unsafe code.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="faq-container">
                 <h2>Frequently Asked Questions</h2>

@@ -1209,95 +1209,9 @@ div[id*="yui"] .container {
     }
 }
 
-/* ===== Technical Documentation Styles ===== */
-.tech-appendix {
-    background-color: #f1f3f4;
-    border-radius: 12px;
-    padding: 3rem;
-    margin: 4rem 0;
-    border: 1px solid #dadce0;
-}
 
-.tech-appendix h2 {
-    color: #202124;
-    font-size: 1.75rem;
-    margin-bottom: 2rem;
-}
 
-.code-container {
-    background: #202124;
-    color: #e8eaed;
-    padding: 1.5rem;
-    border-radius: 8px;
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    line-height: 1.5;
-    margin: 1.5rem 0;
-    overflow-x: auto;
-    position: relative;
-}
-
-.code-label {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.7rem;
-    background: #3c4043;
-    color: #bdc1c6;
-    border-bottom-left-radius: 8px;
-    text-transform: uppercase;
-}
-
-.ast-tree {
-    background: #ffffff;
-    border: 1px solid #dadce0;
-    padding: 1.5rem;
-    border-radius: 8px;
-    font-family: var(--font-mono);
-    margin: 1.5rem 0;
-}
-
-.ast-node {
-    margin-bottom: 0.5rem;
-    padding-left: 1.5rem;
-    border-left: 2px solid #e8eaed;
-}
-
-.ast-node-header {
-    font-weight: 600;
-    color: var(--primary);
-}
-
-.data-table-container {
-    margin: 2rem 0;
-    overflow-x: auto;
-}
-
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #ffffff;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.data-table th,
-.data-table td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid #f1f3f4;
-}
-
-.data-table th {
-    background: #f8fafc;
-    color: var(--text-dark);
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
+/* ===== FAQ Styles ===== */
 .faq-container {
     margin-top: 4rem;
 }
