@@ -1,0 +1,67 @@
+# MEDICAL CONTENT PRINCIPLES
+
+## Realism & Conservative Advice
+- Acknowledges individual variation in healing
+- Avoids giving a fixed timeline that might not apply to everyone
+- Never minimizes discomfort or complications ("we do not want to minimize the fact that it is invasive")
+- Sets realistic expectations (e.g., "arrange a ride home" not "drive yourself")
+- Uses conservative recovery timelines (e.g., "at least 7 days" then "assess how your body feels")
+- Avoids over-promising on outcomes ("cannot guarantee," "depends on many factors")
+
+## Honest Scope of Services
+- Only claims what the clinic directly controls (e.g., "Rapid Access to Transperineal Biopsy")
+- Acknowledges public system limitations (e.g., MRI wait times are system-dependent)
+- Differentiates between clinic-provided services vs. coordinated services
+- No false promises about system-wide speed improvements
+
+## Professional Tone
+- Removes marketing filler ("Focus requires precision," "Near-zero infection")
+- Uses comparative language instead of absolutes ("Lower infection risk than..." not "Near-zero")
+- Factual over salesy ("reduces infection risk" not "dramatically reduces")
+- Avoids hyperbole and unsubstantiated claims
+
+## Physician-Centric Referral
+- Strictly requires physician referral (no self-referrals)
+- Makes referral as easy as possible (accepts standard forms, no special PDF required)
+- Provides MD Advice Line for pre-referral triage questions
+- Enforces strict PHI privacy (no patient identifiers, physician license # required)
+
+---
+
+# TECHNICAL ARCHITECTURE PRINCIPLES
+
+## Single Source of Truth
+- All contact information in ONE file: `contacts.json`
+- All navigation in ONE file: `nav-loader.js`
+- All referral widgets in ONE file: `contact-loader.js`
+- All layout fixes in ONE file: `layout-fix.js`
+
+## DRY (Don't Repeat Yourself)
+- Navigation HTML is dynamically injected, not hardcoded on every page
+- Referral widget uses `.referral-widget-container` placeholder, content injected by JS
+- Contact info (fax, email) populated from JSON, not hardcoded
+- Shared scripts loaded once, not duplicated inline
+
+## Maintainability
+- To update fax number: edit ONE line in `contacts.json`
+- To add a new pathway: edit ONE array in `nav-loader.js`
+- To change referral widget: edit ONE template in `contact-loader.js`
+- HTML files are clean, minimal, and focused on content only
+
+## Separation of Concerns
+- **Data**: `contacts.json` (contact info)
+- **Behavior**: `*.js` files (dynamic functionality)
+- **Structure**: `*.html` files (content only, minimal inline styles)
+- **Presentation**: `styles.css` (shared styling)
+
+## User Experience
+- Interstitial modal for MD Advice (explains service before opening email)
+- Pre-filled email templates with strict privacy warnings
+- Dynamic active state detection in navigation
+- Consistent hero section centering across all pages
+
+## Portability
+- All assets (CSS, JS, JSON) are local to `urology_clinic/` folder
+- No dependencies on parent project
+- Can be deployed independently
+- All links are relative, not absolute

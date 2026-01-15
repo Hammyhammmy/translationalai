@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ureteral Obstruction Clinic - Toronto Urology</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .clinic-nav {
+            background: #fff;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 2rem;
+        }
+
+        .clinic-nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+            /* Allow wrapping for mobile/more items */
+        }
+
+        .clinic-nav a {
+            color: var(--text-gray);
+            font-weight: 500;
+            font-size: 1.1rem;
+            text-decoration: none;
+        }
+
+        .clinic-nav a:hover,
+        .clinic-nav a.active {
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <script src="nav-loader.js"></script>
+
+    <div class="container" style="padding-top: 0 !important;">
+        <section class="hero clinic-hero">
+            <h1>Ureteral Obstruction & Stone Clinic</h1>
+            <p class="hero-headline">
+                Urgent management for acute colic and obstructing kidney stones.
+            </p>
+        </section>
+
+        <section class="section" style="background: var(--bg-blue-light); border: none;">
+            <h2>Understanding Obstruction</h2>
+            <p>Kidney stones can block the ureter (the tube draining the kidney), causing severe pain (colic) and
+                potential kidney damage.</p>
+            <ul style="margin-top: 1rem;">
+                <li><strong>Septic Stone (Fever + Obstruction):</strong> This is a medical emergency. Go to the
+                    Emergency Department immediately for IV antibiotics and urgent drainage.</li>
+                <li><strong>Obstructing Stone (No Fever):</strong> Severe pain without fever can be managed through our
+                    clinic with scheduled stenting or stone removal.</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>The Management Pathway</h2>
+            <div class="benefit-list">
+                <div class="benefit">
+                    <h3>Step 1: Assessment & Imaging</h3>
+                    <p>We review available imaging (CT, ultrasound) to confirm stone size and location. If imaging
+                        hasn't been done yet, we can arrange it. <strong>Note:</strong> If you have fever with
+                        obstruction or uncontrollable pain, go to the Emergency Department first for acute
+                        stabilization.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Step 2: Decompression (When Indicated)</h3>
+                    <p>For stones that cannot pass and are causing persistent symptoms, we can arrange <strong>ureteral
+                            stent</strong> placement to drain the kidney. This is typically scheduled within days, not
+                        same-day emergency care.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Step 3: Stone Removal</h3>
+                    <p>Once stable, we perform definitive management including <strong>Ureteroscopy (Laser
+                            Lithotripsy)</strong> or <strong>Percutaneous Nephrolithotomy (PCNL)</strong> for larger
+                        renal stones. <em>(Note: We do not offer Shockwave/ESWL at this site).</em></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="benefit-list" style="grid-template-columns: 1fr;">
+                <div class="benefit">
+                    <h3>Is a stent uncomfortable?</h3>
+                    <p>Yes, ureteral stents can cause bladder irritation, urgency, and flank ache. Tolerance varies
+                        significantly between individuals. They are a temporary necessity to protect the kidney. We aim
+                        to keep them in for the shortest time specific to your case.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Will the stone pass on its own?</h3>
+                    <p>Stones under 5mm have a reasonable chance of passing spontaneously, though this varies by
+                        individual anatomy and stone location. Stones over 5mm or those causing unmanageable pain
+                        usually require intervention.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h2>Refer a Patient</h2>
+            <p><strong>Physician Referral Required.</strong> Indications: Confirmed Ureteral Stone on CT/Ultrasound with
+                pain/hydronephrosis.</p>
+            <div class="referral-widget-container"></div>
+        </section>
+    </div>
+
+    <script src="contact-loader.js"></script>
+    <script src="layout-fix.js"></script>
+</body>
+
+</html>

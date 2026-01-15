@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renal Mass Clinic - Toronto Urology</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .clinic-nav {
+            background: #fff;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 2rem;
+        }
+
+        .clinic-nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .clinic-nav a {
+            color: var(--text-gray);
+            font-weight: 500;
+            font-size: 1.1rem;
+            text-decoration: none;
+        }
+
+        .clinic-nav a:hover,
+        .clinic-nav a.active {
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <script src="nav-loader.js"></script>
+
+    <div class="container" style="padding-top: 0 !important;">
+        <section class="hero clinic-hero">
+            <h1>Renal Mass Clinic</h1>
+            <p class="hero-headline">
+                Expedited evaluation of kidney masses found on imaging.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2>The Evaluation Process</h2>
+            <div class="benefit-list">
+                <div class="benefit">
+                    <h3>Step 1: Expert Imaging Review</h3>
+                    <p>We review available imaging (CT, MRI, or ultrasound) to determine the likelihood of malignancy
+                        (Risk Stratification). If imaging hasn't been done yet, we can arrange it.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Step 2: Renal Biopsy (If Needed)</h3>
+                    <p>If the diagnosis is unclear, a targeted biopsy may be performed to guide treatment decisions and
+                        avoid unnecessary surgery.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Step 3: Treatment Decision</h3>
+                    <p>Options range from Active Surveillance for small/slow-growing masses to surgical intervention. We
+                        offer <strong>Laparoscopic Partial Nephrectomy</strong> for amenable masses and <strong>Radical
+                            Nephrectomy</strong> for larger or advanced cases (excluding those with IVC involvement,
+                        which require specialized referral).</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Understanding Renal Masses</h2>
+            <p>Incidental findings of kidney masses are common. Our goal is to provide clarity quickly.</p>
+            <ul>
+                <li><strong>Benign vs. Malignant:</strong> A significant portion of small renal masses are benign (e.g.,
+                    Oncocytoma, Angiomyolipoma).</li>
+                <li><strong>Preserving Kidney Function:</strong> We offer Laparoscopic Partial Nephrectomy to preserve
+                    kidney function whenever feasible.</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="benefit-list" style="grid-template-columns: 1fr;">
+                <div class="benefit">
+                    <h3>Will I need surgery?</h3>
+                    <p>Most small renal masses do <strong>not</strong> require immediate surgery. Many are benign or so
+                        slow-growing that Active Surveillance is the safest option. We avoid rushing into surgery unless
+                        clearly indicated.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Is a biopsy always done?</h3>
+                    <p>No. We only biopsy if the result will change our management. If the mass looks clearly benign or
+                        clearly requires removal, a biopsy may just add unnecessary risk.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h2>Refer a Patient</h2>
+            <p><strong>Physician Referral Required.</strong> Indications: Solid or complex cystic renal mass on
+                Ultrasound, CT, or MRI.</p>
+            <div class="referral-widget-container"></div>
+        </section>
+    </div>
+
+    <script src="contact-loader.js"></script>
+    <script src="layout-fix.js"></script>
+</body>
+
+</html>
