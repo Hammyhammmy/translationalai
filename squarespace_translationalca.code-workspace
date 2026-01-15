@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "squarespace_translationalca",
+			"path": "."
+		},
+		{
+			"name": "assets",
+			"path": "../agentic_extract/agentic_intake_frontend/assets"
+		}
+	],
+	"settings": {}
+}
