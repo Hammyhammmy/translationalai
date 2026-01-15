@@ -1607,8 +1607,148 @@ body.nav-open {
     display: block;
 }
 
+/* ===== Urologists Section ===== */
+.urologists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.urologist-card {
+    background: var(--white);
+    border-radius: 1rem;
+    border: 1px solid var(--border-light);
+    padding: var(--spacing-lg);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.urologist-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(60, 64, 67, 0.15);
+    border-color: var(--primary-lighter);
+}
+
+.urologist-image {
+    width: 100%;
+    max-width: 200px;
+    height: 200px;
+    margin: 0 auto var(--spacing-md);
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--bg-blue-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.urologist-info {
+    text-align: center;
+    flex: 1;
+    min-height: 0;
+}
+
+.urologist-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.urologist-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--bg-blue-light) 0%, var(--bg-blue-lighter) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 3rem;
+}
+
+.urologist-info {
+    text-align: center;
+    flex: 1;
+}
+
+.urologist-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: var(--spacing-xs);
+    font-family: var(--font-heading);
+}
+
+.urologist-title {
+    font-size: 1rem;
+    color: var(--text-gray);
+    font-weight: 500;
+    margin-bottom: var(--spacing-xs);
+    margin-top: 0;
+}
+
+.urologist-title:empty {
+    display: none;
+}
+
+.urologist-credentials {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-style: italic;
+    margin-bottom: var(--spacing-sm);
+    margin-top: 0;
+}
+
+.urologist-credentials:empty {
+    display: none;
+}
+
+.urologist-specialization {
+    font-size: 0.95rem;
+    color: var(--text-gray);
+    margin-bottom: var(--spacing-sm);
+    margin-top: 0;
+    line-height: 1.6;
+}
+
+.urologist-specialization:empty {
+    display: none;
+}
+
+.urologist-specialization strong {
+    color: var(--text-dark);
+}
+
+.urologist-bio {
+    font-size: 0.95rem;
+    color: var(--text-gray);
+    line-height: 1.7;
+    margin-top: var(--spacing-sm);
+    margin-bottom: 0;
+    text-align: left;
+}
+
+.urologist-bio:empty {
+    display: none;
+}
+
 @media (max-width: 768px) {
     .tech-appendix {
         padding: 1.5rem;
+    }
+
+    .urologists-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .urologist-card {
+        padding: var(--spacing-md);
+    }
+
+    .urologist-image {
+        max-width: 150px;
+        height: 150px;
     }
 }

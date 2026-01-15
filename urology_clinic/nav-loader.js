@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
         { href: 'retention.html', label: 'Urinary Retention', shortLabel: 'Retention', page: 'retention.html' }
     ];
 
-    // All navigation items (hamburger menu) - includes Home and MD Advice
+    // All navigation items (hamburger menu) - includes Home, About Us, and MD Advice
     const allNavItems = [
         { href: 'index.html', label: 'Home', shortLabel: 'Home', page: 'index.html' },
         { href: 'prostate.html', label: 'Prostate (Rapid Bx)', shortLabel: 'Prostate', page: 'prostate.html' },
@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
         { href: 'renal.html', label: 'Renal Mass', shortLabel: 'Renal', page: 'renal.html' },
         { href: 'stones.html', label: 'Kidney Stones', shortLabel: 'Stones', page: 'stones.html' },
         { href: 'retention.html', label: 'Urinary Retention', shortLabel: 'Retention', page: 'retention.html' },
-        { href: '#', label: 'MD Advice', shortLabel: 'MD Advice', page: 'advice', special: 'email-link' }
+        { href: 'about.html', label: 'About Us', shortLabel: 'About', page: 'about.html' },
+        { href: '#', label: 'For Doctors', shortLabel: 'For Doctors', page: 'advice', special: 'email-link' }
     ];
 
     // Build mobile text navigation bar (only main items)
