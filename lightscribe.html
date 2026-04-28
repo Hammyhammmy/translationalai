@@ -15,8 +15,8 @@
 
             <h1>LightScribe</h1>
             <p class="hero-headline">
-                AI-powered medical scribe deployed in production.<br>
-                Designed by a Canadian physician.
+                Note expansion powered by ChartPrepper's provenance architecture.<br>
+                Every expanded sentence anchors to the clinician's seed note—or it is suppressed.
             </p>
 
 
@@ -25,24 +25,33 @@
 
         <section class="content">
             <div class="section">
-                <h2>Clinical Documentation Reimagined</h2>
+                <h2>Same Architecture, Different Source</h2>
                 <div class="screenshot-inline right">
                     <img src="assets/lightscribe1.jpg" alt="LightScribe Interface" class="screenshot-thumb-large">
                     <div class="screenshot-caption">Physician-designed interface supporting multiple documentation
                         styles and note types.</div>
                 </div>
                 <p>
-                    LightScribe uses the <a href="extraction_demo.html">LightProof SDK</a> to generate medical
-                    documentation with verifiable source
-                    attribution. The tool processes clinical input and produces structured documentation while mapping
-                    each statement back to the source material.
+                    LightScribe is not a separate product—it is ChartPrepper's provenance architecture applied to a
+                    shorter, clinician-authored source. The physician types or dictates a brief seed note, and
+                    LightScribe expands it into conventional clinical structure. Every expanded sentence anchors to a
+                    span in the seed note. Canonical expansions (e.g., "S1 S2 normal, no murmurs rubs or gallops")
+                    only appear when the seed authorizes them. Content the clinician did not assert is suppressed.
                 </p>
                 <div class="highlight-box">
-                    <h3>Source-Anchored Verifiability</h3>
+                    <h3>Inverted Audit Contract</h3>
                     <p>
-                        Unlike traditional scribes that may rely on probabilistic generation, LightScribe ensures that
-                        every extracted detail is anchored to specific evidence in the clinical session, providing
-                        physicians with tools to rapidly verify AI-generated content.
+                        A VHA evaluation of 11 AI scribe tools (Reddy et al., Annals of Internal Medicine, 2026) found
+                        AI-generated notes scored lower than human notes across all 10 PDQI-9 domains—with the largest
+                        deficits in <em>thorough</em>, <em>organized</em>, and <em>useful</em>. Physicians report
+                        the same pattern: physical exam findings dropped despite being stated aloud, histories that are
+                        "too good," and a re-read tax that erodes the time savings.
+                    </p>
+                    <p>
+                        LightScribe inverts this contract. The clinician's seed note is the source of truth—the model
+                        cannot lose what the clinician chose to assert. The audit question shifts from "did the model
+                        hear everything I said?" to "did the expansion stay faithful to my seed?" Every physician who
+                        has felt the "I have to re-read everything anyway" tax understands why this matters.
                     </p>
                 </div>
             </div>
@@ -51,19 +60,19 @@
                 <h2>Features</h2>
                 <div class="features-grid">
                     <div class="feature-item">
-                        <h3>Comprehensive Documentation</h3>
-                        <p>Generates high-quality consult notes, SOAP notes, and patient summaries tailored to clinical
-                            standards.</p>
+                        <h3>Provenance-Backed Expansion</h3>
+                        <p>Every generated sentence traces to a span in the seed note. The same structural guarantee
+                            as ChartPrepper's referral mode—not prompt discipline, but an architectural constraint.</p>
                     </div>
                     <div class="feature-item">
                         <h3>Custom Templates</h3>
-                        <p>Leverage pre-built or custom templates to match various clinical scenarios and physician
-                            preferences.</p>
+                        <p>Pre-built or custom templates for consult notes, SOAP notes, and patient summaries—matched
+                            to clinical scenarios and physician preferences.</p>
                     </div>
                     <div class="feature-item">
-                        <h3>Real-Time Support</h3>
-                        <p>Includes a private input field for quick notes during patient encounters, optimized for
-                            physician focus.</p>
+                        <h3>Seed Note Input</h3>
+                        <p>Brief typed or dictated notes during patient encounters. Not ambient capture—the clinician
+                            controls what enters the source of truth.</p>
                     </div>
                 </div>
             </div>
@@ -83,9 +92,9 @@
             <div class="section">
                 <h2>Status</h2>
                 <p>
-                    LightScribe is currently deployed in real clinical environments, demonstrating the practical value
-                    of verifiable AI in healthcare documentation workflows. Available for pilot use with select
-                    institutions.
+                    LightScribe is deployed in real clinical environments as a mode of ChartPrepper, sharing the same
+                    provenance architecture. The approach generalizes from referral summarization to note expansion
+                    under a single structural guarantee. Available for pilot use with select institutions.
                 </p>
             </div>
         </section>

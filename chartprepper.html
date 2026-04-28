@@ -15,8 +15,8 @@
 
             <h1>ChartPrepper</h1>
             <p class="hero-headline">
-                Referral summary tool deployed in production.<br>
-                Processes medical referrals to generate structured summaries.
+                Unified provenance architecture for referral summarization and note expansion.<br>
+                Every fact traces to a span in the source, or it is suppressed.
             </p>
 
 
@@ -25,11 +25,23 @@
 
         <section class="content">
             <div class="section">
-                <h2>Accelerated Referral Review</h2>
+                <h2>One Architecture, Two Modes</h2>
                 <p>
-                    ChartPrepper processes referral documentation through a secure interface, using AI to identify and
-                    extract key clinical details. The tool generates structured summaries with critical information
-                    highlighted, enabling efficient transfer to EMR or practice management systems.
+                    ChartPrepper applies a single architectural contract across all input modes: every fact in the
+                    output traces to a span in the source, or it is suppressed. This is not prompt discipline—it is
+                    a structural property of the system. The model cannot emit content that fails the provenance check,
+                    regardless of how the prompt is written or how the model behaves on any given input.
+                </p>
+                <p>
+                    <strong>Referral mode:</strong> External clinical documents (faxed or scanned PDF referrals) are
+                    processed into structured clinical summaries. Every extracted fact anchors to a specific location
+                    in the source document.
+                </p>
+                <p>
+                    <strong>LightScribe mode:</strong> Brief clinician-authored seed notes are expanded into
+                    conventional clinical structure. Every expanded sentence anchors to a span in the seed note.
+                    Content the clinician did not assert is suppressed. LightScribe is not a separate product—it is
+                    the same provenance architecture applied to a shorter, clinician-authored source.
                 </p>
 
                 <div class="highlight-box">
@@ -52,14 +64,22 @@
                 <h2>Features</h2>
                 <div class="features-grid">
                     <div class="feature-item">
-                        <h3>Actionable Summaries</h3>
-                        <p>Generate structured summaries that highlight critical clinical information, reducing
-                            cognitive load for clinicians.</p>
+                        <h3>Error Opacity, Solved</h3>
+                        <p>Most clinical AI produces fluent output that is wrong in ways the clinician must catch by
+                            re-reading. ChartPrepper sidesteps generation opacity by solving error opacity—errors
+                            become findable. Audit shifts from "re-read everything" to "spot-check anchors."</p>
                     </div>
                     <div class="feature-item">
-                        <h3>Intelligent Filtering</h3>
-                        <p>Automatically removes filler content and administrative noise to focus on what matters for
-                            patient care.</p>
+                        <h3>Structural, Not Prompt-Based</h3>
+                        <p>Provenance is a structural property of the system, not prompt discipline. The model cannot
+                            emit content that fails the provenance check. Prompt engineering has a ceiling
+                            (Asgari et al., 2025)—this architecture operates below it.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Audited Accuracy</h3>
+                        <p>~0.64% error rate across 785 statements from 50 referrals, with zero fabricated facts.
+                            Published benchmarks for prompt-engineered approaches report 1–3% hallucination
+                            and 3.45% omission rates at ceiling.</p>
                     </div>
                     <div class="feature-item">
                         <h3>EMR Ready</h3>
@@ -82,10 +102,75 @@
             </div>
 
             <div class="section">
+                <h2>Why Provenance Matters</h2>
+                <p>
+                    Most clinical AI systems—including ambient scribes and prompt-engineered summarizers—produce
+                    fluent, organized output that is wrong or incomplete in ways the clinician must catch by
+                    re-reading. The clinician cannot audit absence (what the model missed) or fabrication (what the
+                    model invented) without comparing output to source line by line. This is generation opacity.
+                </p>
+                <p>
+                    ChartPrepper does not attempt to solve generation opacity. It sidesteps it by solving error
+                    opacity. A clinician auditing ChartPrepper output asks one question: "Does this fact have a
+                    source anchor I can verify?" If yes, the fact is grounded. If no, the system would not have
+                    emitted it. This reduces audit from "re-read everything" to "spot-check anchors."
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>Contrast with Adjacent Approaches</h2>
+                <p>
+                    <strong>Ambient AI scribes</strong> capture audio and generate notes. A VHA evaluation of 11 AI
+                    scribe tools (Reddy et al., Annals of Internal Medicine, 2026) found AI-generated notes scored
+                    lower than human notes across all 10 PDQI-9 quality domains, with the largest deficits in
+                    <em>thorough</em> (−1.23), <em>organized</em> (−1.06), and <em>useful</em> (−1.03). The authors
+                    explicitly flag patient safety risk from key errors when adopted without rigorous oversight.
+                </p>
+                <p>
+                    Practicing physicians confirm the pattern: histories that are "too good," physical exam findings
+                    dropped despite being stated aloud, vitals omitted. One physician describes notes that are "very
+                    good in organizing the history, medications, summaries of investigations but not good at capturing
+                    the physical exam... despite talking out loud it often writes no physical findings reported."
+                    Another: "It certainly requires going back and making sure the notes are accurate. It's not yet
+                    'good enough' on its own."
+                </p>
+                <p>
+                    The failure mode is the same across tools: AI scribes solve generation (audio → note) but leave
+                    the clinician to audit unanchored prose. The time savings are real—but so is the re-read tax.
+                    ChartPrepper is the counter-example: where scribes produce fluent output the clinician must
+                    re-read, provenance makes audit structural. Every physician who has felt the "I have to re-read
+                    everything anyway" tax is primed to understand why provenance matters.
+                </p>
+                <p>
+                    LightScribe mode inverts the scribe contract entirely: the clinician's seed note is the source
+                    of truth, so the model cannot lose what the clinician chose to assert. The audit question becomes
+                    "did the expansion stay faithful to my seed?" rather than "did the model hear everything I said?"
+                </p>
+                <p>
+                    <strong>Prompt-engineered summarization</strong> has a ceiling. Asgari et al. (npj Digital Medicine,
+                    2025) reported a 1.47% hallucination rate and 3.45% omission rate across 18 prompt engineering
+                    experiments—and chain-of-thought prompting worsened errors. ChartPrepper's ~0.64% error rate
+                    with zero fabrications reflects an architectural difference, not better prompts.
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>Honest Limitations</h2>
+                <p>
+                    Provenance does not guarantee clinical correctness—a faithfully extracted fact from a poorly
+                    written referral is still grounded in a poorly written referral. It does not eliminate the need
+                    to read the output; it changes what reading the output costs. And the model is still a black
+                    box—the architecture works by constraining outputs, not by understanding reasoning.
+                </p>
+            </div>
+
+            <div class="section">
                 <h2>Status</h2>
                 <p>
-                    ChartPrepper is currently deployed in real clinical environments, demonstrating the practical value
-                    of verifiable AI in referral workflows. Available for pilot use with select institutions.
+                    ChartPrepper is deployed in real clinical environments. Internal QA (single specialty, not a
+                    clinical trial) demonstrates practical value in referral workflows. The architecture generalizes
+                    across input modes—referral summarization and note expansion share the same structural guarantee.
+                    Available for pilot use with select institutions.
                 </p>
             </div>
         </section>

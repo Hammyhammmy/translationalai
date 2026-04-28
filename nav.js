@@ -25,6 +25,7 @@
                     <ul class="nav-dropdown-menu">
                         <li><a href="https://lightscribe-service-260133948622.northamerica-northeast1.run.app/" target="_blank" rel="noopener noreferrer">LightScribe Login</a></li>
                         <li><a href="https://chartprepper-service-cokcye7pwq-nn.a.run.app/" target="_blank" rel="noopener noreferrer">ChartPrepper Login</a></li>
+                        <li><a href="https://chartprepper-service-postgres-cokcye7pwq-nn.a.run.app/login" target="_blank" rel="noopener noreferrer">ChartPrepper v2 (PG)</a></li>
                     </ul>
                 </li>
             </ul>

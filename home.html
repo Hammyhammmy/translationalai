@@ -50,22 +50,23 @@
             <div class="product">
                 <h2>LightScribe</h2>
                 <p>AI-powered medical scribe deployed in production. Generates consult notes, SOAP notes, and patient
-                    summaries using verifiable AI with source-anchored outputs.</p>
+                    summaries with per-fact source provenance—every claim traces back to the original transcript.</p>
                 <ul>
                     <li>Simple interface designed for clinical workflows</li>
-                    <li>Verifiable outputs with source attribution</li>
+                    <li>Source-anchored outputs with traceable provenance, not cosmetic footnotes</li>
                     <li>Deployed in real clinical environments</li>
                 </ul>
             </div>
 
             <div class="product">
                 <h2>ChartPrepper</h2>
-                <p>Referral summary tool deployed in production. Processes medical referrals to generate accurate,
-                    structured summaries that highlight critical clinical information.</p>
+                <p>Unified provenance architecture for referral summarization and note expansion. Every fact in the
+                    output traces to a span in the source, or it is suppressed. This is a structural property of the
+                    system, not prompt discipline—the model cannot emit content that fails the provenance check.</p>
                 <ul>
-                    <li>Structured summaries with key clinical details highlighted</li>
-                    <li>Reduces cognitive load by removing filler content</li>
-                    <li>Deployed in real clinical environments</li>
+                    <li>Two modes, one architecture: referral summarization and LightScribe note expansion share the same provenance contract</li>
+                    <li>Solves error opacity—errors become findable rather than requiring line-by-line re-reading</li>
+                    <li>~0.64% error rate across 785 statements from 50 referrals, with zero fabricated facts</li>
                 </ul>
             </div>
         </section>
@@ -74,9 +75,11 @@
             <h2>Approach</h2>
             <div class="benefit-list">
                 <div class="benefit">
-                    <h3>Verifiable AI</h3>
-                    <p>LightProof SDK ensures every output can be traced to source material, with unverifiable content
-                        rejected at generation time.</p>
+                    <h3>Verifiable Source Attribution</h3>
+                    <p>Most clinical AI produces fluent output that is wrong or incomplete in ways the clinician must
+                        catch by re-reading—generation opacity. Our architecture sidesteps this by solving error
+                        opacity: every fact traces to a source span, and unverifiable content is structurally
+                        suppressed. Audit shifts from "re-read everything" to "spot-check anchors."</p>
                 </div>
                 <div class="benefit">
                     <h3>Clinical Workflow Integration</h3>
@@ -103,6 +106,40 @@
                 currently in pilot with select clinics and hospitals. We welcome research partnerships and academic
                 collaborations.
             </p>
+        </section>
+
+        <section class="benefits">
+            <h2>The AI Scribe Problem</h2>
+            <div class="benefit-list">
+                <div class="benefit">
+                    <h3>The Evidence</h3>
+                    <p>A VHA evaluation of 11 AI scribe tools (Reddy et al., Annals of Internal Medicine, 2026) found
+                        AI-generated notes scored lower than human notes across all 10 PDQI-9 quality domains—with the
+                        largest deficits in <em>thorough</em>, <em>organized</em>, and <em>useful</em>. The authors
+                        explicitly flag patient safety risk from key errors when these tools are adopted without rigorous
+                        oversight.</p>
+                </div>
+                <div class="benefit">
+                    <h3>The Practitioner Experience</h3>
+                    <p>Physicians using commercial AI scribes report the same pattern: histories that are "too good,"
+                        physical exam findings dropped despite being stated aloud, vitals omitted, and notes that require
+                        complete re-reading to verify. The time savings are real—but so is the re-read tax. As one
+                        physician put it: "it certainly requires going back and making sure the notes are accurate."</p>
+                </div>
+                <div class="benefit">
+                    <h3>The Underlying Problem</h3>
+                    <p>AI scribes solve generation (audio → note) but leave the clinician to audit. The output is fluent
+                        and organized, but wrong or incomplete in ways that are invisible without line-by-line
+                        comparison to the encounter. This is error opacity—the same problem across modalities.</p>
+                </div>
+                <div class="benefit">
+                    <h3>The Counter-Example</h3>
+                    <p>ChartPrepper is not competing with scribes—it is the counter-example to them. Where scribes generate
+                        unanchored prose the clinician must re-read, ChartPrepper provides structural provenance that
+                        makes audit a spot-check rather than a re-read. Every physician who has felt the "I have to
+                        re-read everything anyway" tax is primed to understand why provenance matters.</p>
+                </div>
+            </div>
         </section>
 
         <section class="cta">
