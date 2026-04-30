@@ -12,100 +12,71 @@
     <script src="nav.js"></script>
     <div class="container">
         <section class="hero home-hero">
-            <!-- <div class="product-tag">Product &nbsp;&nbsp; Dec 17, 2025</div> -->
-            <h1>TranslationalAI</h1>
+            <h1>ChartPrepper</h1>
             <p class="hero-headline">
-                Clinician-led AI tools powered by <a href="extraction_demo.html"></a>LightProof SDK</a><br>
-                for verifiable, source-anchored AI outputs.
+                Every fact traces to its source, or it is suppressed.<br>
+                Unified provenance architecture for referral summarization, note generation, and note expansion.
             </p>
-            <!-- <p class="hero-author">The TranslationalAI Team</p> -->
 
             <div class="hero-card">
                 <div class="card-content">
                     <span class="card-logo">
-                        Introducing LightProof SDK in<br>
-                        TranslationalAI
+                        Clinical AI with structural<br>
+                        source provenance
                     </span>
-                    <a href="extraction_demo.html" class="hero-button">Learn about LightProof</a>
-                    <!-- Decorative dots controlled by CSS -->
+                    <a href="https://chart.translational.ca/login" target="_blank" rel="noopener noreferrer" class="hero-button">Launch ChartPrepper</a>
                 </div>
-            </div>
-        </section>
-
-        <section class="products">
-            <div class="product">
-                <h2>Partner in Practice</h2>
-                <p>Clinical decision support tool that uses AI-assisted pathway generation, with final tools that are
-                    rules-based and deterministic. Designed by physicians for physicians, with pathways vetted by
-                    subject matter experts.</p>
-                <ul>
-                    <li>Evidence-based clinical pathways for complex treatment decisions</li>
-                    <li>Deterministic outputs—identical inputs yield identical recommendations</li>
-                    <li>Available for educational use at <a href="https://publicprostateland.onrender.com/"
-                            target="_blank" rel="noopener noreferrer"
-                            style="color: var(--primary-light);">publicprostateland.onrender.com</a></li>
-                </ul>
-            </div>
-
-            <div class="product">
-                <h2>LightScribe</h2>
-                <p>AI-powered medical scribe deployed in production. Generates consult notes, SOAP notes, and patient
-                    summaries with per-fact source provenance—every claim traces back to the original transcript.</p>
-                <ul>
-                    <li>Simple interface designed for clinical workflows</li>
-                    <li>Source-anchored outputs with traceable provenance, not cosmetic footnotes</li>
-                    <li>Deployed in real clinical environments</li>
-                </ul>
-            </div>
-
-            <div class="product">
-                <h2>ChartPrepper</h2>
-                <p>Unified provenance architecture for referral summarization and note expansion. Every fact in the
-                    output traces to a span in the source, or it is suppressed. This is a structural property of the
-                    system, not prompt discipline—the model cannot emit content that fails the provenance check.</p>
-                <ul>
-                    <li>Two modes, one architecture: referral summarization and LightScribe note expansion share the same provenance contract</li>
-                    <li>Solves error opacity—errors become findable rather than requiring line-by-line re-reading</li>
-                    <li>~0.64% error rate across 785 statements from 50 referrals, with zero fabricated facts</li>
-                </ul>
             </div>
         </section>
 
         <section class="benefits">
-            <h2>Approach</h2>
+            <h2>Three Modes, One Architecture</h2>
             <div class="benefit-list">
                 <div class="benefit">
-                    <h3>Verifiable Source Attribution</h3>
-                    <p>Most clinical AI produces fluent output that is wrong or incomplete in ways the clinician must
-                        catch by re-reading—generation opacity. Our architecture sidesteps this by solving error
-                        opacity: every fact traces to a source span, and unverifiable content is structurally
-                        suppressed. Audit shifts from "re-read everything" to "spot-check anchors."</p>
+                    <h3>Referral Summarization</h3>
+                    <p>Faxed or scanned PDF referrals are processed into structured clinical summaries. Every extracted
+                        fact anchors to a specific location in the source document. Facts that cannot be anchored are
+                        suppressed.</p>
                 </div>
                 <div class="benefit">
-                    <h3>Clinical Workflow Integration</h3>
-                    <p>Tools designed to integrate seamlessly into existing clinical workflows without requiring EMR
-                        integration.</p>
+                    <h3>Note Generation</h3>
+                    <p>From any referral summary, clinicians add their own notes and generate a complete clinical note.
+                        Every statement carries inline source citations—<code>[1] [2]</code> markers that trace back to
+                        the exact input that produced it. Citations strip automatically on clipboard copy for clean EMR
+                        paste.</p>
                 </div>
                 <div class="benefit">
-                    <h3>Privacy and Security</h3>
-                    <p>End-to-end encryption, PHI filtering, and alignment with PIPEDA privacy principles. Self-assessed
-                        alignment with HIPAA security protocols (not certified).</p>
-                </div>
-                <div class="benefit">
-                    <h3>Canadian Data Sovereignty</h3>
-                    <p>All data stored and processed within Canada.</p>
-                </div>
-                <div class="benefit">
-                    <h3>Production Deployment</h3>
-                    <p>Tools deployed in real clinical environments, demonstrating practical value in healthcare
-                        workflows.</p>
+                    <h3>LightScribe Note Expansion</h3>
+                    <p>Brief clinician-authored seed notes are expanded into conventional clinical structure. Every
+                        expanded sentence anchors to a span in the seed note. Content the clinician did not assert is
+                        suppressed—the same provenance architecture applied to a shorter source.</p>
                 </div>
             </div>
-            <p class="footer-note">
-                We're committed to advancing healthcare through rigorous, evidence-based AI development. Our tools are
-                currently in pilot with select clinics and hospitals. We welcome research partnerships and academic
-                collaborations.
-            </p>
+        </section>
+
+        <section class="benefits">
+            <h2>Why Provenance</h2>
+            <div class="benefit-list">
+                <div class="benefit">
+                    <h3>Error Opacity, Solved</h3>
+                    <p>Most clinical AI produces fluent output that is wrong or incomplete in ways the clinician must
+                        catch by re-reading—generation opacity. ChartPrepper sidesteps this by solving error opacity:
+                        every fact traces to a source span, and unverifiable content is structurally suppressed. Audit
+                        shifts from "re-read everything" to "spot-check anchors."</p>
+                </div>
+                <div class="benefit">
+                    <h3>Structural, Not Prompt-Based</h3>
+                    <p>Provenance is a structural property of the system, not prompt discipline. The model cannot emit
+                        content that fails the provenance check. Prompt engineering has a ceiling (Asgari et al.,
+                        2025)—this architecture operates below it.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Audited Accuracy</h3>
+                    <p>~0.64% error rate across 785 statements from 50 referrals, with zero fabricated facts. Published
+                        benchmarks for prompt-engineered approaches report 1–3% hallucination and 3.45% omission rates
+                        at ceiling.</p>
+                </div>
+            </div>
         </section>
 
         <section class="benefits">
@@ -136,17 +107,39 @@
                     <h3>The Counter-Example</h3>
                     <p>ChartPrepper is not competing with scribes—it is the counter-example to them. Where scribes generate
                         unanchored prose the clinician must re-read, ChartPrepper provides structural provenance that
-                        makes audit a spot-check rather than a re-read. Every physician who has felt the "I have to
-                        re-read everything anyway" tax is primed to understand why provenance matters.</p>
+                        makes audit a spot-check rather than a re-read. Its LightScribe mode inverts the scribe contract
+                        entirely: the clinician's seed note is the source of truth, so the model cannot lose what the
+                        clinician chose to assert. Every physician who has felt the "I have to re-read everything anyway"
+                        tax is primed to understand why provenance matters.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="benefits">
+            <h2>Security and Infrastructure</h2>
+            <div class="benefit-list">
+                <div class="benefit">
+                    <h3>Privacy and Security</h3>
+                    <p>End-to-end encryption, PHI filtering, and alignment with PIPEDA privacy principles. Self-assessed
+                        alignment with HIPAA security protocols (not certified). No data used for AI training.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Canadian Data Sovereignty</h3>
+                    <p>All data stored and processed within Canada.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Production Deployment</h3>
+                    <p>Deployed in real clinical environments, not demo-only. Currently in pilot with select clinics.</p>
                 </div>
             </div>
         </section>
 
         <section class="cta">
             <h2>Pilot Access and Research Collaboration</h2>
-            <p>Our clinical tools are available for pilot use with select institutions. We're seeking research partners
-                to advance verifiable AI in healthcare.</p>
+            <p>ChartPrepper is available for pilot use with select clinics and hospitals. We're seeking research
+                partners to advance verifiable AI in healthcare.</p>
             <p>
+                <a href="https://chart.translational.ca/login" target="_blank" rel="noopener noreferrer">Launch ChartPrepper</a> |
                 <a href="mailto:yan+websitesignup@translational.ca">Request Pilot Access</a> |
                 <a href="mailto:yan+enterpriseAPI@translational.ca">Contact for Collaboration</a>
             </p>

@@ -13,21 +13,17 @@
         <div class="nav-container">
             <a href="home.html" class="nav-logo">TranslationalAI</a>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="home.html" ${currentPage === 'home.html' || currentPage === 'index.html' ? 'class="active"' : ''}>Home</a></li>
-                <li><a href="lightscribe.html" ${currentPage === 'lightscribe.html' ? 'class="active"' : ''}>LightScribe</a></li>
                 <li><a href="chartprepper.html" ${currentPage === 'chartprepper.html' ? 'class="active"' : ''}>ChartPrepper</a></li>
-                <li><a href="partner-in-practice.html" ${currentPage === 'partner-in-practice.html' ? 'class="active"' : ''}>Partner in Practice</a></li>
-                <li><a href="data-science.html" ${currentPage === 'data-science.html' ? 'class="active"' : ''}>Data Science</a></li>
-                <li><a href="team.html" ${currentPage === 'team.html' ? 'class="active"' : ''}>About</a></li>
-                <li class="nav-divider">|</li>
                 <li class="nav-dropdown">
-                    <a href="#" class="nav-dropdown-toggle">Logins<span class="dropdown-arrow">▼</span></a>
+                    <a href="#" class="nav-dropdown-toggle">More<span class="dropdown-arrow">▼</span></a>
                     <ul class="nav-dropdown-menu">
-                        <li><a href="https://lightscribe-service-260133948622.northamerica-northeast1.run.app/" target="_blank" rel="noopener noreferrer">LightScribe Login</a></li>
-                        <li><a href="https://chartprepper-service-cokcye7pwq-nn.a.run.app/" target="_blank" rel="noopener noreferrer">ChartPrepper Login</a></li>
-                        <li><a href="https://chartprepper-service-postgres-cokcye7pwq-nn.a.run.app/login" target="_blank" rel="noopener noreferrer">ChartPrepper v2 (PG)</a></li>
+                        <li><a href="partner-in-practice.html">Partner in Practice</a></li>
+                        <li><a href="data-science.html">Data Science</a></li>
                     </ul>
                 </li>
+                <li><a href="team.html" ${currentPage === 'team.html' ? 'class="active"' : ''}>About</a></li>
+                <li class="nav-divider">|</li>
+                <li><a href="https://chart.translational.ca/login" target="_blank" rel="noopener noreferrer" style="background:var(--primary); color:white; padding:6px 16px; border-radius:20px; font-weight:600; font-size:13px;">Launch ChartPrepper</a></li>
             </ul>
             <div class="nav-toggle" id="navToggle">
                 <span></span>
@@ -60,13 +56,13 @@
         });
     }
 
+
     // Dropdown functionality
     const dropdownToggle = document.querySelector('.nav-dropdown-toggle');
     const dropdownMenu = document.querySelector('.nav-dropdown-menu');
     const dropdown = document.querySelector('.nav-dropdown');
 
     if (dropdownToggle && dropdownMenu && dropdown) {
-        // Desktop: hover to show
         dropdown.addEventListener('mouseenter', () => {
             dropdownMenu.classList.add('show');
             dropdown.classList.add('show');
@@ -77,7 +73,6 @@
             dropdown.classList.remove('show');
         });
 
-        // Mobile: click to toggle
         dropdownToggle.addEventListener('click', (e) => {
             e.preventDefault();
             dropdownMenu.classList.toggle('show');
