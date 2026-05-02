@@ -18,6 +18,7 @@
                     <a href="#" class="nav-dropdown-toggle">More<span class="dropdown-arrow">▼</span></a>
                     <ul class="nav-dropdown-menu">
                         <li><a href="lightemr.html">LightEMR</a></li>
+                        <li><a href="https://fax-triage-dashboard-emrh4jz3xq-nn.a.run.app/auth/login" target="_blank" rel="noopener noreferrer">Fax Triage</a></li>
                         <li><a href="partner-in-practice.html">Partner in Practice</a></li>
                         <li><a href="data-science.html">Data Science</a></li>
                     </ul>
