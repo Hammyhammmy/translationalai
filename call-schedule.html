@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TranslationalAI - Call Schedule Maker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <script src="nav.js"></script>
+    <div class="container">
+        <section class="hero">
+
+            <h1>Call Schedule Maker</h1>
+            <p class="hero-headline">
+                Fair on-call schedules, rotation assignments, and OR block allocation.<br>
+                Optimized by algorithm, controlled by the team lead.
+            </p>
+            <p class="hero-cta" style="margin-top:1.5rem;">
+                <a href="https://schedule-generator-465306031489.northamerica-northeast1.run.app" target="_blank" rel="noopener noreferrer" style="background:var(--primary); color:white; padding:10px 24px; border-radius:24px; font-weight:600; text-decoration:none; font-size:15px;">Launch Call Schedule Maker</a>
+            </p>
+
+        </section>
+
+        <section class="content">
+            <div class="section">
+                <h2>The Problem</h2>
+                <p>
+                    On-call scheduling is a constrained optimization problem disguised as a spreadsheet task.
+                    Vacation dates, long weekends, minimum coverage, seniority, fairness across months of
+                    shifts—the number of competing constraints exceeds what a person can hold in their head.
+                    The result is hours of manual work that still produces schedules someone feels are unfair.
+                </p>
+                <p>
+                    Call Schedule Maker takes the constraints as inputs and produces schedules that are
+                    balanced by construction. The team lead stays in control—every assignment can be reviewed,
+                    overridden, and locked—but the optimization is handled by the system.
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>Four Scheduling Modes</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3>Weekly Call Schedule</h3>
+                        <p>Fair weekly on-call rotation for teams of 2–15 physicians. Input vacation dates, long
+                            weekends, and forced assignments. The system balances shift counts, weekend distribution,
+                            and spacing between calls.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Daily Schedule</h3>
+                        <p>Day-by-day rotation over weeks to months. Generates multiple pattern variants and scores
+                            each by spacing fairness. Choose the pattern that fits your team's preferences.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Academic Rotation Scheduler</h3>
+                        <p>Assign residents to clinical rotations (ICU, clinic, elective, teaching) with per-resident
+                            requirements and max-consecutive limits. The system runs multiple attempts and returns the
+                            best solution.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>OR Block Allocator</h3>
+                        <p>Assign operating room time across surgeons with anchor slots, day preferences, seniority
+                            rules, research commitments, and equipment constraints. Multiple priority policies from
+                            equal distribution to subspecialty-driven allocation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Built-In Fairness</h2>
+                <p>
+                    Fairness isn't a report you run after the schedule is made—it's a constraint the algorithm
+                    optimizes for during generation. The system tracks shift debt (who's worked more, who's owed
+                    rest), weekend and holiday distribution, and spacing between shifts. A fairness dashboard
+                    shows the numbers so the team lead can defend the schedule with data, not judgment calls.
+                </p>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3>Leave Adjudication</h3>
+                        <p>Before approving time off, test whether coverage minimums hold on every affected day.
+                            The system returns approved or denied with per-day coverage details—no guesswork.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Constraint Editing</h3>
+                        <p>Vacation dates, forced assignments, and long weekends are entered in a simple grid editor.
+                            Paste from email, edit inline, save versions. Prior schedules are versioned so you can
+                            compare and reuse.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Status</h2>
+                <p>
+                    Call Schedule Maker is available for use by healthcare teams. Works from any browser, no
+                    installation required.
+                </p>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h2>Try It</h2>
+            <p>Call Schedule Maker is free to use for healthcare teams managing on-call rotations, resident
+                assignments, or OR block allocation.</p>
+            <p>
+                <a href="https://schedule-generator-465306031489.northamerica-northeast1.run.app" target="_blank" rel="noopener noreferrer">Launch Call Schedule Maker</a> |
+                <a href="mailto:yan+websitesignup@translational.ca">Contact Us</a>
+            </p>
+        </section>
+    </div>
+
+    <script>
+        (function () {
+            function forceFullWidth() {
+                const container = document.querySelector('.container');
+                if (!container) return;
+
+                let parent = container.parentElement;
+                while (parent && parent !== document.body) {
+                    const computedStyle = window.getComputedStyle(parent);
+                    const maxWidth = computedStyle.maxWidth;
+
+                    if (maxWidth && maxWidth !== 'none' && maxWidth !== '100%') {
+                        parent.style.setProperty('max-width', '100%', 'important');
+                        parent.style.setProperty('width', '100%', 'important');
+                    }
+
+                    parent = parent.parentElement;
+                }
+
+                container.style.setProperty('max-width', '100%', 'important');
+                container.style.setProperty('width', '100%', 'important');
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', forceFullWidth);
+            } else {
+                forceFullWidth();
+            }
+
+            setTimeout(forceFullWidth, 100);
+            setTimeout(forceFullWidth, 500);
+        })();
+    </script>
+</body>
+
+</html>

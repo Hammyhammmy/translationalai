@@ -518,7 +518,7 @@ a:hover {
 
 /* Hide original paragraphs if they still exist (we replaced them in HTML but just in case) */
 .hero .intro,
-.hero p:not(.hero-headline):not(.hero-author) {
+.hero p:not(.hero-headline):not(.hero-author):not(.hero-cta) {
     display: none;
 }
 
