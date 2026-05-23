@@ -22,6 +22,9 @@ fastapi_app.bak/
 *.swo
 *~
 
+# Secrets
+cloudflare_tokens.json
+
 # OS
 .DS_Store
 Thumbs.db

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investors — TranslationalAI</title>
+    <meta name="description" content="What we're building, what we've shipped, and what kind of investor we're looking for.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script src="nav.js"></script>
+
+    <section class="subhero">
+        <div class="wrap">
+            <div class="eyebrow">For investors</div>
+            <h1>A short read on <em>what we're doing</em> and why now.</h1>
+            <p class="lede">
+                We're a small Canadian company building clinical AI that doctors can actually
+                check. ChartPrepper is in real clinics. We're starting to take early investor
+                meetings.
+            </p>
+            <div class="subhero-meta">
+                <span>Stage <strong>Early — talking to angels</strong></span>
+                <span>Where <strong>Canada</strong></span>
+                <span>Who's building <strong>A practicing physician</strong></span>
+                <span>Where it runs <strong>Real clinics, every day</strong></span>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="wrap">
+            <div class="sec-head">
+                <div><div class="eyebrow">What we're doing</div><h2 class="h-2">Make clinical AI checkable in seconds.</h2></div>
+                <div>
+                    <p class="lede" style="margin-bottom: 18px;">
+                        Most clinical AI today writes a fluent note and asks the doctor to re-read it
+                        to know what's missing or wrong. That's the part everyone complains about.
+                        It's also the part nobody has fixed by adding better prompts.
+                    </p>
+                    <p class="lede">
+                        Our approach is to change what the model is allowed to write. If a sentence
+                        can't be pointed back to something in the source — the referral, the chart,
+                        the doctor's own seed note — the system doesn't produce it. Checking the
+                        output becomes a glance at anchors instead of a full re-read.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tight" style="background: var(--paper-warm); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+        <div class="wrap">
+            <div class="sec-head" style="margin-bottom: 32px;">
+                <div><div class="eyebrow">Where we are</div><h2 class="h-2">Shipped, in use, audited.</h2></div>
+                <div><p class="lede">All numbers below are from real clinical output, not a benchmark.</p></div>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric">
+                    <div class="metric-num">3,000<span class="unit">+</span></div>
+                    <div class="metric-label">Real referrals<br>processed to date</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-num">0.64<span class="unit">%</span></div>
+                    <div class="metric-label">Forensic audit<br>error rate</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-num">0</div>
+                    <div class="metric-label">Fabricated facts<br>across the audit</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-num">100<span class="unit">%</span></div>
+                    <div class="metric-label">Canadian data residency<br>PIPEDA-aligned</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="wrap">
+            <div class="sec-head">
+                <div><div class="eyebrow">Who's building it</div><h2 class="h-2">A clinician-led team.</h2></div>
+                <div>
+                    <p class="lede" style="margin-bottom: 18px;">
+                        Founded and led by Hanmu Yan, MD FRCSC — fellowship-trained Canadian
+                        urologist with a background in applied AI. ChartPrepper is used daily in
+                        his own clinical practice.
+                    </p>
+                    <p class="lede">
+                        Alongside ChartPrepper, we operate LightEMR — a clinic operating layer
+                        running in two pilot clinics with AI-triaged intake, follow-up tracking
+                        (90% precision), and pre-visit clinical intelligence — plus Partner in
+                        Practice (deterministic decision pathways, live for ARPI selection in
+                        advanced prostate cancer), a kiosk check-in product, a call-schedule
+                        constraint solver, and research analytics work. Same platform discipline
+                        throughout.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tight" style="background: var(--paper-warm); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+        <div class="wrap">
+            <div class="sec-head">
+                <div><div class="eyebrow">What we'd do with funding</div><h2 class="h-2">Three things, in order.</h2></div>
+                <div><p class="lede">We're not raising on a big roadmap. We want to take the next concrete steps.</p></div>
+            </div>
+            <div class="card-grid cols-3">
+                <div class="card">
+                    <div class="card-num">First</div>
+                    <h3 class="h-3">More pilot clinics</h3>
+                    <p>Get ChartPrepper into specialty practices outside urology, so we can show
+                       the same accuracy holds when the source documents change.</p>
+                </div>
+                <div class="card">
+                    <div class="card-num">Next</div>
+                    <h3 class="h-3">An API for other builders</h3>
+                    <p>Open the anchoring engine to EMR vendors and hospital innovation teams who
+                       want to wrap their own UI around it.</p>
+                </div>
+                <div class="card accent">
+                    <div class="card-num">After that</div>
+                    <h3 class="h-3">Audit tools for hospitals</h3>
+                    <p>Reporting that compliance and quality teams can use to check any clinical
+                       AI running in their system — ours or someone else's.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="wrap">
+            <div class="sec-head">
+                <div><div class="eyebrow">What we don't claim</div><h2 class="h-2">Things we want to be honest about.</h2></div>
+                <div>
+                    <p class="lede" style="margin-bottom: 18px;">
+                        Anchoring a fact to its source doesn't make the source correct. A faithful
+                        summary of a vague referral is still a summary of a vague referral. The tool
+                        reduces what reading costs; it doesn't read for you.
+                    </p>
+                    <p class="lede">
+                        Our audit is single-specialty internal QA — not a published clinical trial.
+                        We aren't pursuing HIPAA certification because we're built for Canada;
+                        PIPEDA and provincial privacy laws are what we align to. We'll keep saying
+                        all of this in plain language as long as it's true.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="investor" style="background: var(--ink); color: var(--paper);">
+        <div class="investor-inner">
+            <div class="eyebrow" style="color: #6fdcc4;">Get in touch</div>
+            <h2 style="color: var(--paper);">If this sounds like the kind of thing <em style="color: #6fdcc4;">you'd want to back</em> — write to us.</h2>
+            <p style="color: rgba(255,255,255,0.78);">
+                We'd rather have a short, honest first conversation than a long pitch deck. Tell
+                us what you'd want to see to get to a yes, and we'll show you what we have.
+            </p>
+            <div class="investor-actions">
+                <a href="mailto:yan+investors@translational.ca" class="btn btn-primary" style="background: #6fdcc4; color: var(--ink);">yan+investors@translational.ca</a>
+                <a href="team.html" class="btn btn-ghost" style="border-color: rgba(255,255,255,0.3); color: var(--paper);">About the founder</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

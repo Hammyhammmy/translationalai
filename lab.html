@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Lab — TranslationalAI</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script src="nav.js"></script>
+
+    <section class="subhero">
+        <div class="wrap">
+            <div class="eyebrow">The Lab</div>
+            <h1>What else <em>we've built.</em></h1>
+            <p class="lede">
+                ChartPrepper is the front door. Behind it is a small set of clinical tools and
+                a full clinic operating layer — all in real use today.
+            </p>
+        </div>
+    </section>
+
+    <section>
+        <div class="wrap">
+
+            <!-- LightEMR / The Platform -->
+            <div class="product-row">
+                <div>
+                    <div class="product-name">LightEMR</div>
+                    <div class="product-status">In production · 2 pilot clinics</div>
+                    <div class="tag-row">
+                        <span class="tag">Intake</span>
+                        <span class="tag">Follow-up</span>
+                        <span class="tag">Clinical intelligence</span>
+                        <span class="tag">Kiosk</span>
+                        <span class="tag">Forms</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="product-desc">
+                        A clinic operating layer that sits in the gaps the EMR leaves —
+                        intake, follow-up tracking, pre-visit summaries, check-in, forms.
+                    </div>
+                    <div class="product-detail">
+                        Fax and email referrals are read by AI, triaged into a single prioritized
+                        queue, drafted into a reply to the referring doctor, and turned into an SMS
+                        booking link the patient taps to book themselves. Follow-up intent is
+                        extracted from signed notes, tracked, and flagged if it isn't done in time
+                        (90% precision against a 65-scenario test set). A day-sheet runs in the
+                        background — PSA trends, overdue scans, drug interactions, pending labs —
+                        and lands a one-line summary on the chart before the patient walks in.
+                        Multi-tenant; 2,680 automated tests passing; infrastructure cost under
+                        $100/month.
+                    </div>
+                    <a href="https://emr.translational.ca" target="_blank" rel="noopener" class="btn-link product-link">Launch LightEMR</a>
+                </div>
+            </div>
+
+            <!-- Fax Triage -->
+            <div class="product-row">
+                <div>
+                    <div class="product-name">Fax Triage</div>
+                    <div class="product-status">In production</div>
+                    <div class="tag-row">
+                        <span class="tag">Intake</span>
+                        <span class="tag">AI triage</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="product-desc">
+                        AI-powered fax intake that reads, classifies, and triages incoming referrals
+                        into a prioritized queue.
+                    </div>
+                    <a href="https://fax.translational.ca" target="_blank" rel="noopener" class="btn-link product-link">Launch Fax Triage</a>
+                </div>
+            </div>
+
+            <!-- Partner in Practice -->
+            <div class="product-row">
+                <div>
+                    <div class="product-name">Partner in Practice</div>
+                    <div class="product-status">Live · Educational use</div>
+                    <div class="tag-row">
+                        <span class="tag">Decision support</span>
+                        <span class="tag">Deterministic</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="product-desc">
+                        AI-assisted authoring of clinical pathways that compile to fully
+                        deterministic, rules-based decision tools. Identical inputs always yield
+                        identical recommendations.
+                    </div>
+                    <div class="product-detail">
+                        The flagship live application focuses on ARPI selection in advanced
+                        prostate cancer — novel agents, overlapping contraindications, and
+                        preference-sensitive trade-offs that real urologists navigate every clinic.
+                        Modules in development for other urologic oncology domains (ADT
+                        side-effects, recurrent UTI management) and beyond urology (antihypertensive
+                        selection in essential hypertension).
+                    </div>
+                    <a href="https://publicprostateland.onrender.com/" target="_blank" rel="noopener" class="btn-link product-link">Launch Partner in Practice</a>
+                </div>
+            </div>
+
+            <!-- Kiosk -->
+            <div class="product-row">
+                <div>
+                    <div class="product-name">Kiosk</div>
+                    <div class="product-status">In production</div>
+                    <div class="tag-row">
+                        <span class="tag">Check-in</span>
+                        <span class="tag">EMR-agnostic</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="product-desc">
+                        Waiting-room check-in tablet that works alongside any EMR. Upload the
+                        day's schedule as a PDF, patients tap their name, doctors see a live board.
+                    </div>
+                    <div class="product-detail">
+                        Five-minute setup, day-purged patient data, free at the entry tier — versus
+                        the $57/device/month incumbent. Designed as a standalone door into the
+                        rest of the platform: clinics that adopt the kiosk often expand into
+                        intake and forms later.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call Schedule -->
+            <div class="product-row">
+                <div>
+                    <div class="product-name">Call Schedule</div>
+                    <div class="product-status">In production · Live group use</div>
+                    <div class="tag-row">
+                        <span class="tag">Scheduling</span>
+                        <span class="tag">Constraint solver</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="product-desc">
+                        A constraint solver for clinical on-call rotations that respects the rules
+                        a real group actually cares about.
+                    </div>
+                    <div class="product-detail">
+                        Post-call days off, subspecialty coverage, holiday fairness, personal
+                        preferences, paired with hard caps on consecutive calls — not a generic
+                        calendar template. Built for and used by a working clinical group.
+                    </div>
+                    <a href="https://schedule-generator-465306031489.northamerica-northeast1.run.app" target="_blank" rel="noopener" class="btn-link product-link">Launch Call Schedule</a>
+                </div>
+            </div>
+
+            <!-- Data Science -->
+            <div class="product-row">
+                <div>
+                    <div class="product-name">Data Science</div>
+                    <div class="product-status">Collaboration</div>
+                    <div class="tag-row">
+                        <span class="tag">Research</span>
+                        <span class="tag">Analytics</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="product-desc">
+                        Custom analytics work with clinical research collaborators.
+                    </div>
+                    <div class="product-detail">
+                        Project-based engagements with research groups in urologic oncology and
+                        beyond — outcomes analysis, registry work, and the kind of source-anchored
+                        data discipline that informed how ChartPrepper handles provenance.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="investor">
+        <div class="investor-inner">
+            <div class="eyebrow">Back to the main product</div>
+            <h2>ChartPrepper is the front door.</h2>
+            <p>If you want the audited numbers, the clinics in daily use, and what we're
+               asking investors to back — start there.</p>
+            <div class="investor-actions">
+                <a href="chartprepper.html" class="btn btn-primary">ChartPrepper →</a>
+                <a href="investors.html" class="btn btn-ghost">For investors</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,247 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TranslationalAI - ChartPrepper</title>
+    <title>ChartPrepper — TranslationalAI</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <script src="nav.js"></script>
-    <div class="container">
-        <section class="hero">
 
-            <h1>ChartPrepper</h1>
-            <p class="hero-headline">
-                Unified provenance architecture for referral summarization, note generation, and note expansion.<br>
-                Every fact traces to a span in the source, or it is suppressed.
+    <section class="subhero">
+        <div class="wrap">
+            <div class="eyebrow">Our product · In real clinics</div>
+            <h1>ChartPrepper — <em>every sentence</em> has a source.</h1>
+            <p class="lede">
+                One product, three jobs: turning paper referrals into structured summaries,
+                helping doctors write notes with citations to the source, and expanding short
+                seed notes into a full clinical note. Each one carries the same rule: if a fact
+                can't be tied back to a source, it doesn't make it into the output.
             </p>
-            <p class="hero-cta" style="margin-top:1.5rem;">
-                <a href="https://chart.translational.ca/login" target="_blank" rel="noopener noreferrer" style="background:var(--primary); color:white; padding:10px 24px; border-radius:24px; font-weight:600; text-decoration:none; font-size:15px;">Launch ChartPrepper</a>
-            </p>
-        </section>
+            <div class="subhero-meta">
+                <span>Processed <strong>3,000+ real cases</strong></span>
+                <span>Used in <strong>Daily clinical practice</strong></span>
+                <span>Forensic audit <strong>~0.64% errors · 0 fabrications</strong></span>
+            </div>
+            <div class="hero-actions" style="margin-top: 28px;">
+                <a href="https://chart.translational.ca/login" target="_blank" rel="noopener" class="btn btn-primary">Launch ChartPrepper →</a>
+                <a href="mailto:yan+websitesignup@translational.ca" class="btn btn-ghost">Request pilot access</a>
+            </div>
+        </div>
+    </section>
 
-        <section class="content">
-            <div class="section">
-                <h2>One Architecture, Two Modes</h2>
-                <p>
-                    ChartPrepper applies a single architectural contract across all input modes: every fact in the
-                    output traces to a span in the source, or it is suppressed. This is not prompt discipline—it is
-                    a structural property of the system. The model cannot emit content that fails the provenance check,
-                    regardless of how the prompt is written or how the model behaves on any given input.
-                </p>
-                <p>
-                    <strong>Referral mode:</strong> External clinical documents (faxed or scanned PDF referrals) are
-                    processed into structured clinical summaries. Every extracted fact anchors to a specific location
-                    in the source document.
-                </p>
-                <p>
-                    <strong>Note generation:</strong> From any referral summary, clinicians add their own notes
-                    (physical exam, impression, plan) and generate a complete clinical note. Every generated statement
-                    carries inline source citations — <code>[1] [2]</code> markers that trace back to the exact input
-                    that produced it, whether from the summary or the clinician's additions. A provenance footer maps
-                    each citation to its verbatim source quote. On clipboard copy, citations are automatically stripped
-                    for clean EMR paste.
-                </p>
-                <p>
-                    <strong>LightScribe mode:</strong> A sub-component of ChartPrepper that expands brief
-                    clinician-authored seed notes into conventional clinical structure. Every expanded sentence anchors
-                    to a span in the seed note. Content the clinician did not assert is suppressed — the same
-                    provenance architecture applied to a shorter, clinician-authored source.
-                </p>
-
-                <div class="highlight-box">
-                    <h3>Privacy-First Clinical Design</h3>
-                    <div class="screenshot-inline right">
-                        <img src="assets/chartprepper1.jpg" alt="ChartPrepper Redaction View"
-                            class="screenshot-thumb-large">
-                        <div class="screenshot-caption">Secure dashboard with automated PHI redaction for referral
-                            documents.</div>
-                    </div>
-                    <p>
-                        Designed for high-stakes clinical environments, ChartPrepper automatically identifies and
-                        filters PHI while maintaining the integrity of clinical data. All processing occurs within
-                        secure, Canadian-hosted infrastructure aligned with PIPEDA principles.
+    <section>
+        <div class="wrap">
+            <div class="sec-head">
+                <div><div class="eyebrow">The product</div><h2 class="h-1">One rule, three jobs.</h2></div>
+                <div>
+                    <p class="lede">
+                        We didn't want to ship one tool for referrals, a second for note writing,
+                        and a third for dictation. They're all the same kind of problem: turn
+                        something a doctor has into something a doctor can use, without losing or
+                        inventing anything along the way. ChartPrepper does each by checking the
+                        same rule before any sentence reaches the page.
                     </p>
                 </div>
             </div>
 
-            <div class="section">
-                <h2>Features</h2>
-                <div class="features-grid">
-                    <div class="feature-item">
-                        <h3>Error Opacity, Solved</h3>
-                        <p>Most clinical AI produces fluent output that is wrong in ways the clinician must catch by
-                            re-reading. ChartPrepper sidesteps generation opacity by solving error opacity—errors
-                            become findable. Audit shifts from "re-read everything" to "spot-check anchors."</p>
-                    </div>
-                    <div class="feature-item">
-                        <h3>Structural, Not Prompt-Based</h3>
-                        <p>Provenance is a structural property of the system, not prompt discipline. The model cannot
-                            emit content that fails the provenance check. Prompt engineering has a ceiling
-                            (Asgari et al., 2025)—this architecture operates below it.</p>
-                    </div>
-                    <div class="feature-item">
-                        <h3>Audited Accuracy</h3>
-                        <p>~0.64% error rate across 785 statements from 50 referrals, with zero fabricated facts.
-                            Published benchmarks for prompt-engineered approaches report 1–3% hallucination
-                            and 3.45% omission rates at ceiling.</p>
-                    </div>
-                    <div class="feature-item">
-                        <h3>Inline Note Provenance</h3>
-                        <p>Generated clinical notes carry per-statement source citations. Each <code>[n]</code> marker
-                            traces to the exact input — summary or clinician additions — that produced it. Verbatim
-                            fields (PMH, medications, allergies) are carried over unchanged and labeled <code>[chart]</code>.
-                            Citations strip automatically on clipboard copy for clean EMR paste.</p>
-                    </div>
-                    <div class="feature-item">
-                        <h3>EMR Ready</h3>
-                        <p>Optimized for seamless transfer of structured clinical data directly into your existing
-                            practice management systems.</p>
-                    </div>
+            <div class="card-grid cols-3">
+                <div class="card">
+                    <div class="card-num">Mode 01</div>
+                    <h3 class="h-3">Referral summarization</h3>
+                    <p>Faxed or scanned PDF referrals turned into structured clinical summaries.
+                       Every extracted fact points back to where in the source it came from.
+                       Anything the system can't anchor isn't included.</p>
+                </div>
+                <div class="card">
+                    <div class="card-num">Mode 02</div>
+                    <h3 class="h-3">Note generation</h3>
+                    <p>The doctor adds their own notes and gets a finished clinical note. Each
+                       sentence shows a small <code>[1]</code> pointing at its source — the
+                       summary, the doctor's additions, or the chart itself. The markers strip
+                       off when you paste into the EMR.</p>
+                </div>
+                <div class="card">
+                    <div class="card-num">Mode 03</div>
+                    <h3 class="h-3">Seed-note expansion (LightScribe)</h3>
+                    <p>The doctor types a brief seed; the system expands it into the full
+                       structure of a clinical note. Anything not in the seed doesn't make it
+                       into the expansion.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--paper-warm); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+        <div class="wrap">
+            <div class="sec-head">
+                <div>
+                    <div class="eyebrow">Why this matters</div>
+                    <h2 class="h-1">The re-read problem.</h2>
+                </div>
+                <div>
+                    <p class="lede" style="margin-bottom: 18px;">
+                        Most clinical AI today produces a fluent note that's sometimes missing
+                        things, sometimes inventing things, in a way the doctor can only catch by
+                        comparing the note to the source. That's the re-read problem.
+                    </p>
+                    <p class="lede">
+                        ChartPrepper doesn't try to make the model smarter. It changes what the
+                        model is allowed to write. A doctor checking the output asks one question:
+                        <em>"Does this sentence have an anchor I can verify?"</em> If yes, it's
+                        grounded. If no, the system wouldn't have written it.
+                    </p>
                 </div>
             </div>
 
-            <div class="section">
-                <h2>Security and Privacy</h2>
-                <ul>
-                    <li>End-to-end encryption for all data in transit and at rest</li>
-                    <li>Aligned with PIPEDA privacy principles and provincial privacy requirements</li>
-                    <li>Self-assessed alignment with HIPAA security protocols (not certified)</li>
-                    <li>All data stored and processed securely in Canada</li>
-                    <li>No data used for AI training or shared with third parties</li>
-                    <li>Privacy by Design approach—automatically filters PHI while maintaining accuracy</li>
-                </ul>
+            <div class="evidence">
+                <div>
+                    <div class="eyebrow">From real clinical use</div>
+                    <h2>3,000+ real cases processed.</h2>
+                    <p>
+                        ChartPrepper has processed over 3,000 referrals in daily clinical practice.
+                        A forensic audit of a 50-referral subset (785 individual statements) showed
+                        a ~0.64% error rate with zero fabricated facts. For reference, published
+                        benchmarks for prompt-engineered approaches sit around 1–3% hallucination
+                        and 3.45% omission — and chain-of-thought prompting actually made things
+                        worse (Asgari et al., <em>npj Digital Medicine</em>, 2025).
+                    </p>
+                    <div class="evidence-cite">Internal QA · Single specialty · Not a clinical trial</div>
+                </div>
+                <div class="evidence-stat">
+                    <div class="evidence-stat-num">3,000<span style="font-size: 0.5em; opacity: 0.6;">+</span></div>
+                    <div class="evidence-stat-label">Real referrals processed<br>in daily clinical use</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="wrap">
+            <div class="sec-head">
+                <div><div class="eyebrow">Compared to the rest</div><h2 class="h-1">Where today's tools <em>get stuck.</em></h2></div>
+                <div>
+                    <p class="lede">
+                        A 2026 VA evaluation of eleven AI scribe tools (Reddy et al.,
+                        <em>Annals of Internal Medicine</em>) found AI-generated notes scored
+                        lower than human notes across all ten PDQI-9 quality measures — the worst
+                        gaps in <em>thorough</em>, <em>organized</em>, and <em>useful</em>. The
+                        authors flagged real safety risk when these tools are used without
+                        careful oversight.
+                    </p>
+                </div>
             </div>
 
-            <div class="section">
-                <h2>Why Provenance Matters</h2>
-                <p>
-                    Most clinical AI systems—including ambient scribes and prompt-engineered summarizers—produce
-                    fluent, organized output that is wrong or incomplete in ways the clinician must catch by
-                    re-reading. The clinician cannot audit absence (what the model missed) or fabrication (what the
-                    model invented) without comparing output to source line by line. This is generation opacity.
-                </p>
-                <p>
-                    ChartPrepper does not attempt to solve generation opacity. It sidesteps it by solving error
-                    opacity. A clinician auditing ChartPrepper output asks one question: "Does this fact have a
-                    source anchor I can verify?" If yes, the fact is grounded. If no, the system would not have
-                    emitted it. This reduces audit from "re-read everything" to "spot-check anchors."
-                </p>
+            <div class="compare">
+                <div class="compare-col bad">
+                    <span class="compare-tag">Ambient scribes</span>
+                    <h3 class="h-3">Audio → unanchored note</h3>
+                    <p>Histories that read "too good," physical exam findings dropped despite
+                       being stated aloud, vitals missing. Time savings are real — but
+                       so is the re-reading.</p>
+                </div>
+                <div class="compare-col bad">
+                    <span class="compare-tag">Prompt-engineered tools</span>
+                    <h3 class="h-3">Better wording, same ceiling</h3>
+                    <p>About 1.5% hallucination and 3.5% omission across 18 prompt-engineering
+                       experiments in the recent literature. Chain-of-thought made it worse,
+                       not better.</p>
+                </div>
+                <div class="compare-col good">
+                    <span class="compare-tag">ChartPrepper</span>
+                    <h3 class="h-3">Anchor first, then write</h3>
+                    <p>The system can't produce a sentence it can't anchor. Checking output is
+                       a glance at the anchors instead of a full re-read of the prose.</p>
+                </div>
+                <div class="compare-col good">
+                    <span class="compare-tag">Seed-note mode</span>
+                    <h3 class="h-3">The doctor's words are the source</h3>
+                    <p>The doctor's seed is the source of truth. The system can't drop or invent
+                       what the doctor chose to say.</p>
+                </div>
             </div>
+        </div>
+    </section>
 
-            <div class="section">
-                <h2>Contrast with Adjacent Approaches</h2>
-                <p>
-                    <strong>Ambient AI scribes</strong> capture audio and generate notes. A VHA evaluation of 11 AI
-                    scribe tools (Reddy et al., Annals of Internal Medicine, 2026) found AI-generated notes scored
-                    lower than human notes across all 10 PDQI-9 quality domains, with the largest deficits in
-                    <em>thorough</em> (−1.23), <em>organized</em> (−1.06), and <em>useful</em> (−1.03). The authors
-                    explicitly flag patient safety risk from key errors when adopted without rigorous oversight.
-                </p>
-                <p>
-                    Practicing physicians confirm the pattern: histories that are "too good," physical exam findings
-                    dropped despite being stated aloud, vitals omitted. One physician describes notes that are "very
-                    good in organizing the history, medications, summaries of investigations but not good at capturing
-                    the physical exam... despite talking out loud it often writes no physical findings reported."
-                    Another: "It certainly requires going back and making sure the notes are accurate. It's not yet
-                    'good enough' on its own."
-                </p>
-                <p>
-                    The failure mode is the same across tools: AI scribes solve generation (audio → note) but leave
-                    the clinician to audit unanchored prose. The time savings are real—but so is the re-read tax.
-                    ChartPrepper is the counter-example: where scribes produce fluent output the clinician must
-                    re-read, provenance makes audit structural. Every physician who has felt the "I have to re-read
-                    everything anyway" tax is primed to understand why provenance matters.
-                </p>
-                <p>
-                    ChartPrepper's LightScribe mode inverts the scribe contract entirely: the clinician's seed note
-                    is the source of truth, so the model cannot lose what the clinician chose to assert. The audit
-                    question becomes "did the expansion stay faithful to my seed?" rather than "did the model hear
-                    everything I said?"
-                </p>
-                <p>
-                    <strong>Prompt-engineered summarization</strong> has a ceiling. Asgari et al. (npj Digital Medicine,
-                    2025) reported a 1.47% hallucination rate and 3.45% omission rate across 18 prompt engineering
-                    experiments—and chain-of-thought prompting worsened errors. ChartPrepper's ~0.64% error rate
-                    with zero fabrications reflects an architectural difference, not better prompts.
-                </p>
+    <section style="background: var(--paper-warm); border-top: 1px solid var(--line);">
+        <div class="wrap">
+            <div class="sec-head">
+                <div><div class="eyebrow">Privacy &amp; data</div><h2 class="h-1">Canadian, by design.</h2></div>
+                <div><p class="lede">Built for Canadian clinics, with the privacy framework that actually applies here.</p></div>
             </div>
-
-            <div class="section">
-                <h2>Honest Limitations</h2>
-                <p>
-                    Provenance does not guarantee clinical correctness—a faithfully extracted fact from a poorly
-                    written referral is still grounded in a poorly written referral. It does not eliminate the need
-                    to read the output; it changes what reading the output costs. And the model is still a black
-                    box—the architecture works by constraining outputs, not by understanding reasoning.
-                </p>
+            <div class="card-grid cols-3">
+                <div class="card">
+                    <h3 class="h-3">PIPEDA-aligned</h3>
+                    <p>End-to-end encryption in transit and at rest, aligned with PIPEDA and
+                       provincial privacy requirements.</p>
+                </div>
+                <div class="card">
+                    <h3 class="h-3">All data stays in Canada</h3>
+                    <p>Stored and processed within Canadian infrastructure. No data leaves the
+                       country.</p>
+                </div>
+                <div class="card">
+                    <h3 class="h-3">Never used for training</h3>
+                    <p>Your clinic's data is never used to train AI models, and it isn't shared
+                       with third parties.</p>
+                </div>
             </div>
+        </div>
+    </section>
 
-            <div class="section">
-                <h2>Status</h2>
-                <p>
-                    ChartPrepper is deployed in real clinical environments. Internal QA (single specialty, not a
-                    clinical trial) demonstrates practical value in referral workflows. The architecture generalizes
-                    across input modes—referral summarization and note expansion share the same structural guarantee.
-                    Available for pilot use with select institutions.
-                </p>
+    <section>
+        <div class="wrap">
+            <div class="sec-head">
+                <div><div class="eyebrow">What it doesn't do</div><h2 class="h-1">A few things we want to be honest about.</h2></div>
+                <div>
+                    <p class="lede" style="margin-bottom: 18px;">
+                        Anchoring a sentence to its source doesn't make the source correct.
+                        A faithful summary of a vague referral is still a summary of a vague
+                        referral. The tool reduces what reading costs — it doesn't read for you.
+                    </p>
+                    <p class="lede">
+                        The model underneath is still a model. The approach works by constraining
+                        what gets written, not by understanding why. We'll keep saying so.
+                    </p>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="cta">
-            <h2>Try It</h2>
-            <p>Explore ChartPrepper with sample referrals, AI-generated notes with inline source citations, and
-                provenance side-by-side — no account required.</p>
-            <p>
-                <a href="https://chart.translational.ca/login" target="_blank" rel="noopener noreferrer">Try the Demo</a>
-            </p>
-            <h2 style="margin-top:2rem;">Pilot Access</h2>
-            <p>ChartPrepper is available for pilot use with select clinics and hospitals. We're seeking research
-                partners to advance verifiable AI in healthcare.</p>
-            <p>
-                <a href="mailto:yan+websitesignup@translational.ca">Request Pilot Access</a> |
-                <a href="mailto:yan+enterpriseAPI@translational.ca">Contact for Collaboration</a>
-            </p>
-        </section>
+    <div class="investor">
+        <div class="investor-inner">
+            <div class="eyebrow">Try it · Pilot it · Talk to us</div>
+            <h2>Available for pilot clinics today.</h2>
+            <p>If you're a clinic interested in pilot access, an investor curious about how this
+               actually works, or a researcher working on the same problems — write to us.</p>
+            <div class="investor-actions">
+                <a href="https://chart.translational.ca/login" target="_blank" rel="noopener" class="btn btn-primary">Launch ChartPrepper →</a>
+                <a href="mailto:yan+websitesignup@translational.ca" class="btn btn-ghost">Pilot access</a>
+                <a href="investors.html" class="btn btn-ghost">For investors</a>
+            </div>
+        </div>
     </div>
-
-    <script>
-        // Force full width by finding and overriding constraining parent elements
-        (function () {
-            function forceFullWidth() {
-                const container = document.querySelector('.container');
-                if (!container) return;
-
-                let parent = container.parentElement;
-                while (parent && parent !== document.body) {
-                    const computedStyle = window.getComputedStyle(parent);
-                    const maxWidth = computedStyle.maxWidth;
-
-                    if (maxWidth && maxWidth !== 'none' && maxWidth !== '100%') {
-                        parent.style.setProperty('max-width', '100%', 'important');
-                        parent.style.setProperty('width', '100%', 'important');
-                    }
-
-                    parent = parent.parentElement;
-                }
-
-                container.style.setProperty('max-width', '100%', 'important');
-                container.style.setProperty('width', '100%', 'important');
-            }
-
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', forceFullWidth);
-            } else {
-                forceFullWidth();
-            }
-
-            setTimeout(forceFullWidth, 100);
-            setTimeout(forceFullWidth, 500);
-        })();
-    </script>
 </body>
-
 </html>

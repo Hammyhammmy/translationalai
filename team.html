@@ -1,140 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TranslationalAI - About</title>
+    <title>About — TranslationalAI</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <script src="nav.js"></script>
-    <div class="container">
-        <section class="hero">
 
-            <h1>About TranslationalAI</h1>
-            <p class="hero-headline">
-                Clinician-led AI tools built on a single principle:<br>
-                every fact traces to its source, or it is suppressed.
+    <section class="subhero">
+        <div class="wrap">
+            <div class="eyebrow">About</div>
+            <h1>Built by a <em>practicing urologist.</em></h1>
+            <p class="lede">
+                TranslationalAI is led by Hanmu Yan, MD FRCSC — a Canadian urologist with a
+                background in applied AI.
             </p>
+        </div>
+    </section>
 
-
-            <!-- Hero card removed -->
-        </section>
-
-        <section class="content">
-            <div class="section">
-                <h2>Mission</h2>
-                <p>
-                    Clinical AI has a credibility problem. Tools produce fluent, organized output that is wrong or
-                    incomplete in ways the clinician must catch by re-reading—error opacity. TranslationalAI was
-                    founded to solve this: we build tools where every output traces to its source, and unverifiable
-                    content is structurally suppressed. The goal is not a better model, but a tractable audit.
-                </p>
+    <section>
+        <div class="wrap">
+            <div class="sec-head">
+                <div><div class="eyebrow">Founder</div><h2 class="h-1">Hanmu Yan, MD&nbsp;FRCSC</h2></div>
+                <div>
+                    <p class="lede" style="margin-bottom: 18px;">
+                        Fellowship-trained urologist practicing in Canada. Sub-specialty interests
+                        in urologic oncology and clinical workflow design.
+                    </p>
+                    <p class="lede">
+                        ChartPrepper, the company's flagship, is used daily in his own clinical
+                        practice. The same is true of the smaller tools in the Lab.
+                    </p>
+                </div>
             </div>
+        </div>
+    </section>
 
-            <div class="section">
-                <h2>Founder</h2>
-                <p>
-                    <strong>Hanmu Yan, MD FRCSC</strong> is a practicing Canadian urologist and the founder of
-                    TranslationalAI. With a background in surgery and applied AI, he develops tools to solve real
-                    problems physicians encounter in clinical practice.
-                </p>
-                <p>
-                    The TranslationalAI suite was created with clinical precision and simplicity, designed to integrate
-                    seamlessly into healthcare workflows without requiring EMR integration.
-                </p>
+    <section style="background: var(--paper-warm); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+        <div class="wrap">
+            <div class="sec-head">
+                <div><div class="eyebrow">Operating principle</div><h2 class="h-1">Clinician-led, by design.</h2></div>
+                <div>
+                    <p class="lede">
+                        Every product is built, tested, and used by a practicing clinician before
+                        anyone else sees it. Feedback and fixes move in days, not quarters.
+                    </p>
+                </div>
             </div>
+        </div>
+    </section>
 
-
-
-            <div class="section">
-                <h2>Approach</h2>
-
-                <p>
-                    We optimize for verifiability, not fluency. Most clinical AI builders optimize for convenience
-                    and output quality. We optimize for making errors findable. Our development approach:
-                </p>
-                <ul>
-                    <li>Per-fact source provenance—a structural property of the system, not prompt discipline</li>
-                    <li>Suppression by default—if a fact can't be traced to its source, it is not emitted</li>
-                    <li>Deterministic systems where identical inputs yield identical outputs</li>
-                    <li>Privacy and security built into every component</li>
-                    <li>Deployed in real clinical environments, not demo-only</li>
-                </ul>
+    <div class="investor">
+        <div class="investor-inner">
+            <div class="eyebrow">Get in touch</div>
+            <h2>Pilot, partner, <em>or invest.</em></h2>
+            <p>Open to pilots with clinics, research collaboration, and early investor
+               conversations.</p>
+            <div class="investor-actions">
+                <a href="mailto:yan+websitesignup@translational.ca" class="btn btn-primary">Pilot access</a>
+                <a href="mailto:yan+enterpriseAPI@translational.ca" class="btn btn-ghost">Research / API</a>
+                <a href="investors.html" class="btn btn-ghost">For investors →</a>
             </div>
-
-            <div class="section">
-                <h2>Values</h2>
-                <ul>
-                    <li><strong>Clinical First:</strong> Every decision prioritizes clinical workflows and patient
-                        safety</li>
-                    <li><strong>Canadian Built:</strong> Designed and hosted in Canada, with Canadian data residency
-                    </li>
-                    <li><strong>Verifiability Over Fluency:</strong> Errors should be findable, not hidden behind
-                        polished prose</li>
-                    <li><strong>Privacy by Design:</strong> Security and privacy are fundamental, not afterthoughts</li>
-                    <li><strong>Physician-Led:</strong> Developed by practicing physicians who understand daily clinical
-                        realities</li>
-                </ul>
-            </div>
-
-            <div class="section">
-                <h2>Privacy and Compliance</h2>
-                <p>
-                    All tools are aligned with PIPEDA privacy principles and provincial privacy requirements, with
-                    self-assessed alignment to HIPAA security protocols (not certified). They require no EMR integration
-                    and are already in daily use by clinicians.
-                </p>
-            </div>
-        </section>
-
-        <section class="cta">
-            <h2>Pilot Access and Research Collaboration</h2>
-            <p>Our tools are available for pilot use with select clinics and hospitals. We're seeking research partners
-                to advance verifiable AI in healthcare.</p>
-            <p>
-                <a href="mailto:yan+websitesignup@translational.ca">Request Pilot Access</a> |
-                <a href="mailto:yan+enterpriseAPI@translational.ca">Contact for Collaboration</a>
-            </p>
-        </section>
+        </div>
     </div>
-
-    <script>
-        // Force full width by finding and overriding constraining parent elements
-        (function () {
-            function forceFullWidth() {
-                const container = document.querySelector('.container');
-                if (!container) return;
-
-                let parent = container.parentElement;
-                while (parent && parent !== document.body) {
-                    const computedStyle = window.getComputedStyle(parent);
-                    const maxWidth = computedStyle.maxWidth;
-
-                    if (maxWidth && maxWidth !== 'none' && maxWidth !== '100%') {
-                        parent.style.setProperty('max-width', '100%', 'important');
-                        parent.style.setProperty('width', '100%', 'important');
-                    }
-
-                    parent = parent.parentElement;
-                }
-
-                container.style.setProperty('max-width', '100%', 'important');
-                container.style.setProperty('width', '100%', 'important');
-            }
-
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', forceFullWidth);
-            } else {
-                forceFullWidth();
-            }
-
-            setTimeout(forceFullWidth, 100);
-            setTimeout(forceFullWidth, 500);
-        })();
-    </script>
 </body>
-
 </html>
