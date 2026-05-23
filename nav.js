@@ -10,12 +10,15 @@
                 <span class="nav-logo-mark"></span>
                 TranslationalAI
             </a>
+            <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
             <div class="nav-links">
-                <a href="chartprepper.html" class="nav-link${isActive('chartprepper.html')}">ChartPrepper</a>
+                <a href="chartprep.html" class="nav-link${isActive('chartprep.html')}">ChartPrep</a>
                 <a href="lab.html" class="nav-link${isActive('lab.html')}">Lab</a>
                 <a href="team.html" class="nav-link${isActive('team.html')}">About</a>
                 <a href="investors.html" class="nav-link${isActive('investors.html')}">Investors</a>
-                <a href="https://chart.translational.ca/login" class="nav-cta" target="_blank" rel="noopener">Launch ChartPrepper →</a>
+                <a href="https://chart.translational.ca/login" class="nav-cta" target="_blank" rel="noopener">Launch ChartPrep →</a>
             </div>
         </div>
     </nav>`;
@@ -29,7 +32,7 @@
             </div>
             <div class="foot-col">
                 <h4>Product</h4>
-                <a href="chartprepper.html">ChartPrepper</a>
+                <a href="chartprep.html">ChartPrep</a>
                 <a href="lab.html">The Lab</a>
             </div>
             <div class="foot-col">
@@ -40,7 +43,7 @@
             </div>
             <div class="foot-col">
                 <h4>Tools</h4>
-                <a href="https://chart.translational.ca/login" target="_blank" rel="noopener">ChartPrepper</a>
+                <a href="https://chart.translational.ca/login" target="_blank" rel="noopener">ChartPrep</a>
                 <a href="https://fax.translational.ca" target="_blank" rel="noopener">Fax Triage</a>
                 <a href="https://emr.translational.ca" target="_blank" rel="noopener">LightEMR</a>
                 <a href="https://schedule-generator-465306031489.northamerica-northeast1.run.app" target="_blank" rel="noopener">Call Schedule</a>
@@ -62,5 +65,21 @@
     document.body.insertAdjacentHTML('afterbegin', navHTML);
     document.addEventListener('DOMContentLoaded', () => {
         document.body.insertAdjacentHTML('beforeend', footHTML);
+        // mobile menu toggle
+        const t = document.querySelector('.nav-toggle');
+        const links = document.querySelector('.nav-links');
+        if (t && links) {
+            t.addEventListener('click', () => {
+                const open = links.classList.toggle('open');
+                t.setAttribute('aria-expanded', open ? 'true' : 'false');
+                t.classList.toggle('open', open);
+            });
+            // close menu on link click
+            links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+                links.classList.remove('open');
+                t.classList.remove('open');
+                t.setAttribute('aria-expanded', 'false');
+            }));
+        }
     });
 })();
