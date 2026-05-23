@@ -50,6 +50,7 @@
                 <h4>Contact</h4>
                 <a href="mailto:yan+investors@translational.ca">yan+investors@translational.ca</a>
                 <a href="mailto:yan+enterpriseAPI@translational.ca">Enterprise & API</a>
+                <a href="https://www.linkedin.com/in/hanmu-yan-42441a306" target="_blank" rel="noopener">LinkedIn</a>
             </div>
         </div>
         <div class="foot-bottom">
