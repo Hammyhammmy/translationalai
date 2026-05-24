@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Three Patterns of the Body</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --card: #ffffff;
+    --border: #e7e5e4;
+    --text: #1c1917;
+    --muted: #78716c;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --orange: #d97706;
+    --orange-light: #fffbeb;
+    --purple: #7c3aed;
+    --purple-light: #f5f3ff;
+    --teal: #0d9488;
+    --teal-light: #f0fdfa;
+    --code-bg: #f5f5f4;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "SF Mono", "Fira Code", "Consolas", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.75; padding: 40px 20px 80px; }
+  .container { max-width: 740px; margin: 0 auto; }
+  .date { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 8px; }
+  h1 { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .subtitle { font-size: 15px; color: var(--muted); margin-bottom: 40px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
+  h2 { font-size: 20px; font-weight: 700; margin-top: 52px; margin-bottom: 16px; }
+  h3 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 10px; }
+  p { margin-bottom: 16px; font-size: 15px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 20px 0; }
+  .card-accent { border-left: 4px solid var(--accent); background: var(--accent-light); }
+  .card-green { border-left: 4px solid var(--green); background: var(--green-light); }
+  .card-red { border-left: 4px solid var(--red); background: var(--red-light); }
+  .card-orange { border-left: 4px solid var(--orange); background: var(--orange-light); }
+  .card-purple { border-left: 4px solid var(--purple); background: var(--purple-light); }
+  .card-teal { border-left: 4px solid var(--teal); background: var(--teal-light); }
+  .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .card-accent .label { color: var(--accent); }
+  .card-green .label { color: var(--green); }
+  .card-red .label { color: var(--red); }
+  .card-orange .label { color: var(--orange); }
+  .card-purple .label { color: var(--purple); }
+  .card-teal .label { color: var(--teal); }
+  code { font-family: var(--mono); font-size: 13px; background: var(--code-bg); padding: 2px 6px; border-radius: 4px; }
+  pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.6; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
+  th { background: var(--code-bg); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  hr { border: none; border-top: 2px solid var(--border); margin: 52px 0; }
+
+  .pattern-card {
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 28px 24px;
+    margin: 28px 0;
+    position: relative;
+  }
+  .pattern-card h3 {
+    margin-top: 0;
+    font-size: 18px;
+  }
+  .pattern-number {
+    position: absolute;
+    top: -14px;
+    left: 24px;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    color: white;
+  }
+  .pattern-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 20px 0;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .pattern-visual .station {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    text-align: center;
+    min-width: 80px;
+  }
+  .pattern-visual .arrow {
+    color: var(--muted);
+    font-size: 18px;
+    padding: 0 4px;
+  }
+
+  .layer-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 20px auto;
+    max-width: 260px;
+  }
+  .layer-stack .layer {
+    text-align: center;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    border-bottom: none;
+  }
+  .layer-stack .layer:last-child { border-bottom: 1px solid var(--border); }
+  .layer-stack .layer:first-child { border-radius: 8px 8px 0 0; }
+  .layer-stack .layer:last-child { border-radius: 0 0 8px 8px; }
+
+  .network-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin: 20px 0;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .network-visual .trunk {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 20px;
+  }
+  .network-visual .branch-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .network-visual .branch {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  .network-visual .fan {
+    color: var(--muted);
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+
+  .triage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .triage-cell {
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .triage-cell .triage-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .triage-cell .triage-q {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .triage-cell .triage-how {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .triage-cell:nth-child(1) { border-color: #ef4444; }
+  .triage-cell:nth-child(1) .triage-label { color: #ef4444; }
+  .triage-cell:nth-child(2) { border-color: #2563eb; }
+  .triage-cell:nth-child(2) .triage-label { color: #2563eb; }
+  .triage-cell:nth-child(3) { border-color: #7c3aed; }
+  .triage-cell:nth-child(3) .triage-label { color: #7c3aed; }
+
+  @media (max-width: 600px) {
+    .pattern-visual { flex-wrap: wrap; gap: 4px; }
+    .pattern-visual .station { min-width: 60px; padding: 6px 8px; font-size: 11px; }
+    .triage-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="date">May 24, 2026</div>
+<h1>Three Patterns of the Body</h1>
+<p class="subtitle">Every anatomical structure is one of three geometric patterns. Every software system is too. The pattern tells you how to diagnose it.</p>
+
+<!-- ============================================================ -->
+<h2>The Claim</h2>
+
+<p>You've spent years learning thousands of structures. But they all organize into three geometric patterns — and those three patterns are the same ones that organize every software system you'll ever debug.</p>
+
+<p>This isn't metaphor. The body and software are both engineered systems with the same constraints: they need to protect (layers), transport (conduits), and coordinate (networks). The geometry follows from the function.</p>
+
+<p>Once you see the pattern, you know the diagnostic logic before you know the specific anatomy.</p>
+
+<!-- ============================================================ -->
+
+<div class="pattern-card" style="border-color: #ef4444;">
+  <div class="pattern-number" style="background: #ef4444;">Pattern 1 — Layers</div>
+  <h3>Parallel depth. Localize by going deeper.</h3>
+
+  <p><strong>Body:</strong> Abdominal wall (skin → subcutaneous → muscle → fascia → peritoneum). Scalp (SCALP mnemonic). Meninges (dura → arachnoid → pia). Vessel walls (intima → media → adventitia). Every boundary you cross changes the tissue type, the function, and the failure mode.</p>
+
+  <p><strong>Software:</strong> The rendering stack. A request passes through all layers simultaneously — screen, reactivity, state, cache, network, server. Each layer transforms the same data. A defect at any depth presents at the surface.</p>
+
+  <div class="layer-stack">
+    <div class="layer" style="background: #fef2f2;">Skin / Rendering (Tailwind, HTML)</div>
+    <div class="layer" style="background: #fff7ed;">Subcutaneous / Reactivity (Alpine, HTMX swap)</div>
+    <div class="layer" style="background: #fefce8;">Muscle / State (Alpine store)</div>
+    <div class="layer" style="background: #f0fdf4;">Fascia / Cache (localStorage)</div>
+    <div class="layer" style="background: #eff6ff;">Preperitoneal / Network (HTMX fetch, fetch())</div>
+    <div class="layer" style="background: #f5f3ff;">Peritoneum / Server (Uvicorn → FastAPI → Postgres)</div>
+  </div>
+
+  <p><strong>Diagnostic logic:</strong> Start at the surface. Go one layer deeper at each step. Stop at the first boundary where correct becomes incorrect. That's the lesion.</p>
+
+  <p><strong>Signature failure:</strong> Referred symptoms. The defect is at layer 4 but the symptom is at layer 1. You blame what you can see (Alpine) instead of what you can't (cache). Same as a transversalis fascia defect presenting as a skin-level bulge.</p>
+
+  <div class="card card-red" style="margin-bottom:0;">
+    <div class="label">Deep Dive</div>
+    <p style="margin:0;"><a href="2026-05-24_software-layers-anatomy-edition.html" style="color:var(--red); font-weight:600;">Software Layers: The Anatomy Edition</a> — Full layer-by-layer mapping with your ChartPrepper stack, diagnostic algorithm with practical console commands, imaging at each layer, and surgical principles. Built around the stale-cache bug where you blamed Alpine for a localStorage defect.</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+
+<div class="pattern-card" style="border-color: #2563eb;">
+  <div class="pattern-number" style="background: #2563eb;">Pattern 2 — Conduits</div>
+  <h3>Serial stations. Localize by tracing upstream.</h3>
+
+  <p><strong>Body:</strong> Urinary tract (kidney → ureter → bladder → sphincter → urethra). GI tract (mouth → esophagus → stomach → small bowel → colon → rectum). Biliary tree (hepatocyte → canaliculus → bile duct → gallbladder → common bile duct → duodenum). Each station has a specific job — production, transport, storage, control, expulsion. The order matters. Flow is one-directional.</p>
+
+  <p><strong>Software:</strong> Data processing pipelines. Your ChartPrepper upload flow:</p>
+
+  <div class="pattern-visual">
+    <div class="station">Upload<br><span style="font-size:11px; color:var(--muted);">raw file</span></div>
+    <div class="arrow">→</div>
+    <div class="station">Validate<br><span style="font-size:11px; color:var(--muted);">TextValidator</span></div>
+    <div class="arrow">→</div>
+    <div class="station">Extract<br><span style="font-size:11px; color:var(--muted);">EnhancedProcessor</span></div>
+    <div class="arrow">→</div>
+    <div class="station">Format<br><span style="font-size:11px; color:var(--muted);">ResponseFormatter</span></div>
+    <div class="arrow">→</div>
+    <div class="station">Store<br><span style="font-size:11px; color:var(--muted);">Postgres / GCS</span></div>
+  </div>
+
+  <p><strong>Diagnostic logic:</strong> Start at the output (what came out wrong). Trace upstream station by station. Check the output of each station. The first station that produced bad output from good input — that's the lesion.</p>
+
+  <p><strong>Signature failure:</strong> Obstruction. Something blocks or corrupts the flow at a station, and everything downstream is affected. Hydronephrosis = ureter obstruction. A malformed summary = the LLM extraction step garbled the data, and formatting faithfully formatted the garbage. The formatter isn't broken. The extraction is.</p>
+
+  <table>
+    <thead>
+      <tr><th>Anatomy</th><th>Station</th><th>Software</th><th>Failure Mode</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Kidney</td>
+        <td>Production</td>
+        <td><code>LLMClientInitializer</code></td>
+        <td>Can't produce at all — API key wrong, model unavailable. Anuria.</td>
+      </tr>
+      <tr>
+        <td>Ureter</td>
+        <td>Transport</td>
+        <td><code>TextValidator</code></td>
+        <td>Blocks bad input from proceeding. Stricture — rejects valid documents (false positive). Reflux — lets garbage through (false negative).</td>
+      </tr>
+      <tr>
+        <td>Bladder</td>
+        <td>Processing + Storage</td>
+        <td><code>EnhancedProcessor</code></td>
+        <td>Transforms input into structured data via Pydantic models. Corruption here = malformed output with correct input. Bladder dysfunction — storage works but the output is wrong.</td>
+      </tr>
+      <tr>
+        <td>Sphincter</td>
+        <td>Control</td>
+        <td><code>ResponseFormatter</code></td>
+        <td>Decides the final shape and release. Formatting errors, wrong template, missing fields. Incontinence — data leaks in wrong format. Retention — valid data stuck in wrong structure.</td>
+      </tr>
+      <tr>
+        <td>Urethra</td>
+        <td>Delivery</td>
+        <td>API response → cache → screen</td>
+        <td>The result exits the pipeline and enters the layer stack. Outlet obstruction — response never reaches the client (timeout, CORS).</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="card card-accent">
+    <div class="label">Key Difference from Layers</div>
+    <p style="margin:0;">In a layer system, all layers are present simultaneously and the same data passes through all of them. In a conduit, each station <strong>transforms</strong> the data — the output of one station is different from its input. That's why you can't just "check each layer" — you have to check the input <em>and</em> output at each station to find where the transformation went wrong.</p>
+  </div>
+
+  <div class="card card-accent" style="margin-bottom:20px;">
+    <div class="label">Deep Dive</div>
+    <p style="margin:0;"><a href="2026-05-24_the-pipeline-edition.html" style="color:var(--accent); font-weight:600;">Software Conduits: The Pipeline Edition</a> — Full station-by-station mapping of your ChartPrepper processing pipeline to the urinary tract, diagnostic algorithm with practical commands for tracing upstream, and surgical principles for each station. Built around real failure modes: silent validation skips, unanchored LLM statements, summary/provenance dyssynergia.</p>
+  </div>
+
+  <h3>The GI parallel</h3>
+
+  <p>Your CI/CD pipeline is a GI tract. Code enters (ingestion), gets tested (digestion — breaking it down to see if it's viable), gets built into an artifact (absorption — extracting the useful form), and gets deployed (elimination — pushing it out into the world). A failed test doesn't mean the deployment system is broken. It means digestion caught something indigestible. That's working correctly.</p>
+
+  <h3>The biliary parallel</h3>
+
+  <p>Your logging pipeline — from application event to structured log to dashboard — is a biliary tree. The liver produces bile (your app produces log events). The bile ducts transport it (your logging library serializes and routes it). The gallbladder concentrates and stores it (your log aggregator indexes and retains it). Cholestasis — backup from an obstructed duct — looks like your logging pipeline when the aggregator goes down. Events are produced but never reach the dashboard. The app is fine. The transport is blocked.</p>
+</div>
+
+<!-- ============================================================ -->
+
+<div class="pattern-card" style="border-color: #7c3aed;">
+  <div class="pattern-number" style="background: #7c3aed;">Pattern 3 — Networks</div>
+  <h3>Branching distribution. Localize by mapping the territory.</h3>
+
+  <p><strong>Body:</strong> Arterial vasculature (aorta branches to organs, each with its own territory). Lymphatic drainage (nodal basins, sentinel nodes). Nervous system (motor cortex → corticospinal tract → anterior horn → peripheral nerve → muscle). Venous return. Dermatomes. Bronchial tree. One trunk fans out to many endpoints. The endpoints define territories.</p>
+
+  <p><strong>Software:</strong> Authentication, event systems, configuration propagation. One source fans out to many consumers. A failure at the trunk affects all downstream territories simultaneously.</p>
+
+  <div class="network-visual">
+    <div class="trunk">Firebase Auth Token</div>
+    <div class="fan">┌─────┼─────┐</div>
+    <div class="branch-row">
+      <div class="branch">API routes<br><span style="font-size:11px; color:var(--muted);">auth middleware</span></div>
+      <div class="branch">WebSocket<br><span style="font-size:11px; color:var(--muted);">connection auth</span></div>
+      <div class="branch">GCS access<br><span style="font-size:11px; color:var(--muted);">signed URLs</span></div>
+    </div>
+  </div>
+
+  <p><strong>Diagnostic logic:</strong> Don't trace a single path — map the distribution of the deficit. What's affected and what's spared? The boundary between affected and spared territories tells you the branch point. If API routes fail but WebSocket works, the lesion is in the API middleware, not the token itself. If everything fails, the lesion is at the trunk.</p>
+
+  <p><strong>Signature failure:</strong> Ischemia. A branch goes down and its entire territory loses supply. Token expiry kills every authenticated endpoint at once — not one at a time, not in sequence, all simultaneously. That simultaneity is the hallmark of a network pattern failure. Layer failures present at the surface. Conduit failures present downstream. Network failures present in a territory.</p>
+
+  <table>
+    <thead>
+      <tr><th>Anatomy</th><th>Software</th><th>Territory</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Aorta → renal artery</td>
+        <td>Firebase token → auth middleware</td>
+        <td>All authenticated API routes. Renal artery occlusion = kidney infarction. Token verification failure = every protected route returns 401.</td>
+      </tr>
+      <tr>
+        <td>Middle cerebral artery</td>
+        <td>Alpine.store() reactivity</td>
+        <td>Every component watching a store key. MCA stroke affects face + arm + speech (same territory). A store update failure affects every <code>x-text</code>, <code>x-for</code>, and <code>x-show</code> bound to that key — simultaneously.</td>
+      </tr>
+      <tr>
+        <td>Vagus nerve (CN X)</td>
+        <td>HTMX event propagation</td>
+        <td>The vagus innervates heart, lungs, and gut from a single trunk. HTMX events (<code>htmx:afterSwap</code>, <code>htmx:responseError</code>) propagate to every listener. A misconfigured event handler doesn't break one swap — it breaks every swap that triggers that event.</td>
+      </tr>
+      <tr>
+        <td>Sentinel lymph node</td>
+        <td>Error boundary / first failure point</td>
+        <td>The first node in a drainage basin. If it's positive, the territory is involved. Your first failed API call after a deploy is the sentinel — it tells you the deployment's territory of damage before you see the full extent.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="card card-purple" style="margin-bottom:20px;">
+    <div class="label">Deep Dive</div>
+    <p style="margin:0;"><a href="2026-05-24_the-vasculature-edition.html" style="color:var(--purple); font-weight:600;">Software Networks: The Vasculature Edition</a> — Firebase auth mapped as an arterial tree, Alpine stores as the nervous system, custom events as lymphatic drainage. Territory mapping with real failure cascades: token expiry ischemia, store starvation, cold-start transient ischemia. Collateral circulation analysis of your fallback paths.</p>
+  </div>
+
+  <div class="card card-purple">
+    <div class="label">Collateral Circulation = Fallback Systems</div>
+    <p style="margin:0;">The circle of Willis provides collateral flow — if one carotid is occluded, the other side can partially supply the territory through communicating arteries. Software equivalents: retry logic, fallback auth (cookie if header fails), CDN serving cached static files when the origin is down, your <code>LLM_PROVIDER</code> env var that can switch from Vertex AI to OpenAI. Collaterals don't fix the occlusion. They limit the infarct size while you fix the trunk.</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>The First Question</h2>
+
+<p>Before you diagnose, before you investigate, before you touch the code — ask one question:</p>
+
+<p><strong>What pattern am I looking at?</strong></p>
+
+<p>The answer determines your entire diagnostic approach.</p>
+
+<div class="triage-grid">
+  <div class="triage-cell">
+    <div class="triage-label">Layers</div>
+    <div class="triage-q">"Which depth?"</div>
+    <div class="triage-how">Start at the surface. Go one layer deeper at each step. Stop at the boundary where correct becomes incorrect.</div>
+  </div>
+  <div class="triage-cell">
+    <div class="triage-label">Conduit</div>
+    <div class="triage-q">"Which station?"</div>
+    <div class="triage-how">Start at the output. Trace upstream. Check input vs. output at each station. The first bad transformation is the lesion.</div>
+  </div>
+  <div class="triage-cell">
+    <div class="triage-label">Network</div>
+    <div class="triage-q">"Which territory?"</div>
+    <div class="triage-how">Map what's affected vs. spared. The boundary between them tells you the branch point. Don't trace one path — compare territories.</div>
+  </div>
+</div>
+
+<p>Getting the pattern wrong costs you the most time. If you apply layer thinking to a pipeline bug, you'll examine each "depth" of the rendering stack and find nothing wrong — because the data is correct at every layer. It was just corrupted at a pipeline station before it entered the layer stack. You'd be examining the abdominal wall for a ureteral stone.</p>
+
+<!-- ============================================================ -->
+<h2>How to Tell Which Pattern You're In</h2>
+
+<div class="card card-green">
+  <div class="label">Triage Heuristics</div>
+<pre style="background:transparent; border:none; padding:0; margin:0; font-size:13px;">
+<strong>It's a LAYER problem if:</strong>
+  → The data is on screen but wrong or missing
+  → "Refresh fixes it" or "it looks right in the API response"
+  → The symptom is visual — wrong content, wrong layout, stale state
+  → You're asking "is the right data reaching the right depth?"
+
+<strong>It's a CONDUIT problem if:</strong>
+  → The output exists but is garbled, malformed, or incomplete
+  → The processing worked for similar inputs before
+  → You're asking "which step corrupted or blocked the data?"
+  → Upstream data is fine, downstream data is wrong
+
+<strong>It's a NETWORK problem if:</strong>
+  → Multiple unrelated features break at the same time
+  → The symptom is total — nothing works, not just wrong data
+  → "Logging out and back in fixes everything"
+  → You're asking "what do all the broken things have in common?"
+</pre>
+</div>
+
+<!-- ============================================================ -->
+<h2>Combinations</h2>
+
+<p>Real systems aren't purely one pattern. Your ChartPrepper app has all three, and they intersect:</p>
+
+<p><strong>The upload flow is a conduit</strong> (file → validate → extract → format → store) <strong>that terminates by entering the layer stack</strong> (store → cache → state → reactivity → screen). A bug in the conduit presents through the layers. You see a malformed summary on screen (layer 1 symptom) caused by bad LLM extraction (conduit station 3). Two different patterns, one bug.</p>
+
+<p><strong>Auth is a network</strong> that gates the conduit. If the Firebase token expires mid-upload, the LLM API call at the extraction station fails — not because extraction is broken, but because the auth network's trunk went down. The conduit looks obstructed but the lesion is in a completely different pattern.</p>
+
+<p><strong>The diagnostic move:</strong> identify the pattern first, then apply that pattern's logic. If you mix up the pattern, the diagnostic algorithm is wrong from the start — and correct execution of the wrong algorithm is still wrong.</p>
+
+<div class="card card-teal">
+  <div class="label">The Surgical Analogy</div>
+  <p style="margin:0;">An acute abdomen can involve all three patterns at once. A mesenteric artery occlusion (network — vascular territory) causes bowel ischemia (conduit — GI tract station failure) that leads to perforation and peritonitis (layer — the peritoneum is breached). You don't pick one pattern and stick with it. You triage: which pattern explains the <strong>primary</strong> pathology? The ischemia is the cause. The perforation is the complication. The peritonitis is the presentation. Treat the cause — restore flow — and the downstream patterns resolve.</p>
+</div>
+
+<hr>
+
+<p style="text-align:center; color:var(--muted); font-size:13px; margin-top:40px;">
+  Written May 24, 2026 — ChartPrepper project<br>
+  Layers stack. Conduits flow. Networks branch.<br>
+  Know which one you're in before you start cutting.
+</p>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Networks — The Vasculature Edition</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --card: #ffffff;
+    --border: #e7e5e4;
+    --text: #1c1917;
+    --muted: #78716c;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --orange: #d97706;
+    --orange-light: #fffbeb;
+    --purple: #7c3aed;
+    --purple-light: #f5f3ff;
+    --teal: #0d9488;
+    --teal-light: #f0fdfa;
+    --code-bg: #f5f5f4;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "SF Mono", "Fira Code", "Consolas", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.75; padding: 40px 20px 80px; }
+  .container { max-width: 740px; margin: 0 auto; }
+  .date { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 8px; }
+  h1 { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .subtitle { font-size: 15px; color: var(--muted); margin-bottom: 40px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
+  h2 { font-size: 20px; font-weight: 700; margin-top: 52px; margin-bottom: 16px; }
+  h3 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 10px; }
+  p { margin-bottom: 16px; font-size: 15px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 20px 0; }
+  .card-accent { border-left: 4px solid var(--accent); background: var(--accent-light); }
+  .card-green { border-left: 4px solid var(--green); background: var(--green-light); }
+  .card-red { border-left: 4px solid var(--red); background: var(--red-light); }
+  .card-orange { border-left: 4px solid var(--orange); background: var(--orange-light); }
+  .card-purple { border-left: 4px solid var(--purple); background: var(--purple-light); }
+  .card-teal { border-left: 4px solid var(--teal); background: var(--teal-light); }
+  .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .card-accent .label { color: var(--accent); }
+  .card-green .label { color: var(--green); }
+  .card-red .label { color: var(--red); }
+  .card-orange .label { color: var(--orange); }
+  .card-purple .label { color: var(--purple); }
+  .card-teal .label { color: var(--teal); }
+  code { font-family: var(--mono); font-size: 13px; background: var(--code-bg); padding: 2px 6px; border-radius: 4px; }
+  pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.6; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
+  th { background: var(--code-bg); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  hr { border: none; border-top: 2px solid var(--border); margin: 52px 0; }
+
+  .vessel-tree {
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 20px;
+    margin: 28px 0;
+    font-size: 13px;
+  }
+  .vessel-trunk {
+    text-align: center;
+    padding: 10px 20px;
+    background: var(--red-light);
+    border: 2px solid var(--red);
+    border-radius: 10px;
+    font-weight: 700;
+    max-width: 280px;
+    margin: 0 auto 4px;
+  }
+  .vessel-branch-line {
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    letter-spacing: 4px;
+    margin: 0 auto;
+    line-height: 1.2;
+  }
+  .vessel-branches {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .vessel-branch {
+    text-align: center;
+    padding: 10px 8px;
+    border-radius: 10px;
+    border: 2px solid var(--border);
+  }
+  .vessel-branch-name { font-weight: 700; display: block; font-size: 13px; }
+  .vessel-branch-desc { font-size: 11px; color: var(--muted); display: block; margin-top: 3px; }
+  .vessel-branch.affected { border-color: var(--red); background: var(--red-light); }
+  .vessel-branch.spared { border-color: var(--green); background: var(--green-light); }
+
+  .territory-map {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .territory {
+    padding: 16px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: white;
+  }
+  .territory-name { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .territory-contents { font-size: 12px; color: var(--muted); }
+  .territory.territory-dead { border-color: var(--red); background: var(--red-light); }
+  .territory.territory-alive { border-color: var(--green); background: var(--green-light); }
+
+  @media (max-width: 600px) {
+    .vessel-branches { grid-template-columns: 1fr 1fr; }
+    .territory-map { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="date">May 24, 2026</div>
+<h1>Software Networks: The Vasculature Edition</h1>
+<p class="subtitle">When one artery occludes, the symptom isn't at the artery — it's across the entire territory it supplies. When your Firebase token expires, the symptom isn't in one endpoint — it's across every authenticated consumer simultaneously. Same pattern, same diagnosis.</p>
+
+<!-- ============================================================ -->
+<h2>The Premise</h2>
+
+<p>The <a href="2026-05-24_software-layers-anatomy-edition.html">Layers doc</a> taught depth localization — go deeper until you find the boundary. The <a href="2026-05-24_the-pipeline-edition.html">Pipeline doc</a> taught upstream tracing — follow the flow back to the station that corrupted it.</p>
+
+<p>Neither works when the symptom is "everything broke at once."</p>
+
+<p>When a user reports that uploads fail, the sidebar won't load, and the file list is empty — all at the same time — that's not a layer problem (wrong depth) or a pipeline problem (wrong station). It's a <strong>network problem</strong>. One trunk went down, and every branch in its territory lost supply. You diagnose it by mapping the territory, not by going deeper or tracing upstream.</p>
+
+<p>The body does this with vasculature. Software does it with auth, events, and shared state.</p>
+
+<!-- ============================================================ -->
+<h2>Your Auth Vasculature</h2>
+
+<p>Firebase auth in ChartPrepper is an arterial tree. One trunk — the ID token — branches to supply every authenticated consumer in the app.</p>
+
+<div class="vessel-tree">
+  <div class="vessel-trunk">Firebase ID Token (trunk)</div>
+  <div class="vessel-branch-line">┌──────────┼──────────┐</div>
+  <div class="vessel-branches">
+    <div class="vessel-branch">
+      <span class="vessel-branch-name">HTMX Requests</span>
+      <span class="vessel-branch-desc">htmx:configRequest injects Authorization header on every request</span>
+    </div>
+    <div class="vessel-branch">
+      <span class="vessel-branch-name">fetch() Calls</span>
+      <span class="vessel-branch-desc">fetch-middleware.js adds Bearer token via waitForToken()</span>
+    </div>
+    <div class="vessel-branch">
+      <span class="vessel-branch-name">Cookie Sync</span>
+      <span class="vessel-branch-desc">POST /verify-firebase-token sets HttpOnly cookie as fallback</span>
+    </div>
+    <div class="vessel-branch">
+      <span class="vessel-branch-name">File Operations</span>
+      <span class="vessel-branch-desc">Upload, delete, hide/unhide — all require user_id from token</span>
+    </div>
+    <div class="vessel-branch">
+      <span class="vessel-branch-name">LightScribe Mount</span>
+      <span class="vessel-branch-desc">/ls/* routes use same auth middleware</span>
+    </div>
+  </div>
+</div>
+
+<p>When the token is valid, all branches receive supply. When it expires or gets revoked, every branch loses supply <strong>simultaneously</strong>. This simultaneity is the hallmark of a network pattern — and the diagnostic key.</p>
+
+<!-- ============================================================ -->
+<h2>The Arterial Analogy</h2>
+
+<table>
+  <thead>
+    <tr><th>Vasculature</th><th>Software</th><th>What Happens</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Aorta</strong></td>
+      <td>Firebase SDK initialization</td>
+      <td>The root trunk. If Firebase SDK doesn't load (aortic dissection), nothing downstream has auth. Every consumer is ischemic. The app renders but can't do anything.</td>
+    </tr>
+    <tr>
+      <td><strong>Common carotid → internal/external</strong></td>
+      <td>Token → Authorization header / HttpOnly cookie</td>
+      <td>Two distribution paths from the same source. The header path supplies HTMX and fetch. The cookie path is the fallback (collateral). If the header path fails, the cookie path can still supply some routes.</td>
+    </tr>
+    <tr>
+      <td><strong>Middle cerebral artery</strong></td>
+      <td>Alpine.store() reactivity</td>
+      <td>MCA supplies the largest territory in the brain — face, arm, speech (Broca's). Alpine.store('files') supplies the sidebar file list, the calendar view, badge counts, the search filter. If the store doesn't update, every bound component shows stale data simultaneously. MCA stroke = store update failure.</td>
+    </tr>
+    <tr>
+      <td><strong>Renal artery</strong></td>
+      <td>GCS access credentials</td>
+      <td>Single artery supplies one organ. GCS service account supplies all storage operations. Credential expiry = renal artery occlusion. All reads and writes fail. The app runs but can't access any files.</td>
+    </tr>
+    <tr>
+      <td><strong>Coronary arteries</strong></td>
+      <td>Server health / Uvicorn process</td>
+      <td>The heart supplies itself. Uvicorn is the process that runs the server. If Uvicorn dies (MI), every endpoint goes down — not because auth failed, but because the pump stopped. Different trunk, total territory.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ============================================================ -->
+<h2>Token Expiry: An Ischemic Event</h2>
+
+<p>Let's trace a real failure through the network — your Firebase token expires mid-session.</p>
+
+<h3>The timeline</h3>
+
+<ol style="padding-left:20px; margin-bottom:16px;">
+  <li><strong>T+0:</strong> Token was issued 55 minutes ago. <code>TokenManager</code> has it cached. Everything works.</li>
+  <li><strong>T+5min:</strong> Proactive refresh loop (runs every 5 minutes) checks expiration. Token expires in <5 minutes. Calls <code>user.getIdToken(true)</code>. Fresh token obtained. All branches re-supplied. <strong>User sees nothing.</strong></li>
+</ol>
+
+<p>That's the healthy path — collateral circulation maintained the supply. But what if the refresh fails?</p>
+
+<ol style="padding-left:20px; margin-bottom:16px;">
+  <li><strong>T+0:</strong> Token expires. Refresh loop fires. <code>user.getIdToken(true)</code> fails (network down, Firebase outage, session revoked server-side).</li>
+  <li><strong>T+0:</strong> <code>clearInterval()</code> — the refresh loop <strong>stops retrying</strong>. No exponential backoff. No retry count. The pump just stops.</li>
+  <li><strong>T+1:</strong> User clicks "Upload." <code>htmx:configRequest</code> fires. Calls <code>TokenManager.getToken()</code>. Token is expired. Calls <code>user.getIdToken(true)</code> — fails again. Request goes out <strong>without Authorization header</strong>.</li>
+  <li><strong>T+1:</strong> Server receives unauthenticated request. <code>get_user_id_from_token()</code> raises HTTPException(401). Global exception handler converts to 200 + <code>X-Auth-Error: token_expired</code> header.</li>
+  <li><strong>T+1:</strong> <code>cold-start-detector.js</code> sees <code>X-Auth-Error</code> → shows "Session ended" banner.</li>
+  <li><strong>T+2:</strong> User clicks sidebar. Same cascade. Another 401-as-200. Another banner.</li>
+  <li><strong>T+2:</strong> <code>htmx:responseError</code> fires. Attempts one more <code>user.getIdToken(true)</code>. Fails. Clears all tokens (localStorage, cookie, cache). Shows "Session Expired" modal. Redirects to <code>/login</code>.</li>
+</ol>
+
+<div class="card card-red">
+  <div class="label">The Ischemic Cascade</div>
+  <p>Every authenticated endpoint failed simultaneously. Not one by one, not in sequence — all at once. The trunk occluded, and the entire territory went ischemic. The symptom was "everything is broken." The lesion was one token.</p>
+  <p style="margin:0;">If you diagnosed this as a layer problem ("the sidebar isn't rendering correctly") or a pipeline problem ("the upload flow is broken"), you'd investigate those specific systems and find nothing wrong with them. They're structurally intact. They're just not receiving supply.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>Territory Mapping: The Diagnostic Method</h2>
+
+<p>In vascular pathology, you don't trace one vessel. You <strong>map the territory</strong> — what's affected and what's spared. The boundary between affected and spared tells you the branch point.</p>
+
+<p>Software networks work the same way. When multiple things break, don't investigate each one separately. Map what's affected vs. what's spared.</p>
+
+<h3>Example: "Uploads fail and the file list is empty"</h3>
+
+<div class="territory-map">
+  <div class="territory territory-dead">
+    <div class="territory-name">Affected</div>
+    <div class="territory-contents">
+      Upload (POST /api/upload) — 401<br>
+      File list (GET /api/files) — 401<br>
+      Delete file — 401<br>
+      Export — 401<br>
+      Billing page — 401
+    </div>
+  </div>
+  <div class="territory territory-alive">
+    <div class="territory-name">Spared</div>
+    <div class="territory-contents">
+      Login page loads — no auth required<br>
+      Static assets (CSS, JS, icons) — no auth<br>
+      Firebase config endpoint — exempt<br>
+      Health check — exempt<br>
+      App shell renders — client-side only
+    </div>
+  </div>
+</div>
+
+<p><strong>Interpretation:</strong> Everything that requires <code>get_user_id_from_token()</code> is affected. Everything exempt is spared. The boundary is the auth middleware. The trunk is the Firebase token. This is a token-level occlusion, not a bug in uploads, files, or billing individually.</p>
+
+<h3>Example: "The file list is stale but uploads work"</h3>
+
+<div class="territory-map">
+  <div class="territory territory-dead">
+    <div class="territory-name">Affected</div>
+    <div class="territory-contents">
+      Sidebar file list — stale<br>
+      Calendar view — stale<br>
+      File count badge — wrong number<br>
+      Search results — searching stale data
+    </div>
+  </div>
+  <div class="territory territory-alive">
+    <div class="territory-name">Spared</div>
+    <div class="territory-contents">
+      Upload succeeds (server confirms)<br>
+      Summary content loads correctly when clicked<br>
+      API returns correct data in Network tab<br>
+      New file appears after manual refresh
+    </div>
+  </div>
+</div>
+
+<p><strong>Interpretation:</strong> Everything bound to <code>Alpine.store('files')</code> is stale. Everything that reads directly from the server is fine. The boundary isn't auth — it's the Alpine store. This is an MCA stroke, not an aortic dissection. The trunk is <code>Alpine.store('files')</code>, and the territory is every component watching that store key.</p>
+
+<p>This is <em>not</em> a layer problem (the cache might be fine — the store just wasn't updated after upload). And it's not a pipeline problem (the upload pipeline succeeded). It's a network problem — one store key didn't propagate, and its entire territory went stale.</p>
+
+<div class="card card-accent">
+  <div class="label">The Diagnostic Principle</div>
+  <p style="margin:0;">Don't trace one path. Compare territories. The boundary between affected and spared tells you the branch point. If you investigate each broken feature independently, you'll find five "bugs." If you map the territory, you'll find one trunk.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>The Three Networks in Your App</h2>
+
+<h3>1. Auth Network (Arterial — supplies access)</h3>
+
+<div class="vessel-tree">
+  <div class="vessel-trunk">Firebase SDK (aorta)</div>
+  <div class="vessel-branch-line">┌──────┼──────┐</div>
+  <div class="vessel-branches">
+    <div class="vessel-branch">
+      <span class="vessel-branch-name">Token Generation</span>
+      <span class="vessel-branch-desc">user.getIdToken()</span>
+    </div>
+    <div class="vessel-branch">
+      <span class="vessel-branch-name">Proactive Refresh</span>
+      <span class="vessel-branch-desc">5-min loop in firebase_auth.js</span>
+    </div>
+    <div class="vessel-branch">
+      <span class="vessel-branch-name">On-demand Refresh</span>
+      <span class="vessel-branch-desc">htmx:configRequest handler</span>
+    </div>
+  </div>
+  <div style="margin-top:8px;">
+    <div class="vessel-branch-line">│</div>
+    <div class="vessel-trunk" style="background:var(--accent-light); border-color:var(--accent);">TokenManager cache (common carotid)</div>
+    <div class="vessel-branch-line">┌──────────────┼──────────────┐</div>
+    <div class="vessel-branches">
+      <div class="vessel-branch">
+        <span class="vessel-branch-name">Header Path</span>
+        <span class="vessel-branch-desc">Authorization: Bearer → all HTMX/fetch routes</span>
+      </div>
+      <div class="vessel-branch">
+        <span class="vessel-branch-name">Cookie Path</span>
+        <span class="vessel-branch-desc">HttpOnly id_token cookie → fallback for page loads</span>
+      </div>
+      <div class="vessel-branch">
+        <span class="vessel-branch-name">localStorage</span>
+        <span class="vessel-branch-desc">id_token key → cross-tab availability</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>2. Store Network (Nervous — propagates state)</h3>
+
+<p>Alpine stores are like the nervous system — one signal source propagates to many effectors. A store key update triggers every <code>x-text</code>, <code>x-for</code>, <code>x-show</code>, and <code>x-effect</code> that watches it.</p>
+
+<table>
+  <thead>
+    <tr><th>Store Key (Nerve Trunk)</th><th>Territory (Effectors)</th><th>Failure Mode</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Alpine.store('files')</code></td>
+      <td>Sidebar file list, calendar view, badge counts, search filter, hidden files pill</td>
+      <td>Store not updated after upload → entire file UI is stale. Motor neuron lesion — the signal isn't reaching any of the muscles.</td>
+    </tr>
+    <tr>
+      <td><code>Alpine.store('sidebar')</code></td>
+      <td>Sidebar visibility, width, resize handle, mobile overlay</td>
+      <td>Store says "open" but CSS says "hidden" → phantom panel. Upper vs. lower motor neuron — the signal exists but the effector isn't responding.</td>
+    </tr>
+    <tr>
+      <td><code>fileTableManager</code></td>
+      <td>Sort order, view mode, selection state, hidden file tracking</td>
+      <td>Manager state desynchronized from Alpine store → two sources of truth. Conflicting innervation — two nerves trying to control the same muscle.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>3. Event Network (Lymphatic — propagates signals)</h3>
+
+<p>Custom events and HTMX lifecycle events propagate through the DOM like lymphatic drainage — the event originates at a source and flows through a chain of listeners.</p>
+
+<table>
+  <thead>
+    <tr><th>Event (Drainage Basin)</th><th>Listeners (Nodes)</th><th>Failure Mode</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>auth-ready</code></td>
+      <td>file-table-manager (initial load), app.js (email display), app-help.js (help panel)</td>
+      <td>If auth-ready never fires (Firebase SDK fails to load), all three listeners wait forever. The app looks loaded but nothing initializes. Lymphedema — fluid accumulates because drainage never started.</td>
+    </tr>
+    <tr>
+      <td><code>chartprep:files-changed</code></td>
+      <td>debug_overlay (stats), tab_switching (badge counts)</td>
+      <td>If this event fires with wrong data, both listeners update incorrectly. The event is the sentinel node — if it's wrong, the entire downstream basin is wrong.</td>
+    </tr>
+    <tr>
+      <td><code>htmx:afterSwap</code></td>
+      <td>offline-cache sync, Alpine re-initialization on swapped content</td>
+      <td>If a swap silently fails, the cache doesn't sync and Alpine doesn't reinitialize. The event didn't fire, so downstream listeners don't know anything happened. Sentinel node negative — no drainage, but not because there's nothing to drain.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ============================================================ -->
+<h2>Collateral Circulation</h2>
+
+<p>The circle of Willis provides collateral flow — if one carotid is occluded, the contralateral carotid and vertebrobasilar system can partially supply the affected territory through communicating arteries. The infarct is smaller because collaterals limit the damage.</p>
+
+<p>Your app has collateral circulation built in:</p>
+
+<table>
+  <thead>
+    <tr><th>Occlusion</th><th>Collateral</th><th>Coverage</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Authorization header fails</td>
+      <td>HttpOnly cookie fallback</td>
+      <td>Partial — cookie only works on full page loads, not HTMX requests. Covers page navigation but not in-page API calls.</td>
+    </tr>
+    <tr>
+      <td>Token expired on request</td>
+      <td>On-demand refresh in htmx:configRequest</td>
+      <td>Full — silent refresh before the request fires. User never sees the expiry. This is the strongest collateral.</td>
+    </tr>
+    <tr>
+      <td>Vertex AI (Gemini) unavailable</td>
+      <td><code>LLM_PROVIDER</code> env var → OpenAI, Bedrock, Anthropic</td>
+      <td>Full (if configured) — but requires restart with new env var. Not automatic. Manual cross-clamping.</td>
+    </tr>
+    <tr>
+      <td>Server returns 503 (cold start)</td>
+      <td>cold-start-detector.js shows banner, user refreshes</td>
+      <td>Manual — the "collateral" is the user pressing F5. Server warms up on next request. Temporary ischemia, not infarction.</td>
+    </tr>
+    <tr>
+      <td>GCS unavailable</td>
+      <td>localStorage cache + <code>buildSummaryHTML()</code></td>
+      <td>Read-only — cached summaries display from localStorage. Writes fail. The app is read-only during the outage. Like perfusing just enough to prevent necrosis but not enough for function.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="card card-green">
+  <div class="label">Collaterals Don't Fix the Occlusion</div>
+  <p style="margin:0;">The circle of Willis doesn't re-open the occluded carotid. It limits the infarct while you address the root cause. Similarly, the HttpOnly cookie fallback doesn't fix the expired token. The localStorage cache doesn't fix the GCS outage. Collaterals buy time. They don't fix trunks. If you see a collateral engaged (cookie being used instead of header, cache serving instead of server), that's a diagnostic sign — a trunk is down somewhere.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>The Diagnostic Algorithm</h2>
+
+<p>Multiple features broken at once. Here's the procedure:</p>
+
+<div class="card card-green">
+  <div class="label">Step 1 — Confirm It's a Network Problem</div>
+  <p><strong>Question:</strong> Are multiple unrelated features broken simultaneously?</p>
+<pre style="background:var(--code-bg); border:1px solid var(--border); border-radius:6px; padding:12px 16px; margin:8px 0; font-size:12px;">
+// Quick check: is this a network problem or coincidence?
+// Try 3 unrelated actions:
+//   1. Click a file in sidebar (needs auth + store)
+//   2. Try uploading (needs auth + pipeline)
+//   3. Check if login page loads (no auth needed)
+
+// If all three fail → trunk occlusion (auth or server)
+// If 1 and 2 fail but 3 works → auth trunk
+// If only 1 fails → not a network problem, go to layer/pipeline diagnosis
+</pre>
+</div>
+
+<div class="card card-green">
+  <div class="label">Step 2 — Map the Territory</div>
+  <p><strong>Question:</strong> What's affected and what's spared?</p>
+<pre style="background:var(--code-bg); border:1px solid var(--border); border-radius:6px; padding:12px 16px; margin:8px 0; font-size:12px;">
+// Check auth state:
+firebase.auth().currentUser                    // null? → Firebase SDK issue (aorta)
+await firebase.auth().currentUser.getIdToken() // throws? → token refresh failed
+localStorage.getItem('id_token')               // null? → token never cached
+
+// Check which requests fail:
+// DevTools → Network tab → filter by status code
+// All 401s? → auth trunk
+// Mix of 401 and 200? → some routes exempt (check exempt_paths in main.py)
+// All 503? → server trunk (Uvicorn/cold start)
+
+// Check store state:
+Alpine.store('files')   // populated or empty?
+Alpine.store('sidebar') // correct state?
+
+// If stores are empty but API returns data → store network (nervous system)
+// If API returns 401 → auth network (arterial)
+// If API returns 503 → server network (cardiac)
+</pre>
+</div>
+
+<div class="card card-green">
+  <div class="label">Step 3 — Identify the Branch Point</div>
+  <p><strong>Question:</strong> Where does the boundary between affected and spared fall?</p>
+<pre style="background:var(--code-bg); border:1px solid var(--border); border-radius:6px; padding:12px 16px; margin:8px 0; font-size:12px;">
+// Auth network — check the trunk chain:
+firebase.auth().currentUser           // Firebase SDK loaded? (aorta)
+  → .getIdToken()                     // Token available? (common carotid)
+    → TokenManager.getToken()         // Cache valid? (internal carotid)
+      → htmx:configRequest injects    // Header path? (MCA)
+      → cookie exists?                // Cookie path? (ACA — collateral)
+
+// Store network — check the signal chain:
+// Did the data source fire an update?
+Alpine.store('files')                 // Is the store object correct?
+document.querySelector('[x-for]')     // Are bindings present?
+// If store is correct but UI is wrong → binding issue (effector)
+// If store is stale → who was supposed to update it? (signal source)
+
+// Event network — check event propagation:
+document.addEventListener('auth-ready', e => console.log('auth-ready fired', e.detail));
+document.addEventListener('chartprep:files-changed', e => console.log('files-changed', e.detail));
+// Reload page. Which events fire? Which don't?
+// Missing event → the source never dispatched. Find the source.
+</pre>
+</div>
+
+<div class="card card-green">
+  <div class="label">Step 4 — Check Collaterals</div>
+  <p><strong>Question:</strong> Are fallback paths engaged? That tells you the primary trunk is down.</p>
+<pre style="background:var(--code-bg); border:1px solid var(--border); border-radius:6px; padding:12px 16px; margin:8px 0; font-size:12px;">
+// Is the cookie being used instead of the header?
+// Check server logs for: "Using token from cookie" vs "Using token from header"
+// If cookie → header path is down. Check htmx:configRequest handler.
+
+// Is localStorage serving cached content?
+// Check if offline-cache.js is serving summaries from cache:
+console.log('Cache keys:', Object.keys(localStorage).filter(k => k.includes('summary')));
+// If summaries load from cache but API calls fail → GCS is down, cache is collateral
+
+// Did cold-start-detector fire?
+// Check for the red banner. If present → server trunk was temporarily down.
+
+// Is the proactive refresh loop still running?
+// Add this to console to check:
+// If firebase_auth.js clearInterval() was called, the refresh loop stopped.
+// The "pump" (proactive refresh) stopped. Only on-demand refresh remains.
+</pre>
+</div>
+
+<p>The branch point is where affected meets spared. Fix the trunk, and the entire territory recovers.</p>
+
+<div class="card card-orange">
+  <div class="label">The Network Shortcut</div>
+  <p style="margin:0;"><strong>"Logging out and back in fixes everything"</strong> → auth trunk. The re-login obtained a fresh token, re-supplying all branches. <strong>"Refreshing the page fixes it"</strong> → could be auth (cookie collateral kicks in) or store (Alpine re-initializes from server). <strong>"It fixes itself after a minute"</strong> → the proactive refresh loop re-supplied the trunk. Transient ischemia, not infarction.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>Surgical Principles for Networks</h2>
+
+<table>
+  <thead>
+    <tr><th>Principle</th><th>Software</th><th>Anatomy</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Maintain collateral circulation.</strong></td>
+      <td>Every trunk should have a fallback path. Authorization header → cookie. Server data → localStorage cache. Primary LLM → fallback provider. Don't assume the primary path is always available.</td>
+      <td>The circle of Willis exists because the brain can't tolerate ischemia. Your auth system can't either.</td>
+    </tr>
+    <tr>
+      <td><strong>Monitor the trunk, not the branches.</strong></td>
+      <td>Check token validity centrally (TokenManager), not at each consumer. If you instrument each API route's auth separately, you'll see five failures instead of one cause.</td>
+      <td>You monitor carotid flow with a Doppler, not by checking perfusion in each cerebral territory independently.</td>
+    </tr>
+    <tr>
+      <td><strong>Fail loud at the trunk.</strong></td>
+      <td>When the refresh loop stops (<code>clearInterval()</code>), it stops silently. No log, no warning, no retry. The trunk occluded and nobody was notified. Log trunk failures at ERROR level. A silent trunk death guarantees a cascade.</td>
+      <td>Carotid stenosis is screened for because a silent occlusion becomes a catastrophic stroke.</td>
+    </tr>
+    <tr>
+      <td><strong>Map territories in advance.</strong></td>
+      <td>Before a bug, know which consumers depend on which trunk. Document that <code>Alpine.store('files')</code> supplies the sidebar, calendar, badges, and search. When the store breaks, you already know the blast radius.</td>
+      <td>You know the MCA territory (face, arm, speech) before you see the stroke. You don't figure it out during the code.</td>
+    </tr>
+    <tr>
+      <td><strong>Don't create single points of failure.</strong></td>
+      <td>The proactive refresh loop has no retry, no fallback, no notification. If it fails, the only remaining path is on-demand refresh in htmx:configRequest. One failure and you're down to your last collateral.</td>
+      <td>End-artery anatomy (retinal artery, coronary) means no collateral. Occlusion = infarction. Design redundancy into your trunks.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ============================================================ -->
+<h2>Where Networks Meet Layers and Conduits</h2>
+
+<p>A token expiry (network) causes an upload failure (pipeline) that the user sees as a broken screen (layers). Three patterns, one incident. The diagnostic triage is:</p>
+
+<ol style="padding-left:20px; margin-bottom:16px;">
+  <li><strong>Is it simultaneous and multi-feature?</strong> → Network. Map the territory.</li>
+  <li><strong>Is it one feature with corrupted output?</strong> → Pipeline. Trace upstream.</li>
+  <li><strong>Is it one feature with wrong display?</strong> → Layers. Go deeper.</li>
+</ol>
+
+<p>Get the pattern right first. The diagnostic algorithm follows from the geometry.</p>
+
+<div class="card card-teal">
+  <div class="label">The Acute Abdomen — All Three at Once</div>
+  <p style="margin:0;">A mesenteric artery occlusion (network) causes bowel ischemia that corrupts the GI pipeline (conduit), which leads to perforation through the peritoneum (layers). In your app: Firebase SDK fails to load (network — aortic level), which causes an upload to fail mid-processing (conduit — extraction station gets 401 from Vertex AI because credentials share the GCS service account), which writes a partial result to storage that the layer stack faithfully displays as a garbled summary (layers). Three patterns, one root cause, one fix: restore the trunk.</p>
+</div>
+
+<hr>
+
+<p style="text-align:center; color:var(--muted); font-size:13px; margin-top:40px;">
+  Written May 24, 2026 — ChartPrepper project<br>
+  Part of <a href="2026-05-24_three-patterns-of-the-body.html" style="color:var(--muted);">Three Patterns of the Body</a><br>
+  Don't trace one path. Map the territory. The boundary between affected and spared is the branch point.
+</p>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Layers — The Anatomy Edition</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --card: #ffffff;
+    --border: #e7e5e4;
+    --text: #1c1917;
+    --muted: #78716c;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --orange: #d97706;
+    --orange-light: #fffbeb;
+    --purple: #7c3aed;
+    --purple-light: #f5f3ff;
+    --teal: #0d9488;
+    --teal-light: #f0fdfa;
+    --code-bg: #f5f5f4;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "SF Mono", "Fira Code", "Consolas", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.75; padding: 40px 20px 80px; }
+  .container { max-width: 740px; margin: 0 auto; }
+  .date { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 8px; }
+  h1 { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .subtitle { font-size: 15px; color: var(--muted); margin-bottom: 40px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
+  h2 { font-size: 20px; font-weight: 700; margin-top: 52px; margin-bottom: 16px; }
+  h3 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 10px; }
+  p { margin-bottom: 16px; font-size: 15px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 20px 0; }
+  .card-accent { border-left: 4px solid var(--accent); background: var(--accent-light); }
+  .card-green { border-left: 4px solid var(--green); background: var(--green-light); }
+  .card-red { border-left: 4px solid var(--red); background: var(--red-light); }
+  .card-orange { border-left: 4px solid var(--orange); background: var(--orange-light); }
+  .card-purple { border-left: 4px solid var(--purple); background: var(--purple-light); }
+  .card-teal { border-left: 4px solid var(--teal); background: var(--teal-light); }
+  .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .card-accent .label { color: var(--accent); }
+  .card-green .label { color: var(--green); }
+  .card-red .label { color: var(--red); }
+  .card-orange .label { color: var(--orange); }
+  .card-purple .label { color: var(--purple); }
+  .card-teal .label { color: var(--teal); }
+  code { font-family: var(--mono); font-size: 13px; background: var(--code-bg); padding: 2px 6px; border-radius: 4px; }
+  pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.6; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
+  th { background: var(--code-bg); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  hr { border: none; border-top: 2px solid var(--border); margin: 52px 0; }
+
+  .layer-diagram {
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 0;
+    margin: 28px 0;
+    overflow: hidden;
+  }
+  .layer-row {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    min-height: 64px;
+  }
+  .layer-row:last-child { border-bottom: none; }
+  .layer-anat, .layer-sw { padding: 12px 16px; font-size: 13px; }
+  .layer-anat { text-align: right; }
+  .layer-sw { text-align: left; }
+  .layer-num {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+    background: var(--accent);
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .layer-row:nth-child(1) .layer-num { background: #ef4444; }
+  .layer-row:nth-child(2) .layer-num { background: #f97316; }
+  .layer-row:nth-child(3) .layer-num { background: #eab308; }
+  .layer-row:nth-child(4) .layer-num { background: #22c55e; }
+  .layer-row:nth-child(5) .layer-num { background: #3b82f6; }
+  .layer-row:nth-child(6) .layer-num { background: #8b5cf6; }
+
+  .layer-name { font-weight: 700; display: block; }
+  .layer-desc { font-size: 12px; color: var(--muted); display: block; margin-top: 2px; }
+
+  @media (max-width: 600px) {
+    .layer-row { grid-template-columns: 1fr 40px 1fr; }
+    .layer-anat, .layer-sw { padding: 10px 10px; font-size: 12px; }
+    .layer-num { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="date">May 23, 2026</div>
+<h1>Software Layers: The Anatomy Edition</h1>
+<p class="subtitle">You know 6 layers of the abdominal wall. Your web app has 6 layers too. Here's the mapping — and why confusing two of them caused a real bug.</p>
+
+<!-- ============================================================ -->
+<h2>The Premise</h2>
+
+<p>In anatomy, you learn the abdominal wall as distinct layers from skin to peritoneum. Each has a specific job. You don't confuse external oblique with transversalis fascia — they're at different depths, made of different tissue, and fail in different ways.</p>
+
+<p>Software works the same way. A web app has layers from the screen (what you see) down to the database (the source of truth). Each has a specific job. Your bug happened because you confused two layers — like blaming the skin for a defect in the transversalis fascia.</p>
+
+<p>Let's build the map.</p>
+
+<!-- ============================================================ -->
+<h2>The 6 Layers, Side by Side</h2>
+
+<div class="layer-diagram">
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">Skin</span>
+      <span class="layer-desc">What you see and touch. Passive — displays what's underneath.</span>
+    </div>
+    <div class="layer-num">1</div>
+    <div class="layer-sw">
+      <span class="layer-name">Rendering (Tailwind CSS, HTML)</span>
+      <span class="layer-desc">Pixels on screen. Passive — paints whatever the framework says.</span>
+    </div>
+  </div>
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">Subcutaneous Tissue</span>
+      <span class="layer-desc">Camper's + Scarpa's. Shapes contour, transmits signals from deeper layers.</span>
+    </div>
+    <div class="layer-num">2</div>
+    <div class="layer-sw">
+      <span class="layer-name">Reactivity (Alpine.js, HTMX swap)</span>
+      <span class="layer-desc">Shapes the DOM, transmits data changes to rendering. Does not originate data.</span>
+    </div>
+  </div>
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">Muscular Layers</span>
+      <span class="layer-desc">External oblique, internal oblique, transversus. Active control — contraction, protection, movement.</span>
+    </div>
+    <div class="layer-num">3</div>
+    <div class="layer-sw">
+      <span class="layer-name">State Management (Alpine store)</span>
+      <span class="layer-desc">Active control — decides what data the UI sees, responds to user actions, transforms data.</span>
+    </div>
+  </div>
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">Transversalis Fascia</span>
+      <span class="layer-desc">Thin but critical barrier. Weakness here = inguinal hernia. First line of containment.</span>
+    </div>
+    <div class="layer-num">4</div>
+    <div class="layer-sw">
+      <span class="layer-name">Cache (localStorage)</span>
+      <span class="layer-desc">Thin but critical. Weakness here = stale data bug. Barrier between local app and network.</span>
+    </div>
+  </div>
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">Preperitoneal Space</span>
+      <span class="layer-desc">The passage — where structures transit between inside and outside. Inguinal canal lives here.</span>
+    </div>
+    <div class="layer-num">5</div>
+    <div class="layer-sw">
+      <span class="layer-name">Network / API (HTMX fetch, fetch())</span>
+      <span class="layer-desc">The passage — HTTP requests transit between your browser and the server. Can be slow, can fail.</span>
+    </div>
+  </div>
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">Peritoneum</span>
+      <span class="layer-desc">Lines the cavity that holds the organs. The source of truth — what's actually inside.</span>
+    </div>
+    <div class="layer-num">6</div>
+    <div class="layer-sw">
+      <span class="layer-name">Server (Uvicorn → Starlette → FastAPI → Jinja2 → Postgres)</span>
+      <span class="layer-desc">Holds the real data. The source of truth — what actually exists.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>Why This Mapping Works</h2>
+
+<h3>Skin doesn't generate content</h3>
+<p>You'd never say "the skin is wrong" when a patient has an abdominal mass. The skin is faithfully showing you the contour of what's underneath. Likewise, HTML/CSS rendering doesn't generate data — it paints whatever the framework hands it. A wrong display means wrong data underneath, not wrong rendering.</p>
+
+<h3>Subcutaneous tissue transmits, doesn't originate</h3>
+<p>Scarpa's fascia doesn't decide what shape the abdomen is. It sits between the muscles and the skin, transmitting the underlying structure to the surface. Alpine.js does the same thing — it's a transmission layer between your data store and the screen. It watches for changes and propagates them upward. It doesn't decide what the data should be.</p>
+
+<div class="card card-red">
+  <div class="label">Your Bug — Anatomically</div>
+  <p style="margin:0;">You saw the wrong contour at the skin (wrong files on screen) and blamed the subcutaneous tissue (Alpine.js). But the problem was at the transversalis fascia (cache layer) — it had a defect that let stale data through instead of fresh data from the peritoneal cavity (server).</p>
+</div>
+
+<h3>The transversalis fascia parallel is the key</h3>
+<p>The transversalis fascia is thin, easy to overlook, and often not what you think about first. But a weakness in it causes indirect inguinal hernias — bowel herniates through the deep ring and presents at the skin as a bulge. The defect is at layer 4 but the symptom is at layer 1.</p>
+
+<p>Your localStorage cache is the same. It's a thin layer, easy to overlook. You didn't even think about it — it just silently served old data. The defect was at layer 4 (cache) but the symptom appeared at layer 1 (screen). You went straight from symptom (screen) to the nearest named structure (Alpine) and blamed it.</p>
+
+<!-- ============================================================ -->
+<h2>The Evagination Analogy</h2>
+
+<p>You mentioned that the testis evaginates through the abdominal wall, and each layer it passes through contributes a covering to the spermatic cord:</p>
+
+<table>
+  <thead>
+    <tr><th>Abdominal Wall Layer</th><th>Spermatic Cord Covering</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Transversalis fascia</td><td>Internal spermatic fascia</td></tr>
+    <tr><td>Internal oblique</td><td>Cremasteric muscle + fascia</td></tr>
+    <tr><td>External oblique aponeurosis</td><td>External spermatic fascia</td></tr>
+  </tbody>
+</table>
+
+<p>The coverings look different from the original layers, but they're derived from them. If you know the layers, you can predict the coverings.</p>
+
+<p>Software works the same way. Data "descends" from the server through each layer, and each layer wraps it in its own format:</p>
+
+<table>
+  <thead>
+    <tr><th>Software Layer</th><th>"Covering" It Adds</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Server (peritoneum)</td><td>Raw database rows</td></tr>
+    <tr><td>API (preperitoneal)</td><td>JSON response with HTTP headers</td></tr>
+    <tr><td>Cache (transversalis)</td><td>Serialized string in localStorage</td></tr>
+    <tr><td>State store (muscle)</td><td>JavaScript object in Alpine reactive store</td></tr>
+    <tr><td>Reactivity (subcutaneous)</td><td>DOM bindings (<code>x-for</code>, <code>x-text</code>)</td></tr>
+    <tr><td>Rendering (skin)</td><td>Pixels — <code>&lt;div&gt;</code> elements with text</td></tr>
+  </tbody>
+</table>
+
+<p>At each layer, the data looks different — just like the coverings look different from the original wall layers. But it's the <strong>same data</strong>, transformed at each boundary. If the data is wrong at the server, it'll be wrong at every layer. If it's right at the server but wrong at the cache, everything above the cache is wrong.</p>
+
+<div class="card card-teal">
+  <div class="label">The Pure Way to Think About It</div>
+  <p style="margin:0;">Just as every covering of the spermatic cord can be traced back to a specific abdominal wall layer, every piece of data on screen can be traced back through a specific chain of transformations to the database. When something is wrong, you don't dissect every layer — you find <strong>the boundary where normal becomes abnormal</strong>. That's the lesion.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>Hernias = Bugs</h2>
+
+<p>This analogy goes deeper than you'd expect.</p>
+
+<h3>Indirect inguinal hernia = Stale cache bug</h3>
+<p>The deep inguinal ring (transversalis fascia defect) lets abdominal contents herniate into a space where they shouldn't be. Our cache defect let stale data leak into the state store where it shouldn't be. In both cases:</p>
+<ul style="margin-bottom:16px; padding-left:20px;">
+  <li>The defect is at a <strong>fascial/barrier layer</strong></li>
+  <li>The symptom presents <strong>superficially</strong> (a bulge you can see / wrong files on screen)</li>
+  <li>The fix is at the <strong>defect site</strong>, not at the surface (you repair the ring, not the skin)</li>
+</ul>
+
+<h3>Direct inguinal hernia = Server-side bug</h3>
+<p>A defect in the posterior wall (Hesselbach's triangle) — the contents push straight through. Like a bug in the server/database: the data is wrong at the source and pushes straight through every layer to the screen. No amount of caching or framework logic can fix it.</p>
+
+<h3>Femoral hernia = Edge case bug</h3>
+<p>Contents herniate through an unexpected route (femoral canal instead of inguinal canal). Like data arriving through a path you didn't consider — a WebSocket update, a different API endpoint (our Calendar vs. Folders issue), or a race condition. The existing layers are intact, but the data found a way around them.</p>
+
+<div class="card card-orange">
+  <div class="label">Diagnostic Approach — Same in Both Fields</div>
+  <p><strong>Anatomy:</strong> You see a groin bulge. You don't immediately cut. You examine: is it above or below the inguinal ligament? Does it reduce? What's the relationship to the pubic tubercle? You're localizing the defect layer by layer before you act.</p>
+  <p style="margin:0;"><strong>Software:</strong> You see wrong data on screen. You don't immediately rewrite. You examine: is the store correct? Is the cache correct? Is the API returning the right thing? You're localizing the defect layer by layer before you act.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>The Layers, Formally</h2>
+
+<p>Now that you have the anatomical intuition, here are the layers with their formal CS names and properties.</p>
+
+<table>
+  <thead>
+    <tr><th>#</th><th>Layer</th><th>CS Name</th><th>Job</th><th>Common Bug</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Rendering</td>
+      <td>View / Presentation</td>
+      <td>Turn data into pixels</td>
+      <td>CSS/layout issues, template typos. <strong>Never</strong> a data correctness issue.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Reactivity</td>
+      <td>View Binding / Observer Pattern</td>
+      <td>Automatically sync data changes to DOM</td>
+      <td>Binding not set up, wrong variable name. Rare in mature frameworks.</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>State</td>
+      <td>Model / Store</td>
+      <td>Hold current application data in memory</td>
+      <td>State not updated after fetch, stale reference, mutation without notification.</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Cache</td>
+      <td>Cache / Persistence</td>
+      <td>Keep a local copy for speed and offline</td>
+      <td><strong>Stale cache</strong> — no invalidation, no refresh, shadows the server. <em>This was your bug.</em></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Network</td>
+      <td>Transport / API</td>
+      <td>Move data between client and server</td>
+      <td>Timeout, wrong endpoint, missing auth header, CORS block.</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Server</td>
+      <td>Backend / Database</td>
+      <td>Store the truth, process business logic</td>
+      <td>Wrong query, missing record, permission error.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ============================================================ -->
+<h2>Placing Your Actual Stack</h2>
+
+<p>The layers above used generic names. Here's where every named technology in ChartPrepper actually lives — because "FastAPI" and "Starlette" are a lot more concrete than "Backend."</p>
+
+<table>
+  <thead>
+    <tr><th>#</th><th>Layer</th><th>Your Tech</th><th>What It Does Here</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Rendering</td>
+      <td><strong>Tailwind CSS</strong>, browser-rendered HTML</td>
+      <td>Pure presentation. <code>class="bg-white p-4"</code> is skin — it shows what's underneath, originating nothing.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Reactivity</td>
+      <td><strong>Alpine.js</strong>, <strong>HTMX</strong> (swap half)</td>
+      <td>Alpine watches stores and updates the DOM. HTMX receives an HTML fragment from the server and swaps it in — that swap is a reactivity job (Layer 2), even though the fetch was Layer 5.</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>State</td>
+      <td><strong>Alpine.store()</strong>, <code>file-table-manager.js</code></td>
+      <td>The JavaScript objects that hold "what files exist, which is selected, what's hidden." Active control layer — the muscles.</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Cache</td>
+      <td><strong>localStorage</strong>, <code>offline-cache.js</code>, <code>buildSummaryHTML()</code></td>
+      <td>Your transversalis fascia. Thin, silent, easily forgotten. Serves stale data when the server has moved on.</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Network</td>
+      <td><strong>HTMX</strong> (fetch half), <code>fetch()</code> calls, HTTP protocol</td>
+      <td>The passage. HTMX fires <code>hx-get="/files"</code> — that request travels through the network to the server and back. <code>fetch()</code> in your JS modules does the same thing manually.</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Server</td>
+      <td><strong>FastAPI</strong> → <strong>Starlette</strong> → <strong>Uvicorn</strong>, <strong>Jinja2</strong>, <strong>Pydantic</strong>, <strong>Postgres</strong></td>
+      <td>The peritoneal cavity — but it has its own layers inside (see below).</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>HTMX: the structure that crosses layers</h3>
+
+<p>HTMX is interesting because it lives in <strong>two layers at once</strong> — like the inguinal canal, which is a passage through multiple wall layers, not a structure confined to one.</p>
+
+<p>When you write <code>hx-get="/files" hx-target="#file-list"</code>, two things happen:</p>
+<ol style="margin-bottom:16px; padding-left:20px;">
+  <li><strong>Layer 5 (Network):</strong> HTMX sends an HTTP GET to <code>/files</code>. This is transport — data crossing between browser and server.</li>
+  <li><strong>Layer 2 (Reactivity):</strong> When the response arrives, HTMX swaps the HTML into <code>#file-list</code>. This is DOM manipulation — the same job Alpine's <code>x-for</code> does, just using server-rendered HTML instead of client-side templates.</li>
+</ol>
+
+<p>This is why HTMX feels different from both Alpine and raw <code>fetch()</code> — it's genuinely doing work at two layers. Alpine only works at Layers 2-3. <code>fetch()</code> only works at Layer 5. HTMX bridges them.</p>
+
+<h3>The server has its own layers (peritoneum has a parietal and visceral side)</h3>
+
+<p>From the browser's perspective, everything on the server is "Layer 6." But internally, the server has its own anatomy — and the terms you asked about are its layers:</p>
+
+<div class="layer-diagram" style="max-width: 540px;">
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">Incoming connection</span>
+      <span class="layer-desc">Raw TCP socket, port 8080</span>
+    </div>
+    <div class="layer-num" style="background: #6366f1;">A</div>
+    <div class="layer-sw">
+      <span class="layer-name">Uvicorn</span>
+      <span class="layer-desc">ASGI server. Listens on the port, receives bytes, hands off to the framework. You never write Uvicorn code — you just <code>uvicorn main:app</code>.</span>
+    </div>
+  </div>
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">HTTP semantics</span>
+      <span class="layer-desc">Request, response, routing, middleware</span>
+    </div>
+    <div class="layer-num" style="background: #8b5cf6;">B</div>
+    <div class="layer-sw">
+      <span class="layer-name">Starlette</span>
+      <span class="layer-desc">The ASGI framework. Routes, middleware, request/response objects. FastAPI is built on top of it — every <code>Request</code> object you touch is a Starlette object.</span>
+    </div>
+  </div>
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">Your application logic</span>
+      <span class="layer-desc">Routes, validation, business rules</span>
+    </div>
+    <div class="layer-num" style="background: #a855f7;">C</div>
+    <div class="layer-sw">
+      <span class="layer-name">FastAPI + Pydantic</span>
+      <span class="layer-desc">Your route functions, type validation, dependency injection. This is where <em>your</em> code lives. Pydantic validates the shape of incoming/outgoing data.</span>
+    </div>
+  </div>
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">HTML generation</span>
+      <span class="layer-desc">Turning data into the response body</span>
+    </div>
+    <div class="layer-num" style="background: #c084fc;">D</div>
+    <div class="layer-sw">
+      <span class="layer-name">Jinja2</span>
+      <span class="layer-desc">Template engine. Takes Python data and produces the HTML that HTMX will swap in or the browser will render on full page load. Server-side equivalent of Alpine's DOM generation.</span>
+    </div>
+  </div>
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">Source of truth</span>
+      <span class="layer-desc">Persistent storage</span>
+    </div>
+    <div class="layer-num" style="background: #d8b4fe;">E</div>
+    <div class="layer-sw">
+      <span class="layer-name">Postgres + GCS</span>
+      <span class="layer-desc">The actual data. User preferences in Postgres, chart files in GCS. Everything above is just wrapping and transporting what lives here.</span>
+    </div>
+  </div>
+</div>
+
+<div class="card card-purple">
+  <div class="label">Why This Matters</div>
+  <p style="margin:0;">When you say "the server returned the wrong thing," that's like saying "there's pathology in the abdomen." True, but not specific enough. Was Uvicorn not running (Layer A — no connection at all)? Was a Starlette middleware stripping headers (Layer B)? Was the FastAPI route querying the wrong data (Layer C)? Was Jinja2 rendering with the wrong template variable (Layer D)? Or was the data actually wrong in Postgres (Layer E)? Each has a different fix.</p>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2>Why You Confused Layer 2 with Layer 4</h2>
+
+<p>In anatomy terms, you confused the subcutaneous tissue with the transversalis fascia. That's a big jump — four layers apart. How did that happen?</p>
+
+<h3>1. Layer 2 has a name. Layer 4 doesn't.</h3>
+<p>"Alpine.js" is a named, visible technology you chose and installed. The caching layer is just a few lines of code in <code>offline-cache.js</code> that someone wrote and forgot about. Named things get blamed. Unnamed things hide.</p>
+<p><em>Anatomically:</em> It's like knowing the external oblique by name but forgetting the transversalis fascia exists. The fascia is thin, unnamed in casual conversation, and easy to skip during a quick dissection. But it's the one that matters for hernias.</p>
+
+<h3>2. You could see layer 2 but not layer 4.</h3>
+<p>Alpine templates are visible in your HTML files. You write <code>x-for="file in files"</code> and you can see it. The cache is invisible — it runs once on page load, silently, in a file you rarely open. You blamed what you could see.</p>
+<p><em>Anatomically:</em> You can see and palpate the superficial layers. The transversalis fascia is deep to three muscle layers. You can't see it without dissection (or, in software terms, without <code>console.log</code> debugging).</p>
+
+<h3>3. "Reactivity" sounds like it should guarantee correctness.</h3>
+<p>The word "reactive" implies responsiveness, freshness, aliveness. So when data was stale, you thought: "The reactive framework isn't being reactive." But reactivity means reactive to <em>store changes</em>, not reactive to <em>the server</em>. If the store is never updated, there's nothing to react to.</p>
+<p><em>Anatomically:</em> It's like saying "the muscle should contract to protect the abdominal contents" — yes, but the muscle can't do anything about a fascial defect below it. Contraction (reactivity) and structural integrity (data freshness) are independent properties at different layers.</p>
+
+<!-- ============================================================ -->
+<h2>The Diagnostic Algorithm</h2>
+
+<p>Next time you see wrong data on screen, use this — same as localizing an abdominal wall defect:</p>
+
+<div class="card card-green">
+  <div class="label">Layer-by-Layer Examination</div>
+<pre style="background:transparent; border:none; padding:0; margin:0; font-size:13px;">
+<strong>Step 1 — Inspect the skin (Rendering)</strong>
+  → Does the HTML/CSS look correct for the data it received?
+  → DevTools: Elements panel. Is the DOM what you expect?
+  → If DOM is right but looks wrong → CSS bug (Layer 1)
+
+<strong>Step 2 — Check subcutaneous (Reactivity)</strong>
+  → Is Alpine's internal data correct?
+  → Console: Alpine.store('files') or $data on the component
+  → If Alpine data is right but DOM is wrong → binding bug (Layer 2)
+
+<strong>Step 3 — Palpate the muscle (State)</strong>
+  → What's in the JavaScript store/variables?
+  → Console: check the manager object, global state
+  → If state is right but Alpine data is wrong → sync bug (Layer 3)
+
+<strong>Step 4 — Image the fascia (Cache)</strong>
+  → What's in localStorage?
+  → Console: JSON.parse(localStorage.getItem('key'))
+  → If cache is right but state is wrong → load bug (Layer 3-4 boundary)
+  → <strong>If cache is WRONG</strong> → cache invalidation bug (Layer 4) ← YOUR BUG WAS HERE
+
+<strong>Step 5 — Scope the canal (Network)</strong>
+  → What does the API actually return?
+  → DevTools: Network tab, or fetch() in console
+  → If API is right but cache is wrong → cache never refreshed (Layer 4)
+
+<strong>Step 6 — Explore the cavity (Server)</strong>
+  → What's in the database?
+  → Direct DB query or admin panel
+  → If DB is wrong → backend/storage bug (Layer 6)
+</pre>
+</div>
+
+<p>You stop at the first layer where the data goes from correct to incorrect. That's your lesion. You fix it there — not above, not below.</p>
+
+<!-- ============================================================ -->
+<h2>One More Thing: Referred Pain</h2>
+
+<p>You know referred pain — diaphragmatic irritation presents as shoulder pain (C3-C5, phrenic nerve). The symptom is far from the pathology. You don't operate on the shoulder.</p>
+
+<p>Software bugs have referred pain too. A cache bug at layer 4 presents as a rendering problem at layer 1. The symptom (wrong files on screen) is four layers away from the pathology (cache never refreshes). You don't rewrite the rendering framework.</p>
+
+<p>The skill, in both fields, is the same: <strong>don't treat the referred symptom. Localize the lesion.</strong></p>
+
+<hr>
+
+<p style="text-align:center; color:var(--muted); font-size:13px; margin-top:40px;">
+  Written May 23, 2026 — ChartPrepper project<br>
+  For a doctor who debugs software the way he was trained to diagnose patients:<br>
+  layer by layer, from the surface to the source.
+</p>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

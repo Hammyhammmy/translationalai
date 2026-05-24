@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Conduits — The Pipeline Edition</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --card: #ffffff;
+    --border: #e7e5e4;
+    --text: #1c1917;
+    --muted: #78716c;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --orange: #d97706;
+    --orange-light: #fffbeb;
+    --purple: #7c3aed;
+    --purple-light: #f5f3ff;
+    --teal: #0d9488;
+    --teal-light: #f0fdfa;
+    --code-bg: #f5f5f4;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "SF Mono", "Fira Code", "Consolas", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.75; padding: 40px 20px 80px; }
+  .container { max-width: 740px; margin: 0 auto; }
+  .date { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 8px; }
+  h1 { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .subtitle { font-size: 15px; color: var(--muted); margin-bottom: 40px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
+  h2 { font-size: 20px; font-weight: 700; margin-top: 52px; margin-bottom: 16px; }
+  h3 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 10px; }
+  p { margin-bottom: 16px; font-size: 15px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 20px 0; }
+  .card-accent { border-left: 4px solid var(--accent); background: var(--accent-light); }
+  .card-green { border-left: 4px solid var(--green); background: var(--green-light); }
+  .card-red { border-left: 4px solid var(--red); background: var(--red-light); }
+  .card-orange { border-left: 4px solid var(--orange); background: var(--orange-light); }
+  .card-purple { border-left: 4px solid var(--purple); background: var(--purple-light); }
+  .card-teal { border-left: 4px solid var(--teal); background: var(--teal-light); }
+  .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .card-accent .label { color: var(--accent); }
+  .card-green .label { color: var(--green); }
+  .card-red .label { color: var(--red); }
+  .card-orange .label { color: var(--orange); }
+  .card-purple .label { color: var(--purple); }
+  .card-teal .label { color: var(--teal); }
+  code { font-family: var(--mono); font-size: 13px; background: var(--code-bg); padding: 2px 6px; border-radius: 4px; }
+  pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.6; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
+  th { background: var(--code-bg); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  hr { border: none; border-top: 2px solid var(--border); margin: 52px 0; }
+
+  .pipeline {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 28px 0;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .station {
+    flex: 1;
+    min-width: 120px;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 12px;
+    text-align: center;
+    position: relative;
+  }
+  .station-name { font-weight: 700; font-size: 13px; display: block; margin-bottom: 4px; }
+  .station-code { font-family: var(--mono); font-size: 11px; color: var(--muted); display: block; }
+  .station-anat { font-size: 11px; color: var(--muted); display: block; margin-top: 6px; font-style: italic; }
+  .station-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--muted);
+    padding: 0 2px;
+    flex-shrink: 0;
+  }
+  .station.station-red { border-color: #ef4444; }
+  .station.station-blue { border-color: #2563eb; }
+  .station.station-green { border-color: #22c55e; }
+  .station.station-purple { border-color: #7c3aed; }
+  .station.station-orange { border-color: #d97706; }
+  .station.station-teal { border-color: #0d9488; }
+
+  .io-block {
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr;
+    gap: 0;
+    align-items: start;
+  }
+  .io-side { font-size: 13px; }
+  .io-side .io-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .io-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--muted);
+    padding-top: 20px;
+  }
+  .io-in .io-label { color: var(--accent); }
+  .io-out .io-label { color: var(--green); }
+
+  @media (max-width: 600px) {
+    .pipeline { flex-direction: column; align-items: center; }
+    .station-arrow { transform: rotate(90deg); padding: 4px 0; }
+    .station { min-width: unset; width: 100%; max-width: 280px; }
+    .io-block { grid-template-columns: 1fr; gap: 12px; }
+    .io-arrow { transform: rotate(90deg); padding: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="date">May 24, 2026</div>
+<h1>Software Conduits: The Pipeline Edition</h1>
+<p class="subtitle">The urinary tract is a pipeline — production to expulsion, each station transforming what it receives. Your document processing pipeline has the same geometry, the same failure modes, and the same diagnostic logic.</p>
+
+<!-- ============================================================ -->
+<h2>The Premise</h2>
+
+<p>The <a href="2026-05-24_software-layers-anatomy-edition.html">Layers doc</a> mapped your rendering stack to the abdominal wall. Layers are parallel depth — all present at once, and you localize by asking "how deep is the defect?"</p>
+
+<p>But your document processing pipeline isn't layers. It's a <strong>conduit</strong> — data flows through sequential stations, each one transforming it. You localize by tracing upstream from where the output went wrong. Different geometry, different diagnostic logic.</p>
+
+<p>The body has the same two patterns. The abdominal wall is layers. The urinary tract is a conduit. You wouldn't diagnose hydronephrosis by palpating the abdominal wall layer by layer. You'd trace the urinary tract upstream from the obstruction.</p>
+
+<!-- ============================================================ -->
+<h2>Your Pipeline, Mapped</h2>
+
+<div class="pipeline">
+  <div class="station station-red">
+    <span class="station-name">Init</span>
+    <span class="station-code">LLMClientInitializer</span>
+    <span class="station-anat">Kidney</span>
+  </div>
+  <div class="station-arrow">→</div>
+  <div class="station station-orange">
+    <span class="station-name">Validate</span>
+    <span class="station-code">TextValidator</span>
+    <span class="station-anat">Ureter</span>
+  </div>
+  <div class="station-arrow">→</div>
+  <div class="station station-blue">
+    <span class="station-name">Extract</span>
+    <span class="station-code">EnhancedProcessor</span>
+    <span class="station-anat">Bladder</span>
+  </div>
+  <div class="station-arrow">→</div>
+  <div class="station station-purple">
+    <span class="station-name">Format</span>
+    <span class="station-code">ResponseFormatter</span>
+    <span class="station-anat">Sphincter</span>
+  </div>
+  <div class="station-arrow">→</div>
+  <div class="station station-green">
+    <span class="station-name">Verify</span>
+    <span class="station-code">FlaggingAgent</span>
+    <span class="station-anat">Urinalysis</span>
+  </div>
+  <div class="station-arrow">→</div>
+  <div class="station station-teal">
+    <span class="station-name">Store</span>
+    <span class="station-code">GCS / Postgres</span>
+    <span class="station-anat">Voiding</span>
+  </div>
+</div>
+
+<p>Each station receives the output of the previous station, transforms it, and passes it downstream. The data looks different at every boundary — raw file in, structured JSON out — but it's the same patient information, processed through a tract.</p>
+
+<!-- ============================================================ -->
+<h2>Station by Station</h2>
+
+<h3>Station 1: Init (Kidney)</h3>
+
+<p>The kidney produces. Without it, nothing downstream has anything to work with.</p>
+
+<p><code>LLMClientInitializer</code> finds GCP credentials, validates Vertex AI enrollment, and produces an initialized LLM client. If this station fails — wrong API key, model unavailable, ZDR not enrolled — the pipeline produces nothing. Anuria.</p>
+
+<div class="io-block">
+  <div class="io-side io-in">
+    <span class="io-label">Input</span>
+    Environment variables, credential files, GCP project config
+  </div>
+  <div class="io-arrow">→</div>
+  <div class="io-side io-out">
+    <span class="io-label">Output</span>
+    <code>instructor_client</code>, <code>model_name</code>, <code>project_id</code> — or <code>{success: false}</code>
+  </div>
+</div>
+
+<div class="card card-red">
+  <div class="label">Failure Mode — Anuria</div>
+  <p style="margin:0;">Client init fails silently on credential discovery. The health check has a 10-second timeout, but if credentials exist but are <em>wrong</em> (expired key, wrong project), the failure surfaces as a cryptic Vertex AI error at Station 3, not here. Same as renal failure presenting as uremia downstream — the kidney isn't producing, but the symptom shows up at the bladder.</p>
+</div>
+
+<h3>Station 2: Validate (Ureter)</h3>
+
+<p>The ureter transports urine from kidney to bladder. It doesn't produce urine — it moves it, and if there's an obstruction, nothing gets through.</p>
+
+<p><code>TextValidator</code> combines extracted page texts, filters empties, and makes a critical gating decision: is this text processable? If combined text is under 100 characters, has no medical keywords, or matches a simple form pattern — it sets <code>is_processable = false</code> and the pipeline <strong>skips Station 3 entirely</strong>.</p>
+
+<div class="io-block">
+  <div class="io-side io-in">
+    <span class="io-label">Input</span>
+    List of page texts (from OCR or text extraction). Could be clean. Could be garbage.
+  </div>
+  <div class="io-arrow">→</div>
+  <div class="io-side io-out">
+    <span class="io-label">Output</span>
+    <code>combined_text</code> with page-break markers, <code>is_processable</code> flag, page count
+  </div>
+</div>
+
+<div class="card card-orange">
+  <div class="label">Failure Mode — Ureteral Stricture (False Positive)</div>
+  <p>A valid medical document with sparse text (a short specialist referral, an imaging order with just a few lines) gets flagged as "not processable" because it's under 100 characters. The pipeline skips extraction entirely. The user sees "simple text processed" but doesn't know their document was never actually analyzed by the LLM. The ureter narrowed, and the document didn't pass through.</p>
+  <p style="margin:0;">The opposite — a non-medical document that passes validation — is <strong>reflux</strong>. Garbage flows upstream into the extraction station where it doesn't belong, and the LLM produces hallucinated medical content from a grocery list.</p>
+</div>
+
+<h3>Station 3: Extract (Bladder)</h3>
+
+<p>The bladder is where the real work happens — not just storage, but active processing. Detrusor contraction, compliance, capacity.</p>
+
+<p><code>EnhancedProcessor</code> is the most complex station. It takes combined text (or raw PDF bytes) and runs LLM extraction across 9 medical categories: demographics, allergies, medications, PMH, family history, social history, referral reason, imaging, labs. Two paths:</p>
+
+<ul style="margin-bottom:16px; padding-left:20px;">
+  <li><strong>PDF-Direct:</strong> 3 batched Gemini calls on raw PDF bytes (skip OCR entirely)</li>
+  <li><strong>Field Agents:</strong> 9 concurrent agents, max 2 at a time via semaphore, each making 1 LLM call with the LightProof SDK</li>
+</ul>
+
+<div class="io-block">
+  <div class="io-side io-in">
+    <span class="io-label">Input</span>
+    Combined text with page-break markers (or PDF bytes). One string, no structure.
+  </div>
+  <div class="io-arrow">→</div>
+  <div class="io-side io-out">
+    <span class="io-label">Output</span>
+    <code>CategorizedStatements</code> — 9 lists of <code>StatementWithProvenance</code>, each with statement, verbatim quote, page number, confidence score, integrity checks.
+  </div>
+</div>
+
+<p>This is where the transformation is most dramatic. Unstructured text in, structured Pydantic models out. The data changes form entirely at this boundary — like the kidney concentrating filtrate into urine. If extraction garbles it, everything downstream faithfully processes the garbage.</p>
+
+<div class="card card-accent">
+  <div class="label">Failure Mode — Bladder Dysfunction</div>
+  <p><strong>Unanchored statements:</strong> A field agent extracts a claim but can't find a verbatim quote to anchor it. Returns <code>{statement: "Patient has diabetes", quote: "", start: 0, end: 0, confidence: 0.0}</code>. The statement is unanchored — the LLM hallucinated or paraphrased. But it still passes downstream into the formatter. The bladder produced, but what it produced wasn't sourced from what came in.</p>
+  <p style="margin:0;"><strong>Partial extraction failure:</strong> One of 9 field agents times out (30-second limit, 3 retries with exponential backoff). The other 8 succeed. The summary ships with 8 of 9 categories — missing, say, imaging studies. No error shown to user. This is the graceful degradation design: better a partial summary than no summary. But the user doesn't know "imaging" is missing because the agent that extracted it failed, not because the document has no imaging.</p>
+</div>
+
+<h3>Station 4: Format (Sphincter)</h3>
+
+<p>The sphincter controls release — what exits, in what form, at what time. It doesn't produce urine. It decides the final shape of what leaves.</p>
+
+<p><code>ResponseFormatter</code> takes the categorized statements and builds the final output: summary text, provenance structure, metadata. It filters low-confidence statements from the summary. It maps statements to page numbers. It decides whether to use the verbatim quote or the extracted statement for each field.</p>
+
+<div class="io-block">
+  <div class="io-side io-in">
+    <span class="io-label">Input</span>
+    <code>CategorizedStatements</code> (structured Pydantic models, 9 categories with provenance)
+  </div>
+  <div class="io-arrow">→</div>
+  <div class="io-side io-out">
+    <span class="io-label">Output</span>
+    <code>{summary, categorized_statements, provenance, processing_metadata}</code> — the shape that storage and the frontend expect.
+  </div>
+</div>
+
+<div class="card card-purple">
+  <div class="label">Failure Mode — Sphincter Dyssynergia</div>
+  <p style="margin:0;">The formatter filters a low-confidence statement from the summary text but keeps it in the provenance structure. The frontend shows a provenance entry with no corresponding summary line. The user sees a quote attributed to nothing — a claim the system extracted but then suppressed, without saying why. The sphincter let part of the stream through and blocked the rest, but the two outputs got out of sync. Dyssynergia — the sphincter and the detrusor aren't coordinating.</p>
+</div>
+
+<h3>Station 5: Verify (Urinalysis)</h3>
+
+<p>This isn't a station in the tract itself — it's a <strong>quality check on the output</strong>. You run a urinalysis to detect problems upstream: hematuria suggests a lesion somewhere along the tract, proteinuria suggests glomerular dysfunction.</p>
+
+<p><code>FlaggingAgent</code> reviews the formatted summary against the provenance to catch extraction errors: high-stakes claims on thin evidence, negation flips, numeric drift (dose or lab value doesn't match the verbatim quote exactly), contradictions within the summary.</p>
+
+<div class="io-block">
+  <div class="io-side io-in">
+    <span class="io-label">Input</span>
+    Summary text + provenance dict (the final formatted output)
+  </div>
+  <div class="io-arrow">→</div>
+  <div class="io-side io-out">
+    <span class="io-label">Output</span>
+    List of <code>VerificationFlag</code> objects — or empty list <code>[]</code> if verification fails.
+  </div>
+</div>
+
+<div class="card card-green">
+  <div class="label">Failure Mode — Lab Not Resulted</div>
+  <p style="margin:0;">The flagging agent's LLM call fails (timeout, rate limit). It returns an empty list. The summary ships without verification — no flags, no warnings, no indication that verification was even attempted. The urinalysis didn't fail <em>visibly</em> — it just never resulted. The clinician doesn't know the test wasn't run. In your app: the user doesn't know the safety-critical flagging step was skipped. The summary looks clean because nobody checked it, not because it passed.</p>
+</div>
+
+<h3>Station 6: Store (Voiding)</h3>
+
+<p>The final act. Urine exits the body. The processed summary exits the pipeline and enters storage — GCS blob or Postgres row — where it becomes the source of truth that the <a href="2026-05-24_software-layers-anatomy-edition.html">layer stack</a> will display.</p>
+
+<div class="io-block">
+  <div class="io-side io-in">
+    <span class="io-label">Input</span>
+    Final result dict (summary + provenance + flags + metadata)
+  </div>
+  <div class="io-arrow">→</div>
+  <div class="io-side io-out">
+    <span class="io-label">Output</span>
+    Timestamped JSON at <code>{user_id}/{filename}_{timestamp}.json</code> in GCS or local filesystem.
+  </div>
+</div>
+
+<div class="card card-teal">
+  <div class="label">Failure Mode — Outlet Obstruction</div>
+  <p style="margin:0;">Storage write fails — GCS timeout, disk full, permission error. The entire pipeline ran successfully. The summary is perfect. But it's lost. The temp file is cleaned up in the <code>finally</code> block. The job status was never updated from "processing." The user sees an eternal spinner. Retention — the data was produced, processed, formatted, and verified, but never voided. And there's no catheter (no retry, no fallback storage).</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>Conduit vs. Layer: The Key Difference</h2>
+
+<p>In the layer stack, all layers are present simultaneously and the same data passes through all of them. A stale cache at layer 4 presents as wrong data at layer 1. You localize by depth.</p>
+
+<p>In a conduit, each station <strong>transforms</strong> the data. The output of Station 3 is structurally different from its input — unstructured text becomes Pydantic models. You can't just "check each layer" because the data at each boundary is a different shape. You have to check <strong>input vs. output at each station</strong>.</p>
+
+<div class="card card-accent">
+  <div class="label">The Diagnostic Move</div>
+  <p><strong>Layer diagnosis:</strong> "Is the data correct at this depth?"</p>
+  <p style="margin:0;"><strong>Conduit diagnosis:</strong> "Did this station produce correct output from correct input?" — Two checks per station, not one. If the input was good and the output was bad, the station is the lesion. If the input was already bad, keep tracing upstream.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>The Diagnostic Algorithm</h2>
+
+<p>A malformed summary is on screen. The user sees wrong medications, missing allergies, a garbled referral reason. Where do you look?</p>
+
+<p><strong>Don't start at Station 1.</strong> Start at the output and trace upstream.</p>
+
+<div class="card card-green">
+  <div class="label">Step 1 — Check the Voided Output (Storage)</div>
+  <p><strong>Question:</strong> Is the stored JSON correct? Or is the display wrong?</p>
+<pre style="background:var(--code-bg); border:1px solid var(--border); border-radius:6px; padding:12px 16px; margin:8px 0; font-size:12px;">
+# Read the raw stored output:
+gsutil cat gs://chartprepcanada/users/USER_ID/filename_timestamp.json | python -m json.tool
+
+# Or locally:
+cat gcs_local_version/USER_ID/filename_timestamp.json | python -m json.tool
+
+# Check: does the JSON match what's on screen?
+# If JSON is correct but screen is wrong → layer problem (cache/rendering), not pipeline
+# If JSON is wrong → pipeline problem. Keep tracing upstream.
+</pre>
+  <p style="margin:0; font-size:13px; color:var(--muted);"><strong>If stored output is correct</strong> → the pipeline is fine. The problem is in the <a href="2026-05-24_software-layers-anatomy-edition.html">layer stack</a> (cache, state, rendering). Switch to layer diagnosis.<br>
+  <strong>If stored output is wrong</strong> → pipeline defect. Go to Step 2.</p>
+</div>
+
+<div class="card card-green">
+  <div class="label">Step 2 — Check the Flags (Urinalysis)</div>
+  <p><strong>Question:</strong> Did the flagging agent catch the problem? Did it even run?</p>
+<pre style="background:var(--code-bg); border:1px solid var(--border); border-radius:6px; padding:12px 16px; margin:8px 0; font-size:12px;">
+# In the stored JSON, check verification_flags:
+cat output.json | python -c "
+import json, sys
+data = json.load(sys.stdin)
+flags = data.get('verification_flags', [])
+print(f'Flags found: {len(flags)}')
+for f in flags:
+    print(f'  - {f.get(\"type\")}: {f.get(\"message\")}')"
+
+# If flags is empty [] → was it verified and clean, or did verification fail?
+# Check server logs for: "Flagging agent failed" or "verification skipped"
+</pre>
+  <p style="margin:0; font-size:13px; color:var(--muted);"><strong>If flags caught the issue</strong> → flagging works, but the summary shipped anyway (by design — flags are advisory).<br>
+  <strong>If flags are empty</strong> → either genuinely clean, or flagging silently failed. Check logs. Either way, the defect is upstream.</p>
+</div>
+
+<div class="card card-green">
+  <div class="label">Step 3 — Check the Formatted Output (Sphincter)</div>
+  <p><strong>Question:</strong> Did the formatter receive correct categorized statements and produce wrong output?</p>
+<pre style="background:var(--code-bg); border:1px solid var(--border); border-radius:6px; padding:12px 16px; margin:8px 0; font-size:12px;">
+# In the stored JSON, compare categorized_statements to final_summary:
+cat output.json | python -c "
+import json, sys
+data = json.load(sys.stdin)
+cats = data.get('categorized_statements', {})
+for category, statements in cats.items():
+    print(f'{category}: {len(statements)} statements')
+    for s in statements[:2]:
+        print(f'  statement: {s.get(\"statement\", \"\")[:80]}')
+        print(f'  quote:     {s.get(\"quote\", \"\")[:80]}')
+        print(f'  confidence: {s.get(\"confidence\", \"?\")}')"
+
+# Compare: are the categorized statements correct but the summary wrong?
+# Check for summary/provenance mismatch (statement in provenance, missing from summary)
+</pre>
+  <p style="margin:0; font-size:13px; color:var(--muted);"><strong>If categorized statements are correct but summary is wrong</strong> → formatting bug. The sphincter garbled the output. Fix at <code>ResponseFormatter</code>.<br>
+  <strong>If categorized statements are already wrong</strong> → extraction defect. Go to Step 4.</p>
+</div>
+
+<div class="card card-green">
+  <div class="label">Step 4 — Check the Extraction (Bladder)</div>
+  <p><strong>Question:</strong> Did the LLM extract correct statements from the combined text?</p>
+<pre style="background:var(--code-bg); border:1px solid var(--border); border-radius:6px; padding:12px 16px; margin:8px 0; font-size:12px;">
+# Check for unanchored statements (no verbatim quote):
+cat output.json | python -c "
+import json, sys
+data = json.load(sys.stdin)
+for cat, stmts in data.get('categorized_statements', {}).items():
+    unanchored = [s for s in stmts if not s.get('quote')]
+    if unanchored:
+        print(f'{cat}: {len(unanchored)} UNANCHORED statements')
+        for s in unanchored:
+            print(f'  → {s[\"statement\"][:80]}')"
+
+# Check integrity scores:
+cat output.json | python -c "
+import json, sys
+data = json.load(sys.stdin)
+for cat, stmts in data.get('categorized_statements', {}).items():
+    low = [s for s in stmts if s.get('confidence', 1) < 0.5]
+    if low:
+        print(f'{cat}: {len(low)} LOW CONFIDENCE')
+        for s in low:
+            print(f'  → {s[\"statement\"][:60]} (conf: {s[\"confidence\"]})')"
+
+# If a specific field agent failed, check server logs:
+# grep "field_agent.*failed\|field_agent.*timeout\|retry.*attempt" server.log
+</pre>
+  <p style="margin:0; font-size:13px; color:var(--muted);"><strong>If extraction produced unanchored/wrong statements from correct text</strong> → LLM extraction bug. Prompt engineering, model issue, or Pydantic schema mismatch.<br>
+  <strong>If the combined text fed to extraction was already wrong</strong> → validation/OCR defect. Go to Step 5.</p>
+</div>
+
+<div class="card card-green">
+  <div class="label">Step 5 — Check the Validated Text (Ureter)</div>
+  <p><strong>Question:</strong> Was the text correctly combined? Was the processability decision right?</p>
+<pre style="background:var(--code-bg); border:1px solid var(--border); border-radius:6px; padding:12px 16px; margin:8px 0; font-size:12px;">
+# Check processing_metadata for the validation decision:
+cat output.json | python -c "
+import json, sys
+data = json.load(sys.stdin)
+meta = data.get('processing_metadata', {})
+print(f'Method: {meta.get(\"processing_method\")}')
+print(f'Enhanced skipped: {meta.get(\"enhanced_processing_skipped\", False)}')
+print(f'Pages: {meta.get(\"pages_processed\", \"?\")}')"
+
+# If enhanced_processing_skipped is True:
+#   → TextValidator decided the text wasn't medical or was too short
+#   → Was that decision correct? Check the original document.
+#   → If the document IS medical → stricture: validation threshold too aggressive
+
+# Check combined_text length and content:
+# Add temporary logging to TextValidator.validate_and_combine_pages():
+#   logger.info(f"Combined text length: {len(combined_text)}")
+#   logger.info(f"First 200 chars: {combined_text[:200]}")
+</pre>
+  <p style="margin:0; font-size:13px; color:var(--muted);"><strong>If text was incorrectly classified as non-processable</strong> → validation stricture. Fix the threshold in <code>TextValidator</code>.<br>
+  <strong>If combined text is garbled or empty</strong> → OCR/extraction defect. Go to Step 6.</p>
+</div>
+
+<div class="card card-green">
+  <div class="label">Step 6 — Check the Source (Kidney)</div>
+  <p><strong>Question:</strong> Was the original file readable? Did OCR/text extraction work?</p>
+<pre style="background:var(--code-bg); border:1px solid var(--border); border-radius:6px; padding:12px 16px; margin:8px 0; font-size:12px;">
+# Re-process the same file and check raw text extraction:
+# Look at the upload route logs for the original processing:
+# grep "process_single_file\|text_extraction\|ocr" server.log
+
+# For PDF-direct path: the issue might be that PDF bytes were used
+# but the PDF is a scanned image (no embedded text).
+# Check processing_method in metadata — "pdf_direct" vs "field_agents"
+
+# If PDF-direct was used on a scanned PDF → silent failure
+# The LLM received image pages but no selectable text
+# Output depends entirely on Gemini's vision capability
+
+# For OCR path: check if the temp file was readable:
+# Was the upload corrupted? Was the file format supported?
+</pre>
+  <p style="margin:0; font-size:13px; color:var(--muted);"><strong>If the source file is unreadable</strong> → upstream of your pipeline entirely. Bad scan, corrupted upload, unsupported format.<br>
+  <strong>If the file is readable but text extraction failed</strong> → client init or OCR defect. The kidney didn't produce.</p>
+</div>
+
+<p>You stop at the first station where correct input produced incorrect output. That's the lesion.</p>
+
+<div class="card card-orange">
+  <div class="label">The Shortcut — Same as Layer Diagnosis</div>
+  <p style="margin:0;">The user's complaint tells you where to start. "The summary is missing allergies" → jump straight to Station 3, check the allergies field agent. "It says 'simple text processed'" → Station 2 made the wrong gating decision. "I uploaded a PDF and got nothing" → Station 1, check if the client initialized. Don't start at the output every time. Let the symptom tell you the station.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>Surgical Principles for Conduits</h2>
+
+<p>Layer principles are about protecting depth boundaries. Conduit principles are about protecting station boundaries — making sure each station's input is clean, its output is correct, and failures don't propagate silently.</p>
+
+<table>
+  <thead>
+    <tr><th>Station</th><th>Principle</th><th>Anatomy Parallel</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Init</td>
+      <td><strong>Fail loud at the source.</strong> If the kidney doesn't work, everything downstream is pointless. Don't let the pipeline proceed with a broken client — surface the failure immediately.</td>
+      <td>Renal agenesis is diagnosed at birth, not when the patient presents with uremia at 40.</td>
+    </tr>
+    <tr>
+      <td>Validate</td>
+      <td><strong>Gate explicitly.</strong> If you skip a document, tell the user why. Silent skips are strictures — the data didn't pass, and nobody knows.</td>
+      <td>Ureteral stents are visible on imaging. Your validation gate should be visible in the UI.</td>
+    </tr>
+    <tr>
+      <td>Extract</td>
+      <td><strong>Anchor every claim.</strong> An unanchored statement (no verbatim quote) is an unverified claim from the LLM. Mark it, flag it, or drop it — but don't let it pass as sourced.</td>
+      <td>Urine should come from filtered blood, not from somewhere else. If you can't trace the provenance, don't trust the output.</td>
+    </tr>
+    <tr>
+      <td>Format</td>
+      <td><strong>Keep summary and provenance in sync.</strong> If you filter a statement from the summary, filter it from provenance too. Dyssynergia between the two outputs confuses the user.</td>
+      <td>Detrusor-sphincter coordination. Both outputs must agree on what passes through.</td>
+    </tr>
+    <tr>
+      <td>Verify</td>
+      <td><strong>If verification didn't run, say so.</strong> An empty flag list must distinguish "verified clean" from "verification failed." Silent failure here is a lab that never resulted.</td>
+      <td>A missing urinalysis result is not a normal urinalysis.</td>
+    </tr>
+    <tr>
+      <td>Store</td>
+      <td><strong>Write atomically or not at all.</strong> If storage fails, the pipeline result must be recoverable — retry, fallback path, or at minimum a clear error status. Don't clean up the temp file before confirming the write.</td>
+      <td>Post-void residual check. Confirm the bladder actually emptied before you close.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ============================================================ -->
+<h2>Where Conduit Meets Layers</h2>
+
+<p>The pipeline doesn't exist in isolation. It terminates by feeding into the layer stack. Station 6 (storage) writes the JSON that becomes the source of truth at Layer 6 (server/database) in the <a href="2026-05-24_software-layers-anatomy-edition.html">layer model</a>.</p>
+
+<p>This means a single bug can span both patterns. A malformed summary on screen could be:</p>
+
+<ul style="margin-bottom:16px; padding-left:20px;">
+  <li><strong>Pipeline defect:</strong> The extraction station garbled the data. Every layer displays the garbage faithfully. Fix at the station.</li>
+  <li><strong>Layer defect:</strong> The pipeline produced correct data, but the cache is serving a stale version. Fix at the layer.</li>
+  <li><strong>Boundary defect:</strong> The pipeline stored correctly, but the layer stack loaded it wrong (deserialization bug, wrong JSON key). Fix at the boundary where conduit meets layers.</li>
+</ul>
+
+<p>The first diagnostic question is always: <strong>which pattern am I in?</strong> Check the stored JSON. If it's correct, you're in the layer stack. If it's wrong, you're in the pipeline. Don't mix the diagnostic algorithms.</p>
+
+<div class="card card-teal">
+  <div class="label">The Urinary Tract to Abdominal Wall Junction</div>
+  <p style="margin:0;">The ureter passes through the abdominal wall to reach the bladder. The pipeline passes through the layer stack to reach the screen. They're different systems with different geometries, but they share a boundary. Pathology at that boundary — a ureteral injury during abdominal surgery, a deserialization bug at the storage-to-cache handoff — requires you to think in both patterns simultaneously. Know which system you're diagnosing, and know where they meet.</p>
+</div>
+
+<hr>
+
+<p style="text-align:center; color:var(--muted); font-size:13px; margin-top:40px;">
+  Written May 24, 2026 — ChartPrepper project<br>
+  Part of <a href="2026-05-24_three-patterns-of-the-body.html" style="color:var(--muted);">Three Patterns of the Body</a><br>
+  Start at the output. Trace upstream. Stop at the station where good input became bad output.
+</p>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

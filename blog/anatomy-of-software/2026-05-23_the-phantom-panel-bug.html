@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Phantom Panel — A Layer 2 Case Study</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --card: #ffffff;
+    --border: #e7e5e4;
+    --text: #1c1917;
+    --muted: #78716c;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --orange: #d97706;
+    --orange-light: #fffbeb;
+    --purple: #7c3aed;
+    --purple-light: #f5f3ff;
+    --teal: #0d9488;
+    --teal-light: #f0fdfa;
+    --code-bg: #f5f5f4;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "SF Mono", "Fira Code", "Consolas", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.75; padding: 40px 20px 80px; }
+  .container { max-width: 740px; margin: 0 auto; }
+  .date { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 8px; }
+  h1 { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .subtitle { font-size: 15px; color: var(--muted); margin-bottom: 40px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
+  h2 { font-size: 20px; font-weight: 700; margin-top: 52px; margin-bottom: 16px; }
+  h3 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 10px; }
+  p { margin-bottom: 16px; font-size: 15px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 20px 0; }
+  .card-accent { border-left: 4px solid var(--accent); background: var(--accent-light); }
+  .card-green { border-left: 4px solid var(--green); background: var(--green-light); }
+  .card-red { border-left: 4px solid var(--red); background: var(--red-light); }
+  .card-orange { border-left: 4px solid var(--orange); background: var(--orange-light); }
+  .card-purple { border-left: 4px solid var(--purple); background: var(--purple-light); }
+  .card-teal { border-left: 4px solid var(--teal); background: var(--teal-light); }
+  .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .card-accent .label { color: var(--accent); }
+  .card-green .label { color: var(--green); }
+  .card-red .label { color: var(--red); }
+  .card-orange .label { color: var(--orange); }
+  .card-purple .label { color: var(--purple); }
+  .card-teal .label { color: var(--teal); }
+  code { font-family: var(--mono); font-size: 13px; background: var(--code-bg); padding: 2px 6px; border-radius: 4px; }
+  pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.6; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
+  th { background: var(--code-bg); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  hr { border: none; border-top: 2px solid var(--border); margin: 52px 0; }
+
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+    margin: 24px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: var(--border);
+  }
+  .tl-step {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .tl-step::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--muted);
+    border: 2px solid var(--bg);
+  }
+  .tl-step.wrong::before { background: var(--red); }
+  .tl-step.right::before { background: var(--green); }
+  .tl-label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .tl-step.wrong .tl-label { color: var(--red); }
+  .tl-step.right .tl-label { color: var(--green); }
+  .tl-text { font-size: 14px; margin-top: 2px; }
+
+  .flow-diagram {
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 2;
+    overflow-x: auto;
+  }
+  .flow-ok { color: var(--green); }
+  .flow-bad { color: var(--red); font-weight: 700; }
+  .flow-arrow { color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="date">May 23, 2026</div>
+<h1>The Phantom Panel</h1>
+<p class="subtitle">A Layer 2 bug that masqueraded as a Layer 5 performance problem, a Layer 1 rendering glitch, and a Layer 3 state issue &mdash; all at the same time. And why it took us hours to find a one-line fix.</p>
+
+<!-- ============================================================ -->
+<h2>The Symptom</h2>
+
+<p>On mobile Safari, open the calendar view. Tap a file to read its summary. Tap back. The calendar view is gone. The sidebar looks broken &mdash; wrong layout, wrong spacing, like it forgot what it was doing. Tap on the Notes tab and back to Documents: everything is fine again. Refresh the page: fine again.</p>
+
+<p>It only happens on mobile. It only happens after viewing a file. And it fixes itself if you switch tabs.</p>
+
+<div class="card card-orange">
+  <div class="label">The Misleading Clue</div>
+  <p style="margin:0;">The calendar also felt slow to load. The server logs showed <code>get_summaries: returning 401 documents</code> on every file click. So the first instinct was: <strong>this is a performance problem at Layer 5/6</strong>. We spent significant time optimizing the SQL query, reducing JSON payload sizes, and adding client-side caching. All good improvements &mdash; but none of them fixed the actual bug.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>Why It Took So Long</h2>
+
+<p>This bug was hard to find for a specific, instructive reason: <strong>the symptom shifted depending on which layer you were looking at.</strong> It was a chameleon &mdash; it looked like a different bug at every layer of investigation.</p>
+
+<h3>1. It looked like a performance problem (Layer 5/6)</h3>
+
+<p>The server logs were alarming. Every time you tapped a file, the summary endpoint loaded all 401 documents from Postgres just to return one. The calendar endpoint fetched full JSON blobs when it only needed four fields. These were real problems &mdash; genuinely wasteful queries that needed fixing.</p>
+
+<p>But they were <strong>independent problems</strong>, not the cause of the broken layout. We fixed them (summary route now does a single-row query; calendar extracts only needed fields via <code>data->>'field_name'</code>; client caches for 30 seconds). The calendar loaded faster. The sidebar was still broken.</p>
+
+<div class="card card-accent">
+  <div class="label">The Trap</div>
+  <p style="margin:0;">When you find a real problem at one layer, it's psychologically very hard to keep looking at other layers. You've found something wrong, you've fixed it, you expect the symptom to resolve. When it doesn't, you look for <em>more</em> problems at the same layer instead of stepping back and re-examining the original symptom. This is anchoring bias &mdash; the same cognitive trap that makes premature closure dangerous in clinical diagnosis.</p>
+</div>
+
+<h3>2. It looked like an iOS rendering bug (Layer 1)</h3>
+
+<p>The calendar panel had correct data in the Alpine store. The DOM elements existed. But they weren't visible. On iOS Safari, this pattern &mdash; "DOM is right but nothing renders" &mdash; is a known class of bugs where WebKit doesn't recalculate layout after a <code>display</code> property change. We'd already built a workaround for this: the <code>translateZ(0)</code> repaint hack in <code>switchSidebarTab()</code>.</p>
+
+<p>But that repaint hack only targeted the documents and notes panels. The calendar panel was never included. So we added it. Still broken &mdash; because the repaint hack only fires during <code>switchSidebarTab()</code>, and the broken flow never calls <code>switchSidebarTab()</code>.</p>
+
+<h3>3. It looked like an Alpine state problem (Layer 3)</h3>
+
+<p>Earlier in the session we'd migrated the calendar from vanilla JS rendering to Alpine.js templates. This was fresh surgery. When the calendar didn't render correctly after tapping back, the natural suspicion was: "did the migration break something? Is Alpine not reacting to the state change?"</p>
+
+<p>We checked. Alpine's state was correct: <code>viewMode === 'calendar'</code>, <code>calData</code> was populated, <code>calGridCells</code> returned the right cells. The state was perfect. Alpine was doing its job. The problem was below Alpine &mdash; at the DOM manipulation layer that Alpine doesn't control.</p>
+
+<!-- ============================================================ -->
+<h2>The Actual Bug</h2>
+
+<p>Two functions. One sets a CSS property. The other doesn't unset it.</p>
+
+<h3>handleFileClick() &mdash; entering summary view on mobile</h3>
+<pre>
+// On mobile: switch to summary view
+if (window.innerWidth <= 768) {
+    document.body.classList.add('mobile-summary-view');
+    const mainWrapper = document.getElementById('main-content-wrapper');
+    if (mainWrapper) mainWrapper.style.display = 'flex';  <span class="flow-bad">// Sets inline style</span>
+}
+</pre>
+
+<h3>mobileGoBack() &mdash; returning to the file list</h3>
+<pre>
+function mobileGoBack() {
+    document.body.classList.remove('mobile-summary-view');
+    <span class="flow-bad">// That's it. That's the whole function.</span>
+}
+</pre>
+
+<p>The CSS class <code>mobile-summary-view</code> hides the sidebar and shows the main content. Removing it should reverse those effects. But <code>handleFileClick</code> also set an <strong>inline style</strong> on <code>#main-content-wrapper</code>: <code>style="display: flex"</code>.</p>
+
+<p>Inline styles override CSS rules. The mobile CSS says <code>#main-content-wrapper { display: none; }</code>, but the inline <code>display: flex</code> trumps it. After <code>mobileGoBack()</code>, the main content wrapper was still <code>display: flex</code> &mdash; invisible content taking up layout space, pushing the sidebar into a broken state.</p>
+
+<div class="card card-red">
+  <div class="label">The Lesion</div>
+  <p style="margin:0;"><code>mobileGoBack()</code> reversed the CSS class but not the inline style. One property, one element, one missing line of code. Everything else &mdash; the slow queries, the missing repaint hack, the Alpine migration &mdash; was either a separate problem or a consequence of this one.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>The Fix</h2>
+
+<pre>
+function mobileGoBack() {
+    document.body.classList.remove('mobile-summary-view');
+    var mainWrapper = document.getElementById('main-content-wrapper');
+    if (mainWrapper) mainWrapper.style.display = 'none';     <span class="flow-ok">// Reset the inline style</span>
+    // ... plus _syncViewPanels() and repaint hack
+}
+</pre>
+
+<p>One line: <code>mainWrapper.style.display = 'none'</code>. That's the fix for the layout bug. Everything else we added (the repaint hack for the calendar panel, the <code>_syncViewPanels()</code> call) is defensive hardening &mdash; good practice, but not the root cause.</p>
+
+<!-- ============================================================ -->
+<h2>Why switchSidebarTab Fixed It</h2>
+
+<p>The user noticed that clicking Notes and then back to Documents "reset" the broken state. This was the critical clue, and here's exactly why it worked:</p>
+
+<pre>
+// Inside switchSidebarTab():
+if (isMobile && mainWrapper) {
+    mainWrapper.style.display = isFullScreen ? 'flex' : 'none';  <span class="flow-ok">// Resets the inline style!</span>
+}
+</pre>
+
+<p><code>switchSidebarTab('notes')</code> sets <code>mainWrapper.style.display = 'none'</code> as a side effect. It cleans up the stale inline style that <code>mobileGoBack()</code> left behind. The bug silently fixes itself &mdash; which is why it looked intermittent and made us doubt our diagnosis at every turn.</p>
+
+<div class="card card-teal">
+  <div class="label">The Self-Healing Pattern</div>
+  <p style="margin:0;">Bugs that fix themselves through unrelated actions are the hardest to diagnose. In medicine, it's the equivalent of a symptom that resolves with positional change &mdash; "it only hurts when I sit, and standing fixes it." You start investigating the standing mechanism instead of the sitting mechanism. The fix is a red herring that pulls you away from the cause.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>The Diagnostic Timeline</h2>
+
+<p>Here's the path we actually took, vs. what the ideal path would have been:</p>
+
+<div class="timeline">
+  <div class="tl-step wrong">
+    <div class="tl-label">Detour 1 &mdash; Layer 5/6</div>
+    <div class="tl-text">Saw <code>get_summaries: returning 401 documents</code> in logs. Assumed performance was the issue. Optimized the SQL query to extract only needed JSON fields. Added month pre-filter. Good fixes, wrong diagnosis.</div>
+  </div>
+  <div class="tl-step wrong">
+    <div class="tl-label">Detour 2 &mdash; Layer 5 (Client)</div>
+    <div class="tl-text">Noticed duplicate <code>/api/files/by-date</code> calls. Added 30-second client-side cache. Eliminated the duplicate fetch. Calendar loaded faster. Sidebar still broken.</div>
+  </div>
+  <div class="tl-step wrong">
+    <div class="tl-label">Detour 3 &mdash; Layer 6</div>
+    <div class="tl-text">Noticed summary route called <code>get_summaries()</code> loading all 401 docs for a single-file view. Replaced with <code>get_file_detail()</code>. Massive improvement. Still not the layout bug.</div>
+  </div>
+  <div class="tl-step">
+    <div class="tl-label">Reframe &mdash; User's observation</div>
+    <div class="tl-text">"It works if I click Notes and then back to Documents." This is the critical clue. The bug is at the layer where tab switching and view restoration diverge.</div>
+  </div>
+  <div class="tl-step right">
+    <div class="tl-label">Found it &mdash; Layer 2</div>
+    <div class="tl-text">Compared <code>mobileGoBack()</code> with <code>switchSidebarTab()</code>. The tab switcher resets <code>mainWrapper.style.display</code>. The back function doesn't. One missing line.</div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>Placing This Bug on the Layer Map</h2>
+
+<table>
+  <thead>
+    <tr><th>Property</th><th>Value</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Defect Layer</td><td><strong>Layer 2 &mdash; Reactivity / DOM Sync</strong> (subcutaneous tissue). Specifically: a manual DOM manipulation function that didn't fully reverse what another function set.</td></tr>
+    <tr><td>Symptom Layer</td><td><strong>Layer 1 &mdash; Rendering</strong> (skin). The sidebar looked broken &mdash; wrong layout, calendar invisible.</td></tr>
+    <tr><td>Investigation Layers</td><td><strong>Layers 5 and 6</strong> (network and server). We spent most of our time here because of the noisy server logs.</td></tr>
+    <tr><td>Self-Healing Layer</td><td><strong>Layer 2</strong> (a different function at the same layer). <code>switchSidebarTab()</code> reset the stale inline style as a side effect.</td></tr>
+    <tr><td>Hernia Type</td><td><strong>Indirect</strong> &mdash; symptom at the surface, defect at a deeper layer, with referred pain across multiple layers.</td></tr>
+  </tbody>
+</table>
+
+<!-- ============================================================ -->
+<h2>The Lesson</h2>
+
+<h3>Inline styles are fascial adhesions</h3>
+<p>An inline <code>style="display: flex"</code> overrides CSS class rules the same way a fascial adhesion overrides the normal glide plane between layers. The CSS class removal (<code>mobile-summary-view</code>) should have been enough to restore the layout &mdash; just as removing superficial tension should let the layers underneath return to their normal position. But the adhesion (inline style) anchored the element in the wrong state, and no amount of work at other layers could fix it.</p>
+
+<h3>Noisy logs are incidental findings</h3>
+<p>The 401-document query was a real problem, like an incidental finding on imaging. It deserved attention and treatment. But it wasn't the chief complaint. We got pulled into treating the incidentaloma (performance) when the patient presented with a functional complaint (layout breaks on back-navigation). In retrospect, the performance issue had been present since the app was built &mdash; it wasn't new. The layout bug was new. New symptoms need new explanations.</p>
+
+<h3>The user's workaround IS the diagnosis</h3>
+<p>"Clicking Notes and back fixes it" is not just a workaround &mdash; it's a precise diagnostic statement. It tells you: (1) the bug is in the back-navigation path specifically, not in the calendar itself, (2) the tab-switching path has something the back-navigation path lacks, (3) the fix is at the point where those two paths diverge. We should have <code>diff</code>'d those two code paths the moment we heard this. Instead, we spent another hour on query optimization.</p>
+
+<div class="card card-green">
+  <div class="label">The Rule</div>
+  <p style="margin:0;">When the user tells you the exact maneuver that fixes a bug, stop everything and compare that maneuver's code path with the broken code path. The difference between them <em>is</em> the bug. Every minute spent elsewhere is wasted.</p>
+</div>
+
+<hr>
+
+<p style="text-align:center; color:var(--muted); font-size:13px; margin-top:40px;">
+  Written May 23, 2026 &mdash; ChartPrepper project<br>
+  Case study: <code>mobileGoBack()</code> missing <code>mainWrapper.style.display = 'none'</code><br>
+  Companion to <a href="2026-05-23_software-layers-anatomy-edition.html" style="color:var(--accent);">Software Layers: The Anatomy Edition</a>
+</p>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

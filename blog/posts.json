@@ -1,6 +1,41 @@
 {
   "series": [
     {
+      "title": "Anatomy Of Software",
+      "posts": [
+        {
+          "title": "Software Layers \u2014 The Anatomy Edition",
+          "date": "May 23, 2026",
+          "href": "anatomy-of-software/2026-05-23_software-layers-anatomy-edition.html"
+        },
+        {
+          "title": "The Phantom Panel \u2014 A Layer 2 Case Study",
+          "date": "May 23, 2026",
+          "href": "anatomy-of-software/2026-05-23_the-phantom-panel-bug.html"
+        },
+        {
+          "title": "Software Layers \u2014 The Anatomy Edition (v2)",
+          "date": "May 24, 2026",
+          "href": "anatomy-of-software/2026-05-24_software-layers-anatomy-edition.html"
+        },
+        {
+          "title": "Software Conduits \u2014 The Pipeline Edition",
+          "date": "May 24, 2026",
+          "href": "anatomy-of-software/2026-05-24_the-pipeline-edition.html"
+        },
+        {
+          "title": "Software Networks \u2014 The Vasculature Edition",
+          "date": "May 24, 2026",
+          "href": "anatomy-of-software/2026-05-24_the-vasculature-edition.html"
+        },
+        {
+          "title": "Three Patterns of the Body",
+          "date": "May 24, 2026",
+          "href": "anatomy-of-software/2026-05-24_three-patterns-of-the-body.html"
+        }
+      ]
+    },
+    {
       "title": "Pa Orientation",
       "posts": [
         {
