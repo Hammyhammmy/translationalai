@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatomy of Software</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --card: #ffffff;
+    --border: #e7e5e4;
+    --text: #1c1917;
+    --muted: #78716c;
+    --accent: #2563eb;
+    --code-bg: #f5f5f4;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.75; padding: 40px 20px 80px; }
+  .container { max-width: 740px; margin: 0 auto; }
+  h1 { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .subtitle { font-size: 15px; color: var(--muted); margin-bottom: 40px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
+  h2 { font-size: 18px; font-weight: 700; margin-top: 40px; margin-bottom: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; font-size: 12px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .doc-list { list-style: none; padding: 0; }
+  .doc-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 10px 0;
+    transition: border-color 0.15s;
+  }
+  .doc-item:hover { border-color: var(--accent); }
+  .doc-item a { display: block; }
+  .doc-title { font-weight: 700; font-size: 16px; display: block; margin-bottom: 2px; }
+  .doc-desc { font-size: 13px; color: var(--muted); display: block; }
+  .doc-date { font-size: 11px; color: var(--muted); font-weight: 500; }
+  .doc-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .badge-layers { background: #fef2f2; color: #dc2626; }
+  .badge-conduit { background: #eff6ff; color: #2563eb; }
+  .badge-network { background: #f5f3ff; color: #7c3aed; }
+  .badge-all { background: #f0fdf4; color: #16a34a; }
+  .badge-case { background: #fffbeb; color: #d97706; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Anatomy of Software</h1>
+<p class="subtitle">Debugging software with the same epistemology you use to diagnose patients. Layers stack. Conduits flow. Networks branch. Know which one you're in before you start cutting.</p>
+
+<h2>Framework</h2>
+
+<ul class="doc-list">
+  <li class="doc-item">
+    <a href="2026-05-24_three-patterns-of-the-body.html">
+      <span class="doc-title">Three Patterns of the Body <span class="doc-badge badge-all">All Patterns</span></span>
+      <span class="doc-desc">The parent doc. Every anatomical structure is layers, conduits, or networks. Every software system is too. Start here to learn the triage: "which pattern am I in?"</span>
+      <span class="doc-date">May 24, 2026</span>
+    </a>
+  </li>
+</ul>
+
+<h2>Pattern 1 — Layers</h2>
+
+<ul class="doc-list">
+  <li class="doc-item">
+    <a href="2026-05-24_software-layers-anatomy-edition.html">
+      <span class="doc-title">Software Layers: The Anatomy Edition <span class="doc-badge badge-layers">Layers</span></span>
+      <span class="doc-desc">Abdominal wall mapped to rendering stack. Six layers from skin (Tailwind) to peritoneum (Postgres). Stacked imaging + surgical principles diagrams, practical diagnostic algorithm with console commands at every layer, observability audit.</span>
+      <span class="doc-date">May 24, 2026 (v2)</span>
+    </a>
+  </li>
+  <li class="doc-item">
+    <a href="2026-05-23_software-layers-anatomy-edition.html">
+      <span class="doc-title">Software Layers: The Anatomy Edition <span class="doc-badge badge-layers">Layers</span></span>
+      <span class="doc-desc">Original version (v1). Preserved as reference.</span>
+      <span class="doc-date">May 23, 2026 (v1)</span>
+    </a>
+  </li>
+</ul>
+
+<h2>Pattern 2 — Conduits</h2>
+
+<ul class="doc-list">
+  <li class="doc-item">
+    <a href="2026-05-24_the-pipeline-edition.html">
+      <span class="doc-title">Software Conduits: The Pipeline Edition <span class="doc-badge badge-conduit">Conduit</span></span>
+      <span class="doc-desc">Urinary tract mapped to your document processing pipeline. LLMClientInitializer (kidney) through FlaggingAgent (urinalysis) to storage (voiding). Station-by-station diagnostic algorithm, input/output checks, failure modes: strictures, reflux, dyssynergia, unreported urinalysis.</span>
+      <span class="doc-date">May 24, 2026</span>
+    </a>
+  </li>
+</ul>
+
+<h2>Pattern 3 — Networks</h2>
+
+<ul class="doc-list">
+  <li class="doc-item">
+    <a href="2026-05-24_the-vasculature-edition.html">
+      <span class="doc-title">Software Networks: The Vasculature Edition <span class="doc-badge badge-network">Network</span></span>
+      <span class="doc-desc">Firebase auth as arterial tree, Alpine stores as nervous system, custom events as lymphatic drainage. Territory mapping diagnostic method, token expiry ischemic cascade, collateral circulation analysis of your fallback paths.</span>
+      <span class="doc-date">May 24, 2026</span>
+    </a>
+  </li>
+</ul>
+
+<h2>Case Studies</h2>
+
+<ul class="doc-list">
+  <li class="doc-item">
+    <a href="2026-05-23_the-phantom-panel-bug.html">
+      <span class="doc-title">The Phantom Panel Bug <span class="doc-badge badge-case">Case Study</span></span>
+      <span class="doc-desc">A mobile sidebar bug diagnosed through the layer model. Two functions half-transitioning the same state — an implicit state machine with a phantom state.</span>
+      <span class="doc-date">May 23, 2026</span>
+    </a>
+  </li>
+</ul>
+
+<hr style="border:none; border-top:2px solid #e7e5e4; margin:40px 0;">
+
+<p style="text-align:center; color:var(--muted); font-size:13px;">
+  ChartPrepper project — for a doctor who debugs software<br>the way he was trained to diagnose patients.
+</p>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>
