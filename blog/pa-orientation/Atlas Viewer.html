@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas of the Urinary Tract — All 16 Plates</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --card: #ffffff;
+    --border: #e7e5e4;
+    --text: #1c1917;
+    --muted: #78716c;
+    --accent: #2563eb;
+    --code-bg: #f5f5f4;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "SF Mono", "Fira Code", "Consolas", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.65; padding: 40px 20px 80px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .crumb { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 8px; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--muted); }
+  .crumb a:hover { color: var(--text); border-bottom-color: var(--text); }
+  h1 { font-size: 30px; font-weight: 800; line-height: 1.15; margin-bottom: 10px; letter-spacing: -0.02em; }
+  .subtitle { font-size: 15px; color: var(--muted); margin-bottom: 36px; border-bottom: 2px solid var(--border); padding-bottom: 22px; max-width: 700px; }
+
+  .section-head {
+    margin-top: 44px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .section-head h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin: 0;
+  }
+  .section-head .count {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+
+  .plate {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .plate-img {
+    background: #f5f4f1;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+  }
+  .plate-img img {
+    max-width: 100%;
+    max-height: 360px;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+  }
+  .plate-body { padding: 14px 18px 16px; }
+  .plate-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .plate-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .plate-desc {
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.55;
+  }
+  .plate-used {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: var(--mono);
+    letter-spacing: 0.04em;
+    border-top: 1px dashed var(--border);
+    padding-top: 8px;
+    margin-top: auto;
+  }
+  .plate-used a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--accent);
+  }
+  .plate-used a:hover { border-bottom-style: solid; }
+  .plate-used .none { color: var(--muted); font-style: italic; }
+
+  .src {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 28px 0 40px;
+    font-size: 14px;
+  }
+  .src .label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="crumb"><a href="index.html">← Clinical Geometry</a> · Atlas Viewer · May 24, 2026</div>
+<h1>Atlas of the Urinary Tract — All 16 Plates</h1>
+<p class="subtitle">Every figure from the original Burroughs Wellcome atlas, with what each plate shows and where it appears in the reference. Use this page as a visual index when you want to find a specific anatomy or pathology illustration.</p>
+
+<div class="src">
+  <div class="label">Source</div>
+  Burroughs Wellcome Co., <em>Atlas of the Urinary Tract</em> — spiral-bound illustrated guide, scanned (16 plates, two parts). Original PDFs: <a href="atlas/Atlas-Part-1.pdf" download>Part 1</a> · <a href="atlas/Atlas-Part-2.pdf" download>Part 2</a>. Full-resolution PNGs of every plate are in <code>images/</code>; the JPG copies below are the web-display versions used throughout the reference.
+</div>
+
+<!-- ====== PART 1 ====== -->
+<div class="section-head">
+  <h2>Part 1 — Anatomy &amp; Inflammation</h2>
+  <span class="count">8 plates</span>
+</div>
+
+<div class="grid">
+
+  <div class="plate">
+    <div class="plate-img"><img src="images/atlas1-p01.jpg" alt="Atlas cover"></div>
+    <div class="plate-body">
+      <div class="plate-num">Part 1 · Plate 1</div>
+      <div class="plate-title">Cover</div>
+      <div class="plate-desc">Title page of the atlas. Establishes the source and the visual style used throughout — bright watercolor-style illustrations with line-pointer labels.</div>
+      <div class="plate-used"><span class="none">— reference only —</span></div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="plate-img"><img src="images/atlas1-p02.jpg" alt="Male urinary tract overview"></div>
+    <div class="plate-body">
+      <div class="plate-num">Part 1 · Plate 2</div>
+      <div class="plate-title">Male Urinary Tract — Overview</div>
+      <div class="plate-desc">The conduit in situ: kidneys, ureters, bladder, prostate-encircled urethra. Sagittal and frontal views with labeled structures. The orientation plate.</div>
+      <div class="plate-used">Used in: <a href="The Urinary Tract.html">The Urinary Tract</a> · principle section</div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="plate-img"><img src="images/atlas1-p03.jpg" alt="Female urinary tract overview"></div>
+    <div class="plate-body">
+      <div class="plate-num">Part 1 · Plate 3</div>
+      <div class="plate-title">Female Urinary Tract — Overview</div>
+      <div class="plate-desc">The female counterpart — short urethra, no prostate, different pelvic anatomy. Worth keeping side-by-side with plate 2 for the asymmetry of UTI epidemiology between sexes.</div>
+      <div class="plate-used"><span class="none">— available for future female-focused docs —</span></div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="plate-img"><img src="images/atlas1-p04.jpg" alt="Bladder cross-section and cystoscopic view"></div>
+    <div class="plate-body">
+      <div class="plate-num">Part 1 · Plate 4</div>
+      <div class="plate-title">Normal Bladder — Cross-Section + Cystoscopic View</div>
+      <div class="plate-desc">Anatomy of station 3: trigone, ureteral orifices, smooth mucosa. Includes the cystoscopic "what the scope sees" view that maps the cross-section to the endoscopic appearance.</div>
+      <div class="plate-used"><span class="none">— available for cystoscopy / bladder docs —</span></div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="plate-img"><img src="images/atlas1-p05.jpg" alt="Inflamed bladder with cystoscopic view of cystitis"></div>
+    <div class="plate-body">
+      <div class="plate-num">Part 1 · Plate 5</div>
+      <div class="plate-title">Inflamed Bladder (Cystitis)</div>
+      <div class="plate-desc">Thickened mucosa, dilated vessels, bladder neck spasm, scattered inflammatory lesions. Cross-section and cystoscopic view of acute cystitis.</div>
+      <div class="plate-used"><span class="none">— available for UTI / cystitis docs —</span></div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="plate-img"><img src="images/atlas1-p06.jpg" alt="Male pelvis sagittal section and prostate cross-section"></div>
+    <div class="plate-body">
+      <div class="plate-num">Part 1 · Plate 6</div>
+      <div class="plate-title">Male Pelvis — Sagittal &amp; Prostate Cross-Section</div>
+      <div class="plate-desc">Four-panel composite: sagittal section of the pelvis showing prostate relationship to bladder and rectum, sagittal view, normal prostate cross-section with anterior/lateral/median lobes labeled, posterior bladder/prostate view with vas, seminal vesicles, ureters.</div>
+      <div class="plate-used"><span class="none">— available for prostate-anatomy docs —</span></div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="plate-img"><img src="images/atlas1-p07.jpg" alt="Normal bladder and prostate"></div>
+    <div class="plate-body">
+      <div class="plate-num">Part 1 · Plate 7</div>
+      <div class="plate-title">Normal Bladder &amp; Prostate</div>
+      <div class="plate-desc">Coronal section showing the relationship of trigone, ureteral orifices, prostatic urethra, and external prostatic anatomy. The baseline for comparison against pathology plates.</div>
+      <div class="plate-used"><span class="none">— reference; pairs with plates 8, 2-1, 2-2 —</span></div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="plate-img"><img src="images/atlas1-p08.jpg" alt="Acute prostatitis with purulent exudate"></div>
+    <div class="plate-body">
+      <div class="plate-num">Part 1 · Plate 8</div>
+      <div class="plate-title">Acute Prostatitis</div>
+      <div class="plate-desc">Sagittal section showing enlarged inflamed prostate with purulent exudate in the urethra. Cross-section showing purulent material in dilated collecting ducts.</div>
+      <div class="plate-used"><span class="none">— available for prostatitis docs —</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ====== PART 2 ====== -->
+<div class="section-head">
+  <h2>Part 2 — Obstruction &amp; Pathology</h2>
+  <span class="count">8 plates</span>
+</div>
+
+<div class="grid">
+
+  <div class="plate">
+    <div class="plate-img"><img src="images/atlas2-p01.jpg" alt="Benign prostatic hyperplasia"></div>
+    <div class="plate-body">
+      <div class="plate-num">Part 2 · Plate 1</div>
+      <div class="plate-title">Benign Prostatic Hyperplasia (Nodular Hyperplasia)</div>
+      <div class="plate-desc">Hyperplastic adenoma compressing the prostatic urethra and bulging into the distended bladder. Cross-section shows compressed urethra, calcifications, displaced normal prostatic tissue. The mechanism of station-5 obstruction visualized.</div>
+      <div class="plate-used">Used in: <a href="The Urinary Tract.html">The Urinary Tract</a> · worked case · <a href="Urology Operations.html">Operations</a> · TURP section</div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="plate-img"><img src="images/atlas2-p02.jpg" alt="Early and advanced prostate carcinoma"></div>
+    <div class="plate-body">
+      <div class="plate-num">Part 2 · Plate 2</div>
+      <div class="plate-title">Prostate Carcinoma — Early &amp; Advanced</div>
+      <div class="plate-desc">Side-by-side: early peripheral-zone carcinoma confined to the gland, vs. advanced carcinoma invading the bladder and surrounding normal prostatic tissue. The visual case for why staging matters and what radical prostatectomy attempts to remove.</div>
+      <div class="plate-used">Used in: <a href="Urology Operations.html">Operations</a> · robotic prostatectomy section</div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="plate-img"><img src="images/atlas2-p03.jpg" alt="Upper tract obstruction synoptic"></div>
+    <div class="plate-body">
+      <div class="plate-num">Part 2 · Plate 3</div>
+      <div class="plate-title">Upper Tract Obstruction — Synoptic</div>
+      <div class="plate-desc"><strong>One of the two showstopper plates.</strong> Hydronephrosis, hydroureter, calculus at multiple levels, ureteral tumor, ureteral kink, aberrant vessel compressing the UPJ, scar tissue, chronic infection. Every way stations 1–2 can fail, in one drawing.</div>
+      <div class="plate-used">Used in: <a href="The Urinary Tract.html">The Urinary Tract</a> · pathophysiology section</div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="plate-img"><img src="images/atlas2-p04.jpg" alt="Bladder pathologies overview"></div>
+    <div class="plate-body">
+      <div class="plate-num">Part 2 · Plate 4</div>
+      <div class="plate-title">Bladder Pathologies — Overview</div>
+      <div class="plate-desc">Diverticulum, thickened wall, tumor, calculus, ureterocele, foreign object, congenital valve, polyp, stenosis. The catalog of things that can sit on or in the bladder. Useful when interpreting cystoscopy findings.</div>
+      <div class="plate-used">Used in: <a href="Urology Follow-Up.html">Follow-Up</a> · bladder cancer surveillance section</div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="plate-img"><img src="images/atlas2-p05.jpg" alt="Lower tract obstruction synoptic"></div>
+    <div class="plate-body">
+      <div class="plate-num">Part 2 · Plate 5</div>
+      <div class="plate-title">Lower Tract Obstruction — Synoptic</div>
+      <div class="plate-desc"><strong>The companion showstopper.</strong> Thickened bladder wall, muscular hypertrophy, calculus, tumor, BPH, prostatic abscess, advanced prostate carcinoma, congenital valve, polyp, infection, urethral stenosis, phimosis. Every way stations 3–5 can obstruct, in one drawing.</div>
+      <div class="plate-used">Used in: <a href="The Urinary Tract.html">The Urinary Tract</a> · pathophysiology · <a href="Urology Follow-Up.html">Follow-Up</a> · recurrent UTI in men</div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="plate-img"><img src="images/atlas2-p06.jpg" alt="Normal kidney cross-section"></div>
+    <div class="plate-body">
+      <div class="plate-num">Part 2 · Plate 6</div>
+      <div class="plate-title">Normal Kidney — Cross-Section</div>
+      <div class="plate-desc">Cortex, medulla, calyces, pelvis, ureter, capsule. Station 1's internal architecture — the structure that obstruction at station 2 backs up into and that partial nephrectomy attempts to preserve.</div>
+      <div class="plate-used">Used in: <a href="The Urinary Tract.html">The Urinary Tract</a> · kidney sub-pipeline · <a href="Urology Operations.html">Operations</a> · partial nephrectomy section</div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="plate-img"><img src="images/atlas2-p07.jpg" alt="Acute pyelonephritis"></div>
+    <div class="plate-body">
+      <div class="plate-num">Part 2 · Plate 7</div>
+      <div class="plate-title">Acute Pyelonephritis</div>
+      <div class="plate-desc">Enlarged inflamed kidney with purulent exudate streaking through the medulla and cortical abscesses scattered through the parenchyma. Why a closed obstructed infected system is a surgical emergency.</div>
+      <div class="plate-used">Used in: <a href="Urology Consults.html">Consults</a> · urosepsis section</div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="plate-img"><img src="images/atlas2-p08.jpg" alt="Chronic pyelonephritis"></div>
+    <div class="plate-body">
+      <div class="plate-num">Part 2 · Plate 8</div>
+      <div class="plate-title">Chronic Pyelonephritis</div>
+      <div class="plate-desc">Shrunken kidney with blunted calyces, fibrosis, cortical scars, irregular contour. The end-stage appearance of recurrent infection and unrecognized obstruction.</div>
+      <div class="plate-used"><span class="none">— available for CKD / chronic infection docs —</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="nav.js" defer></script>
+</body>
+</html>

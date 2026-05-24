@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urology — Common Consults</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --card: #ffffff;
+    --border: #e7e5e4;
+    --text: #1c1917;
+    --muted: #78716c;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --orange: #d97706;
+    --orange-light: #fffbeb;
+    --purple: #7c3aed;
+    --purple-light: #f5f3ff;
+    --teal: #0d9488;
+    --teal-light: #f0fdfa;
+    --code-bg: #f5f5f4;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "SF Mono", "Fira Code", "Consolas", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.75; padding: 40px 20px 80px; }
+  .container { max-width: 740px; margin: 0 auto; }
+  .crumb { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 8px; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--muted); }
+  .crumb a:hover { color: var(--text); border-bottom-color: var(--text); }
+  h1 { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .subtitle { font-size: 15px; color: var(--muted); margin-bottom: 40px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
+  h2 { font-size: 20px; font-weight: 700; margin-top: 52px; margin-bottom: 16px; }
+  h3 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 10px; }
+  h4 { font-size: 14px; font-weight: 700; margin-top: 18px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+  p { margin-bottom: 16px; font-size: 15px; }
+  ul, ol { margin-bottom: 16px; padding-left: 20px; }
+  ul li, ol li { margin-bottom: 4px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 20px 0; }
+  .card-accent { border-left: 4px solid var(--accent); background: var(--accent-light); }
+  .card-green { border-left: 4px solid var(--green); background: var(--green-light); }
+  .card-red { border-left: 4px solid var(--red); background: var(--red-light); }
+  .card-orange { border-left: 4px solid var(--orange); background: var(--orange-light); }
+  .card-purple { border-left: 4px solid var(--purple); background: var(--purple-light); }
+  .card-teal { border-left: 4px solid var(--teal); background: var(--teal-light); }
+  .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .card-accent .label { color: var(--accent); }
+  .card-green .label { color: var(--green); }
+  .card-red .label { color: var(--red); }
+  .card-orange .label { color: var(--orange); }
+  .card-purple .label { color: var(--purple); }
+  .card-teal .label { color: var(--teal); }
+  code { font-family: var(--mono); font-size: 13px; background: var(--code-bg); padding: 2px 6px; border-radius: 4px; }
+  pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.6; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--code-bg); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  hr { border: none; border-top: 2px solid var(--border); margin: 52px 0; }
+
+  /* Atlas figure */
+  .fig {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin: 18px 0;
+    text-align: center;
+  }
+  .fig img { max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 4px; }
+  .fig figcaption {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+    line-height: 1.5;
+    font-family: var(--mono);
+    letter-spacing: 0.02em;
+  }
+  .fig figcaption strong { color: var(--text); font-family: var(--font); font-weight: 700; letter-spacing: 0; }
+
+  /* Consult cards — header strip */
+  .consult {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 28px 0;
+  }
+  .consult-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--code-bg);
+  }
+  .consult-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .consult-badge.crit { background: var(--red); color: white; border-color: var(--red); }
+  .consult-badge.urg { background: var(--orange); color: white; border-color: var(--orange); }
+  .consult-badge.semi { background: var(--green); color: white; border-color: var(--green); }
+  .consult-title { font-size: 17px; font-weight: 700; flex: 1; }
+  .consult-clock {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .consult-body { padding: 6px 20px 18px; }
+  .consult-body h4:first-child { margin-top: 14px; }
+
+  /* lesion/symptom mini-grid */
+  .lvs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 14px 0 4px;
+  }
+  .lvs > div {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    background: var(--bg);
+  }
+  .lvs .k {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .lvs .v { font-size: 14px; font-weight: 600; }
+  .lvs .sub { font-size: 12px; color: var(--muted); margin-top: 2px; font-weight: 400; }
+
+  /* Triage matrix */
+  .triage {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin: 24px 0;
+  }
+  .tri-col {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+  }
+  .tri-head {
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: white;
+  }
+  .tri-col.crit .tri-head { background: var(--red); }
+  .tri-col.urg .tri-head { background: var(--orange); }
+  .tri-col.semi .tri-head { background: var(--green); }
+  .tri-body { padding: 12px 14px; font-size: 13px; }
+  .tri-body ul { padding-left: 18px; margin: 0; }
+  .tri-body li { margin-bottom: 6px; }
+  .tri-foot {
+    padding: 10px 14px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    background: var(--bg);
+  }
+
+  /* Timeline */
+  .timeline { margin: 28px 0; }
+  .tl-step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .tl-step:last-child { border-bottom: none; }
+  .tl-num {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--code-bg);
+    color: var(--text);
+    font-weight: 800;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border);
+  }
+  .tl-step.hit .tl-num { background: var(--red); color: white; border-color: var(--red); }
+  .tl-step.ok .tl-num { background: var(--green); color: white; border-color: var(--green); }
+  .tl-head { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .tl-meta { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; font-weight: 600; }
+  .tl-body { font-size: 14px; }
+  .tl-finding { margin-top: 6px; font-size: 13px; }
+
+  @media (max-width: 600px) {
+    .lvs { grid-template-columns: 1fr; }
+    .triage { grid-template-columns: 1fr; }
+    .tl-step { grid-template-columns: 44px 1fr; gap: 12px; }
+    .tl-num { width: 32px; height: 32px; font-size: 12px; }
+    .consult-head { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="crumb"><a href="index.html">← Clinical Geometry</a> · <a href="The Urinary Tract.html">The Urinary Tract</a> · May 24, 2026</div>
+<h1>Common Consults: The ER &amp; Inpatient Set</h1>
+<p class="subtitle">For the trainee taking first call. The ER sees the exit complaint. Your job is to localize the station where flow first failed — and to know which consults will not wait for the workup to complete.</p>
+
+<!-- ============================================================ -->
+<h2>The Consult Framework</h2>
+
+<p>Every urology consult arrives in <strong>tiers</strong> (a hierarchy of clinical reasoning, separate from the anatomical <a href="The Urinary Tract.html">stations of the conduit</a>). The tiers map cleanly onto how the call comes in:</p>
+
+<table>
+  <thead>
+    <tr><th>Tier</th><th>What it is</th><th>Who sees it</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>1 — Presenting complaint</strong></td><td>"Can't pee" · "Blood in urine" · "Pain" · "Fever"</td><td>Triage nurse, ER attending</td></tr>
+    <tr><td><strong>2 — Functional problem</strong></td><td>Retention. Obstructed flow. Loss of continence. Hemodynamic instability.</td><td>ER physician</td></tr>
+    <tr><td><strong>3 — Structural lesion</strong></td><td>Stone at the UVJ. Prostatic enlargement. Clot in the bladder. Ischemic testis.</td><td>You — on consult</td></tr>
+    <tr><td><strong>4 — Root cause</strong></td><td>BPH. Anticoagulation. Bladder cancer. Cord torsion. Diabetes.</td><td>Urology, downstream</td></tr>
+  </tbody>
+</table>
+
+<p>The ER physician saw tier 1 and inferred tier 2. They called you because they need someone who can localize tier 3 — <strong>the station along the urinary conduit where flow first failed</strong> — and start planning around tier 4. That is the entire consult in one sentence.</p>
+
+<div class="card card-accent">
+  <div class="label">What "first call" actually means</div>
+  <p style="margin:0;">You are being trusted to do three things, in order. <strong>One,</strong> identify the consults that will not survive the workup — Fournier's, torsion, urosepsis with an obstructed system. <strong>Two,</strong> stabilize: decompress what's distended upstream, drain what's obstructed, hold pressure where it's bleeding. <strong>Three,</strong> localize the lesion well enough — to the conduit station that first failed — that the staff urologist can plan the operation by phone. The framework below exists so you do those three in the right order every time.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>How to Read Each Consult Below</h2>
+
+<p>Every entry follows the same structure. The badge tells you the clinical tempo, the clock tells you the rate at which layer failure outpaces your diagnostic window, and the lesion/symptom box localizes before the prose starts.</p>
+
+<div class="consult">
+  <div class="consult-head">
+    <div class="consult-badge crit">Critical</div>
+    <div class="consult-title">Example — read the structure</div>
+    <div class="consult-clock">clock · time-to-failure</div>
+  </div>
+  <div class="consult-body">
+    <div class="lvs">
+      <div><div class="k">Lesion site</div><div class="v">where the pathology lives</div><div class="sub">e.g. cord, fascia, ureter</div></div>
+      <div><div class="k">Where it presents</div><div class="v">where the patient feels it</div><div class="sub">e.g. scrotum, skin, flank</div></div>
+    </div>
+    <p style="margin-top: 14px; margin-bottom: 0; font-size: 13px; color: var(--muted);">Then: <strong>Pattern</strong> · <strong>Diagnostic move</strong> · <strong>Treatment</strong> · <strong>When to call urology</strong>.</p>
+  </div>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2>The Consults</h2>
+
+<!-- ====== Urinary retention ====== -->
+<div class="consult">
+  <div class="consult-head">
+    <div class="consult-badge urg">Urgent</div>
+    <div class="consult-title">1. Urinary Retention</div>
+    <div class="consult-clock">clock · hours (kidneys); minutes (pain)</div>
+  </div>
+  <div class="consult-body">
+    <div class="lvs">
+      <div><div class="k">Lesion station</div><div class="v">Station 5 (prostate / urethra) or wiring (control)</div><div class="sub">obstructive vs neurogenic</div></div>
+      <div><div class="k">Where it presents</div><div class="v">Distended bladder, suprapubic pain</div><div class="sub">"can't pee" — Layer 1</div></div>
+    </div>
+
+    <h4>Pattern</h4>
+    <p>Two flavors. <strong>Obstructive retention</strong>: chronic outflow narrowing (BPH, stricture) decompensates acutely — usually triggered by alcohol, anticholinergics, decongestants, opioids, or postoperative state. Slow stream history. Big bladder, big PVR. <strong>Neurogenic retention</strong>: think cord — cauda equina, spinal cord injury, MS flare, diabetic autonomic neuropathy. Look for saddle anesthesia, leg weakness, bowel involvement, recent back pain. <strong>Acute on chronic</strong> is the most common ER picture: a man with years of LUTS who suddenly cannot void after a hip replacement and a few opioids.</p>
+
+    <h4>Diagnostic move</h4>
+    <p>Bladder scan first — anything over 300 mL with the complaint of inability to void is retention. Decompress with a Foley before you finish the workup. UA + BMP. Renal ultrasound if bilateral hydro is suspected or creatinine is up. <strong>Always</strong> ask the neuro questions out loud — saddle, legs, bowel, back pain. If any are positive, MRI lumbar spine STAT, not a urology consult.</p>
+
+    <h4>Treatment</h4>
+    <p>Foley decompresses Layer 2–3. Tamsulosin starts immediately if obstructive — improves voiding-trial success. Monitor for post-obstructive diuresis (urine output &gt;200 mL/hr after decompression) — replace half of hourly output with IVF, recheck electrolytes. Trial of void in 3–7 days as outpatient if stable.</p>
+
+    <h4>When to call urology</h4>
+    <ul>
+      <li>Can't pass the catheter — call before forcing. A false passage in a man with BPH or stricture costs you weeks.</li>
+      <li>Frank hematuria with retention — likely clot retention, needs 3-way irrigation, see below.</li>
+      <li>Retention with sepsis or AKI — admit, call now.</li>
+      <li>Any suspicion of cord pathology — neurosurgery first, urology second.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ====== Renal colic ====== -->
+<div class="consult">
+  <div class="consult-head">
+    <div class="consult-badge urg">Urgent</div>
+    <div class="consult-title">2. Renal Colic / Ureteric Stone</div>
+    <div class="consult-clock">clock · hours if infected; days if not</div>
+  </div>
+  <div class="consult-body">
+    <div class="lvs">
+      <div><div class="k">Lesion station</div><div class="v">Station 2 — ureter (UPJ, pelvic brim, or UVJ)</div><div class="sub">three natural narrowings</div></div>
+      <div><div class="k">Where it presents</div><div class="v">Flank → groin → testis/labia</div><div class="sub">refers along the dermatome as the stone descends</div></div>
+    </div>
+
+    <h4>Pattern</h4>
+    <p>Sudden, severe, colicky pain. Patient cannot find a comfortable position — distinguishes from peritonitis, where they lie still. Microscopic hematuria common, gross hematuria possible. Nausea and vomiting prominent. Migration of pain toward the groin/scrotum suggests descent to the UVJ.</p>
+
+    <h4>Diagnostic move</h4>
+    <p>Non-contrast CT KUB is the test — sees stone, sees hydro, sees alternatives (AAA, appendicitis). UA looking for hematuria <strong>and</strong> infection. CBC + BMP. If pregnant: ultrasound first, then MRI if needed; CT is the last resort.</p>
+
+    <h4>Treatment</h4>
+    <ul>
+      <li>Stones &lt;5 mm in the distal ureter: ~80% pass. NSAIDs (ketorolac if renal function ok), antiemetic, tamsulosin (medical expulsive therapy — controversial but standard for distal stones &gt;5 mm), strain urine, outpatient follow-up.</li>
+      <li>Stones 5–10 mm: variable. Most still pass with time. Outpatient urology in 1–2 weeks if uncomplicated.</li>
+      <li>Stones &gt;10 mm: rarely pass spontaneously. Plan for intervention (ureteroscopy / SWL).</li>
+    </ul>
+
+    <h4>When to call urology</h4>
+    <ul>
+      <li><strong>Infected obstructed system</strong> — fever + stone + hydronephrosis. This is urosepsis until proven otherwise. Drain immediately, see below.</li>
+      <li>Solitary kidney with obstruction.</li>
+      <li>Bilateral obstruction.</li>
+      <li>AKI from obstruction.</li>
+      <li>Intractable pain despite adequate analgesia.</li>
+      <li>Stone &gt;10 mm — for elective planning, not in the ED.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ====== Gross hematuria ====== -->
+<div class="consult">
+  <div class="consult-head">
+    <div class="consult-badge urg">Urgent</div>
+    <div class="consult-title">3. Gross Hematuria</div>
+    <div class="consult-clock">clock · hours if clot retention; days if not</div>
+  </div>
+  <div class="consult-body">
+    <div class="lvs">
+      <div><div class="k">Lesion station</div><div class="v">Any station from kidney to meatus</div><div class="sub">localization is the entire job</div></div>
+      <div><div class="k">Where it presents</div><div class="v">Color of urine — Layer 1</div><div class="sub">tells you nothing about depth</div></div>
+    </div>
+
+    <h4>Pattern</h4>
+    <p>Three patterns worth distinguishing by history. <strong>Initial hematuria</strong> (blood at the start, clearing) → urethral source. <strong>Terminal hematuria</strong> (clear, then blood at the end) → bladder neck / trigone. <strong>Total hematuria</strong> (blood throughout) → bladder or upper tract. <strong>Painless gross hematuria in an adult is malignancy until proven otherwise.</strong> Painful gross hematuria is usually stone or infection. Anticoagulation does not cause hematuria by itself — it unmasks an underlying lesion. Work it up the same way regardless.</p>
+
+    <h4>Diagnostic move</h4>
+    <p>UA + culture (rule out infection first; treat first if positive, then re-evaluate). CBC, BMP, coags. CT urogram for the upper tracts and bladder. Cystoscopy for the bladder mucosa — flexible, in clinic, the gold standard for bladder cancer detection. Assess clot retention at the bedside: palpate suprapubically, bladder scan if uncertain.</p>
+
+    <h4>Treatment</h4>
+    <p>If not retaining clot and stable: outpatient workup. If retaining clot: <strong>3-way Foley</strong> (22–24 Fr, large bore) with continuous bladder irrigation (CBI). Manually evacuate clots with a Toomey before starting CBI — a CBI on top of a clot-filled bladder just inflates the system. Reverse anticoagulation if the bleeding is consequential. Type and screen, transfuse for symptomatic anemia.</p>
+
+    <h4>When to call urology</h4>
+    <ul>
+      <li>Clot retention requiring CBI.</li>
+      <li>Failure to clear clots after manual evacuation and CBI.</li>
+      <li>Hemodynamic instability — bleeding from anywhere in the GU tract that drops a blood pressure is a now-call.</li>
+      <li>Recent urologic procedure with new bleeding — assume procedure-related, see post-op section.</li>
+      <li>Any gross hematuria needs outpatient urology follow-up. State this explicitly in the discharge plan; do not assume the patient will find their way to clinic.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ====== Urosepsis ====== -->
+<div class="consult">
+  <div class="consult-head">
+    <div class="consult-badge crit">Critical</div>
+    <div class="consult-title">4. Urosepsis</div>
+    <div class="consult-clock">clock · hours — mortality climbs with each one</div>
+  </div>
+  <div class="consult-body">
+    <div class="lvs">
+      <div><div class="k">Lesion station</div><div class="v">Stations 1–2 — obstructed, infected upper tract</div><div class="sub">closed space with bacteria</div></div>
+      <div><div class="k">Where it presents</div><div class="v">Fever, tachycardia, hypotension</div><div class="sub">systemic — Layer 1 in the worst way</div></div>
+    </div>
+
+    <h4>Pattern</h4>
+    <p>Fever + flank pain + hydronephrosis = obstructed pyelonephritis until proven otherwise. Diabetic, immunosuppressed, elderly, recently instrumented, or with a known stone are the at-risk groups. They can look surprisingly well one hour and crash the next. <strong>An infected, obstructed system is a closed-space infection.</strong> Antibiotics alone will not drain it. Pressure has to come off.</p>
+
+    <figure class="fig">
+      <img src="images/atlas2-p07.jpg" alt="Acute pyelonephritis: kidney enlarged with purulent exudate streaking through the medulla and abscesses scattered in the cortex">
+      <figcaption><strong>What an obstructed, infected kidney looks like inside.</strong> Purulent exudate fills the collecting system; abscesses are scattered through the cortex; the parenchyma is inflamed. Drainage is not optional. Antibiotics arrive through the bloodstream; they do not enter the closed obstructed space.<br>From Burroughs Wellcome Co., <em>Atlas of the Urinary Tract</em>.</figcaption>
+    </figure>
+
+    <h4>Diagnostic move</h4>
+    <p>Lactate, blood cultures, UA + urine culture, CBC, BMP, coags. CT abdomen/pelvis with contrast (or non-contrast if AKI) to identify the obstruction. Sepsis bundle: fluids, broad-spectrum antibiotics, source control. Do not wait for cultures to start antibiotics — but understand that antibiotics are the second move, not the first.</p>
+
+    <h4>Treatment</h4>
+    <p><strong>Drainage before antibiotics will work.</strong> Two options:</p>
+    <ol>
+      <li><strong>Ureteral stent</strong> — urology, retrograde, in the OR. Faster if available.</li>
+      <li><strong>Percutaneous nephrostomy</strong> — IR, antegrade, at the bedside or in IR suite. Often the right call after hours.</li>
+    </ol>
+    <p>The choice is local — whoever can drain faster. Both work. The wrong answer is "let's see if the antibiotics work."</p>
+
+    <h4>When to call urology</h4>
+    <p style="font-weight: 600;">Always, immediately, in parallel with calling IR. This is the consult where the phone call goes out before the CT result is back if the picture is clear enough. ICU admission expected.</p>
+  </div>
+</div>
+
+<!-- ====== Fournier's ====== -->
+<div class="consult">
+  <div class="consult-head">
+    <div class="consult-badge crit">Critical</div>
+    <div class="consult-title">5. Fournier's Gangrene</div>
+    <div class="consult-clock">clock · time to OR is the only variable</div>
+  </div>
+  <div class="consult-body">
+    <div class="lvs">
+      <div><div class="k">Lesion station</div><div class="v">Fascial planes of the perineum (layer geometry, not conduit)</div><div class="sub">necrotizing infection along Colles' / Buck's / dartos</div></div>
+      <div><div class="k">Where it presents</div><div class="v">Scrotal / perineal skin</div><div class="sub">often deceptively unimpressive early</div></div>
+    </div>
+
+    <div class="card card-red" style="margin: 14px 0;">
+      <div class="label">If you suspect Fournier's, stop reading and call.</div>
+      <p style="margin:0;">Pain out of proportion to exam findings in the perineum, scrotum, or groin — especially in a diabetic, obese, or immunosuppressed patient — is Fournier's until proven otherwise. Skin findings lag the fascial necrosis by hours. Crepitus is late. Hemodynamic instability is later. <strong>Time to operative debridement is the single variable that correlates with survival.</strong> Imaging delays the OR. Antibiotics do not penetrate dead tissue. Cut.</p>
+    </div>
+
+    <h4>Pattern</h4>
+    <p>Diabetic, immunosuppressed, alcoholic, perirectal abscess, recent perineal procedure, or chronic catheter. Severe pain in the perineum or scrotum. Skin can look like cellulitis early — pink, warm, swollen — then progress to dusky, purple, bullous, finally black. Crepitus is highly specific but not sensitive. Foul-smelling, "dishwater" purulent discharge if open. Systemic toxicity disproportionate to skin findings.</p>
+
+    <h4>Diagnostic move</h4>
+    <p>This is clinical. <strong>If you are sure, CT is a delay you cannot afford.</strong> If you are uncertain and the patient is hemodynamically stable, CT can confirm fascial gas and define extent — but a normal CT does not rule it out. LRINEC score is supportive, not diagnostic. Labs (CBC, BMP, lactate, CRP, glucose, coags) draw on the way to the OR.</p>
+
+    <h4>Treatment</h4>
+    <ul>
+      <li>Broad-spectrum antibiotics with anaerobic coverage (e.g. pip-tazo + clindamycin + vancomycin, per local protocol). Start in the ED.</li>
+      <li>Aggressive resuscitation. ICU disposition.</li>
+      <li><strong>Operative debridement.</strong> Surgical debridement is the treatment. Everything else is supportive. Expect repeat trips to the OR every 24–48 hours until clean.</li>
+      <li>Suprapubic catheter or diverting colostomy may be required depending on extent.</li>
+    </ul>
+
+    <h4>When to call urology</h4>
+    <p style="font-weight: 600;">Now. Before any of the above. Call urology and general surgery together — the debridement crosses anatomic territories.</p>
+  </div>
+</div>
+
+<!-- ====== Priapism ====== -->
+<div class="consult">
+  <div class="consult-head">
+    <div class="consult-badge crit">Critical</div>
+    <div class="consult-title">6. Priapism</div>
+    <div class="consult-clock">clock · 4 h functional; 24 h is too late</div>
+  </div>
+  <div class="consult-body">
+    <div class="lvs">
+      <div><div class="k">Lesion station</div><div class="v">Corpus cavernosum — ischemic outflow failure</div><div class="sub">or arterial fistula in non-ischemic</div></div>
+      <div><div class="k">Where it presents</div><div class="v">Painful, rigid penis &gt;4 hours</div><div class="sub">glans typically soft, corpora rigid</div></div>
+    </div>
+
+    <h4>Pattern</h4>
+    <p>Two types, totally different problems. <strong>Ischemic (low-flow, veno-occlusive)</strong> is a compartment syndrome of the corpora. Painful, fully rigid, dark blood on aspiration. Causes: sickle cell, leukemia, intracavernosal injections, PDE5 inhibitors, trazodone, cocaine. Treat as an emergency. <strong>Non-ischemic (high-flow, arterial)</strong> follows perineal trauma. Partially rigid, painless, bright red blood on aspiration. Not an emergency — managed semi-electively with selective embolization.</p>
+
+    <h4>Diagnostic move</h4>
+    <p>History (sickle cell? trauma? drugs?). Cavernosal blood gas distinguishes — dark and acidotic = ischemic; bright and arterial = non-ischemic. Doppler ultrasound is confirmatory if uncertain.</p>
+
+    <h4>Treatment — ischemic</h4>
+    <ol>
+      <li>Aspirate the corpus cavernosum with a 19G needle through the glans or lateral shaft. Remove dark blood.</li>
+      <li>Irrigate with saline.</li>
+      <li>Inject phenylephrine — dilute to 100–500 mcg/mL, 1 mL aliquots every 3–5 minutes, monitoring BP and HR. Maximum dose ~1 mg total in most protocols.</li>
+      <li>If &gt;36 hours or refractory: surgical shunt. Permanent ED risk rises with every hour after the 4-hour mark.</li>
+    </ol>
+
+    <h4>Treatment — non-ischemic</h4>
+    <p>Conservative initially. Many resolve. Selective pudendal artery embolization if persistent. Not a same-day procedure.</p>
+
+    <h4>When to call urology</h4>
+    <p style="font-weight: 600;">For any priapism &gt;4 hours, call. If it's ischemic, you want urology hands-on for the aspiration and injection. If it's non-ischemic, you still want them planning the embolization conversation with IR.</p>
+  </div>
+</div>
+
+<!-- ====== Torsion ====== -->
+<div class="consult">
+  <div class="consult-head">
+    <div class="consult-badge crit">Critical</div>
+    <div class="consult-title">7. Testicular Torsion</div>
+    <div class="consult-clock">clock · 6 h to save the testis</div>
+  </div>
+  <div class="consult-body">
+    <div class="lvs">
+      <div><div class="k">Lesion station</div><div class="v">Spermatic cord — vascular occlusion (network geometry — testicular artery)</div><div class="sub">testicular artery strangled by the twist</div></div>
+      <div><div class="k">Where it presents</div><div class="v">Acute scrotal pain</div><div class="sub">often radiating to the lower abdomen</div></div>
+    </div>
+
+    <h4>Pattern</h4>
+    <p>Adolescent or young adult, sudden severe scrotal pain, often with nausea and vomiting. Sometimes wakes from sleep. Testis high-riding, transverse lie, absent cremasteric reflex. Pain not relieved by elevation (Prehn's sign negative — differentiates from epididymitis where elevation helps, although do not stake the diagnosis on Prehn alone). Can present atypically in younger children and post-pubertal men — never bet against torsion in a sudden-onset acute scrotum.</p>
+
+    <h4>Diagnostic move</h4>
+    <p>Clinical. Doppler ultrasound shows decreased or absent testicular blood flow — but <strong>do not delay surgery for ultrasound if the clinical picture is convincing.</strong> The clock starts when the cord twists, not when the patient arrives.</p>
+
+    <h4>Treatment</h4>
+    <p><strong>OR for emergent scrotal exploration, detorsion, and bilateral orchiopexy.</strong> Manual detorsion in the ED ("opening the book" — rotate the affected testis outward, away from midline) can be attempted while preparing for OR — relieves pain, may restore flow, does not replace the operation. Bilateral orchiopexy because the contralateral side has the same anatomic predisposition (bell-clapper deformity).</p>
+
+    <h4>When to call urology</h4>
+    <p style="font-weight: 600;">Immediately upon suspicion. NPO, mark the patient for OR. Salvage rate is &gt;90% at &lt;6 hours, &lt;10% at &gt;24 hours. The consult is not "rule out torsion" — it's "this is torsion until urology rules it out in the OR."</p>
+  </div>
+</div>
+
+<!-- ====== Trauma ====== -->
+<div class="consult">
+  <div class="consult-head">
+    <div class="consult-badge urg">Urgent</div>
+    <div class="consult-title">8. Traumatic GU Injury</div>
+    <div class="consult-clock">clock · mechanism-dependent</div>
+  </div>
+  <div class="consult-body">
+    <div class="lvs">
+      <div><div class="k">Lesion station</div><div class="v">Stations 1–5 — any conduit station, mechanism-dependent</div><div class="sub">force vector predicts depth</div></div>
+      <div><div class="k">Where it presents</div><div class="v">Hematuria, perineal bruising, blood at meatus</div><div class="sub">small surface signs, big underlying injury</div></div>
+    </div>
+
+    <h4>Renal trauma</h4>
+    <p>Blunt — usually MVC, sports impact, fall. Penetrating — gunshot or stab. Hematuria does <em>not</em> correlate with severity; a major renal pedicle injury can have minimal hematuria. CT abdomen/pelvis with IV contrast (delayed phase for collecting system) grades the injury (AAST I–V). Most blunt low-grade injuries (I–III) managed non-operatively. Active extravasation or hemodynamic instability → angio-embolization or OR. Watch for delayed bleeding from a pseudoaneurysm — readmit threshold low.</p>
+
+    <h4>Bladder trauma</h4>
+    <p>Pelvic fracture + gross hematuria = bladder injury until proven otherwise. <strong>CT cystogram</strong> (retrograde fill with contrast, then image) is the test — not a contrasted CT alone, which underdiagnoses by 50%. Two patterns: <strong>extraperitoneal</strong> (most common, with pelvic fracture) — managed with Foley drainage 10–14 days, repeat cystogram before catheter removal. <strong>Intraperitoneal</strong> (blunt trauma to a full bladder, classically a seatbelt injury) — surgical repair. Always.</p>
+
+    <h4>Urethral trauma</h4>
+    <p><strong>Blood at the meatus is a stop sign.</strong> Do not place a Foley until urethral injury is ruled out. Two patterns: <strong>posterior</strong> (pelvic fracture, "high-riding prostate" on DRE — though that finding is unreliable) → retrograde urethrogram (RUG); often managed with suprapubic catheter and delayed repair. <strong>Anterior</strong> (straddle injury) → RUG; may be primarily repaired or stented depending on the lesion.</p>
+
+    <h4>When to call urology</h4>
+    <ul>
+      <li>Any blood at the meatus before catheterization.</li>
+      <li>Gross hematuria in a trauma patient.</li>
+      <li>Pelvic fracture with any GU sign.</li>
+      <li>Penetrating GU trauma — always operative until proven otherwise.</li>
+      <li>Renal injury AAST grade III or higher.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ====== Post-op ====== -->
+<div class="consult">
+  <div class="consult-head">
+    <div class="consult-badge urg">Urgent</div>
+    <div class="consult-title">9. Post-Operative Complications</div>
+    <div class="consult-clock">clock · variable; treat the new finding seriously</div>
+  </div>
+  <div class="consult-body">
+    <div class="lvs">
+      <div><div class="k">Lesion station</div><div class="v">Whatever station was operated on</div><div class="sub">prostate, kidney, bladder, ureter</div></div>
+      <div><div class="k">Where it presents</div><div class="v">Drain output, urine color, fever, ileus</div><div class="sub">all of which can mean several things</div></div>
+    </div>
+
+    <h4>Hematuria post-TURP</h4>
+    <p>Some bleeding is expected — pink urine, mild clots, clearing over 24–48 hours. <strong>Bright red, brisk, or with clots that overwhelm the CBI</strong> is not expected. Increase irrigation rate, manually evacuate clots, check coags, check that the catheter balloon isn't pulled into the prostatic fossa applying tamponade incorrectly. Persistent bleeding → return to OR for fulguration.</p>
+
+    <h4>Urine leak post-partial nephrectomy / post-pyeloplasty</h4>
+    <p>High drain output that smells like urine, or drain creatinine markedly higher than serum creatinine, confirms urine leak. Most heal with prolonged drainage and a ureteral stent to lower the pressure in the collecting system (decompress upstream so the leak closes downstream). Persistent leak → percutaneous nephrostomy + stent. Reoperation rare.</p>
+
+    <h4>Catheter pulled / fell out post-prostatectomy or post-urethroplasty</h4>
+    <p><strong>Do not blindly replace.</strong> Call urology. A urethral catheter passing through a fresh anastomosis can disrupt it. Often requires cystoscopic placement over a wire. Treat this as a same-night call.</p>
+
+    <h4>Anuria post-cystectomy with ileal conduit</h4>
+    <p>Stoma not draining. First — is the stoma viable (pink)? Dusky stoma is a vascular emergency. Then — check the catheters in the conduit; mucus plug is the usual cause. Irrigate the conduit catheters gently. If still no output, imaging of the ureteroenteric anastomosis.</p>
+
+    <h4>Ileus + fever + leukocytosis post-pelvic urologic surgery</h4>
+    <p>Think urinoma, abscess, ureteric injury. CT abdomen/pelvis with delayed images. The clinical picture you do not want is "anastomotic leak masquerading as ileus."</p>
+
+    <h4>When to call urology</h4>
+    <p style="font-weight: 600;">Any unexpected finding in the first 30 days after a urologic operation belongs on the operating surgeon's phone, not just on a generic urology consult. The surgeon knows what their reconstruction looks like and what should and should not be happening.</p>
+  </div>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2>The Triage Matrix</h2>
+
+<p>The principle: <strong>the rate of layer failure determines tempo.</strong> If the lesion advances faster than your diagnostic window, you act first and confirm later. If it advances slower, you image and plan.</p>
+
+<div class="triage">
+  <div class="tri-col crit">
+    <div class="tri-head">Critical · act now</div>
+    <div class="tri-body">
+      <ul>
+        <li><strong>Fournier's gangrene</strong> — OR clock</li>
+        <li><strong>Testicular torsion</strong> — 6 h clock</li>
+        <li><strong>Urosepsis with obstruction</strong> — drain first</li>
+        <li><strong>Ischemic priapism</strong> — &gt;4 h harms</li>
+        <li><strong>Penetrating GU trauma</strong></li>
+        <li><strong>Hemodynamic instability</strong> from any GU source</li>
+      </ul>
+    </div>
+    <div class="tri-foot">failure outpaces workup</div>
+  </div>
+  <div class="tri-col urg">
+    <div class="tri-head">Urgent · stabilize & localize</div>
+    <div class="tri-body">
+      <ul>
+        <li><strong>Acute retention</strong> — decompress, then plan</li>
+        <li><strong>Colic with fever</strong> — verify not obstructed</li>
+        <li><strong>Gross hematuria with clot retention</strong></li>
+        <li><strong>Pyelonephritis without obstruction</strong></li>
+        <li><strong>Blunt renal trauma grade III+</strong></li>
+        <li><strong>Post-op complications</strong> within 30 days</li>
+      </ul>
+    </div>
+    <div class="tri-foot">act this shift</div>
+  </div>
+  <div class="tri-col semi">
+    <div class="tri-head">Semi-elective · disposition</div>
+    <div class="tri-body">
+      <ul>
+        <li><strong>Stable ureteric stone</strong> &lt;5 mm, no fever, no AKI</li>
+        <li><strong>Asymptomatic microscopic hematuria</strong></li>
+        <li><strong>Chronic retention</strong>, stable creatinine, no overflow</li>
+        <li><strong>Uncomplicated cystitis</strong></li>
+        <li><strong>Non-ischemic priapism</strong> (rare to see at all)</li>
+        <li><strong>Stable Grade I–II renal trauma</strong></li>
+      </ul>
+    </div>
+    <div class="tri-foot">outpatient or routine</div>
+  </div>
+</div>
+
+<div class="card card-orange">
+  <div class="label">The framing question</div>
+  <p style="margin:0;">For every consult, ask: <strong>what is the rate of layer failure, and does it outpace my diagnostic window?</strong> If yes → act now, confirm later. If no → confirm, then act. This is the one habit that separates a useful first-call from one that holds the operation up.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>When to Wake Up the Urologist</h2>
+
+<p>The PA needs rules, not judgment. Use these. They are intentionally over-inclusive on the side of waking someone up.</p>
+
+<div class="card card-red">
+  <div class="label">Wake them up. Right now.</div>
+  <ul style="margin: 0; padding-left: 20px;">
+    <li>Suspected <strong>Fournier's gangrene</strong>. No imaging required.</li>
+    <li>Suspected <strong>testicular torsion</strong> within the operative window.</li>
+    <li><strong>Obstructed pyelonephritis</strong> — fever + hydronephrosis + sepsis physiology.</li>
+    <li><strong>Ischemic priapism</strong> &gt;4 hours.</li>
+    <li>GU bleeding with <strong>hemodynamic instability</strong>.</li>
+    <li><strong>Penetrating GU trauma.</strong></li>
+    <li>Failed catheterization in <strong>acute retention with rising creatinine or sepsis</strong>.</li>
+    <li>Any <strong>post-operative urology patient</strong> within 30 days with a new acute finding.</li>
+  </ul>
+</div>
+
+<div class="card card-orange">
+  <div class="label">Call within the shift, not at 0300.</div>
+  <ul style="margin: 0; padding-left: 20px;">
+    <li>Successful Foley placement for retention — patient stable, no AKI. Sign-out call is fine.</li>
+    <li>Renal colic, controlled pain, no fever, no AKI, stone passable.</li>
+    <li>Gross hematuria, no clot retention, stable hemoglobin, anticoagulation reviewed.</li>
+    <li>Stable Grade I–II renal trauma.</li>
+    <li>Uncomplicated UTI in a normal host.</li>
+  </ul>
+</div>
+
+<div class="card card-green">
+  <div class="label">Handle yourself; pass to clinic.</div>
+  <ul style="margin: 0; padding-left: 20px;">
+    <li>Asymptomatic microscopic hematuria with a clean UA and no risk factors — workup as outpatient.</li>
+    <li>Stable chronic retention without overflow incontinence or AKI.</li>
+    <li>Phimosis without obstruction.</li>
+    <li>Non-painful scrotal masses (with documentation and follow-up arranged).</li>
+  </ul>
+</div>
+
+<div class="card card-accent">
+  <div class="label">The default</div>
+  <p style="margin:0;">When in doubt, call. The cost of an unnecessary call is one annoyed urologist. The cost of a missed Fournier's or torsion is a patient who loses tissue or dies. The asymmetry is not subtle. You will lose nothing in the long run by being the PA who called at 0300 about a possible torsion that turned out to be epididymitis. You will lose a lot by being the one who didn't.</p>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2>A Worked Consult</h2>
+
+<p>POD1 after right total hip replacement. 68-year-old man. Has not voided since the Foley came out 6 hours ago. ER is involved because the floor team is uncertain. Call comes to you.</p>
+
+<div class="timeline">
+
+  <div class="tl-step">
+    <div class="tl-num">1</div>
+    <div>
+      <div class="tl-meta">What the ER / floor sees · tier 1</div>
+      <div class="tl-head">"Post-op patient can't void."</div>
+      <div class="tl-body">Floor team has the surface complaint and a generic post-op picture. No vitals abnormality yet. They want to know if they can replace the catheter, or whether something else is going on. The floor's instinct is to put the Foley back. Your instinct should be to localize before you instrument.</div>
+    </div>
+  </div>
+
+  <div class="tl-step">
+    <div class="tl-num">2</div>
+    <div>
+      <div class="tl-meta">What you assess first · tier 2</div>
+      <div class="tl-head">Bladder scan. Vitals. Med list.</div>
+      <div class="tl-body">Scan: 720 mL. Confirms retention — the symptom is real and the bladder is the reservoir, not just a sensation issue. Vitals: HR 88, BP 138/82, afebrile. No sepsis. Medications since OR: spinal anesthetic, fentanyl PCA, ketorolac, ondansetron, oxybutynin (someone wrote it for "bladder spasms" pre-op and it never came off). The PCA and oxybutynin are the immediate functional cause. Underneath them may sit chronic BPH.</div>
+      <div class="tl-finding"><strong>Working frame:</strong> drug-precipitated acute retention, almost certainly on a background of LUTS.</div>
+    </div>
+  </div>
+
+  <div class="tl-step">
+    <div class="tl-num">3</div>
+    <div>
+      <div class="tl-meta">Targeted history · tier 3 (structural lesion)</div>
+      <div class="tl-head">"Have you had trouble peeing before this?"</div>
+      <div class="tl-body">Yes. Slow stream for two years. Nocturia twice a night. Has been "meaning to see somebody about my prostate." Never had retention before. No back pain, no leg weakness, no saddle anesthesia, no bowel change. No prior catheterization, no instrumentation. This is acute-on-chronic outflow obstruction precipitated by anticholinergic + opioid load + supine recovery, with a Layer 5 substrate (prostate).</div>
+      <div class="tl-finding"><strong>Off the list:</strong> cord pathology. <strong>On the list:</strong> BPH unmasked.</div>
+    </div>
+  </div>
+
+  <div class="tl-step">
+    <div class="tl-num">4</div>
+    <div>
+      <div class="tl-meta">Decompress · relieve back-pressure</div>
+      <div class="tl-head">Foley, 16 Fr, sterile, single attempt.</div>
+      <div class="tl-body">Passes without difficulty. 780 mL out over the first 15 minutes. No gross hematuria. Patient instantly comfortable. You are now in the diagnostic window the catheter bought you — do not waste it. Order: BMP, UA, urine culture (it'll grow eventually if anything; better to know now). Confirm afebrile, watch for the next hour.</div>
+      <div class="tl-finding"><strong>Result:</strong> creatinine 1.1 (baseline 1.0). UA clean. No infection. No AKI worth a consult on its own.</div>
+    </div>
+  </div>
+
+  <div class="tl-step">
+    <div class="tl-num">5</div>
+    <div>
+      <div class="tl-meta">What urology needs to know · tier 4 (root cause)</div>
+      <div class="tl-head">The 30-second handoff.</div>
+      <div class="tl-body">When you call the staff urologist or the resident, give them this, in this order:
+        <ol style="margin-top: 8px;">
+          <li>"68 y/o man, POD1 right THA, acute retention 720 mL on scan."</li>
+          <li>"Two-year history of LUTS, never retained before. No neuro symptoms."</li>
+          <li>"Foley passed easily, drained 780 mL, no hematuria."</li>
+          <li>"BMP normal, UA clean, afebrile."</li>
+          <li>"On PCA and oxybutynin — I'd like to stop the oxybutynin and start tamsulosin."</li>
+          <li>"Plan: leave Foley for 48–72 hours, trial of void after offending meds are off, urology clinic follow-up."</li>
+        </ol>
+        That is the entire consult. You have localized, decompressed, named the root cause, and offered a plan. The urologist either agrees and goes back to sleep, or modifies the plan by one variable. Either way you have done your job.</div>
+    </div>
+  </div>
+
+  <div class="tl-step ok">
+    <div class="tl-num">6</div>
+    <div>
+      <div class="tl-meta">Management · station 5 (urethral outlet)</div>
+      <div class="tl-head">Foley + tamsulosin + stop the offenders.</div>
+      <div class="tl-body">Discontinue oxybutynin. De-escalate PCA to PRN oral opioid plus scheduled acetaminophen. Start tamsulosin 0.4 mg nightly. Foley to leg bag, training the patient and family on care. Document: <em>"Acute urinary retention post-arthroplasty, multifactorial — anticholinergic, opioid, supine state — on a background of clinical BPH. Decompressed. TOV planned in 48–72 hours after offending agents discontinued. Outpatient urology referral placed."</em></div>
+    </div>
+  </div>
+
+  <div class="tl-step hit">
+    <div class="tl-num">7</div>
+    <div>
+      <div class="tl-meta">The disposition hinge · what you are watching for</div>
+      <div class="tl-head">The TOV decides everything.</div>
+      <div class="tl-body">Trial of void in 48–72 hours. Three outcomes, three dispositions:
+        <ul style="margin-top: 8px;">
+          <li><strong>Voids well, low PVR (&lt;150 mL)</strong> → home on tamsulosin, outpatient urology in 4–6 weeks. Discharged when ortho clears him.</li>
+          <li><strong>Voids partially, PVR 200–400 mL</strong> → judgment. Often replace catheter, try again in a week as outpatient. Tamsulosin continued.</li>
+          <li><strong>Fails to void, or PVR &gt;400 mL</strong> → Foley with leg bag home, outpatient urology in 1–2 weeks, frank conversation about BPH workup and likely intervention (medical vs surgical).</li>
+        </ul>
+        <p style="margin-top: 10px; margin-bottom: 0;">The hospital stay is no longer about urology — orthopedics owns the disposition for the hip. Urology's contribution is the bladder plan that travels home with him.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="card card-green">
+  <div class="label">What this consult teaches</div>
+  <p style="margin:0;">You did not need urodynamics. You did not need cystoscopy. You did not need to wake anyone up. You localized the lesion (Layer 5, prostate), identified the precipitant (Layer 4, drug-induced), decompressed the functional problem (Layer 2, retention), and handed off a plan that survives discharge. Most of your consults will look like this. The point of all the other entries in this document is so that you recognize the ones that <em>don't</em> — and call accordingly.</p>
+</div>
+
+<hr>
+
+<p style="text-align:center; color:var(--muted); font-size:13px; margin-top:40px;">
+  Written May 24, 2026 — for a PA student taking first call<br>
+  The framework before the cases, so the cases make sense when they arrive.<br>
+  Layer by layer, surface to source. <a href="index.html" style="color: var(--muted); border-bottom: 1px dotted var(--muted); text-decoration: none;">← back to reference</a>
+</p>
+
+</div>
+<script src="nav.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urology — Clinic Follow-Up Patterns</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --card: #ffffff;
+    --border: #e7e5e4;
+    --text: #1c1917;
+    --muted: #78716c;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --orange: #d97706;
+    --orange-light: #fffbeb;
+    --purple: #7c3aed;
+    --purple-light: #f5f3ff;
+    --teal: #0d9488;
+    --teal-light: #f0fdfa;
+    --code-bg: #f5f5f4;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "SF Mono", "Fira Code", "Consolas", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.7; padding: 40px 20px 80px; }
+  .container { max-width: 820px; margin: 0 auto; }
+  .crumb { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 8px; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--muted); }
+  .crumb a:hover { color: var(--text); border-bottom-color: var(--text); }
+  h1 { font-size: 30px; font-weight: 800; line-height: 1.15; margin-bottom: 10px; letter-spacing: -0.02em; }
+  .subtitle { font-size: 16px; color: var(--muted); margin-bottom: 40px; border-bottom: 2px solid var(--border); padding-bottom: 24px; max-width: 700px; }
+  h2 { font-size: 21px; font-weight: 700; margin-top: 52px; margin-bottom: 16px; letter-spacing: -0.01em; }
+  h3 { font-size: 16px; font-weight: 700; margin-top: 24px; margin-bottom: 10px; }
+  h4 { font-size: 12px; font-weight: 700; margin-top: 18px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  p { margin-bottom: 16px; font-size: 15px; }
+  ul, ol { margin-bottom: 16px; padding-left: 20px; }
+  ul li, ol li { margin-bottom: 4px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 20px 0; }
+  .card-accent { border-left: 4px solid var(--accent); background: var(--accent-light); }
+  .card-green { border-left: 4px solid var(--green); background: var(--green-light); }
+  .card-red { border-left: 4px solid var(--red); background: var(--red-light); }
+  .card-orange { border-left: 4px solid var(--orange); background: var(--orange-light); }
+  .card-purple { border-left: 4px solid var(--purple); background: var(--purple-light); }
+  .card-teal { border-left: 4px solid var(--teal); background: var(--teal-light); }
+  .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .card-accent .label { color: var(--accent); }
+  .card-green .label { color: var(--green); }
+  .card-red .label { color: var(--red); }
+  .card-orange .label { color: var(--orange); }
+  .card-purple .label { color: var(--purple); }
+  .card-teal .label { color: var(--teal); }
+  code { font-family: var(--mono); font-size: 13px; background: var(--code-bg); padding: 2px 6px; border-radius: 4px; }
+  pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.6; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--code-bg); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  hr { border: none; border-top: 2px solid var(--border); margin: 52px 0; }
+
+  /* Follow-up topic card */
+  .topic {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 32px 0;
+  }
+  .topic-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border);
+    background: var(--code-bg);
+  }
+  .topic-mark {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--accent);
+    color: white;
+    font-weight: 800;
+    font-size: 18px;
+    font-family: var(--mono);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .topic-title { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
+  .topic-sub { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.04em; margin-top: 2px; }
+  .topic-body { padding: 8px 24px 22px; }
+
+  /* Atlas figure */
+  .fig {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin: 18px 0;
+    text-align: center;
+  }
+  .fig img { max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 4px; }
+  .fig figcaption {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+    line-height: 1.5;
+    font-family: var(--mono);
+    letter-spacing: 0.02em;
+  }
+  .fig figcaption strong { color: var(--text); font-family: var(--font); font-weight: 700; letter-spacing: 0; }
+
+  /* Schedule list */
+  .sched {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0;
+    margin: 14px 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .sched > div {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .sched > div:nth-last-child(-n+2) { border-bottom: none; }
+  .sched .when {
+    background: var(--code-bg);
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  /* Note template (uses pre styling) */
+  .note-template {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 16px 0;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+  .note-template .h {
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 11px;
+    display: inline;
+  }
+
+  @media (max-width: 700px) {
+    .sched { grid-template-columns: 90px 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="crumb"><a href="index.html">← Clinical Geometry</a> · <a href="The Urinary Tract.html">The Urinary Tract</a> · May 24, 2026</div>
+<h1>Clinic Follow-Up Patterns</h1>
+<p class="subtitle">The four most common urology clinic returns and how to make each visit useful. PSA in context, bladder cancer surveillance, the kidney mass that the radiologist found, and recurrent UTI in women and in men. Plus the clinic note that makes the next visit possible. For PAs, medical students, and clinical clerks.</p>
+
+<!-- ============================================================ -->
+<h2>Why Clinic Notes Are Different From Inpatient Notes</h2>
+
+<p>On the wards, you write to communicate with the next shift. In clinic, you write to communicate with <em>yourself in six months</em>, who has seen 300 patients between this visit and the next and will not remember a single thing about this one. The clinic note's job is to make the next visit competent without you being there to explain.</p>
+
+<div class="card card-accent">
+  <div class="label">The clinic-note frame</div>
+  <p style="margin:0;">Every urology clinic note answers four questions: <strong>What conduit station are we monitoring?</strong> <strong>What did we find or do last time?</strong> <strong>What's the surveillance interval and what test comes next?</strong> <strong>What would cause us to escalate?</strong> Notes that answer those four are useful. Notes that don't are decorative.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>1 — PSA in Context</h2>
+
+<div class="topic">
+  <div class="topic-head">
+    <div class="topic-mark" style="background: #8b5cf6;">P</div>
+    <div>
+      <div class="topic-title">Prostate-Specific Antigen</div>
+      <div class="topic-sub">station 5 · screening, surveillance, and a number that means different things in different contexts</div>
+    </div>
+  </div>
+  <div class="topic-body">
+
+    <h4>What PSA actually measures</h4>
+    <p>A serum glycoprotein produced almost exclusively by prostatic epithelial cells. The total PSA reflects the volume of prostatic tissue plus any disruption of the gland's architecture that lets PSA leak into the circulation faster than usual. <strong>It is not a cancer-specific test.</strong> It is a prostate-disruption test. BPH raises it. Inflammation raises it. Recent ejaculation raises it. DRE raises it. Cancer raises it.</p>
+
+    <h4>How to interpret a single PSA</h4>
+    <table>
+      <thead><tr><th>Context</th><th>What changes</th></tr></thead>
+      <tbody>
+        <tr><td>Patient on 5α-reductase inhibitor (finasteride, dutasteride)</td><td><strong>Double the PSA</strong> for interpretation. 6 months of treatment cuts PSA ~50%. Always document the multiplier in the note.</td></tr>
+        <tr><td>Recent acute urinary retention</td><td>PSA artificially elevated for days–weeks. Recheck after recovery.</td></tr>
+        <tr><td>Recent prostate biopsy or instrumentation</td><td>Recheck in 4–6 weeks; up to 50× elevation is possible acutely.</td></tr>
+        <tr><td>Active UTI / prostatitis</td><td>Treat the infection first; recheck in 6 weeks.</td></tr>
+        <tr><td>After radical prostatectomy</td><td>Should be undetectable (&lt;0.1 ng/mL). Anything detectable is concerning.</td></tr>
+        <tr><td>After radiation therapy</td><td>Nadir varies; failure defined as nadir + 2.0 (Phoenix criteria).</td></tr>
+      </tbody>
+    </table>
+
+    <h4>When PSA trend matters more than the single value</h4>
+    <p><strong>PSA velocity</strong> (rate of rise) and <strong>PSA density</strong> (PSA / prostate volume) refine risk. A man with a PSA of 6 in a 100 g prostate is different from a man with a PSA of 6 in a 30 g prostate. The first has a density of 0.06 (low concern), the second 0.20 (significant concern).</p>
+
+    <h4>What to actually do with the number</h4>
+    <div class="card card-orange" style="margin-bottom: 0;">
+      <ul style="margin: 0; padding-left: 20px;">
+        <li><strong>PSA elevated, first finding</strong> → repeat in 6–12 weeks after addressing reversible causes (UTI, retention, recent instrumentation). Confirm before acting.</li>
+        <li><strong>Persistent elevation</strong> → multiparametric prostate MRI (replaces or precedes biopsy in most current pathways). PI-RADS 3 lesions are equivocal; 4–5 are biopsy targets.</li>
+        <li><strong>MRI suspicious, or clinical concern despite normal MRI</strong> → MRI-targeted ± systematic prostate biopsy.</li>
+        <li><strong>PSA rising on active surveillance for low-risk cancer</strong> → trigger repeat MRI ± biopsy.</li>
+        <li><strong>PSA rising after definitive treatment</strong> → biochemical recurrence; oncology pathway, restaging imaging (PSMA PET is the modern tool).</li>
+      </ul>
+    </div>
+
+    <h4>What the clinic note must contain</h4>
+    <ul>
+      <li>Today's PSA, with date.</li>
+      <li>Previous PSA values (last 3 minimum) with dates — trend is the point.</li>
+      <li>Whether the patient is on a 5-ARI (and the corrected value if so).</li>
+      <li>Prostate volume (DRE estimate or imaging) for PSA density.</li>
+      <li>Any reversible cause to address before next check.</li>
+      <li>The plan: recheck interval, next test, what would trigger biopsy.</li>
+    </ul>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>2 — Bladder Cancer Surveillance</h2>
+
+<div class="topic">
+  <div class="topic-head">
+    <div class="topic-mark" style="background: #f97316;">B</div>
+    <div>
+      <div class="topic-title">After TURBT — the cystoscopy schedule</div>
+      <div class="topic-sub">station 3 · non-muscle-invasive bladder cancer is a chronic disease, not a one-time fix</div>
+    </div>
+  </div>
+  <div class="topic-body">
+
+    <figure class="fig">
+      <img src="images/atlas2-p04.jpg" alt="Bladder pathologies including diverticulum, tumor, calculus, cystitis, ureterocele, foreign object, congenital valve, polyp, and orifice stenosis">
+      <figcaption><strong>The bladder is a busy station.</strong> Tumors are one of many things that can sit on the wall of station 3. The job of surveillance cystoscopy is to find the new tumor early, while it's still confined to the urothelium and treatable endoscopically.<br>From Burroughs Wellcome Co., <em>Atlas of the Urinary Tract</em>.</figcaption>
+    </figure>
+
+    <h4>The framing</h4>
+    <p>Urothelial cancer is a field-effect disease — the entire urothelium has been exposed to the same insult (typically tobacco) and any one cell can transform. Resect a tumor and another may grow in the next year, or the next decade. <strong>Surveillance is the treatment plan, not an optional follow-up.</strong></p>
+
+    <h4>Risk stratification drives the schedule</h4>
+    <table>
+      <thead><tr><th>Risk group</th><th>What it looks like</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Low risk</strong></td><td>Solitary, primary, Ta low-grade, &lt;3 cm.</td></tr>
+        <tr><td><strong>Intermediate risk</strong></td><td>Recurrent, multifocal, or &gt;3 cm Ta low-grade.</td></tr>
+        <tr><td><strong>High risk</strong></td><td>Any high-grade, T1, CIS, BCG-failure, variant histology.</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Standard surveillance cystoscopy schedule (NMIBC)</h4>
+    <div class="sched">
+      <div class="when">Low risk</div>
+      <div>Cystoscopy at 3 months. If negative: yearly thereafter for 5 years. Discharge if persistently negative.</div>
+      <div class="when">Intermediate</div>
+      <div>Cystoscopy + cytology every 3 months × 1–2 years, then every 6 months × 2 years, then yearly. Upper-tract imaging every 1–2 years.</div>
+      <div class="when">High risk</div>
+      <div>Cystoscopy + cytology every 3 months × 2 years, every 6 months × 2 years, yearly thereafter — typically lifelong. Upper-tract imaging yearly. Consider random biopsies, MMC/BCG maintenance.</div>
+    </div>
+
+    <h4>What the clinic note must contain</h4>
+    <ul>
+      <li>Risk group, stated explicitly.</li>
+      <li>Date and findings of the most recent cystoscopy. ("No recurrence" is not enough; describe what was looked at: trigone, lateral walls, dome, neck, scope to verumontanum.)</li>
+      <li>Cytology result, dated.</li>
+      <li>Last upper-tract imaging (CT urogram or renal US per protocol).</li>
+      <li>Intravesical therapy status — BCG induction or maintenance schedule, with cycle numbers.</li>
+      <li>Next scope and next imaging dates, explicit.</li>
+      <li>Smoking status. Always. (Smoking cessation reduces recurrence; this is treatment, not lifestyle advice.)</li>
+    </ul>
+
+    <div class="card card-red" style="margin-bottom: 0;">
+      <div class="label">The things that escalate</div>
+      <ul style="margin: 0; padding-left: 20px;">
+        <li>New visible tumor on surveillance → re-TURBT.</li>
+        <li>Positive cytology with negative cystoscopy → look upstream. Upper-tract urothelial carcinoma. CT urogram + ureteroscopy.</li>
+        <li>High-grade recurrence after BCG → consider radical cystectomy. Conversation, not delay.</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>3 — The Incidental Kidney Mass</h2>
+
+<div class="topic">
+  <div class="topic-head">
+    <div class="topic-mark" style="background: #16a34a;">K</div>
+    <div>
+      <div class="topic-title">Small Renal Mass Workup</div>
+      <div class="topic-sub">station 1 · 60% of renal masses are found incidentally — and that's the whole reason they're treatable</div>
+    </div>
+  </div>
+  <div class="topic-body">
+
+    <h4>The scenario</h4>
+    <p>A man gets a CT for diverticulitis. Report mentions a 2.3 cm solid enhancing lesion at the lower pole of the left kidney. He has no urinary symptoms. He has been referred to your clinic. He is terrified. The visit's job is to (a) confirm the finding, (b) characterize the lesion, (c) lay out the options, (d) document the conversation.</p>
+
+    <h4>The characterization questions</h4>
+    <table>
+      <thead><tr><th>Question</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Does it enhance with contrast?</strong></td><td>Enhancement (&gt;15–20 HU change) defines a solid mass. Non-enhancing = cyst.</td></tr>
+        <tr><td><strong>Is it fat-containing?</strong></td><td>Macroscopic fat on CT (&lt;–10 HU) is angiomyolipoma — benign. Don't operate.</td></tr>
+        <tr><td><strong>Is it cystic? Bosniak category?</strong></td><td>Bosniak I–II: benign, observe. IIF: surveillance. III–IV: surgical, malignancy risk significant.</td></tr>
+        <tr><td><strong>How big?</strong></td><td>&lt;4 cm = T1a, partial nephrectomy or active surveillance. 4–7 cm = T1b, partial if feasible. &gt;7 cm = T2, often radical.</td></tr>
+        <tr><td><strong>Where is it?</strong></td><td>Polar lesions are easier to resect than central or hilar lesions. Exophytic vs. endophytic. Nephrometry score quantifies this.</td></tr>
+      </tbody>
+    </table>
+
+    <h4>The three branches of the algorithm</h4>
+    <ul>
+      <li><strong>Partial nephrectomy</strong> — small enhancing solid mass, otherwise healthy patient. Curative if confined.</li>
+      <li><strong>Active surveillance</strong> — small (&lt;3 cm), older patient, significant comorbidity, slow growth on serial imaging. Many small renal masses are indolent. Repeat imaging at 3, 6, 12 months then yearly.</li>
+      <li><strong>Ablation</strong> (cryoablation, RFA) — small, peripheral, poor surgical candidate. Lower-quality oncologic data than partial nephrectomy but reasonable for selected patients.</li>
+    </ul>
+
+    <h4>Biopsy when?</h4>
+    <p>Renal mass biopsy used to be reserved for unusual cases (suspected metastatic deposit, lymphoma, abscess). Modern practice biopsies more often — especially before ablation, before observing a mass, or when imaging is indeterminate. A benign biopsy result (oncocytoma, AML) can avoid an unnecessary nephrectomy. Bleeding and seeding risks are real but small.</p>
+
+    <h4>What the clinic note must contain</h4>
+    <ul>
+      <li>Mass description: size, location, density, enhancement, Bosniak (if cystic), growth rate (if serial imaging).</li>
+      <li>Renal function (eGFR), single vs. two kidneys.</li>
+      <li>Patient comorbidities and surgical fitness.</li>
+      <li>Options discussed (surgery / surveillance / ablation), shared decision-making documented.</li>
+      <li>Next imaging or treatment date, explicit.</li>
+    </ul>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>4 — Recurrent UTI</h2>
+
+<div class="topic">
+  <div class="topic-head">
+    <div class="topic-mark" style="background: #dc2626;">U</div>
+    <div>
+      <div class="topic-title">Recurrent Urinary Tract Infection</div>
+      <div class="topic-sub">station 3 (mostly) · in women, look for behavior and biology · in men, look for anatomy</div>
+    </div>
+  </div>
+  <div class="topic-body">
+
+    <p><strong>Recurrent UTI</strong> = ≥2 episodes in 6 months, or ≥3 in 12 months. The clinic visit splits into two completely different conversations depending on the patient's sex.</p>
+
+    <h3>Recurrent UTI in women</h3>
+
+    <p>In a structurally normal female urinary tract, recurrence is the rule rather than the exception. The mechanism is colonization of the vaginal vestibule and periurethral area by uropathogens that migrate up a short urethra. Anatomy is rarely the problem; behavior, biology, and bacterial reservoirs are.</p>
+
+    <h4>Workup</h4>
+    <ul>
+      <li><strong>Urine culture every episode</strong> for one cycle of recurrences — confirm it's actually UTI, identify the organism, check resistance pattern.</li>
+      <li><strong>Post-void residual</strong> in office — rule out retention as a substrate.</li>
+      <li><strong>Imaging</strong> only if atypical: stone history, hematuria, atypical organism (Proteus suggests stone), pyelonephritis episodes.</li>
+      <li><strong>Cystoscopy</strong> for atypical features or persistent unexplained recurrence.</li>
+    </ul>
+
+    <h4>Management</h4>
+    <ul>
+      <li><strong>Modifiable behaviors</strong> — voiding after intercourse, hydration, wiping direction, avoiding spermicide. Evidence is mixed; counseling is cheap.</li>
+      <li><strong>Vaginal estrogen</strong> in postmenopausal women — single most effective intervention. Restores vaginal pH and lactobacillus dominance. Topical, low systemic absorption, safe in most.</li>
+      <li><strong>Cranberry, D-mannose, probiotics</strong> — modest or unclear evidence; reasonable to try.</li>
+      <li><strong>Antibiotic strategies</strong> — patient-initiated short course (give the prescription, let her start at first symptoms after sending culture); post-coital prophylaxis; daily low-dose prophylaxis (last resort — resistance and microbiome cost).</li>
+    </ul>
+
+    <h3>Recurrent UTI in men</h3>
+
+    <figure class="fig">
+      <img src="images/atlas2-p05.jpg" alt="Multiple causes of lower urinary tract obstruction in a man — bladder diverticulum, calculus, tumor, BPH, abscess, congenital valve, prostate carcinoma, infection, polyp, stenosis, and phimosis">
+      <figcaption><strong>Why a man with recurrent UTI gets imaged.</strong> Every label in this figure is a potential reservoir for infection. Stagnant urine in any of these (a diverticulum, an obstructed bladder, a stone, a stricture) is where bacteria persist between courses of antibiotics.<br>From Burroughs Wellcome Co., <em>Atlas of the Urinary Tract</em>.</figcaption>
+    </figure>
+
+    <p>A man with recurrent UTI has anatomy. Period. The long male urethra and the prostatic barrier make UTI uncommon, so when it recurs, <strong>find the enabler</strong>. That is the entire workup.</p>
+
+    <h4>Workup</h4>
+    <ul>
+      <li><strong>Urine culture</strong> — confirm, identify, treat the episode.</li>
+      <li><strong>Post-void residual</strong> — retention is a common substrate (BPH).</li>
+      <li><strong>Renal/bladder ultrasound or CT urogram</strong> — stones, hydronephrosis, bladder diverticulum, masses.</li>
+      <li><strong>Cystoscopy</strong> — diverticula, bladder stones, foreign bodies (forgotten stent), bladder cancer, strictures.</li>
+      <li><strong>DRE and PSA</strong> — chronic prostatitis vs. cancer in the differential.</li>
+      <li><strong>Expressed prostatic secretions / Meares-Stamey four-glass test</strong> in selected cases of suspected chronic bacterial prostatitis.</li>
+    </ul>
+
+    <h4>Management</h4>
+    <ul>
+      <li><strong>Treat the enabling lesion.</strong> Stone → remove. BPH with retention → manage outlet. Diverticulum with stagnant urine → consider resection. The infection is the symptom; the anatomy is the disease.</li>
+      <li><strong>Chronic bacterial prostatitis</strong> — needs prolonged courses (4–6 weeks) of lipid-soluble antibiotics that penetrate prostatic tissue (fluoroquinolone, TMP-SMX). Cure rate is honest with patients: variable.</li>
+      <li><strong>Prophylactic antibiotics</strong> are a last resort and rarely curative in men because they don't fix anatomy.</li>
+    </ul>
+
+    <div class="card card-orange" style="margin-bottom: 0;">
+      <div class="label">The asymmetry</div>
+      <p style="margin:0;">A 60-year-old woman with three UTIs a year is common and usually has none of the dangerous anatomy. A 60-year-old man with three UTIs a year almost certainly has something obstructing or harboring bacteria. <strong>Different sex, same diagnosis, completely different workup.</strong></p>
+    </div>
+
+  </div>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2>The Clinic Note Template</h2>
+
+<p>One template, useful for almost every urology visit. The headers are stations of the conduit plus surveillance variables. The note's purpose is to make the next visit possible without reconstruction.</p>
+
+<div class="note-template"><span class="h">SUBJECTIVE</span>
+  Reason for visit. LUTS by IPSS if relevant. Pain, hematuria, incontinence (stress/urge/mixed),
+  voiding symptoms. Sexual function (erectile, ejaculatory). Prior treatments, response.
+  Pertinent negatives.
+
+<span class="h">OBJECTIVE</span>
+  Vitals. Focused exam: abdomen (palpable bladder?), back (CVA tenderness),
+  GU (meatus, prepuce, scrotum, testes, cord), DRE (size, consistency, nodules, tenderness).
+
+<span class="h">DATA</span>
+  Latest UA, culture (date, organism).
+  PSA trend (last 3 with dates; on 5-ARI? doubled?).
+  Imaging: CT/US/MRI/cystogram — date, key findings.
+  Procedures: cysto/TURBT/biopsy — date, findings.
+  PVR if measured today.
+  eGFR / creatinine trend if relevant.
+
+<span class="h">ASSESSMENT — by station</span>
+  Station 1 (kidney):       …
+  Station 2 (ureter):       …
+  Station 3 (bladder):      …
+  Station 4 (sphincter):    …
+  Station 5 (outlet):       …
+  Active surveillance protocols and their cycle numbers.
+
+<span class="h">PLAN</span>
+  - Today's interventions (med changes, in-office procedures).
+  - Next test, with date.
+  - Next visit, with timing.
+  - What would escalate before next visit (named symptoms, threshold values).
+  - Patient education delivered.</div>
+
+<div class="card card-green">
+  <div class="label">Why the station-by-station assessment matters</div>
+  <p style="margin:0;">A man being followed for low-risk prostate cancer (station 5) may also have chronic kidney disease (station 1), a known bladder diverticulum (station 3), and stress urinary incontinence (station 4). The single-diagnosis note misses three problems. The station-by-station note is auditable — anyone reading it knows what's being watched at each level of the conduit and what comes next.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>One More Discipline — The Surveillance Calendar</h2>
+
+<p>Urology generates more surveillance schedules per patient than most specialties. The patient cannot remember them. The chart often won't enforce them. <strong>Build a visible calendar inside every chart.</strong></p>
+
+<div class="card card-accent">
+  <div class="label">For every patient under surveillance, on the front page of the chart</div>
+  <ul style="margin: 0; padding-left: 20px;">
+    <li>Diagnosis being surveilled, with date of diagnosis.</li>
+    <li>Risk category (low / intermediate / high) where applicable.</li>
+    <li>Scheduled test #1, date, status.</li>
+    <li>Scheduled test #2, date, status.</li>
+    <li>Trigger criteria for unscheduled visits.</li>
+    <li>End-of-surveillance condition (e.g. "after 5 years cystoscopy-negative, transition to PCP-led monitoring").</li>
+  </ul>
+</div>
+
+<p>This is not paperwork. It is the part of the disease management plan that survives between visits — and the part that prevents the forgotten stent, the missed surveillance cystoscopy that lets a high-grade recurrence become muscle-invasive, the post-prostatectomy patient whose PSA started rising in month 18 and nobody saw because nobody scheduled the draw.</p>
+
+<hr>
+
+<p style="text-align:center; color:var(--muted); font-size:13px; margin-top:40px;">
+  May 24, 2026 — for PAs, medical students, and clinical clerks<br>
+  the clinic note's job is to make the next visit possible · station by station · with the calendar attached<br>
+  <a href="index.html" style="color: var(--muted); border-bottom: 1px dotted var(--muted); text-decoration: none;">← back to reference</a>
+</p>
+
+</div>
+<script src="nav.js" defer></script>
+</body>
+</html>

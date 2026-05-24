@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urology — Procedures the PA Will Do</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --card: #ffffff;
+    --border: #e7e5e4;
+    --text: #1c1917;
+    --muted: #78716c;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --orange: #d97706;
+    --orange-light: #fffbeb;
+    --purple: #7c3aed;
+    --purple-light: #f5f3ff;
+    --teal: #0d9488;
+    --teal-light: #f0fdfa;
+    --code-bg: #f5f5f4;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "SF Mono", "Fira Code", "Consolas", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.75; padding: 40px 20px 80px; }
+  .container { max-width: 740px; margin: 0 auto; }
+  .crumb { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 8px; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--muted); }
+  .crumb a:hover { color: var(--text); border-bottom-color: var(--text); }
+  h1 { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .subtitle { font-size: 15px; color: var(--muted); margin-bottom: 40px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
+  h2 { font-size: 20px; font-weight: 700; margin-top: 52px; margin-bottom: 16px; }
+  h3 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 10px; }
+  h4 { font-size: 13px; font-weight: 700; margin-top: 18px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  p { margin-bottom: 16px; font-size: 15px; }
+  ul, ol { margin-bottom: 16px; padding-left: 20px; }
+  ul li, ol li { margin-bottom: 4px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 20px 0; }
+  .card-accent { border-left: 4px solid var(--accent); background: var(--accent-light); }
+  .card-green { border-left: 4px solid var(--green); background: var(--green-light); }
+  .card-red { border-left: 4px solid var(--red); background: var(--red-light); }
+  .card-orange { border-left: 4px solid var(--orange); background: var(--orange-light); }
+  .card-purple { border-left: 4px solid var(--purple); background: var(--purple-light); }
+  .card-teal { border-left: 4px solid var(--teal); background: var(--teal-light); }
+  .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .card-accent .label { color: var(--accent); }
+  .card-green .label { color: var(--green); }
+  .card-red .label { color: var(--red); }
+  .card-orange .label { color: var(--orange); }
+  .card-purple .label { color: var(--purple); }
+  .card-teal .label { color: var(--teal); }
+  code { font-family: var(--mono); font-size: 13px; background: var(--code-bg); padding: 2px 6px; border-radius: 4px; }
+  pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.6; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--code-bg); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  hr { border: none; border-top: 2px solid var(--border); margin: 52px 0; }
+
+  /* Procedure card */
+  .proc { background: white; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin: 28px 0; }
+  .proc-head {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 20px; border-bottom: 1px solid var(--border); background: var(--code-bg);
+  }
+  .proc-num {
+    width: 40px; height: 40px; border-radius: 8px;
+    color: white; font-weight: 800; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--accent);
+  }
+  .proc-title { font-size: 17px; font-weight: 700; flex: 1; }
+  .proc-meta { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+  .proc-body { padding: 6px 20px 18px; }
+
+  .proc:nth-of-type(1) .proc-num { background: #ef4444; }
+  .proc:nth-of-type(2) .proc-num { background: #f97316; }
+  .proc:nth-of-type(3) .proc-num { background: #eab308; }
+  .proc:nth-of-type(4) .proc-num { background: #22c55e; }
+  .proc:nth-of-type(5) .proc-num { background: #3b82f6; }
+  .proc:nth-of-type(6) .proc-num { background: #8b5cf6; }
+
+  /* Decision tree */
+  .tree { margin: 20px 0; border-left: 3px solid var(--border); padding-left: 16px; }
+  .tree-node { margin: 14px 0; }
+  .tree-q { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+  .tree-branch {
+    margin-left: 14px;
+    padding-left: 14px;
+    border-left: 2px solid var(--border);
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+  .tree-branch .label-mini {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+
+  @media (max-width: 600px) {
+    .proc-head { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="crumb"><a href="index.html">← Clinical Geometry</a> · <a href="The Urinary Tract.html">The Urinary Tract</a> · May 24, 2026</div>
+<h1>Procedures the Trainee Will Do</h1>
+<p class="subtitle">The bedside set for PAs, medical students, and clinical clerks. Foley, suprapubic tap, urine collection, bladder irrigation, stoma assessment. Step-by-step with the failure modes attached — because the failures are when you'll need to think, not when you're following the steps.</p>
+
+<!-- ============================================================ -->
+<h2>The Operating Principle</h2>
+
+<p>Every procedure below has three failure modes you need to recognize: the technical failure (it didn't work), the wrong-procedure failure (you did the right steps for the wrong indication), and the missed-finding failure (the procedure worked but the result tells you something you didn't expect to hear). The steps are the easy part. The failure modes are why you read this twice.</p>
+
+<div class="card card-accent">
+  <div class="label">Before you do anything sterile</div>
+  <p style="margin:0;">Confirm: right patient, right side, right indication, allergies (especially latex and chlorhexidine), anticoagulation status, mental capacity to consent. Document the indication in the chart <em>before</em> you do the procedure, not after. "I did a Foley because the patient was retaining 800 mL on scan after failing to void for 8 hours" is a different note from "Foley placed per request."</p>
+</div>
+
+<hr>
+
+<!-- ====== Foley ====== -->
+<div class="proc">
+  <div class="proc-head">
+    <div class="proc-num">1</div>
+    <div class="proc-title">Foley Catheter Placement</div>
+    <div class="proc-meta">Station 5 → 3 · sterile</div>
+  </div>
+  <div class="proc-body">
+
+    <h4>Indication</h4>
+    <ul>
+      <li>Acute urinary retention (decompression).</li>
+      <li>Accurate output monitoring in a critically ill patient.</li>
+      <li>Healing of a urinary tract injury or fresh anastomosis.</li>
+      <li>Procedural — perioperative drainage where prolonged surgery is expected.</li>
+    </ul>
+
+    <h4>Contraindication / call before you try</h4>
+    <ul>
+      <li><strong>Blood at the meatus</strong> in a trauma patient. Stop. Get a retrograde urethrogram.</li>
+      <li>Suspected urethral disruption (pelvic fracture, high-riding prostate).</li>
+      <li>Recent urethral reconstruction or fresh anastomosis — call the operating surgeon.</li>
+      <li>Known stricture disease that has previously required cystoscopic guidance.</li>
+    </ul>
+
+    <h4>Kit (16 Fr is the default for men and women)</h4>
+    <ul>
+      <li>16 Fr 2-way Foley (Coudé tip — see below — for the difficult male).</li>
+      <li>Sterile gloves, drapes, prep solution, 10 mL syringe of sterile water, lubricant (lidocaine jelly preferred for men), drainage bag.</li>
+      <li>Bladder scanner, ideally, before and after.</li>
+    </ul>
+
+    <h4>Standard technique — male</h4>
+    <ol>
+      <li>Position supine, expose. Prep with the dominant hand contaminated as soon as you hold the penis — use the other hand for the catheter.</li>
+      <li>Hold the penis perpendicular to the body. <strong>Instill 10 mL of lidocaine jelly into the urethra</strong>, hold meatus closed for 2 minutes — this is not optional, it relaxes the external sphincter and patients tolerate the catheter without it badly.</li>
+      <li>Advance the catheter steadily to the hub. Most resistance is at the membranous urethra (external sphincter) — ask the patient to take a slow breath in, sphincter relaxes.</li>
+      <li>Confirm urine return before inflating. <strong>If no urine returns and you have not reached the hub, do not inflate.</strong></li>
+      <li>Inflate the balloon with 10 mL sterile water. Gently retract until the balloon meets the bladder neck.</li>
+    </ol>
+
+    <h4>Standard technique — female</h4>
+    <ol>
+      <li>Position supine, knees flexed, frog-legged. Identify the urethral meatus — between the clitoris and vaginal introitus. In post-menopausal or obese patients it can be retracted; use the index and middle fingers of the non-dominant hand to spread the labia and visualize.</li>
+      <li>Prep, lubricate, advance until urine returns or to the hub.</li>
+      <li>If the catheter goes into the vagina, leave it there as a marker and pass a second catheter above it into the urethra. Then remove the misplaced one.</li>
+    </ol>
+
+    <h4>Failure modes</h4>
+    <ul>
+      <li><strong>No urine on initial pass.</strong> If the bladder scan was &gt;200 mL, the catheter is in a false passage or coiled. Do not inflate. Withdraw, irrigate the catheter to confirm patency, retry with more lube and more time.</li>
+      <li><strong>Hematuria during passage.</strong> Stop. Means you've created a false passage or scraped a stricture. Call urology.</li>
+      <li><strong>Resistance at the prostate.</strong> The most common stopping point in older men. See the decision tree below.</li>
+      <li><strong>Balloon won't inflate.</strong> Catheter is in the urethra, not the bladder. Do not force. Withdraw and reposition.</li>
+      <li><strong>Patient in severe pain mid-procedure.</strong> Stop. Reassess. Often a stricture or false passage.</li>
+    </ul>
+
+    <!-- Decision tree -->
+    <div class="card card-orange">
+      <div class="label">The difficult male catheterization — decision tree</div>
+      <div class="tree">
+
+        <div class="tree-node">
+          <div class="tree-q">1. Standard 16 Fr fails at the prostate.</div>
+          <div class="tree-branch">
+            <div class="label-mini">→ try a Coudé tip</div>
+            <p style="margin:0; font-size: 14px;">16 Fr Coudé. The curved tip points <strong>up</strong> (toward the patient's belly) — keep the indicator stripe pointing at 12 o'clock during advancement. This rides over the median lobe of the prostate. Most BPH-related failures end here.</p>
+          </div>
+        </div>
+
+        <div class="tree-node">
+          <div class="tree-q">2. Coudé fails.</div>
+          <div class="tree-branch">
+            <div class="label-mini">→ upsize, don't downsize</div>
+            <p style="margin:0; font-size: 14px;">Counterintuitive. A larger catheter (18 or 20 Fr) is stiffer and rides over the prostate more reliably than a 14 Fr, which kinks. Downsizing is for strictures, not BPH. <strong>If you cannot tell stricture from BPH, stop and call.</strong></p>
+          </div>
+        </div>
+
+        <div class="tree-node">
+          <div class="tree-q">3. Two passes have failed, or there is fresh blood.</div>
+          <div class="tree-branch">
+            <div class="label-mini">→ stop. Call urology.</div>
+            <p style="margin:0; font-size: 14px;">The PA's rule: <strong>two failed attempts is the ceiling.</strong> A third attempt creates more false passages and more bleeding. Urology will place over a wire under cystoscopic guidance. That preserves the urethra for future catheterizations. A third blind attempt does not.</p>
+          </div>
+        </div>
+
+        <div class="tree-node">
+          <div class="tree-q">4. The bladder is dangerously full and urology cannot come immediately.</div>
+          <div class="tree-branch">
+            <div class="label-mini">→ percutaneous suprapubic tap as a bridge</div>
+            <p style="margin:0; font-size: 14px;">See procedure #2. Decompresses the bladder while urology mobilizes. Not a definitive solution. Document the bridge clearly.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <h4>Removal</h4>
+    <p>Deflate the balloon by drawing back with the syringe — do not cut the inflation port. Withdraw gently. If you meet resistance on deflation, the balloon may not have fully decompressed (check by attempting to overinflate, then deflate again). Persistent failure to deflate is a call to urology, not a yank.</p>
+
+  </div>
+</div>
+
+<!-- ====== Suprapubic tap ====== -->
+<div class="proc">
+  <div class="proc-head">
+    <div class="proc-num">2</div>
+    <div class="proc-title">Suprapubic Bladder Aspiration / Percutaneous Decompression</div>
+    <div class="proc-meta">Station 1 ↔ 3 · sterile</div>
+  </div>
+  <div class="proc-body">
+
+    <h4>Indication</h4>
+    <ul>
+      <li>Urgent decompression when urethral catheterization has failed and urology is delayed.</li>
+      <li>Sterile urine sample in an infant or non-cooperative patient where catheter sample is impractical (less common in adults).</li>
+    </ul>
+
+    <h4>Contraindication</h4>
+    <ul>
+      <li>Empty or unidentifiable bladder on scan — confirm volume first.</li>
+      <li>Coagulopathy, anticoagulation — relative; weigh against retention severity.</li>
+      <li>Prior lower abdominal surgery with possible adherent bowel.</li>
+      <li>Suprapubic skin infection at the insertion site.</li>
+    </ul>
+
+    <h4>Technique (single-stick decompression)</h4>
+    <ol>
+      <li>Confirm bladder volume on scan (≥300 mL ideal — gives you a target).</li>
+      <li>Identify insertion: 2 fingerbreadths above the symphysis pubis, midline.</li>
+      <li>Prep, drape, local anesthetic with lidocaine through the planned tract.</li>
+      <li>Advance an 18G spinal needle perpendicular to the skin, aspirating as you go. Urine return confirms intravesical position.</li>
+      <li>For sample only: collect, withdraw, dress. For decompression bridge: use a dedicated suprapubic catheter kit per institutional protocol.</li>
+    </ol>
+
+    <h4>Failure modes</h4>
+    <ul>
+      <li><strong>No urine return.</strong> Either the bladder is not where you thought (re-scan) or you are too superficial. Do not redirect blindly; reconfirm landmarks.</li>
+      <li><strong>Frank blood return.</strong> Withdraw. Likely vessel rather than bladder; rescan and reposition.</li>
+      <li><strong>Stool / cloudy non-urine fluid.</strong> Bowel injury until proven otherwise. Withdraw, broad-spectrum antibiotics, call surgery.</li>
+    </ul>
+
+    <div class="card card-red">
+      <div class="label">The decompression that isn't yours alone</div>
+      <p style="margin:0;">A formal indwelling suprapubic catheter — not just an aspiration — is a urologic procedure. The single-stick aspiration described above is a temporizing maneuver, used when a patient is in distress and an indwelling solution is minutes away. Place an aspiration; arrange an indwelling tube. Document the gap explicitly.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ====== Urine cultures ====== -->
+<div class="proc">
+  <div class="proc-head">
+    <div class="proc-num">3</div>
+    <div class="proc-title">Urine Collection for Culture</div>
+    <div class="proc-meta">Station 5 / cargo · sample integrity is everything</div>
+  </div>
+  <div class="proc-body">
+
+    <h4>Why the technique matters</h4>
+    <p>A poorly collected sample is worse than no sample. It generates a false positive — bacteria from the perineum colonize the cup — and you end up treating a culture, not a patient. The most common urology error on the consult service is treating asymptomatic bacteriuria in a contaminated specimen.</p>
+
+    <h4>Methods, in order of cleanliness</h4>
+    <table>
+      <thead>
+        <tr><th>Method</th><th>Clean enough for</th><th>Caveat</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Clean-catch midstream</td><td>Symptomatic outpatient women, men with intact prepuce</td><td>Coach the technique — most failures are technique failures, not biology.</td></tr>
+        <tr><td>Straight catheter sample</td><td>Hospitalized patients, anyone who cannot midstream</td><td>One-time pass. Discard the first 5 mL (urethral flora). Collect from the stream.</td></tr>
+        <tr><td>Catheter port aspiration</td><td>Patients with indwelling Foley</td><td>Sample from the port, <strong>not the bag</strong>. Bag urine is colonized within hours regardless of patient.</td></tr>
+        <tr><td>Suprapubic aspiration</td><td>Definitive — used clinically rarely in adults</td><td>The gold standard. Any growth is real.</td></tr>
+      </tbody>
+    </table>
+
+    <h4>How to read what comes back</h4>
+    <ul>
+      <li><strong>&gt;10⁵ CFU/mL of a single organism with pyuria + symptoms</strong> → UTI, treat.</li>
+      <li><strong>&gt;10⁵ CFU/mL, no pyuria, no symptoms</strong> → asymptomatic bacteriuria. <strong>Do not treat</strong> outside of pregnancy and pre-urologic-instrumentation cases. Treating it selects resistance and changes nothing.</li>
+      <li><strong>Mixed flora, two or three organisms</strong> → contaminated sample. Recollect with better technique before deciding anything.</li>
+      <li><strong>Pyuria with no growth</strong> → think atypicals, prior antibiotic, urolithiasis with inflammation, tuberculosis if subacute, or interstitial cystitis.</li>
+    </ul>
+
+    <div class="card card-orange">
+      <div class="label">The teaching point</div>
+      <p style="margin:0;">A urine culture is a question, not an answer. The answer comes from <em>matching the culture to the patient</em>. Bacteria in a cup with no fever, no dysuria, no flank pain is colonization. Bacteria in a cup with sepsis is urosepsis. Same lab result. Different diseases.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ====== CBI ====== -->
+<div class="proc">
+  <div class="proc-head">
+    <div class="proc-num">4</div>
+    <div class="proc-title">Continuous Bladder Irrigation (CBI) Setup</div>
+    <div class="proc-meta">Station 3 · clot management</div>
+  </div>
+  <div class="proc-body">
+
+    <h4>Indication</h4>
+    <ul>
+      <li>Gross hematuria with clot retention.</li>
+      <li>Post-TURP / post-prostatectomy / post-cystoscopy with significant bleeding.</li>
+      <li>Prevention of clot formation in expected bleeding (immediately post-TURP).</li>
+    </ul>
+
+    <h4>Kit</h4>
+    <ul>
+      <li><strong>3-way Foley</strong> — 22 or 24 Fr. The third lumen is the inflow channel. A 3-way Foley is non-negotiable; you cannot run CBI through a 2-way.</li>
+      <li>Sterile saline irrigation bags (3 L) ×2 minimum, with Y-tubing.</li>
+      <li>Drainage bag — large capacity, urometer if monitoring closely.</li>
+      <li>Toomey or piston syringe, 60 mL, sterile saline for manual evacuation.</li>
+    </ul>
+
+    <h4>Setup, in order</h4>
+    <ol>
+      <li><strong>Manual clot evacuation first.</strong> Disconnect the drainage tubing. Use a Toomey syringe with sterile saline. Inject 60 mL, withdraw, repeat until the return is pink, not red. <em>You cannot irrigate continuously through a bladder full of clot — the fluid pools above the clot and the bladder distends without flow.</em></li>
+      <li>Hang the irrigation bag, prime the inflow line.</li>
+      <li>Connect inflow to the third port of the Foley. Connect outflow to the drainage bag.</li>
+      <li>Start irrigation at a rate that keeps the effluent <strong>pink, not red</strong>. Titrate up if the effluent darkens; titrate down once clear.</li>
+      <li>Track input and output meticulously. Net output should exceed net input — this is your reassurance that flow is forward.</li>
+    </ol>
+
+    <h4>Failure modes</h4>
+    <ul>
+      <li><strong>Bladder distends, no outflow.</strong> Clot has occluded the eyelets of the catheter. Stop the inflow. Manually evacuate clots. Restart only when patency is confirmed.</li>
+      <li><strong>Bright red effluent persists or worsens.</strong> Bleeding is outpacing your irrigation. Increase rate, manually evacuate again, check coags, call urology.</li>
+      <li><strong>Patient with abdominal pain and tense suprapubic fullness on CBI.</strong> Distension. Stop the irrigation immediately. Assume clot occlusion until proven otherwise. <em>You can rupture a bladder this way.</em></li>
+      <li><strong>Negative net output (more in than out over the shift).</strong> Stop, evacuate, re-set. Document.</li>
+    </ul>
+
+    <div class="card card-red">
+      <div class="label">The CBI rule</div>
+      <p style="margin:0;">CBI is not a substitute for clot evacuation; it is a maintenance system after the bladder is clear. Starting CBI on top of a clot-filled bladder makes things worse. <strong>Evacuate, then irrigate.</strong></p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ====== Stoma assessment ====== -->
+<div class="proc">
+  <div class="proc-head">
+    <div class="proc-num">5</div>
+    <div class="proc-title">Urostomy / Ileal Conduit Stoma Assessment</div>
+    <div class="proc-meta">Station 3 substitute · vascular check</div>
+  </div>
+  <div class="proc-body">
+
+    <h4>What you're assessing for</h4>
+    <ul>
+      <li>Stoma viability — is the bowel mucosa pink and healthy?</li>
+      <li>Output — volume, character, presence of mucus (expected) versus frank blood or pus (not).</li>
+      <li>Skin around the stoma — appropriate fit of the appliance, no leakage, no excoriation.</li>
+      <li>Patency — anuria from a conduit is a workup, not a wait.</li>
+    </ul>
+
+    <h4>The 30-second exam</h4>
+    <ol>
+      <li><strong>Color.</strong> Healthy stoma is beefy pink to red. Pale pink is okay. <strong>Dusky purple is ischemia. Black is necrosis. Both are calls now.</strong></li>
+      <li><strong>Moisture.</strong> Mucosa should look glistening. Dry, dull, or shriveled is a problem.</li>
+      <li><strong>Edema.</strong> Some swelling for the first 6 weeks post-op is normal. Increasing edema later is not.</li>
+      <li><strong>Retraction or prolapse.</strong> Stoma flush or below skin level after maturation is retraction. Stoma protruding several cm is prolapse. Both prompt urology review, neither is usually emergent.</li>
+      <li><strong>Output.</strong> A healthy adult ileal conduit produces 1–2 L/day of urine with mucus strands. No output in 4–6 hours, with the stoma viable, is a workup — irrigate the conduit catheters gently with saline (mucus plug is common) and call if no return.</li>
+    </ol>
+
+    <h4>Failure modes</h4>
+    <ul>
+      <li><strong>Dusky stoma.</strong> Vascular emergency. Operating team needs to know within minutes. Do not wait for "it might pink up."</li>
+      <li><strong>No output, viable stoma.</strong> Irrigate gently. If still nothing, image (CT) to assess the ureteroenteric anastomosis and the conduit lumen.</li>
+      <li><strong>Frank blood from the stoma.</strong> Either intraluminal (bleeding from inside the conduit or upstream) or extrinsic (skin trauma from the appliance). Inspect; if intraluminal, call.</li>
+      <li><strong>Skin breakdown around the stoma.</strong> Appliance fit problem. The wound ostomy nurse is your friend; this is in their territory.</li>
+    </ul>
+
+    <div class="card card-teal">
+      <div class="label">The mental model for ileal conduit</div>
+      <p style="margin:0;">An ileal conduit is a short segment of small bowel that has been disconnected from the GI tract and reconnected to the ureters at one end, with the other end brought out as a stoma. <strong>It is not a bladder.</strong> It does not store. It passively drains. Urine has bowel mucus in it (normal) and is mildly more acidic and salty than ordinary urine. Anuria in a conduit patient is a mechanical problem until proven otherwise — mucus plug, kinked appliance, anastomotic issue — not a renal problem.</p>
+    </div>
+
+  </div>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2>The Common Thread</h2>
+
+<p>Each procedure above has the same shape: a defined indication, an absolute contraindication, a sequence of steps, and a failure mode where the procedure no longer belongs to you. The expert is not the person who never fails — it is the person who recognizes the failure two steps earlier than the novice and stops.</p>
+
+<div class="card card-green">
+  <div class="label">Three rules that survive every procedure</div>
+  <ol style="margin: 0; padding-left: 20px;">
+    <li><strong>Two failed attempts is the ceiling.</strong> Any procedure. The third attempt creates the complication that becomes the consult.</li>
+    <li><strong>If you cannot name the failure mode you're at, you do not understand the procedure well enough to continue.</strong> Stop. Reread. Restart or escalate.</li>
+    <li><strong>Document the indication before, not after.</strong> If the procedure goes wrong, the note that says <em>"placed because creatinine rising on retention of 800 mL"</em> reads very differently from <em>"placed per order."</em></li>
+  </ol>
+</div>
+
+<hr>
+
+<p style="text-align:center; color:var(--muted); font-size:13px; margin-top:40px;">
+  Written May 24, 2026 — for PAs, medical students, and clinical clerks<br>
+  <a href="index.html" style="color: var(--muted); border-bottom: 1px dotted var(--muted); text-decoration: none;">← back to reference</a>
+</p>
+
+</div>
+<script src="nav.js" defer></script>
+</body>
+</html>

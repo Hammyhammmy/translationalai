@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urology — Medications &amp; Their Layers</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --card: #ffffff;
+    --border: #e7e5e4;
+    --text: #1c1917;
+    --muted: #78716c;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --orange: #d97706;
+    --orange-light: #fffbeb;
+    --purple: #7c3aed;
+    --purple-light: #f5f3ff;
+    --teal: #0d9488;
+    --teal-light: #f0fdfa;
+    --code-bg: #f5f5f4;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "SF Mono", "Fira Code", "Consolas", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.75; padding: 40px 20px 80px; }
+  .container { max-width: 740px; margin: 0 auto; }
+  .crumb { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 8px; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--muted); }
+  .crumb a:hover { color: var(--text); border-bottom-color: var(--text); }
+  h1 { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .subtitle { font-size: 15px; color: var(--muted); margin-bottom: 40px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
+  h2 { font-size: 20px; font-weight: 700; margin-top: 52px; margin-bottom: 16px; }
+  h3 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 10px; }
+  h4 { font-size: 13px; font-weight: 700; margin-top: 18px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  p { margin-bottom: 16px; font-size: 15px; }
+  ul, ol { margin-bottom: 16px; padding-left: 20px; }
+  ul li, ol li { margin-bottom: 4px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 20px 0; }
+  .card-accent { border-left: 4px solid var(--accent); background: var(--accent-light); }
+  .card-green { border-left: 4px solid var(--green); background: var(--green-light); }
+  .card-red { border-left: 4px solid var(--red); background: var(--red-light); }
+  .card-orange { border-left: 4px solid var(--orange); background: var(--orange-light); }
+  .card-purple { border-left: 4px solid var(--purple); background: var(--purple-light); }
+  .card-teal { border-left: 4px solid var(--teal); background: var(--teal-light); }
+  .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .card-accent .label { color: var(--accent); }
+  .card-green .label { color: var(--green); }
+  .card-red .label { color: var(--red); }
+  .card-orange .label { color: var(--orange); }
+  .card-purple .label { color: var(--purple); }
+  .card-teal .label { color: var(--teal); }
+  code { font-family: var(--mono); font-size: 13px; background: var(--code-bg); padding: 2px 6px; border-radius: 4px; }
+  pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.6; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--code-bg); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  hr { border: none; border-top: 2px solid var(--border); margin: 52px 0; }
+
+  /* Layer map — adapted from layers doc */
+  .layer-diagram { background: white; border: 2px solid var(--border); border-radius: 16px; padding: 0; margin: 28px 0; overflow: hidden; }
+  .layer-row { display: grid; grid-template-columns: 1fr 60px 1fr; align-items: center; border-bottom: 1px solid var(--border); min-height: 64px; }
+  .layer-row:last-child { border-bottom: none; }
+  .layer-anat, .layer-sw { padding: 12px 16px; font-size: 13px; }
+  .layer-anat { text-align: right; }
+  .layer-sw { text-align: left; }
+  .layer-num { text-align: center; font-size: 18px; font-weight: 800; color: white; align-self: stretch; display: flex; align-items: center; justify-content: center; }
+  .layer-row:nth-child(1) .layer-num { background: #ef4444; }
+  .layer-row:nth-child(2) .layer-num { background: #f97316; }
+  .layer-row:nth-child(3) .layer-num { background: #eab308; }
+  .layer-row:nth-child(4) .layer-num { background: #22c55e; }
+  .layer-row:nth-child(5) .layer-num { background: #3b82f6; }
+  .layer-row:nth-child(6) .layer-num { background: #8b5cf6; }
+  .layer-name { font-weight: 700; display: block; }
+  .layer-desc { font-size: 12px; color: var(--muted); display: block; margin-top: 2px; }
+
+  /* Drug class card */
+  .drug { background: white; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin: 28px 0; }
+  .drug-head {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 16px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--code-bg);
+    align-items: center;
+  }
+  .drug-layer {
+    width: 56px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 6px 0;
+    text-align: center;
+    line-height: 1.1;
+    font-family: var(--mono);
+    letter-spacing: 0.04em;
+  }
+  .drug-layer .ln { display: block; font-size: 20px; line-height: 1; margin-top: 2px; }
+  .drug-title { font-size: 17px; font-weight: 700; }
+  .drug-recep { font-size: 12px; color: var(--muted); font-family: var(--mono); letter-spacing: 0.04em; margin-top: 2px; }
+  .drug-tag { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  .drug-body { padding: 6px 20px 18px; }
+
+  .l3 { background: #eab308; }
+  .l4 { background: #22c55e; }
+  .l5 { background: #3b82f6; }
+  .l1 { background: #ef4444; }
+  .l6 { background: #8b5cf6; }
+  .lx { background: var(--muted); }
+
+  /* Compact key table inside drug cards */
+  .agents {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 4px;
+    font-size: 13px;
+  }
+  .agents th, .agents td { padding: 8px 10px; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  .agents th { background: var(--bg); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+  @media (max-width: 600px) {
+    .layer-row { grid-template-columns: 1fr 40px 1fr; }
+    .layer-anat, .layer-sw { padding: 10px 10px; font-size: 12px; }
+    .layer-num { font-size: 14px; }
+    .drug-head { grid-template-columns: 48px 1fr; }
+    .drug-tag { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="crumb"><a href="index.html">← Clinical Geometry</a> · <a href="The Urinary Tract.html">The Urinary Tract</a> · May 24, 2026</div>
+<h1>Medications &amp; Their Stations</h1>
+<p class="subtitle">Every urology drug acts at a specific station along the urinary conduit through a specific receptor. Learn the receptor and the station; the rest follows. Memorize the drug without the mechanism and you will reach for the wrong agent in the right scenario.</p>
+
+<!-- ============================================================ -->
+<h2>The Map</h2>
+
+<p>Five conduit stations from production to expulsion (see <a href="The Urinary Tract.html">The Urinary Tract</a>), four drug classes that matter for storage/voiding, and two extras that show up constantly. Here is where each acts:</p>
+
+<div class="layer-diagram">
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">Kidney</span>
+      <span class="layer-desc">Filtration, concentration</span>
+    </div>
+    <div class="layer-num">1</div>
+    <div class="layer-sw">
+      <span class="layer-name">Antibiotics (concentration matters), desmopressin (concentrating)</span>
+      <span class="layer-desc">Where the urine is made; where some antibiotics achieve their working concentration.</span>
+    </div>
+  </div>
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">Ureter</span>
+      <span class="layer-desc">Smooth muscle, peristalsis</span>
+    </div>
+    <div class="layer-num">2</div>
+    <div class="layer-sw">
+      <span class="layer-name">α1-blockers (MET — medical expulsive therapy)</span>
+      <span class="layer-desc">Relaxation of distal ureter facilitates stone passage.</span>
+    </div>
+  </div>
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">Bladder (detrusor)</span>
+      <span class="layer-desc">M3 (contract), β3 (relax)</span>
+    </div>
+    <div class="layer-num">3</div>
+    <div class="layer-sw">
+      <span class="layer-name">Antimuscarinics, β3 agonists, intravesical BoNT</span>
+      <span class="layer-desc">Overactive bladder — quiet the detrusor or relax it.</span>
+    </div>
+  </div>
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">Bladder neck / internal sphincter</span>
+      <span class="layer-desc">α1A-rich</span>
+    </div>
+    <div class="layer-num">4</div>
+    <div class="layer-sw">
+      <span class="layer-name">α1-blockers (BPH symptoms, voiding trial)</span>
+      <span class="layer-desc">Open the smooth-muscle gate to allow flow.</span>
+    </div>
+  </div>
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">Urethra / prostate</span>
+      <span class="layer-desc">α1A smooth muscle + glandular tissue</span>
+    </div>
+    <div class="layer-num">5</div>
+    <div class="layer-sw">
+      <span class="layer-name">α1-blockers (dynamic), 5α-reductase inhibitors (static), PDE5</span>
+      <span class="layer-desc">The two components of BPH: smooth-muscle tone and gland volume — two drug classes, two targets.</span>
+    </div>
+  </div>
+  <div class="layer-row">
+    <div class="layer-anat">
+      <span class="layer-name">The cargo · urine itself</span>
+      <span class="layer-desc">Not a station — what flows through the conduit</span>
+    </div>
+    <div class="layer-num">C</div>
+    <div class="layer-sw">
+      <span class="layer-name">Phenazopyridine (urinary analgesic)</span>
+      <span class="layer-desc">Numbs the symptom in the cargo. Treats nothing. Useful, and dangerous when mistaken for definitive therapy.</span>
+    </div>
+  </div>
+</div>
+
+<div class="card card-accent">
+  <div class="label">The frame</div>
+  <p style="margin:0;">When you see a urology medication on a chart, ask three questions. <strong>Which station is the lesion at?</strong> <strong>Which station does this drug act at?</strong> <strong>Do those match?</strong> Tamsulosin for retention from BPH: lesion at station 5, drug at stations 4–5, match. Oxybutynin for retention from BPH: lesion at station 5, drug at station 3 — the drug will quiet the bladder that's already failing to empty. Mismatch. You just made it worse.</p>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2>The Drug Classes</h2>
+
+<!-- α1-blockers -->
+<div class="drug">
+  <div class="drug-head">
+    <div class="drug-layer l4">S<span class="ln">4·5·2</span></div>
+    <div>
+      <div class="drug-title">α1-Adrenergic Blockers</div>
+      <div class="drug-recep">α1A (prostate, bladder neck) · α1B (vasculature) · α1D (ureter, detrusor)</div>
+    </div>
+    <div class="drug-tag">smooth muscle relaxers</div>
+  </div>
+  <div class="drug-body">
+
+    <h4>Mechanism</h4>
+    <p>Block α1-adrenergic receptors → smooth muscle relaxation. The clinically useful effect is at α1A (prostate/bladder neck → opens the outlet). The unwanted effect is at α1B (vasculature → vasodilation → hypotension). Newer "uroselective" agents (tamsulosin, silodosin) target α1A preferentially; older ones (terazosin, doxazosin) hit α1B as well and drop blood pressure.</p>
+
+    <h4>Indications</h4>
+    <ul>
+      <li><strong>BPH-associated LUTS</strong> — first-line, mainstay.</li>
+      <li><strong>Voiding trial after acute retention</strong> — improves the odds of a successful trial of void.</li>
+      <li><strong>Medical expulsive therapy (MET)</strong> for distal ureteric stones — best evidence for stones &gt;5 mm at the UVJ.</li>
+      <li><strong>Female voiding dysfunction</strong> from primary bladder neck obstruction — off-label but used.</li>
+    </ul>
+
+    <h4>Agents</h4>
+    <table class="agents">
+      <thead><tr><th>Drug</th><th>Dose</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Tamsulosin</td><td>0.4 mg PO daily (after a meal)</td><td>Workhorse. α1A-selective. Floppy-iris syndrome — flag for the ophthalmologist before cataract surgery.</td></tr>
+        <tr><td>Silodosin</td><td>8 mg PO daily</td><td>Most α1A-selective. Most retrograde ejaculation. Least BP drop.</td></tr>
+        <tr><td>Alfuzosin</td><td>10 mg PO daily</td><td>Less selective; tolerable BP profile.</td></tr>
+        <tr><td>Terazosin / doxazosin</td><td>Titrated up over weeks</td><td>Older, also antihypertensive. Useful when you want both effects; otherwise tamsulosin is cleaner.</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Side effects to flag</h4>
+    <ul>
+      <li><strong>Orthostatic hypotension</strong> — first-dose phenomenon, worst with non-selective agents. Take at bedtime.</li>
+      <li><strong>Retrograde ejaculation</strong> — α1A-mediated bladder neck relaxation. Common with tamsulosin, very common with silodosin. <strong>Tell the patient before they take the first dose.</strong></li>
+      <li><strong>Intraoperative floppy iris syndrome (IFIS)</strong> — applies to all but worst with tamsulosin. Patients facing cataract surgery should tell their ophthalmologist.</li>
+      <li><strong>Dizziness, nasal congestion, fatigue.</strong></li>
+    </ul>
+
+    <div class="card card-teal">
+      <div class="label">The teaching point</div>
+      <p style="margin:0;">α1-blockers are <em>dynamic</em> — they relax tone. They don't shrink anything. Effect is felt in days. If you stop them, the symptom returns within days. Pair with a 5-ARI when the prostate is large and the patient wants a chance at long-term independence from the medication.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- 5-ARI -->
+<div class="drug">
+  <div class="drug-head">
+    <div class="drug-layer l5">S<span class="ln">5</span></div>
+    <div>
+      <div class="drug-title">5α-Reductase Inhibitors (5-ARIs)</div>
+      <div class="drug-recep">Block conversion of testosterone → dihydrotestosterone (DHT)</div>
+    </div>
+    <div class="drug-tag">prostate shrinkers</div>
+  </div>
+  <div class="drug-body">
+
+    <h4>Mechanism</h4>
+    <p>DHT is the androgen that drives prostatic glandular growth. 5α-reductase converts testosterone to DHT. Block the enzyme → DHT falls by 70–90% → prostate volume falls by ~20–25% over 6–12 months. <strong>This is the static component of BPH.</strong></p>
+
+    <h4>Indications</h4>
+    <ul>
+      <li>BPH with a <strong>large prostate</strong> (&gt;40 mL on imaging or DRE) — where actual gland reduction matters.</li>
+      <li>Reduction of acute urinary retention and BPH-related surgery risk over the long term (CombAT, MTOPS data).</li>
+      <li>Hematuria of prostatic origin — reduces vascularity.</li>
+      <li>Off-label: androgenic alopecia (finasteride 1 mg).</li>
+    </ul>
+
+    <h4>Agents</h4>
+    <table class="agents">
+      <thead><tr><th>Drug</th><th>Dose</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Finasteride</td><td>5 mg PO daily</td><td>Blocks type II 5α-reductase.</td></tr>
+        <tr><td>Dutasteride</td><td>0.5 mg PO daily</td><td>Blocks types I and II. Slightly greater DHT suppression; clinically similar.</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Side effects to flag</h4>
+    <ul>
+      <li><strong>Sexual</strong> — decreased libido, ED, ejaculatory volume reduction. Counsel before starting.</li>
+      <li><strong>Gynecomastia, breast tenderness.</strong></li>
+      <li><strong>PSA reduction by ~50%</strong> after 6–12 months. <strong>Always double the PSA</strong> when interpreting in a patient on a 5-ARI, and document the multiplier in the chart. Failure to do this is a classic missed cancer.</li>
+      <li><strong>Pregnancy hazard</strong> — crushed or broken tablets, or semen exposure during sex in some cases, can cause genital ambiguity in a male fetus. Women of childbearing potential should not handle crushed tablets.</li>
+    </ul>
+
+    <div class="card card-teal">
+      <div class="label">The teaching point</div>
+      <p style="margin:0;">5-ARIs are <em>structural</em> — they shrink. Effect is felt in months. The right patient is the one with the big prostate who can wait six months. The wrong patient is the man in acute retention asking what will help him void tomorrow — give him tamsulosin for that, and add a 5-ARI if his prostate is large enough to benefit over time. <strong>Tamsulosin is the now-drug. Finasteride/dutasteride is the year-drug.</strong></p>
+    </div>
+
+  </div>
+</div>
+
+<!-- Antimuscarinics -->
+<div class="drug">
+  <div class="drug-head">
+    <div class="drug-layer l3">S<span class="ln">3</span></div>
+    <div>
+      <div class="drug-title">Antimuscarinics (Anticholinergics)</div>
+      <div class="drug-recep">M3 antagonism — detrusor (and salivary, GI, eye, brain)</div>
+    </div>
+    <div class="drug-tag">detrusor quieters</div>
+  </div>
+  <div class="drug-body">
+
+    <h4>Mechanism</h4>
+    <p>The detrusor contracts via M3 muscarinic receptors. Block them → fewer involuntary contractions → less urgency, less frequency, fewer urge-incontinence episodes. The cost is everywhere else muscarinic receptors live: salivary glands (dry mouth), gut (constipation), eye (blurry vision, raised IOP in angle-closure glaucoma), brain (cognition).</p>
+
+    <h4>Indications</h4>
+    <ul>
+      <li><strong>Overactive bladder (OAB)</strong> — urgency, frequency, urge incontinence — without significant outflow obstruction or retention.</li>
+      <li><strong>Neurogenic detrusor overactivity</strong> — often higher doses.</li>
+    </ul>
+
+    <h4>Agents</h4>
+    <table class="agents">
+      <thead><tr><th>Drug</th><th>Receptor selectivity</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Oxybutynin (IR / ER / transdermal)</td><td>Non-selective M1–M5</td><td>Cheapest, most side effects. Crosses BBB — worst for cognition. Avoid in elderly.</td></tr>
+        <tr><td>Tolterodine</td><td>Non-selective but bladder-preferential</td><td>Better tolerated than oxybutynin IR.</td></tr>
+        <tr><td>Solifenacin</td><td>M3-selective</td><td>Once daily. Cleaner profile.</td></tr>
+        <tr><td>Darifenacin</td><td>M3-selective</td><td>Less CNS penetration; preferred in older patients if antimuscarinic is needed.</td></tr>
+        <tr><td>Trospium</td><td>Quaternary amine — minimal BBB crossing</td><td>Cognitive-sparing option.</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Side effects to flag</h4>
+    <ul>
+      <li><strong>Urinary retention.</strong> The same mechanism that quiets the detrusor in overactivity can paralyze it in someone with marginal voiding. <strong>Do not give to a man with significant BPH and high PVR.</strong></li>
+      <li><strong>Anticholinergic burden</strong> — sums with other anticholinergics (TCAs, diphenhydramine, antipsychotics). The elderly patient on three of them is a delirium waiting for the trigger.</li>
+      <li><strong>Acute angle-closure glaucoma</strong> — contraindicated. Open-angle glaucoma is fine.</li>
+      <li><strong>Cognitive decline</strong> — emerging long-term data, especially with oxybutynin. Prefer β3 agonists in older patients when you can.</li>
+    </ul>
+
+    <div class="card card-red">
+      <div class="label">The trap</div>
+      <p style="margin:0;">A man with frequency and urgency from BPH-induced overflow can <em>look</em> like OAB. Treating him with an antimuscarinic before checking a PVR will tip him into frank retention. <strong>Always check a PVR before starting an antimuscarinic in a man with LUTS.</strong> If the PVR is &gt;150 mL, you're treating the wrong layer.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- β3 agonists -->
+<div class="drug">
+  <div class="drug-head">
+    <div class="drug-layer l3">S<span class="ln">3</span></div>
+    <div>
+      <div class="drug-title">β3-Adrenergic Agonists</div>
+      <div class="drug-recep">β3 stimulation — detrusor smooth muscle relaxation (storage phase)</div>
+    </div>
+    <div class="drug-tag">detrusor relaxers</div>
+  </div>
+  <div class="drug-body">
+
+    <h4>Mechanism</h4>
+    <p>The detrusor expresses β3-adrenergic receptors that, when stimulated, promote relaxation during the storage phase. Activating them increases bladder capacity and decreases urgency without paralyzing detrusor contraction during voiding — which is the win over antimuscarinics.</p>
+
+    <h4>Indications</h4>
+    <ul>
+      <li>Overactive bladder — alternative to antimuscarinics, especially in patients with cognitive concerns, dry mouth burden, or contraindications.</li>
+      <li>Combination therapy with an antimuscarinic for refractory OAB (synergistic).</li>
+    </ul>
+
+    <h4>Agents</h4>
+    <table class="agents">
+      <thead><tr><th>Drug</th><th>Dose</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Mirabegron</td><td>25–50 mg PO daily</td><td>The original. Modest BP elevation — check baseline BP, recheck after starting.</td></tr>
+        <tr><td>Vibegron</td><td>75 mg PO daily</td><td>Newer; minimal BP signal.</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Side effects</h4>
+    <ul>
+      <li><strong>Hypertension</strong> — modest, but real with mirabegron. Avoid in uncontrolled HTN.</li>
+      <li>Headache, nasopharyngitis, UTI symptoms.</li>
+      <li>Drug interactions — mirabegron is a CYP2D6 inhibitor; raises metoprolol, some antidepressants.</li>
+    </ul>
+
+    <div class="card card-teal">
+      <div class="label">Why this class exists</div>
+      <p style="margin:0;">Antimuscarinics treat OAB by paralyzing the detrusor everywhere. β3 agonists treat OAB by relaxing the detrusor during storage <em>without</em> blocking its ability to contract for voiding. Cleaner mechanism, cleaner side effect profile. They are the right starting choice in many older patients now, even though antimuscarinics remain cheaper and more familiar.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- PDE5 -->
+<div class="drug">
+  <div class="drug-head">
+    <div class="drug-layer l5">S<span class="ln">5</span></div>
+    <div>
+      <div class="drug-title">PDE5 Inhibitors</div>
+      <div class="drug-recep">Block phosphodiesterase 5 → increased cGMP → vascular smooth muscle relaxation</div>
+    </div>
+    <div class="drug-tag">vascular relaxers</div>
+  </div>
+  <div class="drug-body">
+
+    <h4>Mechanism</h4>
+    <p>Nitric oxide → cGMP → smooth muscle relaxation. PDE5 degrades cGMP. Block PDE5, cGMP rises, smooth muscle relaxes — specifically, the smooth muscle of the corpus cavernosum (erections), the prostate and bladder neck (BPH symptoms), and the pulmonary vasculature (pulmonary hypertension).</p>
+
+    <h4>Indications</h4>
+    <ul>
+      <li><strong>Erectile dysfunction</strong> — first-line oral therapy.</li>
+      <li><strong>BPH-related LUTS</strong> (tadalafil 5 mg daily) — particularly when ED and BPH coexist.</li>
+      <li>Pulmonary hypertension (different dosing, different formulation).</li>
+    </ul>
+
+    <h4>Agents</h4>
+    <table class="agents">
+      <thead><tr><th>Drug</th><th>Onset / duration</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Sildenafil</td><td>30–60 min onset, ~4 h duration</td><td>Take on empty stomach. Bluish vision tinge (PDE6 cross-reactivity).</td></tr>
+        <tr><td>Tadalafil</td><td>30 min, 24–36 h ("weekender")</td><td>5 mg daily for BPH ± ED. Once-daily dosing is the LUTS use.</td></tr>
+        <tr><td>Vardenafil / avanafil</td><td>Intermediate</td><td>Niche.</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Critical contraindications</h4>
+    <ul>
+      <li><strong>Nitrates — absolute contraindication.</strong> Severe hypotension. Includes sublingual nitroglycerin for chest pain. Patients on PRN nitroglycerin should not take PDE5i within 24 h (sildenafil) or 48 h (tadalafil).</li>
+      <li><strong>α-blockers</strong> — relative; can synergize for hypotension. Tamsulosin generally safe with PDE5i at standard doses, but counsel on orthostasis.</li>
+      <li>Recent MI / unstable cardiac status — defer.</li>
+      <li>Severe hepatic impairment — reduce dose.</li>
+    </ul>
+
+    <h4>Side effects</h4>
+    <ul>
+      <li>Headache, flushing, dyspepsia, nasal congestion.</li>
+      <li>Vision changes (sildenafil; rare ischemic optic neuropathy reported).</li>
+      <li>Priapism — rare; counsel patients to seek care at &gt;4 hours.</li>
+    </ul>
+
+    <div class="card card-teal">
+      <div class="label">The teaching point</div>
+      <p style="margin:0;">Sildenafil and tadalafil are the same mechanism with different pharmacokinetics. Pick on the basis of patient preference, dosing pattern (event-driven vs. daily), and other indications (BPH-coexistent ED → daily tadalafil is two diagnoses one pill). The danger is always nitrates. Ask. Twice.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- Antibiotics -->
+<div class="drug">
+  <div class="drug-head">
+    <div class="drug-layer l1">S<span class="ln">1·3·5</span></div>
+    <div>
+      <div class="drug-title">Antibiotics — Urologic Use</div>
+      <div class="drug-recep">Pathogen and tissue penetration drive choice, not "broad-spectrum vs narrow"</div>
+    </div>
+    <div class="drug-tag">match site to drug</div>
+  </div>
+  <div class="drug-body">
+
+    <h4>Match the antibiotic to the station</h4>
+    <table>
+      <thead>
+        <tr><th>Site / scenario</th><th>First-line</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Acute uncomplicated cystitis</strong> (station 3)</td><td>Nitrofurantoin 100 mg BID ×5 d <em>or</em> TMP-SMX DS BID ×3 d <em>or</em> fosfomycin 3 g ×1</td><td>Bladder-concentrating agents. Nitrofurantoin doesn't reach renal tissue — perfect for cystitis, useless for pyelo.</td></tr>
+        <tr><td><strong>Pyelonephritis</strong> (station 1)</td><td>Outpatient: ciprofloxacin 500 mg BID ×7 d (if local resistance low). Inpatient: ceftriaxone 1 g IV, then tailor.</td><td>Renal tissue penetration required. <strong>Never use nitrofurantoin or fosfomycin for pyelo</strong> — they don't reach parenchymal tissue.</td></tr>
+        <tr><td><strong>Acute bacterial prostatitis</strong> (station 5)</td><td>Ciprofloxacin or TMP-SMX, 2–4 weeks</td><td>Lipid-soluble agents penetrate the inflamed prostate. β-lactams penetrate poorly when uninflamed; in acute prostatitis the barrier is leaky and most agents work — but the duration is what matters.</td></tr>
+        <tr><td><strong>Chronic bacterial prostatitis</strong></td><td>Fluoroquinolone 4–6 weeks</td><td>Lipid solubility is the only way through. β-lactams fail.</td></tr>
+        <tr><td><strong>Urosepsis with obstruction</strong></td><td>Pip-tazo or carbapenem empirically, plus drainage</td><td>Drainage is the procedure. Antibiotics support it; they do not substitute for it.</td></tr>
+        <tr><td><strong>Pre-procedure prophylaxis</strong> (cystoscopy, TRUS biopsy)</td><td>Per institutional protocol; rectal swab-guided for prostate biopsy</td><td>Fluoroquinolone resistance has risen sharply; targeted prophylaxis is now standard for TRUS biopsy.</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Rules that get you 80% of the way</h4>
+    <ul>
+      <li><strong>Nitrofurantoin is a bladder drug.</strong> Useless for kidney, prostate, blood. Useful and clean for uncomplicated cystitis. Avoid if CrCl &lt;30.</li>
+      <li><strong>Fluoroquinolones penetrate everything urologic.</strong> Including prostate. Tendinopathy, dysglycemia, QT prolongation, C. difficile — reserve them.</li>
+      <li><strong>TMP-SMX</strong> — good cystitis and prostate. Watch creatinine bump (tubular secretion, usually not real AKI), hyperkalemia, sulfa allergy.</li>
+      <li><strong>Ceftriaxone</strong> — workhorse inpatient pyelonephritis empirically. Easy IV-to-PO once cultures back.</li>
+      <li><strong>Always send the culture before the first dose</strong> when feasible. The culture is what tells you the second week.</li>
+    </ul>
+
+    <div class="card card-orange">
+      <div class="label">The asymptomatic bacteriuria rule</div>
+      <p style="margin:0;">Positive urine culture, no symptoms, no fever, no pyuria-with-pain → <strong>do not treat</strong>. Exceptions: pregnancy, pre-urologic procedure with mucosal trauma expected. Treating colonization selects resistance, changes nothing clinically, and turns the next real infection harder to treat. This is the most violated rule in inpatient urinary management. Don't be the one who violates it.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- Phenazopyridine + desmopressin grouped -->
+<div class="drug">
+  <div class="drug-head">
+    <div class="drug-layer lx">S<span class="ln">6</span></div>
+    <div>
+      <div class="drug-title">Phenazopyridine &amp; Desmopressin — Surface Agents</div>
+      <div class="drug-recep">One numbs symptom · one reduces urine production</div>
+    </div>
+    <div class="drug-tag">narrow uses</div>
+  </div>
+  <div class="drug-body">
+
+    <h4>Phenazopyridine (Pyridium)</h4>
+    <p>Topical urinary analgesic. Turns urine and tears bright orange — warn patients, warn the lab. <strong>Treats nothing, masks dysuria.</strong> Useful: short-term symptom relief in confirmed uncomplicated cystitis while antibiotics work, 2–3 days max. Dangerous: in renal insufficiency (methemoglobinemia, hemolytic anemia), as a substitute for actual diagnosis, or in patients with G6PD deficiency.</p>
+
+    <h4>Desmopressin (DDAVP)</h4>
+    <p>Synthetic vasopressin analog. Reduces nocturnal urine production. Useful: primary nocturnal enuresis in children, nocturnal polyuria in carefully selected adults, mild factor VIII deficiency / von Willebrand. <strong>Hyponatremia is the dangerous side effect.</strong> Restrict fluids around dosing. Avoid in older patients with cardiac or renal disease. Check baseline sodium; recheck after starting and at follow-up. Death from severe hyponatremia is documented and entirely preventable.</p>
+
+    <div class="card card-red">
+      <div class="label">Why these get grouped here</div>
+      <p style="margin:0;">Both feel innocuous and both cause serious harm when used carelessly. Phenazopyridine is a band-aid that hides infection while it climbs. Desmopressin is a powerful water-retainer in a population that often cannot tolerate it. Treat both as prescribing decisions, not OTC suggestions.</p>
+    </div>
+
+  </div>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2>Two Quick Heuristics</h2>
+
+<div class="card card-green">
+  <div class="label">The "before you sign" checklist</div>
+  <ol style="margin: 0; padding-left: 20px;">
+    <li>Which station is the lesion at?</li>
+    <li>Which station does this drug act at?</li>
+    <li>Is there a PVR I should know before starting it? (Mandatory before antimuscarinics in any man, any patient with LUTS, anyone with neurologic disease.)</li>
+    <li>Is the patient on nitrates? (Mandatory before any PDE5i.)</li>
+    <li>Will this drug change a number I care about — PSA, creatinine, sodium, BP? Document the baseline.</li>
+  </ol>
+</div>
+
+<div class="card card-accent">
+  <div class="label">The combination logic</div>
+  <p style="margin:0;">BPH with large prostate and moderate-to-severe symptoms: <strong>α-blocker + 5-ARI</strong>. Two mechanisms on the same station — dynamic + structural. OAB refractory to monotherapy: <strong>antimuscarinic + β3 agonist</strong>. Two mechanisms on the same station, additive effect. BPH + ED: <strong>tadalafil 5 mg daily</strong> handles both. Most of the rational polypharmacy in urology pairs drugs that act at different stations or different mechanisms on the same station — never two drugs of the same class.</p>
+</div>
+
+<hr>
+
+<p style="text-align:center; color:var(--muted); font-size:13px; margin-top:40px;">
+  Written May 24, 2026 — for PAs, medical students, and clinical clerks<br>
+  <a href="index.html" style="color: var(--muted); border-bottom: 1px dotted var(--muted); text-decoration: none;">← back to reference</a>
+</p>
+
+</div>
+<script src="nav.js" defer></script>
+</body>
+</html>

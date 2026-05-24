@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urology — The Operations</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --card: #ffffff;
+    --border: #e7e5e4;
+    --text: #1c1917;
+    --muted: #78716c;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --orange: #d97706;
+    --orange-light: #fffbeb;
+    --purple: #7c3aed;
+    --purple-light: #f5f3ff;
+    --teal: #0d9488;
+    --teal-light: #f0fdfa;
+    --code-bg: #f5f5f4;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "SF Mono", "Fira Code", "Consolas", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.7; padding: 40px 20px 80px; }
+  .container { max-width: 820px; margin: 0 auto; }
+  .crumb { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 8px; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--muted); }
+  .crumb a:hover { color: var(--text); border-bottom-color: var(--text); }
+  h1 { font-size: 30px; font-weight: 800; line-height: 1.15; margin-bottom: 10px; letter-spacing: -0.02em; }
+  .subtitle { font-size: 16px; color: var(--muted); margin-bottom: 40px; border-bottom: 2px solid var(--border); padding-bottom: 24px; max-width: 700px; }
+  h2 { font-size: 21px; font-weight: 700; margin-top: 52px; margin-bottom: 16px; letter-spacing: -0.01em; }
+  h3 { font-size: 16px; font-weight: 700; margin-top: 24px; margin-bottom: 10px; }
+  h4 { font-size: 12px; font-weight: 700; margin-top: 18px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  p { margin-bottom: 16px; font-size: 15px; }
+  ul, ol { margin-bottom: 16px; padding-left: 20px; }
+  ul li, ol li { margin-bottom: 4px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 20px 0; }
+  .card-accent { border-left: 4px solid var(--accent); background: var(--accent-light); }
+  .card-green { border-left: 4px solid var(--green); background: var(--green-light); }
+  .card-red { border-left: 4px solid var(--red); background: var(--red-light); }
+  .card-orange { border-left: 4px solid var(--orange); background: var(--orange-light); }
+  .card-purple { border-left: 4px solid var(--purple); background: var(--purple-light); }
+  .card-teal { border-left: 4px solid var(--teal); background: var(--teal-light); }
+  .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .card-accent .label { color: var(--accent); }
+  .card-green .label { color: var(--green); }
+  .card-red .label { color: var(--red); }
+  .card-orange .label { color: var(--orange); }
+  .card-purple .label { color: var(--purple); }
+  .card-teal .label { color: var(--teal); }
+  code { font-family: var(--mono); font-size: 13px; background: var(--code-bg); padding: 2px 6px; border-radius: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--code-bg); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  hr { border: none; border-top: 2px solid var(--border); margin: 52px 0; }
+
+  /* Operation card */
+  .op {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 32px 0;
+  }
+  .op-head {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--border);
+    background: var(--code-bg);
+  }
+  .op-station {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    color: white;
+    font-weight: 800;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    line-height: 1;
+  }
+  .op-station .num { font-size: 22px; margin-bottom: 2px; }
+  .op-station .sub { font-size: 9px; letter-spacing: 0.05em; opacity: 0.85; }
+  .op-station.s5 { background: #8b5cf6; }
+  .op-station.s2 { background: #f97316; }
+  .op-station.s1 { background: #16a34a; }
+  .op-title { font-size: 19px; font-weight: 800; letter-spacing: -0.01em; }
+  .op-meta { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.04em; margin-top: 2px; }
+  .op-mode {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    background: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  .op-body { padding: 6px 24px 22px; }
+
+  /* Atlas figure embed */
+  .fig {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin: 18px 0;
+    text-align: center;
+  }
+  .fig img { max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 4px; }
+  .fig figcaption {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+    line-height: 1.5;
+    font-family: var(--mono);
+    letter-spacing: 0.02em;
+  }
+  .fig figcaption strong { color: var(--text); font-family: var(--font); font-weight: 700; letter-spacing: 0; }
+
+  /* Post-op timeline */
+  .pop {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 12px;
+    margin: 10px 0;
+    padding: 10px 14px;
+    border-left: 3px solid var(--border);
+    background: var(--bg);
+    border-radius: 0 8px 8px 0;
+  }
+  .pop-when {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding-top: 1px;
+  }
+  .pop-what { font-size: 14px; }
+
+  @media (max-width: 700px) {
+    .op-head { grid-template-columns: 48px 1fr; }
+    .op-mode { display: none; }
+    .pop { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="crumb"><a href="index.html">← Clinical Geometry</a> · <a href="The Urinary Tract.html">The Urinary Tract</a> · May 24, 2026</div>
+<h1>The Operations — What Actually Happens</h1>
+<p class="subtitle">Five operations, each acting on a specific station of the conduit. What the surgeon is doing mechanically, what the post-op course should look like, and the complications that come back to you on the call phone. For PAs, medical students, and clinical clerks.</p>
+
+<!-- ============================================================ -->
+<h2>How To Read This Document</h2>
+
+<p>Every operation has the same shape, and we describe each in that shape. <strong>What station does it act on?</strong> <strong>What does it remove or rearrange?</strong> <strong>What's the expected day-by-day post-op course?</strong> <strong>What complications bring the patient back, and which need urology vs. emergency surgery vs. medicine?</strong></p>
+
+<p>The point isn't to make you a surgeon. The point is so that when a post-op patient calls or returns and the chart says <em>"POD3 s/p HoLEP"</em>, you have a model in your head of what was just done to that man's prostate, what his urine should look like today, and what would worry the surgeon enough that you should call.</p>
+
+<div class="card card-accent">
+  <div class="label">The frame, once</div>
+  <p style="margin:0;">Every urology operation either <strong>removes a lesion at a station</strong>, <strong>reconstructs a conduit segment</strong>, or <strong>creates a new exit when the existing one cannot work</strong>. Hold those three categories and the post-op picture for any operation is roughly predictable from first principles.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>1 — TURP (Transurethral Resection of the Prostate)</h2>
+
+<div class="op">
+  <div class="op-head">
+    <div class="op-station s5"><span class="num">5</span><span class="sub">station</span></div>
+    <div>
+      <div class="op-title">TURP</div>
+      <div class="op-meta">station 5 · BPH outlet obstruction · endoscopic</div>
+    </div>
+    <div class="op-mode">remove</div>
+  </div>
+  <div class="op-body">
+
+    <figure class="fig">
+      <img src="images/atlas2-p01.jpg" alt="Benign prostatic hypertrophy: enlarged prostate compressing the urethra and bulging into the bladder">
+      <figcaption><strong>What the operation is removing.</strong> The hyperplastic adenoma (yellow) compresses the prostatic urethra and bulges into the bladder neck. Resection or enucleation removes that mass and re-opens the station-5 lumen, leaving the true prostatic capsule behind.<br>From Burroughs Wellcome Co., <em>Atlas of the Urinary Tract</em>.</figcaption>
+    </figure>
+
+    <h4>What the surgeon actually does</h4>
+    <p>A resectoscope passes up the urethra to the prostate. A wire loop carries cutting current and shaves the obstructing adenoma — the inner zone of the prostate — into small chips, which are irrigated out and sent to pathology. The capsule, the verumontanum, and the external sphincter are preserved. Hemostasis is the other half of the operation; bleeding from the prostatic fossa is brisk if not controlled. At the end, a 22 Fr 3-way Foley with CBI sits in the bladder.</p>
+
+    <h4>Standard post-op course</h4>
+
+    <div class="pop"><div class="pop-when">POD 0</div><div class="pop-what">3-way Foley with CBI. Urine pink to light red, never bright red. Patient may have bladder spasms — antimuscarinic PRN (oxybutynin or B&O suppository). Hgb checked overnight.</div></div>
+    <div class="pop"><div class="pop-when">POD 1</div><div class="pop-what">CBI off if urine pink, BPL irrigation as needed. Diet advanced. Ambulate. Most patients go home POD 1 with the catheter still in.</div></div>
+    <div class="pop"><div class="pop-when">POD 2–3</div><div class="pop-what">Catheter out in clinic or at home with PCP support. Patient may have dysuria, urgency, frequency for 2–4 weeks ("raw fossa healing"). Coach: drink water, avoid caffeine, expect intermittent pink urine at terminal stream for weeks.</div></div>
+    <div class="pop"><div class="pop-when">Weeks 2–6</div><div class="pop-what">Delayed bleeding is the classic visit — eschar sloughs off the resected fossa around POD 10–21 and patients see frank blood. Usually self-limited with hydration; escalate if clot retention or hemodynamic change.</div></div>
+
+    <h4>Complications that come back to you</h4>
+    <ul>
+      <li><strong>Clot retention</strong> — most common urgent return. Manual evacuation + CBI restart. See Procedures doc.</li>
+      <li><strong>Delayed hematuria at week 2–3</strong> — eschar sloughing. Usually clears with hydration; call urology if it doesn't.</li>
+      <li><strong>UTI</strong> — common, send culture, treat.</li>
+      <li><strong>TUR syndrome (now rare)</strong> — historic complication of monopolar TURP with hypotonic irrigation, causing hyponatremia and confusion. Bipolar TURP and HoLEP use saline and have largely eliminated this. Still worth knowing the term.</li>
+      <li><strong>Retrograde ejaculation</strong> — expected, not a complication per se. Pre-op counseling. Permanent in 65–75%.</li>
+      <li><strong>Erectile dysfunction</strong> — risk discussed; rates 5–10% above baseline.</li>
+      <li><strong>Bladder neck contracture / urethral stricture</strong> — late complication, weeks to months. Returns with worsening flow.</li>
+      <li><strong>Persistent urinary incontinence</strong> — should be transient. Persistent stress incontinence after 3 months suggests sphincter injury; call.</li>
+    </ul>
+
+    <div class="card card-red">
+      <div class="label">Things that should not happen — call now</div>
+      <ul style="margin: 0; padding-left: 20px;">
+        <li>Bright red effluent on CBI that doesn't clear with rate increase + manual evacuation.</li>
+        <li>Hemodynamic change with hematuria.</li>
+        <li>Inability to replace a dislodged Foley in the first 48 hours — call before forcing.</li>
+        <li>Fever &gt;38.5°C with rigors — urosepsis suspected.</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>2 — HoLEP (Holmium Laser Enucleation of the Prostate)</h2>
+
+<div class="op">
+  <div class="op-head">
+    <div class="op-station s5"><span class="num">5</span><span class="sub">station</span></div>
+    <div>
+      <div class="op-title">HoLEP</div>
+      <div class="op-meta">station 5 · BPH · endoscopic · laser enucleation + morcellation</div>
+    </div>
+    <div class="op-mode">remove</div>
+  </div>
+  <div class="op-body">
+
+    <h4>What's different from TURP</h4>
+    <p>Same target — the obstructing adenoma at station 5 — but a different mechanical approach. The holmium laser develops a plane between the adenoma and the surgical capsule (the same plane an open simple prostatectomy uses), the adenoma is enucleated whole into the bladder, and a morcellator inside the bladder breaks it into pieces for removal. The result is more complete removal of adenoma than TURP — including very large glands (&gt;100 g) that previously required open surgery. Hemostasis is excellent because the laser seals as it cuts.</p>
+
+    <h4>Standard post-op course</h4>
+
+    <div class="pop"><div class="pop-when">POD 0</div><div class="pop-what">3-way Foley with CBI, typically lower irrigation rate than TURP — less bleeding. Often discharge same day in selected centers.</div></div>
+    <div class="pop"><div class="pop-when">POD 1</div><div class="pop-what">Catheter out, void trial, discharge. Faster than TURP.</div></div>
+    <div class="pop"><div class="pop-when">First 2 weeks</div><div class="pop-what">Mild dysuria, urge, and possible stress urinary incontinence (transient, mechanism: the external sphincter has just lost its proximal support; trigone control returns within weeks). Pelvic floor exercises help.</div></div>
+    <div class="pop"><div class="pop-when">Weeks 2–4</div><div class="pop-what">Symptoms continue improving. Flow rates by week 4 are dramatically better than baseline.</div></div>
+
+    <h4>Complications that come back to you</h4>
+    <ul>
+      <li><strong>Early stress urinary incontinence</strong> — distinguishing feature from TURP. Patients leak on cough/exercise for weeks. Reassure, refer to pelvic floor PT. Most resolve by 3 months.</li>
+      <li><strong>Hematuria</strong> — less than TURP but still present. Delayed eschar sloughing at week 2–3 still occurs.</li>
+      <li><strong>UTI, urgency, retrograde ejaculation</strong> — similar to TURP.</li>
+      <li><strong>Bladder injury from the morcellator</strong> — rare; pre-empted by the surgeon, but if you see hematuria with peritonitis signs early post-op, this is the one to consider.</li>
+    </ul>
+
+    <div class="card card-teal">
+      <div class="label">The choice between TURP and HoLEP</div>
+      <p style="margin:0;">Same target. TURP is faster to teach, faster to perform on smaller glands, ubiquitously available. HoLEP works on any prostate size, gives more complete tissue removal, and has the bleeding profile to handle anticoagulated patients. For glands &gt;80 g, HoLEP (or simple prostatectomy) is the right operation.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>3 — Ureteroscopy (URS) ± Holmium Lithotripsy + Stent</h2>
+
+<div class="op">
+  <div class="op-head">
+    <div class="op-station s2"><span class="num">2</span><span class="sub">station</span></div>
+    <div>
+      <div class="op-title">Ureteroscopy</div>
+      <div class="op-meta">station 2 · stones, strictures, upper-tract tumors</div>
+    </div>
+    <div class="op-mode">remove + bridge</div>
+  </div>
+  <div class="op-body">
+
+    <h4>What the surgeon actually does</h4>
+    <p>A flexible (or semi-rigid) ureteroscope passes up the urethra, through the bladder, into the ureter through the UVJ. The stone is visualized; a holmium laser breaks it into dust or small fragments; a basket retrieves the bigger pieces. A double-J ureteral stent is left in place at the end (in nearly all cases) to ensure drainage through the next 1–14 days while edema resolves. The stent has a loop at the renal pelvis and a loop at the bladder, holding it in.</p>
+
+    <h4>Standard post-op course</h4>
+
+    <div class="pop"><div class="pop-when">POD 0</div><div class="pop-what">Same-day discharge in most cases. Foley out before discharge. Patient takes home a stent.</div></div>
+    <div class="pop"><div class="pop-when">Days 1–7</div><div class="pop-what">Stent symptoms: urgency, frequency, hematuria, suprapubic discomfort, flank pain on voiding (vesicoureteral reflux up the stent). All expected. Phenazopyridine PRN for dysuria. α-blocker (tamsulosin) sometimes improves stent tolerance. Push fluids.</div></div>
+    <div class="pop"><div class="pop-when">Days 7–14</div><div class="pop-what">Stent removal in clinic — simple cystoscopic procedure. Symptoms resolve within 24–48 hours of removal.</div></div>
+    <div class="pop"><div class="pop-when">Weeks 4–6</div><div class="pop-what">Repeat imaging (KUB or CT) to confirm stone clearance. Metabolic stone workup if recurrent.</div></div>
+
+    <h4>Complications that come back to you</h4>
+    <ul>
+      <li><strong>Stent symptoms more severe than expected</strong> — first thing: confirm the stent isn't migrated (KUB). Then anticholinergic + α-blocker + phenazopyridine. Early stent removal if intractable.</li>
+      <li><strong>Fever post-URS</strong> — assume infected obstruction until proven otherwise. UA, culture, CBC, lactate. CT if hydronephrosis suspected (stent should be preventing this — if hydronephrosis is present, the stent is occluded or displaced).</li>
+      <li><strong>Forgotten stent</strong> — the classic late catastrophe. Stents are designed to stay in 2–6 weeks, no longer. Encrusted stents that have been in for months become a stone surrounding a stent, removal becomes a major operation, and patients can lose renal function. <strong>Track every stent you place.</strong></li>
+      <li><strong>Ureteral injury / perforation</strong> — rare; intraoperative finding usually. Post-op presentation: persistent flank pain, urinoma on imaging.</li>
+      <li><strong>Hematuria</strong> — pink urine for days is expected. Frank red blood with clots is not.</li>
+    </ul>
+
+    <div class="card card-orange">
+      <div class="label">The stent counseling moment</div>
+      <p style="margin:0;">Every patient who goes home with a stent gets one sentence drilled into them: <strong>"You have a plastic tube in your kidney. If you don't come back to have it taken out, you will lose this kidney."</strong> The number of patients lost to follow-up after stent placement is non-trivial. Build a tracking system. Confirm the removal appointment exists before they leave.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>4 — Robotic Radical Prostatectomy (RARP)</h2>
+
+<div class="op">
+  <div class="op-head">
+    <div class="op-station s5"><span class="num">5</span><span class="sub">station</span></div>
+    <div>
+      <div class="op-title">Robotic Radical Prostatectomy</div>
+      <div class="op-meta">station 5 · localized prostate cancer · oncologic resection + reconstruction</div>
+    </div>
+    <div class="op-mode">remove + reconstruct</div>
+  </div>
+  <div class="op-body">
+
+    <figure class="fig">
+      <img src="images/atlas2-p02.jpg" alt="Early carcinoma of the prostate versus advanced carcinoma invading the bladder and surrounding prostatic tissue">
+      <figcaption><strong>Why this operation exists.</strong> Early prostate cancer (left) is contained within the gland — surgically curable. Advanced disease (right) invades into bladder and beyond. Radical prostatectomy is the curative option for organ-confined disease; locally advanced disease is treated multimodally.<br>From Burroughs Wellcome Co., <em>Atlas of the Urinary Tract</em>.</figcaption>
+    </figure>
+
+    <h4>What the surgeon actually does</h4>
+    <p>This is a different operation from TURP/HoLEP. Those leave the prostate behind and just remove the obstructing inner zone. Here, the entire prostate gland is removed, plus the seminal vesicles, plus a margin around the apex and base. The bladder neck is reconstructed and anastomosed directly to the urethra over a Foley. Pelvic lymphadenectomy is performed for staging in many cases. The patient leaves the OR with a urethral Foley sitting through a fresh anastomosis — that catheter <strong>is the operation</strong> until the anastomosis heals.</p>
+
+    <h4>Standard post-op course</h4>
+
+    <div class="pop"><div class="pop-when">POD 0–1</div><div class="pop-what">Inpatient overnight in most centers; discharge POD 1 typical. Foley to gravity, ambulate, diet advanced. Drain (if placed) measured for output and creatinine.</div></div>
+    <div class="pop"><div class="pop-when">Days 1–7</div><div class="pop-what">Home with the Foley. Strict no-instrumentation: any urethral manipulation can disrupt the anastomosis. Patient is taught Foley care, leg bag use, and when to call.</div></div>
+    <div class="pop"><div class="pop-when">Day 7–10</div><div class="pop-what">Cystogram in clinic if surgeon protocol requires; if no leak, Foley out. Some surgeons remove without imaging.</div></div>
+    <div class="pop"><div class="pop-when">Weeks 1–3 after Foley out</div><div class="pop-what">Significant urinary incontinence — this is the expected price. The internal sphincter is gone (it was part of the prostate). Continence depends on the external sphincter alone. Pelvic floor PT starts immediately. 70–90% achieve continence by 12 months.</div></div>
+    <div class="pop"><div class="pop-when">Months 1–3</div><div class="pop-what">First PSA. Should be undetectable (&lt;0.1 ng/mL). Rising PSA = biochemical recurrence; oncology pathway.</div></div>
+    <div class="pop"><div class="pop-when">Months 3–24</div><div class="pop-what">Erectile function recovery — slower than continence. Depends on nerve-sparing technique, age, baseline function.</div></div>
+
+    <h4>Complications that come back to you</h4>
+    <ul>
+      <li><strong>Catheter falls out / pulled in the first 7 days</strong> — <strong>do not replace blindly.</strong> Call urology immediately. Often requires cystoscopic placement over a wire to avoid disrupting the anastomosis.</li>
+      <li><strong>Anastomotic leak</strong> — drain output that's urinous, drain creatinine markedly higher than serum. Usually heals with prolonged Foley drainage and a percutaneous drain. Rarely re-operative.</li>
+      <li><strong>Lymphocele</strong> — fluid collection in the pelvis from disrupted lymphatics. Most asymptomatic and resolve. Infected lymphocele or compressive lymphocele needs drainage.</li>
+      <li><strong>Stress urinary incontinence at 3+ months</strong> — expected to varying degrees. Persistent SUI at 12 months may need surgical management (sling, AUS).</li>
+      <li><strong>Bladder neck contracture</strong> — late complication, narrows the anastomosis. Returns with weak stream.</li>
+      <li><strong>Erectile dysfunction</strong> — expected; managed with PDE5i, vacuum devices, intracavernosal injections, eventually penile implant if refractory.</li>
+      <li><strong>Rising PSA</strong> — never normal after RP. &gt;0.2 with confirmation = biochemical recurrence.</li>
+    </ul>
+
+    <div class="card card-red">
+      <div class="label">The post-prostatectomy rule</div>
+      <p style="margin:0;">A post-prostatectomy patient with a Foley problem in the first 30 days belongs on the operating surgeon's phone. Not a generic urology consult. Not the ED's catheter cart. The surgeon knows what their anastomosis looks like.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>5 — Partial Nephrectomy (Robotic or Open)</h2>
+
+<div class="op">
+  <div class="op-head">
+    <div class="op-station s1"><span class="num">1</span><span class="sub">station</span></div>
+    <div>
+      <div class="op-title">Partial Nephrectomy</div>
+      <div class="op-meta">station 1 · small renal masses · nephron-sparing</div>
+    </div>
+    <div class="op-mode">remove + reconstruct</div>
+  </div>
+  <div class="op-body">
+
+    <figure class="fig">
+      <img src="images/atlas2-p06.jpg" alt="Normal kidney with cortex, medulla, calyces, pelvis, ureter, and capsule labeled">
+      <figcaption><strong>The architecture being preserved.</strong> Partial nephrectomy resects a tumor with a margin and reconstructs the cortex and collecting system back together. Done well, this preserves nephrons (cortex/medulla mass) and renal function that radical nephrectomy would sacrifice.<br>From Burroughs Wellcome Co., <em>Atlas of the Urinary Tract</em>.</figcaption>
+    </figure>
+
+    <h4>What the surgeon actually does</h4>
+    <p>The renal hilum is exposed. The renal artery is temporarily clamped (warm ischemia) — the clock starts. The tumor is excised with a small rim of normal parenchyma. The collecting system is closed (if entered). The cortex is reconstructed. The clamp comes off and the kidney reperfuses. The goal: tumor out, collecting system watertight, parenchyma reconstructed, kidney still working.</p>
+
+    <h4>Standard post-op course</h4>
+
+    <div class="pop"><div class="pop-when">POD 0–1</div><div class="pop-what">Inpatient. JP drain in the perinephric space. Foley overnight. Hgb trended. Creatinine bumped (expected — single-kidney ischemia time).</div></div>
+    <div class="pop"><div class="pop-when">POD 2–3</div><div class="pop-what">Foley out. Drain output trends: if low and serous, drain comes out before discharge. If high or urinous, drain stays. Discharge POD 2–4 typically.</div></div>
+    <div class="pop"><div class="pop-when">Weeks 1–4</div><div class="pop-what">Recovery. Restrictions on heavy lifting. Watch for delayed bleeding (week 2–3 — pseudoaneurysm rupture territory).</div></div>
+    <div class="pop"><div class="pop-when">Month 3, then annually</div><div class="pop-what">Surveillance imaging (CT or MRI). Renal function monitoring.</div></div>
+
+    <h4>Complications that come back to you</h4>
+    <ul>
+      <li><strong>Urine leak</strong> — drain output stays elevated, drain creatinine markedly higher than serum. Confirm with drain Cr. Management: prolonged drain + Foley to lower bladder pressure, ± ureteral stent to decompress upstream. Most heal in weeks. Reoperation rare.</li>
+      <li><strong>Delayed bleeding (pseudoaneurysm rupture)</strong> — POD 7–21. Sudden flank pain, hematuria, hemodynamic change. CT angio, IR embolization. <strong>This is a true emergency</strong> — recognize the timeline.</li>
+      <li><strong>AKI</strong> — expected mild rise. Significant AKI suggests vascular injury, particularly if the patient has a solitary kidney or pre-existing CKD.</li>
+      <li><strong>Positive surgical margin</strong> — pathology finding. Surveillance vs. completion nephrectomy decision is the surgeon's, not ED's.</li>
+      <li><strong>Wound infection / hernia at port site</strong> — standard surgical complications.</li>
+    </ul>
+
+    <div class="card card-orange">
+      <div class="label">Why this operation exists instead of radical</div>
+      <p style="margin:0;">For small renal masses (&lt;7 cm, T1), partial nephrectomy gives equivalent cancer outcomes to radical nephrectomy and preserves nephrons. Preserved nephrons matter long-term — chronic kidney disease, cardiovascular events, and overall survival are all better. Radical nephrectomy is reserved for tumors where partial is technically impossible or unsafe.</p>
+    </div>
+
+  </div>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2>The Quick-Reference Card</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Operation</th>
+      <th>Station</th>
+      <th>What's removed</th>
+      <th>Catheter duration</th>
+      <th>Watch for</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>TURP</strong></td>
+      <td>5 · prostate</td>
+      <td>Adenoma chips</td>
+      <td>1–2 days</td>
+      <td>Clot retention, week-2 eschar bleed</td>
+    </tr>
+    <tr>
+      <td><strong>HoLEP</strong></td>
+      <td>5 · prostate</td>
+      <td>Enucleated adenoma (morcellated)</td>
+      <td>1 day</td>
+      <td>Early SUI, week-2 eschar bleed</td>
+    </tr>
+    <tr>
+      <td><strong>Ureteroscopy + stent</strong></td>
+      <td>2 · ureter</td>
+      <td>Stone fragments</td>
+      <td>None (stent only)</td>
+      <td>Stent intolerance, fever (obstructed infection), forgotten stent</td>
+    </tr>
+    <tr>
+      <td><strong>RARP</strong></td>
+      <td>5 · prostate</td>
+      <td>Whole prostate + SVs</td>
+      <td>7–14 days</td>
+      <td>Dislodged Foley (call surgeon), anastomotic leak, SUI, rising PSA</td>
+    </tr>
+    <tr>
+      <td><strong>Partial nephrectomy</strong></td>
+      <td>1 · kidney</td>
+      <td>Tumor + margin</td>
+      <td>1–2 days</td>
+      <td>Urine leak, week-2–3 pseudoaneurysm bleed</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ============================================================ -->
+<h2>The 30-Day Rule</h2>
+
+<div class="card card-red">
+  <div class="label">For any urology post-op patient in the first 30 days</div>
+  <p style="margin:0;">Any new acute finding — bleeding, fever, can't void, can't pass urine, pain disproportionate to expected course, drain output change — <strong>belongs on the operating surgeon's phone</strong>, not a generic urology consult and not "let's see in the morning." The surgeon knows their reconstruction. You do not yet. Bias toward calling.</p>
+</div>
+
+<hr>
+
+<p style="text-align:center; color:var(--muted); font-size:13px; margin-top:40px;">
+  May 24, 2026 — for PAs, medical students, and clinical clerks<br>
+  every operation acts on a station · know which one and you know the post-op picture<br>
+  <a href="index.html" style="color: var(--muted); border-bottom: 1px dotted var(--muted); text-decoration: none;">← back to reference</a>
+</p>
+
+</div>
+<script src="nav.js" defer></script>
+</body>
+</html>

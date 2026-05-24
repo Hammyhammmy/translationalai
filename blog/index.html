@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TranslationalAI — Lab Notes</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap">
+    <style>
+        :root {
+            --ink: #0a1f33;
+            --ink-soft: #2a4258;
+            --ink-mute: #5b7184;
+            --line: #e2e8ee;
+            --paper: #ffffff;
+            --paper-warm: #f7f9fb;
+            --accent: #00876f;
+            --signal: #c84a2e;
+            --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+            --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-sans); background: var(--paper-warm); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+        /* ---- password gate ---- */
+        .gate {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            padding: 40px;
+        }
+        .gate-box {
+            background: var(--paper); border: 1px solid var(--line); border-radius: 12px;
+            padding: 48px; max-width: 380px; width: 100%; text-align: center;
+        }
+        .gate-box h1 { font-size: 20px; font-weight: 600; margin-bottom: 6px; }
+        .gate-box p { font-size: 14px; color: var(--ink-mute); margin-bottom: 24px; }
+        .gate-box input {
+            width: 100%; padding: 12px 16px; border: 1px solid var(--line); border-radius: 8px;
+            font-family: var(--font-mono); font-size: 16px; text-align: center;
+            outline: none; transition: border-color 0.15s;
+        }
+        .gate-box input:focus { border-color: var(--accent); }
+        .gate-box .error { color: var(--signal); font-size: 13px; margin-top: 8px; display: none; }
+
+        /* ---- blog index ---- */
+        .blog { display: none; min-height: 100vh; padding: 48px 24px 80px; }
+        .blog.visible { display: block; }
+        .blog-inner { max-width: 720px; margin: 0 auto; }
+        .blog-header { margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+        .blog-header h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+        .blog-header p { font-size: 15px; color: var(--ink-mute); margin-top: 6px; }
+        .blog-disclaimer {
+            font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+            letter-spacing: 0.1em; color: var(--signal); margin-top: 12px;
+        }
+
+        .series { margin-bottom: 40px; }
+        .series-title {
+            font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+            letter-spacing: 0.1em; color: var(--ink-mute); margin-bottom: 12px;
+        }
+        .post-list { list-style: none; }
+        .post-item {
+            background: var(--paper); border: 1px solid var(--line); border-radius: 10px;
+            padding: 16px 20px; margin-bottom: 8px; transition: border-color 0.15s;
+        }
+        .post-item:hover { border-color: var(--accent); }
+        .post-item a { text-decoration: none; color: inherit; display: block; }
+        .post-title { font-weight: 600; font-size: 15px; color: var(--ink); }
+        .post-meta { font-size: 12px; color: var(--ink-mute); margin-top: 2px; }
+
+        .back-link {
+            display: inline-block; margin-bottom: 24px; font-size: 13px;
+            color: var(--ink-mute); text-decoration: none;
+        }
+        .back-link:hover { color: var(--accent); }
+
+        .empty { color: var(--ink-mute); font-size: 14px; font-style: italic; }
+    </style>
+</head>
+<body>
+
+<!-- Password gate -->
+<div class="gate" id="gate">
+    <div class="gate-box">
+        <h1>Lab Notes</h1>
+        <p>Educational beta content. Enter the access code to continue.</p>
+        <input type="password" id="pin" placeholder="Access code" autofocus
+               onkeydown="if(event.key==='Enter')checkPin()">
+        <div class="error" id="error">Incorrect code</div>
+    </div>
+</div>
+
+<!-- Blog index (hidden until authenticated) -->
+<div class="blog" id="blog">
+    <div class="blog-inner">
+        <a href="https://translational.ca" class="back-link">&larr; translational.ca</a>
+        <div class="blog-header">
+            <h1>Lab Notes</h1>
+            <p>Educational explorations, works in progress, and technical writing from TranslationalAI.</p>
+            <div class="blog-disclaimer">Beta content &middot; Not clinical advice &middot; Not peer-reviewed</div>
+        </div>
+        <div id="posts"></div>
+    </div>
+</div>
+
+<script>
+const PIN = '1234';
+const KEY = 'blog_auth';
+
+function checkPin() {
+    if (document.getElementById('pin').value === PIN) {
+        sessionStorage.setItem(KEY, '1');
+        show();
+    } else {
+        document.getElementById('error').style.display = 'block';
+    }
+}
+
+function show() {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('blog').classList.add('visible');
+    loadPosts();
+}
+
+async function loadPosts() {
+    const container = document.getElementById('posts');
+    try {
+        const res = await fetch('posts.json');
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        if (!data.series || data.series.length === 0) {
+            container.innerHTML = '<p class="empty">No posts yet.</p>';
+            return;
+        }
+        container.innerHTML = data.series.map(s => `
+            <div class="series">
+                <div class="series-title">${s.title}</div>
+                <ul class="post-list">
+                    ${s.posts.map(p => `
+                        <li class="post-item">
+                            <a href="${p.href}">
+                                <span class="post-title">${p.title}</span>
+                                <span class="post-meta">${p.date}</span>
+                            </a>
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>
+        `).join('');
+    } catch {
+        container.innerHTML = '<p class="empty">No posts yet.</p>';
+    }
+}
+
+if (sessionStorage.getItem(KEY) === '1') show();
+</script>
+</body>
+</html>
