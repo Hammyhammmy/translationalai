@@ -17,7 +17,6 @@
                 <a href="chartprep.html" class="nav-link${isActive('chartprep.html')}">ChartPrep</a>
                 <a href="lab.html" class="nav-link${isActive('lab.html')}">Lab</a>
                 <a href="team.html" class="nav-link${isActive('team.html')}">About</a>
-                <a href="investors.html" class="nav-link${isActive('investors.html')}">Investors</a>
                 <a href="https://chart.translational.ca/login" class="nav-cta" target="_blank" rel="noopener">Launch ChartPrep →</a>
             </div>
         </div>
