@@ -27,7 +27,7 @@
         <div class="foot-grid">
             <div>
                 <div class="foot-brand"><span class="nav-logo-mark"></span> TranslationalAI</div>
-                <div class="foot-tag">Verifiable clinical AI. Built by clinicians, audited by structure. Designed and hosted in Canada.</div>
+                <div class="foot-tag">Clinical AI with source-level transparency. Built and hosted in Canada.</div>
             </div>
             <div class="foot-col">
                 <h4>Product</h4>
