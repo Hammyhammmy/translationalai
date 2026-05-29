@@ -57,7 +57,7 @@
         </div>
         <div class="foot-bottom">
             <span>© ${new Date().getFullYear()} TranslationalAI — Canadian-built clinical AI</span>
-            <span>PIPEDA-aligned · All data stored and processed in Canada</span>
+            <span>PHIPA-aligned · All data stored and processed in Canada</span>
         </div>
     </footer>`;
 
