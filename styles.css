@@ -73,13 +73,9 @@ a:hover { color: var(--accent-deep); border-color: var(--accent); }
 }
 .nav-logo:hover { color: var(--accent-deep); }
 .nav-logo-mark {
-    width: 22px; height: 22px;
-    background: var(--accent); position: relative; border-radius: 4px;
+    width: 24px; height: 24px;
+    background: url('assets/logo-mark.svg') center / contain no-repeat;
     display: inline-block;
-}
-.nav-logo-mark::after {
-    content: ''; position: absolute; inset: 4px;
-    background: var(--paper); clip-path: polygon(0 100%, 28% 60%, 56% 80%, 100% 0, 100% 100%);
 }
 .nav-links { display: flex; gap: 28px; align-items: center; margin-left: auto; }
 .nav-link {

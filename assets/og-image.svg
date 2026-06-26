@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="TranslationalAI — Verifiable Clinical AI">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="0" y="624" width="1200" height="6" fill="#00876f"/>
+
+  <g transform="translate(180, 230)">
+    <g stroke="#00876f" stroke-width="11" fill="none" stroke-linecap="square">
+      <path d="M 56 0 L 14 0 L 14 168 L 56 168"/>
+      <path d="M 154 0 L 196 0 L 196 168 L 154 168"/>
+    </g>
+    <circle cx="105" cy="84" r="12" fill="#00876f"/>
+  </g>
+
+  <text x="430" y="330" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="76" font-weight="700" fill="#0a1f33" letter-spacing="-1.5">Translational<tspan fill="#00876f">AI</tspan></text>
+  <text x="432" y="382" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="22" font-weight="600" fill="#5b7184" letter-spacing="5">VERIFIABLE CLINICAL AI</text>
+
+  <text x="180" y="490" font-family="'IBM Plex Serif', Georgia, serif" font-size="34" font-weight="400" fill="#2a4258" font-style="italic">Every sentence has a source.</text>
+
+  <text x="180" y="570" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="16" font-weight="500" fill="#5b7184" letter-spacing="2">CANADIAN-BUILT  ·  PHIPA-ALIGNED  ·  TRANSLATIONAL.CA</text>
+</svg>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="TranslationalAI mark">
+  <title>TranslationalAI mark</title>
+  <g stroke="#00876f" stroke-width="14" fill="none" stroke-linecap="square">
+    <path d="M 84 60 L 50 60 L 50 180 L 84 180"/>
+    <path d="M 156 60 L 190 60 L 190 180 L 156 180"/>
+  </g>
+  <circle cx="120" cy="120" r="14" fill="#00876f"/>
+</svg>
