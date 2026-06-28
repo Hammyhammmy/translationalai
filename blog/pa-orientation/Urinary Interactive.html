@@ -87,8 +87,18 @@
   .hot:hover{fill:rgba(37,99,235,.18);stroke:rgba(37,99,235,.7)}
   .hot.sel{stroke:var(--accent);stroke-width:2.5;fill:rgba(37,99,235,.18)}
   @keyframes lpulse{0%,100%{r:13px;opacity:.9}50%{r:19px;opacity:.35}}
-  /* mobile: nav must not pin (single column) — placed last to win over the base .nav rule */
-  @media(max-width:820px){.nav{position:static;max-height:40vh}}
+  /* mobile polish — placed last so these win over the base rules */
+  @media(max-width:820px){
+    body{padding:22px 20px 60px}        /* match the injected ribbon's -20px side margin (avoids h-overflow) */
+    h1{font-size:22px}
+    .subtitle{font-size:14px;margin-bottom:14px}
+    .tab{font-size:13px;padding:7px 4px}
+    .tab .em{display:none}                 /* drop two-line tab labels → tabs wrap short, all visible */
+    .nav{position:static;max-height:40vh}   /* don't pin the structure list over content */
+    .tx{grid-template-columns:1fr;gap:1px}  /* stack treatment class/drug above its rationale */
+    .tx .k{margin-top:4px}
+    .content{max-width:none}
+  }
 </style>
 </head>
 <body>
