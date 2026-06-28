@@ -1,0 +1,77 @@
+<svg viewBox="0 0 440 560" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, sans-serif">
+  <rect width="440" height="560" fill="#ffffff"/>
+
+  <!-- style title -->
+  <text x="20" y="28" font-size="13" fill="#78716c">Flat editorial vector</text>
+
+  <!-- ===================== URETERS (behind, smooth amber strokes) ===================== -->
+  <g fill="none" stroke="#d97706" stroke-width="10" stroke-linecap="round">
+    <!-- left ureter: left hilum (150,115) -> bladder (188,345) -->
+    <path d="M 150,118 C 178,170 172,250 188,342"/>
+    <!-- right ureter: right hilum (290,115) -> bladder (252,345) -->
+    <path d="M 290,118 C 262,170 268,250 252,342"/>
+  </g>
+
+  <!-- ===================== BLADDER (flat orange, rounded friendly) ===================== -->
+  <!-- bladder body ~150 wide x 120 tall centered (220,395) -->
+  <path d="M 220,335
+           C 268,335 295,365 295,400
+           C 295,440 265,460 220,460
+           C 175,460 145,440 145,400
+           C 145,365 172,335 220,335 Z"
+        fill="#f97316"/>
+  <!-- thin white separators where ureters meet bladder -->
+  <path d="M 188,342 C 200,355 205,360 210,366" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.85"/>
+  <path d="M 252,342 C 240,355 235,360 230,366" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.85"/>
+
+  <!-- ===================== BLADDER NECK + URETHRA (purple) ===================== -->
+  <!-- white separator between bladder and outlet -->
+  <path d="M 206,455 C 212,461 228,461 234,455" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+  <path d="M 220,455 L 220,515" fill="none" stroke="#7c3aed" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- ===================== KIDNEYS (flat green beans) ===================== -->
+  <!-- left kidney, hilum faces center -->
+  <g transform="translate(120,110)">
+    <path d="M 0,-55 C 25,-55 40,-35 40,-10 C 40,-5 30,-2 24,0 C 30,2 40,5 40,10 C 40,35 25,55 0,55 C -25,55 -42,35 -42,0 C -42,-35 -25,-55 0,-55 Z"
+          fill="#16a34a"/>
+    <!-- subtle inner pelvis accent + white hilum separator -->
+    <path d="M 24,0 C 14,-3 4,-3 -6,0 C 4,3 14,3 24,0 Z" fill="#ffffff" opacity="0.55"/>
+  </g>
+  <!-- right kidney, mirrored -->
+  <g transform="translate(320,110) scale(-1,1)">
+    <path d="M 0,-55 C 25,-55 40,-35 40,-10 C 40,-5 30,-2 24,0 C 30,2 40,5 40,10 C 40,35 25,55 0,55 C -25,55 -42,35 -42,0 C -42,-35 -25,-55 0,-55 Z"
+          fill="#16a34a"/>
+    <path d="M 24,0 C 14,-3 4,-3 -6,0 C 4,3 14,3 24,0 Z" fill="#ffffff" opacity="0.55"/>
+  </g>
+
+  <!-- ===================== LABELS (pill chips + thin grey leaders) ===================== -->
+  <g font-size="13" fill="#1c1917">
+    <!-- Kidney -->
+    <line x1="120" y1="65" x2="120" y2="48" stroke="#78716c" stroke-width="1"/>
+    <g transform="translate(86,30)">
+      <rect width="68" height="20" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="1.4"/>
+      <text x="34" y="14" text-anchor="middle">Kidney</text>
+    </g>
+
+    <!-- Ureter -->
+    <line x1="284" y1="200" x2="335" y2="200" stroke="#78716c" stroke-width="1"/>
+    <g transform="translate(338,190)">
+      <rect width="66" height="20" rx="10" fill="#ffffff" stroke="#d97706" stroke-width="1.4"/>
+      <text x="33" y="14" text-anchor="middle">Ureter</text>
+    </g>
+
+    <!-- Bladder -->
+    <line x1="295" y1="400" x2="335" y2="400" stroke="#78716c" stroke-width="1"/>
+    <g transform="translate(338,390)">
+      <rect width="74" height="20" rx="10" fill="#ffffff" stroke="#f97316" stroke-width="1.4"/>
+      <text x="37" y="14" text-anchor="middle">Bladder</text>
+    </g>
+
+    <!-- Urethra -->
+    <line x1="220" y1="515" x2="220" y2="528" stroke="#78716c" stroke-width="1"/>
+    <g transform="translate(186,530)">
+      <rect width="72" height="20" rx="10" fill="#ffffff" stroke="#7c3aed" stroke-width="1.4"/>
+      <text x="36" y="14" text-anchor="middle">Urethra</text>
+    </g>
+  </g>
+</svg>

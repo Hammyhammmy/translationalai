@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Urinary Tract — Interactive 3D Model</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --card: #ffffff;
+    --border: #e7e5e4;
+    --text: #1c1917;
+    --muted: #78716c;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --orange: #d97706;
+    --orange-light: #fffbeb;
+    --purple: #7c3aed;
+    --purple-light: #f5f3ff;
+    --teal: #0d9488;
+    --teal-light: #f0fdfa;
+    --code-bg: #f5f5f4;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "SF Mono", "Fira Code", "Consolas", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.75; padding: 40px 20px 80px; }
+  .container { max-width: 920px; margin: 0 auto; }
+  .crumb { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 8px; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--muted); }
+  .crumb a:hover { color: var(--text); border-bottom-color: var(--text); }
+  h1 { font-size: 30px; font-weight: 800; line-height: 1.15; margin-bottom: 10px; letter-spacing: -0.02em; }
+  .subtitle { font-size: 16px; color: var(--muted); margin-bottom: 32px; border-bottom: 2px solid var(--border); padding-bottom: 24px; max-width: 760px; }
+  h2 { font-size: 21px; font-weight: 700; margin-top: 48px; margin-bottom: 16px; letter-spacing: -0.01em; }
+  p { margin-bottom: 16px; font-size: 15px; }
+
+  /* ---- The interactive stage ---- */
+  .stage-wrap {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 0;
+    margin: 28px 0;
+    overflow: hidden;
+  }
+  #stage {
+    width: 100%;
+    height: 460px;
+    display: block;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f5f4 100%);
+    cursor: grab;
+    touch-action: none;
+  }
+  #stage:active { cursor: grabbing; }
+  .stage-hint {
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 8px 0 12px;
+  }
+
+  /* ---- Control panel ---- */
+  .controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin: 24px 0;
+  }
+  .ctl-group {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .ctl-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); margin-bottom: 12px;
+  }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .btn {
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: all 0.12s ease;
+  }
+  .btn:hover { border-color: #d6d3d1; background: #fff; }
+  .btn[aria-pressed="true"] {
+    background: var(--text);
+    color: white;
+    border-color: var(--text);
+  }
+  .btn.path[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); }
+  .btn.path[data-case="ureteral_stone"][aria-pressed="true"],
+  .btn.path[data-case="bph"][aria-pressed="true"] { background: var(--orange); border-color: var(--orange); }
+  .btn.path[data-case="bladder_hematuria"][aria-pressed="true"] { background: var(--red); border-color: var(--red); }
+
+  /* ---- Readout + caption ---- */
+  .panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 24px 0;
+  }
+  .panel.normal { border-left-color: var(--green); }
+  .panel.obstruction { border-left-color: var(--orange); }
+  .panel.bleeding { border-left-color: var(--red); }
+  .panel-title { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+  .panel-sub { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; margin-bottom: 12px; }
+  .panel-body { font-size: 14px; line-height: 1.6; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--code-bg);
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .chip.on-dilate { background: var(--orange-light); color: var(--orange); border-color: #fde7c3; }
+  .chip.on-silent { background: var(--code-bg); color: #a8a29e; }
+  .chip.on-blood { background: var(--red-light); color: var(--red); border-color: #fbd5d5; }
+  .chip.on-renal { background: var(--red-light); color: var(--red); border-color: #fbd5d5; }
+
+  .noscript-fallback {
+    background: var(--red-light); border: 1px solid #fbd5d5; border-radius: 12px;
+    padding: 16px 20px; color: var(--text); font-size: 14px; margin: 24px 0;
+  }
+
+  .foot {
+    text-align: center; color: var(--muted); font-size: 13px; margin-top: 48px;
+    padding-top: 24px; border-top: 1px solid var(--border);
+  }
+  .foot a { color: var(--muted); border-bottom: 1px dotted var(--muted); text-decoration: none; }
+
+  @media (max-width: 700px) {
+    .controls { grid-template-columns: 1fr; }
+    #stage { height: 380px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="crumb"><a href="index.html">← Clinical Geometry</a> · <a href="The Urinary Tract.html">The Urinary Tract</a> · Interactive</div>
+<h1>The Urinary Tract — Interactive 3D Model</h1>
+<p class="subtitle">Rotate the conduit. Watch urine flow one way, production → expulsion. Switch between storage and voiding to see the sympathetic / parasympathetic state machine. Then drop a lesion in and watch the physiology fail — back-pressure builds upstream, the exit goes silent. The companion to <a href="The Urinary Tract.html">The Urinary Tract — A Conduit</a>.</p>
+
+<noscript>
+  <div class="noscript-fallback">
+    This is an interactive 3D model and needs JavaScript enabled. For the full written walkthrough,
+    see <a href="The Urinary Tract.html">The Urinary Tract — A Conduit</a>.
+  </div>
+</noscript>
+
+<div class="stage-wrap">
+  <canvas id="stage" aria-label="Interactive 3D model of the urinary tract. Use the controls below to change phase and pathology."></canvas>
+  <div class="stage-hint">drag to rotate · scroll to zoom · the controls below drive the model</div>
+</div>
+
+<div class="controls">
+  <div class="ctl-group">
+    <div class="ctl-label">Phase — the storage / voiding state machine</div>
+    <div class="btn-row" id="phase-row" role="group" aria-label="Phase">
+      <button class="btn phase" data-phase="STORAGE" aria-pressed="true">Storage · sympathetic</button>
+      <button class="btn phase" data-phase="VOIDING" aria-pressed="false">Voiding · parasympathetic</button>
+    </div>
+  </div>
+  <div class="ctl-group">
+    <div class="ctl-label">Pathology — drop a lesion into the conduit</div>
+    <div class="btn-row" id="case-row" role="group" aria-label="Pathology">
+      <button class="btn path" data-case="normal" aria-pressed="true">Normal</button>
+      <button class="btn path" data-case="ureteral_stone" aria-pressed="false">Ureteral stone</button>
+      <button class="btn path" data-case="bladder_hematuria" aria-pressed="false">Hematuria</button>
+      <button class="btn path" data-case="bph" aria-pressed="false">BPH</button>
+    </div>
+  </div>
+</div>
+
+<div class="panel normal" id="panel" aria-live="polite">
+  <div class="panel-title" id="panel-title">Normal flow</div>
+  <div class="panel-sub" id="panel-sub">storage phase · no lesion</div>
+  <div class="panel-body" id="panel-body">Urine is produced at the kidneys and flows one way to the exit.</div>
+  <div class="chips" id="panel-chips"></div>
+</div>
+
+<h2>How to read it</h2>
+<p>Every lesion does the same two things a conduit lesion always does: it makes <strong>back-pressure</strong> upstream (stations dilate — the kidney balloons into hydronephrosis) and <strong>silence</strong> downstream (stations dim — nothing is getting through). Hematuria is the exception: nothing is blocked, but the cargo changes color from the bleeding station down. The lesion station itself is where flow first fails — it's neither dilated nor silent. That's the whole diagnostic game: find where flow stops, then trace upstream.</p>
+
+<div class="foot">
+  Interactive companion · <a href="The Urinary Tract.html">read the full walkthrough →</a><br>
+  the urinary tract is a conduit · trace upstream from the exit
+</div>
+
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { STATIONS, PHASES, evaluateCase, CASES } from './urinary-model.js';
+
+// ---------------------------------------------------------------------------
+// Station palette (green production -> purple expulsion, matching the reference)
+// ---------------------------------------------------------------------------
+const STATION_COLOR = {
+  kidney:  0x16a34a,
+  ureter:  0xeab308,
+  bladder: 0xf97316,
+  urethra: 0x8b5cf6,
+};
+// How far along the flow path each station sits (0 = production, 1 = exit).
+const STATION_FRACTION = { kidney: 0.08, ureter: 0.34, bladder: 0.60, urethra: 0.86 };
+
+// ---------------------------------------------------------------------------
+// Scene scaffolding
+// ---------------------------------------------------------------------------
+const canvas = document.getElementById('stage');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(42, 2, 0.1, 100);
+camera.position.set(0, 0.5, 11);
+
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.minDistance = 6;
+controls.maxDistance = 18;
+controls.target.set(0, 0, 0);
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.75));
+const key = new THREE.DirectionalLight(0xffffff, 0.9);
+key.position.set(4, 6, 8);
+scene.add(key);
+const rim = new THREE.DirectionalLight(0xffffff, 0.35);
+rim.position.set(-6, 2, -4);
+scene.add(rim);
+
+// ---------------------------------------------------------------------------
+// Anatomy positions (stylized, y-up). Two kidneys/ureters, one bladder, one urethra.
+// ---------------------------------------------------------------------------
+const POS = {
+  kidneyL:  new THREE.Vector3(-2.0, 3.0, 0),
+  kidneyR:  new THREE.Vector3( 2.0, 3.0, 0),
+  bladder:  new THREE.Vector3( 0.0, -0.8, 0),
+  exit:     new THREE.Vector3( 0.0, -3.6, 0),
+};
+const BLADDER_TOP = new THREE.Vector3(0, 0.1, 0);
+
+// Groups per station so the engine's per-station consequences map to meshes.
+const stationGroups = {
+  kidney:  new THREE.Group(),
+  ureter:  new THREE.Group(),
+  bladder: new THREE.Group(),
+  urethra: new THREE.Group(),
+};
+Object.values(stationGroups).forEach((g) => scene.add(g));
+
+function mat(color) {
+  return new THREE.MeshStandardMaterial({ color, roughness: 0.55, metalness: 0.05 });
+}
+
+// --- Kidneys (ellipsoids) ---
+function makeKidney(pos) {
+  const geo = new THREE.SphereGeometry(0.95, 32, 24);
+  const m = new THREE.Mesh(geo, mat(STATION_COLOR.kidney));
+  m.position.copy(pos);
+  m.scale.set(0.78, 1.15, 0.7);
+  stationGroups.kidney.add(m);
+  return m;
+}
+const kidneyL = makeKidney(POS.kidneyL);
+const kidneyR = makeKidney(POS.kidneyR);
+
+// --- Ureters (tubes from each kidney to the bladder) ---
+function makeUreter(from) {
+  const curve = new THREE.CatmullRomCurve3([
+    from.clone().add(new THREE.Vector3(0, -0.9, 0)),
+    new THREE.Vector3(from.x * 0.55, 1.2, 0.1),
+    new THREE.Vector3(from.x * 0.25, 0.0, 0),
+    BLADDER_TOP.clone(),
+  ]);
+  const geo = new THREE.TubeGeometry(curve, 40, 0.16, 12, false);
+  const m = new THREE.Mesh(geo, mat(STATION_COLOR.ureter));
+  stationGroups.ureter.add(m);
+  return m;
+}
+makeUreter(POS.kidneyL);
+makeUreter(POS.kidneyR);
+
+// --- Bladder (sphere) ---
+const bladder = new THREE.Mesh(new THREE.SphereGeometry(1.15, 36, 28), mat(STATION_COLOR.bladder));
+bladder.position.copy(POS.bladder);
+bladder.scale.set(1.1, 0.92, 1.0);
+stationGroups.bladder.add(bladder);
+
+// --- Urethra (tube from bladder neck to exit) ---
+const urethraCurve = new THREE.CatmullRomCurve3([
+  POS.bladder.clone().add(new THREE.Vector3(0, -0.9, 0)),
+  new THREE.Vector3(0, -2.2, 0),
+  POS.exit.clone(),
+]);
+const urethra = new THREE.Mesh(new THREE.TubeGeometry(urethraCurve, 30, 0.17, 12, false), mat(STATION_COLOR.urethra));
+stationGroups.urethra.add(urethra);
+
+// --- Prostate ring around the bladder neck (only shown for BPH) ---
+const prostate = new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.28, 16, 28), mat(0x9a3412));
+prostate.position.copy(POS.bladder.clone().add(new THREE.Vector3(0, -1.0, 0)));
+prostate.rotation.x = Math.PI / 2;
+prostate.visible = false;
+scene.add(prostate);
+
+// --- Stone (only shown for the ureteral-stone case) ---
+const stone = new THREE.Mesh(new THREE.IcosahedronGeometry(0.22, 0), mat(0x57534e));
+stone.visible = false;
+scene.add(stone);
+
+// ---------------------------------------------------------------------------
+// Flow particles — travel kidney -> bladder -> exit along two paths
+// ---------------------------------------------------------------------------
+function flowPath(fromKidney) {
+  return new THREE.CatmullRomCurve3([
+    fromKidney.clone(),
+    fromKidney.clone().add(new THREE.Vector3(0, -0.9, 0)),
+    new THREE.Vector3(fromKidney.x * 0.25, 0.0, 0),
+    POS.bladder.clone(),
+    new THREE.Vector3(0, -2.2, 0),
+    POS.exit.clone(),
+  ]);
+}
+const paths = [flowPath(POS.kidneyL), flowPath(POS.kidneyR)];
+
+const PARTICLE_COUNT = 90;
+const URINE_COLOR = new THREE.Color(0xeacb6e);
+const BLOOD_COLOR = new THREE.Color(0xb91c1c);
+const particles = [];
+const pGeo = new THREE.BufferGeometry();
+const pPos = new Float32Array(PARTICLE_COUNT * 3);
+const pCol = new Float32Array(PARTICLE_COUNT * 3);
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  particles.push({
+    path: paths[i % 2],
+    t: Math.random(),
+    speed: 0.05 + Math.random() * 0.03,
+  });
+}
+pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+pGeo.setAttribute('color', new THREE.BufferAttribute(pCol, 3));
+const pMat = new THREE.PointsMaterial({ size: 0.16, vertexColors: true, transparent: true, opacity: 0.95 });
+const points = new THREE.Points(pGeo, pMat);
+scene.add(points);
+
+// ---------------------------------------------------------------------------
+// Innervation overlays — sympathetic (storage) vs parasympathetic (voiding)
+// ---------------------------------------------------------------------------
+function makeNerve(points3, color) {
+  const curve = new THREE.CatmullRomCurve3(points3);
+  const geo = new THREE.TubeGeometry(curve, 30, 0.05, 8, false);
+  const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({
+    color, emissive: color, emissiveIntensity: 0.35, roughness: 0.4,
+  }));
+  scene.add(m);
+  return m;
+}
+// Sympathetic chain (T10-L2) running down toward bladder neck — teal/blue.
+const sympNerve = makeNerve([
+  new THREE.Vector3(-3.2, 4.0, -0.6),
+  new THREE.Vector3(-2.4, 1.5, -0.4),
+  new THREE.Vector3(-1.2, -0.6, -0.2),
+  POS.bladder.clone().add(new THREE.Vector3(-0.2, -0.9, -0.1)),
+], 0x0d9488);
+// Parasympathetic (S2-S4, pelvic) approaching from below/behind — violet.
+const paraNerve = makeNerve([
+  new THREE.Vector3(3.0, -3.0, -0.6),
+  new THREE.Vector3(1.6, -2.0, -0.4),
+  new THREE.Vector3(0.8, -1.0, -0.2),
+  POS.bladder.clone().add(new THREE.Vector3(0.3, -0.6, -0.1)),
+], 0x7c3aed);
+
+// ---------------------------------------------------------------------------
+// State + rendering of engine consequences
+// ---------------------------------------------------------------------------
+let currentCase = 'normal';
+let currentPhase = 'STORAGE';
+let state = evaluateCase(currentCase, currentPhase);
+
+const baseScale = { kidney: 1, ureter: 1, bladder: 1, urethra: 1 };
+const targetScale = { ...baseScale };
+const targetOpacity = { kidney: 1, ureter: 1, bladder: 1, urethra: 1 };
+
+function setGroupOpacity(group, opacity) {
+  group.traverse((o) => {
+    if (o.isMesh) {
+      o.material.transparent = opacity < 0.999;
+      o.material.opacity = opacity;
+    }
+  });
+}
+
+function applyState() {
+  state = evaluateCase(currentCase, currentPhase);
+  const def = CASES[currentCase];
+
+  // Reset targets to baseline.
+  for (const s of STATIONS) { targetScale[s] = 1; targetOpacity[s] = 1; }
+
+  // Dilation upstream of the lesion (hydronephrosis = kidney swells most).
+  for (const s of state.dilatedStations) {
+    targetScale[s] = s === 'kidney' ? 1.6 : 1.3;
+  }
+  if (state.bladderDistension) targetScale.bladder = Math.max(targetScale.bladder, 1.45);
+
+  // Silence downstream — dim it out.
+  for (const s of state.silentStations) targetOpacity[s] = 0.28;
+
+  // Lesion props.
+  stone.visible = currentCase === 'ureteral_stone';
+  if (stone.visible) {
+    const f = STATION_FRACTION[state.lesionStation];
+    stone.position.copy(paths[0].getPointAt(f));
+  }
+  prostate.visible = currentCase === 'bph';
+  prostate.scale.setScalar(currentCase === 'bph' ? 1.0 : 0.6);
+
+  // Caption + readout.
+  renderPanel();
+}
+
+const CAPTIONS = {
+  normal: {
+    body: 'Urine is produced at the kidneys, runs down the ureters, fills the bladder, and leaves through the urethra. One way, every time. Toggle <b>Voiding</b> to watch the detrusor contract and the gates open.',
+  },
+  ureteral_stone: {
+    body: 'A stone is wedged in the ureter. Flow stops there. Above it, pressure has nowhere to go — the kidney balloons into <b>hydronephrosis</b>. Below it, the tract is <b>silent</b>. The patient feels colicky flank pain referred to the groin, not pain at the stone itself.',
+  },
+  bladder_hematuria: {
+    body: 'Bleeding into the bladder. Nothing is obstructed — flow continues — but the cargo changes: urine runs <b>red from the bladder down</b>. Painless gross hematuria is malignancy until proven otherwise, precisely because there is no back-pressure to warn you.',
+  },
+  bph: {
+    body: 'The prostate is squeezing the urethra shut from outside. The outlet is the lesion, but the bladder pays first — it <b>distends</b> against a gate that will not open — and the back-pressure climbs all the way to the kidneys (<b>renal impact</b>). The Foley relieves the exit; it does not treat the prostate.',
+  },
+};
+
+function chip(text, cls) { return `<span class="chip ${cls || ''}">${text}</span>`; }
+
+function renderPanel() {
+  const def = CASES[currentCase];
+  const panel = document.getElementById('panel');
+  const mech = def.mechanism === 'none' ? 'normal' : def.mechanism;
+  panel.className = 'panel ' + mech;
+
+  document.getElementById('panel-title').innerHTML = def.label;
+  const phaseTxt = currentPhase === 'STORAGE'
+    ? 'storage phase · sympathetic T10–L2'
+    : 'voiding phase · parasympathetic S2–S4';
+  const lesionTxt = state.lesionStation ? `lesion at ${state.lesionStation}` : 'no lesion';
+  document.getElementById('panel-sub').textContent = `${phaseTxt} · ${lesionTxt}`;
+  document.getElementById('panel-body').innerHTML = CAPTIONS[currentCase].body;
+
+  const chips = [];
+  const ph = PHASES[currentPhase];
+  chips.push(chip(`detrusor: ${ph.detrusor}`));
+  chips.push(chip(`gates: ${ph.internalSphincter === 'open' ? 'open' : 'closed'}`));
+  if (state.flowBlocked) chips.push(chip('flow blocked', 'on-silent'));
+  state.dilatedStations.forEach((s) => chips.push(chip(`${s} dilated ↑`, 'on-dilate')));
+  if (state.hydronephrosis) chips.push(chip('hydronephrosis', 'on-renal'));
+  if (state.bladderDistension) chips.push(chip('bladder distended', 'on-dilate'));
+  if (state.renalImpact) chips.push(chip('renal impact', 'on-renal'));
+  state.silentStations.forEach((s) => chips.push(chip(`${s} silent`, 'on-silent')));
+  if (state.particleColor === 'blood') chips.push(chip(`blood from ${state.particleColorFrom} ↓`, 'on-blood'));
+  document.getElementById('panel-chips').innerHTML = chips.join('');
+}
+
+// ---------------------------------------------------------------------------
+// UI wiring
+// ---------------------------------------------------------------------------
+document.getElementById('case-row').addEventListener('click', (e) => {
+  const b = e.target.closest('button[data-case]');
+  if (!b) return;
+  currentCase = b.dataset.case;
+  document.querySelectorAll('#case-row .btn').forEach((x) =>
+    x.setAttribute('aria-pressed', String(x === b)));
+  applyState();
+});
+document.getElementById('phase-row').addEventListener('click', (e) => {
+  const b = e.target.closest('button[data-phase]');
+  if (!b) return;
+  currentPhase = b.dataset.phase;
+  document.querySelectorAll('#phase-row .btn').forEach((x) =>
+    x.setAttribute('aria-pressed', String(x === b)));
+  applyState();
+});
+
+// ---------------------------------------------------------------------------
+// Resize
+// ---------------------------------------------------------------------------
+function resize() {
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  if (canvas.width !== w || canvas.height !== h) {
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+}
+window.addEventListener('resize', resize);
+
+// ---------------------------------------------------------------------------
+// Animation loop
+// ---------------------------------------------------------------------------
+let last = 0;
+function tick(now) {
+  const dt = Math.min((now - last) / 1000, 0.05) || 0.016;
+  last = now;
+  resize();
+
+  // Smoothly ease station scale/opacity toward engine targets.
+  for (const s of STATIONS) {
+    const g = stationGroups[s];
+    const cur = g.scale.x;
+    const next = cur + (targetScale[s] - cur) * Math.min(dt * 6, 1);
+    g.scale.setScalar(next);
+    // opacity ease
+    let curOp = 1;
+    g.traverse((o) => { if (o.isMesh) curOp = o.material.opacity ?? 1; });
+    const nextOp = curOp + (targetOpacity[s] - curOp) * Math.min(dt * 6, 1);
+    setGroupOpacity(g, nextOp);
+  }
+
+  // Flow particles.
+  const phaseFlowing = currentPhase === 'VOIDING' || currentCase !== 'normal';
+  const blockFrac = state.flowBlocked ? STATION_FRACTION[state.lesionStation] : 1;
+  const colorFromFrac = state.particleColorFrom ? STATION_FRACTION[state.particleColorFrom] : 2;
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
+    // During pure storage with no lesion, flow idles slowly (gentle circulation).
+    const spd = phaseFlowing ? p.speed : p.speed * 0.25;
+    p.t += spd * dt;
+    if (p.t >= 1) p.t -= 1;
+    // Obstruction: pile particles up just upstream of the block.
+    let t = p.t;
+    if (t > blockFrac) t = blockFrac - (0.03 * ((i % 5) + 1));
+    if (t < 0) t = 0;
+    const pt = p.path.getPointAt(t);
+    pPos[i * 3] = pt.x; pPos[i * 3 + 1] = pt.y; pPos[i * 3 + 2] = pt.z;
+    const col = (state.particleColor === 'blood' && t >= colorFromFrac) ? BLOOD_COLOR : URINE_COLOR;
+    pCol[i * 3] = col.r; pCol[i * 3 + 1] = col.g; pCol[i * 3 + 2] = col.b;
+  }
+  pGeo.attributes.position.needsUpdate = true;
+  pGeo.attributes.color.needsUpdate = true;
+
+  // Innervation overlay follows the active phase.
+  const storage = currentPhase === 'STORAGE';
+  sympNerve.material.emissiveIntensity = storage ? 0.9 : 0.12;
+  sympNerve.material.opacity = 1;
+  paraNerve.material.emissiveIntensity = storage ? 0.12 : 0.9;
+  sympNerve.scale.setScalar(storage ? 1.06 : 1);
+  paraNerve.scale.setScalar(storage ? 1 : 1.06);
+
+  controls.update();
+  renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+}
+
+applyState();
+requestAnimationFrame(tick);
+</script>
+<script src="nav.js" defer></script>
+</body>
+</html>

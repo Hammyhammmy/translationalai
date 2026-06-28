@@ -1,0 +1,95 @@
+<svg viewBox="0 0 440 560" xmlns="http://www.w3.org/2000/svg">
+  <rect width="440" height="560" fill="#ffffff"/>
+
+  <!-- defs -->
+  <defs>
+    <marker id="flow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M1 1 L8 5 L1 9 Z" fill="#1c1917"/>
+    </marker>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#1c1917" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- title -->
+  <text x="20" y="30" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" letter-spacing="0.4" fill="#78716c">Schematic conduit</text>
+  <line x1="20" y1="40" x2="420" y2="40" stroke="#e7e5e4" stroke-width="1"/>
+
+  <!-- faint anatomy silhouette for orientation -->
+  <g fill="none" stroke="#e7e5e4" stroke-width="2" opacity="0.55">
+    <path d="M150 110 q-26 6 -26 34 q0 28 26 34 q14 -34 0 -68 Z"/>
+    <path d="M290 110 q26 6 26 34 q0 28 -26 34 q-14 -34 0 -68 Z"/>
+    <path d="M150 178 q24 70 70 86"/>
+    <path d="M290 178 q-24 70 -70 86"/>
+    <path d="M188 270 q32 -16 64 0 q14 26 0 52 q-32 14 -64 0 q-14 -26 0 -52 Z"/>
+    <path d="M220 322 v60"/>
+  </g>
+
+  <!-- conduit connectors -->
+  <g fill="none" stroke="#a8a29e" stroke-width="10" stroke-linecap="round">
+    <path d="M150 132 q22 64 70 86" opacity="0.28"/>
+    <path d="M290 132 q-22 64 -70 86" opacity="0.28"/>
+  </g>
+
+  <!-- left kidney -> junction -->
+  <path d="M150 132 q22 64 66 84" fill="none" stroke="#16a34a" stroke-width="6" stroke-linecap="round" marker-end="url(#flow)"/>
+  <!-- right kidney -> junction -->
+  <path d="M290 132 q-22 64 -66 84" fill="none" stroke="#16a34a" stroke-width="6" stroke-linecap="round" marker-end="url(#flow)"/>
+
+  <!-- ureter segment (junction -> bladder) -->
+  <path d="M220 222 L220 286" fill="none" stroke="#d97706" stroke-width="8" stroke-linecap="round" marker-end="url(#flow)"/>
+
+  <!-- urethra segment (bladder -> outlet) -->
+  <path d="M220 350 L220 414" fill="none" stroke="#7c3aed" stroke-width="8" stroke-linecap="round" marker-end="url(#flow)"/>
+
+  <!-- ===== STATION NODES ===== -->
+
+  <!-- left kidney node -->
+  <g filter="url(#soft)">
+    <circle cx="150" cy="120" r="24" fill="#16a34a"/>
+  </g>
+  <circle cx="150" cy="120" r="24" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+  <text x="150" y="125" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" font-weight="700" fill="#ffffff">L</text>
+  <text x="150" y="74" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" font-weight="700" fill="#1c1917">Kidney</text>
+  <text x="150" y="90" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="10.5" fill="#78716c">produce</text>
+
+  <!-- right kidney node -->
+  <g filter="url(#soft)">
+    <circle cx="290" cy="120" r="24" fill="#16a34a"/>
+  </g>
+  <circle cx="290" cy="120" r="24" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+  <text x="290" y="125" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" font-weight="700" fill="#ffffff">R</text>
+  <text x="290" y="74" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" font-weight="700" fill="#1c1917">Kidney</text>
+  <text x="290" y="90" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="10.5" fill="#78716c">produce</text>
+
+  <!-- ureter junction node -->
+  <g filter="url(#soft)">
+    <circle cx="220" cy="222" r="20" fill="#d97706"/>
+  </g>
+  <circle cx="220" cy="222" r="20" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+  <text x="252" y="216" font-family="-apple-system, sans-serif" font-size="13" font-weight="700" fill="#1c1917">Ureter</text>
+  <text x="252" y="232" font-family="-apple-system, sans-serif" font-size="10.5" fill="#78716c">transport</text>
+
+  <!-- bladder node -->
+  <g filter="url(#soft)">
+    <circle cx="220" cy="318" r="30" fill="#f97316"/>
+  </g>
+  <circle cx="220" cy="318" r="30" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+  <text x="262" y="312" font-family="-apple-system, sans-serif" font-size="13" font-weight="700" fill="#1c1917">Bladder</text>
+  <text x="262" y="328" font-family="-apple-system, sans-serif" font-size="10.5" fill="#78716c">store</text>
+
+  <!-- urethra / outlet node -->
+  <g filter="url(#soft)">
+    <circle cx="220" cy="442" r="22" fill="#7c3aed"/>
+  </g>
+  <circle cx="220" cy="442" r="22" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+  <text x="220" y="446" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" font-weight="700" fill="#ffffff">&#8595;</text>
+  <text x="252" y="436" font-family="-apple-system, sans-serif" font-size="13" font-weight="700" fill="#1c1917">Urethra</text>
+  <text x="252" y="452" font-family="-apple-system, sans-serif" font-size="10.5" fill="#78716c">expel</text>
+
+  <!-- flow legend -->
+  <g transform="translate(20, 500)">
+    <line x1="0" y1="6" x2="34" y2="6" stroke="#1c1917" stroke-width="3" marker-end="url(#flow)"/>
+    <text x="44" y="10" font-family="-apple-system, sans-serif" font-size="11" fill="#78716c">one-way flow &#183; production &#8594; expulsion</text>
+  </g>
+</svg>

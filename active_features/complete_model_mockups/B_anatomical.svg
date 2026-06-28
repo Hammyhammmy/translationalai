@@ -1,0 +1,297 @@
+<svg viewBox="0 0 580 720" xmlns="http://www.w3.org/2000/svg" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <!-- Organ volume gradients -->
+    <linearGradient id="cortex" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c5705f"/>
+      <stop offset="0.55" stop-color="#b35a4a"/>
+      <stop offset="1" stop-color="#974334"/>
+    </linearGradient>
+    <linearGradient id="medulla" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f1d2c7"/>
+      <stop offset="1" stop-color="#e8b9ab"/>
+    </linearGradient>
+    <radialGradient id="pelvisLumen" cx="0.4" cy="0.4" r="0.8">
+      <stop offset="0" stop-color="#faf1ea"/>
+      <stop offset="1" stop-color="#f3e3da"/>
+    </radialGradient>
+    <linearGradient id="ureter" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d68d75"/>
+      <stop offset="0.5" stop-color="#c97b63"/>
+      <stop offset="1" stop-color="#ad6048"/>
+    </linearGradient>
+    <linearGradient id="bladder" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#d68d75"/>
+      <stop offset="0.6" stop-color="#c97b63"/>
+      <stop offset="1" stop-color="#a85b43"/>
+    </linearGradient>
+    <radialGradient id="bladderLumen" cx="0.45" cy="0.4" r="0.7">
+      <stop offset="0" stop-color="#faf2ec"/>
+      <stop offset="1" stop-color="#f3e3da"/>
+    </radialGradient>
+    <radialGradient id="prostate" cx="0.5" cy="0.35" r="0.75">
+      <stop offset="0" stop-color="#dcb863"/>
+      <stop offset="1" stop-color="#c9a24a"/>
+    </radialGradient>
+    <radialGradient id="stoneG" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#928d86"/>
+      <stop offset="0.6" stop-color="#6b6660"/>
+      <stop offset="1" stop-color="#4c4843"/>
+    </radialGradient>
+    <radialGradient id="glomG" cx="0.4" cy="0.4" r="0.7">
+      <stop offset="0" stop-color="#c5705f"/>
+      <stop offset="1" stop-color="#974334"/>
+    </radialGradient>
+    <marker id="flowArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#3f7fb0"/>
+    </marker>
+    <marker id="sympArrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#0d9488"/>
+    </marker>
+    <marker id="paraArrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#7c3aed"/>
+    </marker>
+    <marker id="insetArrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#8a7f78"/>
+    </marker>
+  </defs>
+
+  <!-- background -->
+  <rect x="0" y="0" width="580" height="720" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="20" y="26" font-size="14" fill="#8a7f78" font-style="italic">Anatomical &#8212; complete model</text>
+  <text x="20" y="42" font-size="9.5" fill="#a99f97" font-style="italic">Male urinary tract &#183; cross-section &#183; innervation &#183; pathology</text>
+
+  <!-- ============================ FLOW STREAM (under organs) ============================ -->
+  <!-- left ureter flow -->
+  <path d="M 219,222 C 240,275 252,360 270,418" fill="none" stroke="#7fb4d6" stroke-width="6" stroke-linecap="round" opacity="0.35"/>
+  <!-- right ureter flow -->
+  <path d="M 351,222 C 330,275 318,360 300,418" fill="none" stroke="#7fb4d6" stroke-width="6" stroke-linecap="round" opacity="0.35"/>
+
+  <!-- ============================ RIGHT KIDNEY (whole, context) ============================ -->
+  <g transform="translate(375,170) scale(-1,1)">
+    <path d="M 0,-55 C 25,-55 40,-35 40,-10 C 40,-5 30,-2 24,0 C 30,2 40,5 40,10 C 40,35 25,55 0,55 C -25,55 -42,35 -42,0 C -42,-35 -25,-55 0,-55 Z"
+          transform="scale(1.55)" fill="url(#cortex)" stroke="#7d3526" stroke-width="1.6"/>
+    <!-- subtle capsule sheen -->
+    <path d="M -55,-50 C -40,-78 -10,-86 5,-80" transform="scale(1.05)" fill="none" stroke="#d68f7f" stroke-width="3" opacity="0.35" stroke-linecap="round"/>
+    <!-- emerging ureter stub -->
+    <path d="M 36,2 C 50,8 56,18 58,30" transform="scale(1.55)" fill="none" stroke="#ad6048" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- ============================ LEFT KIDNEY (cross-section) ============================ -->
+  <g transform="translate(195,170)">
+    <!-- outer cortex capsule, slightly distended (hydronephrosis hint) -->
+    <path d="M 0,-55 C 25,-55 40,-35 40,-10 C 40,-5 30,-2 24,0 C 30,2 40,5 40,10 C 40,35 25,55 0,55 C -25,55 -42,35 -42,0 C -42,-35 -25,-55 0,-55 Z"
+          transform="scale(1.55)" fill="url(#cortex)" stroke="#7d3526" stroke-width="1.6"/>
+    <!-- inner medullary field (pale) following capsule, leaving cortex band -->
+    <path d="M -3,-44 C 16,-44 28,-28 28,-9 C 28,-5 21,-2 16,0 C 21,2 28,5 28,9 C 28,28 16,44 -3,44 C -22,44 -33,28 -33,0 C -33,-28 -22,-44 -3,-44 Z"
+          transform="scale(1.55)" fill="url(#medulla)" stroke="#d9a18f" stroke-width="0.8" opacity="0.92"/>
+
+    <!-- renal pelvis lumen (ballooned = hydronephrosis) -->
+    <path d="M 8,-14 C 30,-12 34,-2 34,0 C 34,2 30,12 8,14 C 0,8 -1,-8 8,-14 Z"
+          transform="scale(1.55)" fill="url(#pelvisLumen)" stroke="#caa292" stroke-width="0.8"/>
+
+    <!-- medullary pyramids (triangles pointing toward hilum/center) + calyces cupping them -->
+    <g transform="scale(1.55)">
+      <!-- pyramid 1 (upper) -->
+      <path d="M -30,-26 L -8,-18 L -30,-10 Z" fill="#c97b63" stroke="#a85b43" stroke-width="0.6" opacity="0.85"/>
+      <path d="M -8,-22 C 0,-19 0,-13 -8,-14 C -3,-18 -3,-18 -8,-22 Z" fill="url(#pelvisLumen)" stroke="#caa292" stroke-width="0.5"/>
+      <!-- pyramid 2 (mid-upper) -->
+      <path d="M -32,-8 L -8,-3 L -32,2 Z" fill="#c97b63" stroke="#a85b43" stroke-width="0.6" opacity="0.85"/>
+      <path d="M -8,-7 C 1,-5 1,1 -8,1 C -3,-3 -3,-3 -8,-7 Z" fill="url(#pelvisLumen)" stroke="#caa292" stroke-width="0.5"/>
+      <!-- pyramid 3 (mid-lower) -->
+      <path d="M -32,6 L -8,10 L -30,18 Z" fill="#c97b63" stroke="#a85b43" stroke-width="0.6" opacity="0.85"/>
+      <path d="M -8,6 C 1,8 1,14 -8,13 C -3,10 -3,10 -8,6 Z" fill="url(#pelvisLumen)" stroke="#caa292" stroke-width="0.5"/>
+      <!-- pyramid 4 (lower) -->
+      <path d="M -28,22 L -8,24 L -26,32 Z" fill="#c97b63" stroke="#a85b43" stroke-width="0.6" opacity="0.85"/>
+    </g>
+
+    <!-- pelvis funneling to ureter -->
+    <path d="M 50,4 C 62,12 66,22 66,34" transform="scale(1.55)" fill="none" stroke="#ad6048" stroke-width="7" stroke-linecap="round" opacity="0.95"/>
+  </g>
+
+  <!-- ============================ URETERS (curved muscular tubes, DILATED = hydroureter) ============================ -->
+  <!-- left ureter -->
+  <path d="M 224,228 C 246,282 256,360 272,418"
+        fill="none" stroke="url(#ureter)" stroke-width="9" stroke-linecap="round"/>
+  <path d="M 224,228 C 246,282 256,360 272,418"
+        fill="none" stroke="#f3e3da" stroke-width="3.4" stroke-linecap="round" opacity="0.85"/>
+  <!-- right ureter -->
+  <path d="M 351,234 C 332,286 320,360 300,418"
+        fill="none" stroke="url(#ureter)" stroke-width="9" stroke-linecap="round"/>
+  <path d="M 351,234 C 332,286 320,360 300,418"
+        fill="none" stroke="#f3e3da" stroke-width="3.4" stroke-linecap="round" opacity="0.85"/>
+
+  <!-- ============================ BLADDER (cutaway, distended/thick wall) ============================ -->
+  <!-- outer muscular wall (thickened) -->
+  <path d="M 200,438 C 198,402 224,388 285,388 C 346,388 372,402 370,438
+           C 369,478 348,512 285,514 C 222,512 201,478 200,438 Z"
+        fill="url(#bladder)" stroke="#8a4733" stroke-width="2"/>
+  <!-- thick detrusor inner edge -->
+  <path d="M 213,438 C 212,408 234,397 285,397 C 336,397 358,408 357,438
+           C 356,472 338,500 285,502 C 232,500 214,472 213,438 Z"
+        fill="none" stroke="#a85b43" stroke-width="6" opacity="0.55"/>
+  <!-- pale lumen -->
+  <path d="M 222,438 C 221,414 240,404 285,404 C 330,404 349,414 348,438
+           C 347,468 330,494 285,496 C 240,494 223,468 222,438 Z"
+        fill="url(#bladderLumen)" stroke="#caa292" stroke-width="0.8"/>
+
+  <!-- ureteric orifices entering bladder base -->
+  <circle cx="266" cy="470" r="3.2" fill="#c97b63" stroke="#8a4733" stroke-width="0.7"/>
+  <circle cx="304" cy="470" r="3.2" fill="#c97b63" stroke="#8a4733" stroke-width="0.7"/>
+
+  <!-- TRIGONE (triangular base region) -->
+  <path d="M 266,470 L 304,470 L 285,500 Z" fill="#dba98f" stroke="#a85b43" stroke-width="0.9" opacity="0.9"/>
+  <path d="M 266,470 L 304,470 L 285,500 Z" fill="none" stroke="#8a4733" stroke-width="0.6" stroke-dasharray="2 2"/>
+
+  <!-- ============================ PROSTATE (encircling urethra at bladder neck) ============================ -->
+  <ellipse cx="285" cy="535" rx="34" ry="26" fill="url(#prostate)" stroke="#9c7a2f" stroke-width="1.6"/>
+  <!-- lobed shading -->
+  <path d="M 285,510 C 270,512 263,524 263,535 C 263,548 272,558 285,560" fill="none" stroke="#b08e3a" stroke-width="1" opacity="0.6"/>
+  <!-- prostatic urethra lumen through it -->
+  <path d="M 285,510 L 285,561" fill="none" stroke="#f3e3da" stroke-width="4.5" stroke-linecap="round"/>
+
+  <!-- ============================ URETHRA (down from prostate) ============================ -->
+  <path d="M 285,560 L 285,650" fill="none" stroke="url(#ureter)" stroke-width="11" stroke-linecap="round"/>
+  <path d="M 285,560 L 285,650" fill="none" stroke="#f3e3da" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+
+  <!-- ============================ STONE (urethral obstruction) ============================ -->
+  <g>
+    <path d="M 285,592 C 292,592 296,597 296,602 C 296,608 291,612 285,612 C 279,612 274,607 275,601 C 276,596 279,592 285,592 Z"
+          fill="url(#stoneG)" stroke="#3c3833" stroke-width="0.9"/>
+    <!-- facets -->
+    <path d="M 282,596 L 290,599 L 286,605 L 280,602 Z" fill="#7c766f" opacity="0.6"/>
+    <path d="M 290,599 L 293,604 L 287,607 L 286,605 Z" fill="#565149" opacity="0.7"/>
+  </g>
+
+  <!-- ============================ FLOW DIRECTION ARROWS (one-way) ============================ -->
+  <g stroke="#3f7fb0" fill="#3f7fb0" opacity="0.9">
+    <path d="M 240,300 L 245,316" fill="none" stroke-width="2" marker-end="url(#flowArrow)"/>
+    <path d="M 327,300 L 322,316" fill="none" stroke-width="2" marker-end="url(#flowArrow)"/>
+    <path d="M 285,420 L 285,432" fill="none" stroke-width="2" marker-end="url(#flowArrow)"/>
+    <path d="M 285,565 L 285,580" fill="none" stroke-width="2" marker-end="url(#flowArrow)"/>
+  </g>
+  <text x="312" y="345" font-size="8.5" fill="#3f7fb0" font-style="italic">urine flow &#8595; one-way</text>
+
+  <!-- ============================ SYMPATHETIC INNERVATION (teal, left, storage) ============================ -->
+  <g fill="none" stroke="#0d9488" stroke-width="2">
+    <!-- chain descending on the left -->
+    <path d="M 120,300 C 118,340 122,380 126,418 C 130,450 145,470 178,480" marker-end="url(#sympArrow)"/>
+    <!-- ganglia beads -->
+    <circle cx="120" cy="312" r="3.4" fill="#0d9488" stroke="none"/>
+    <circle cx="119" cy="346" r="3.4" fill="#0d9488" stroke="none"/>
+    <circle cx="121" cy="382" r="3.4" fill="#0d9488" stroke="none"/>
+    <circle cx="126" cy="416" r="3.4" fill="#0d9488" stroke="none"/>
+    <!-- small branch to bladder neck -->
+    <path d="M 126,418 C 150,440 170,500 232,520" stroke-width="1.6" stroke-dasharray="0" marker-end="url(#sympArrow)"/>
+  </g>
+  <text x="40" y="300" font-size="9" fill="#0d9488" font-style="italic">Sympathetic</text>
+  <text x="40" y="312" font-size="8" fill="#0d9488" font-style="italic">T10&#8211;L2 &#183; storage</text>
+
+  <!-- ============================ PARASYMPATHETIC INNERVATION (violet, from below, voiding) ============================ -->
+  <g fill="none" stroke="#7c3aed" stroke-width="2">
+    <path d="M 470,640 C 430,628 410,600 400,560 C 392,528 370,512 340,505" marker-end="url(#paraArrow)"/>
+    <!-- pelvic ganglion -->
+    <circle cx="412" cy="572" r="4" fill="#7c3aed" stroke="none"/>
+    <!-- branch onto detrusor -->
+    <path d="M 400,560 C 380,540 360,512 350,488" stroke-width="1.6" marker-end="url(#paraArrow)"/>
+  </g>
+  <text x="448" y="660" font-size="9" fill="#7c3aed" font-style="italic" text-anchor="end">Parasympathetic</text>
+  <text x="448" y="672" font-size="8" fill="#7c3aed" font-style="italic" text-anchor="end">S2&#8211;S4 &#183; voiding (detrusor)</text>
+
+  <!-- ============================ NEPHRON INSET (how urine is produced) ============================ -->
+  <g>
+    <rect x="20" y="55" width="165" height="155" rx="6" fill="#fffdfb" stroke="#cbbfb5" stroke-width="1.1"/>
+    <text x="30" y="72" font-size="9.5" fill="#8a7f78" font-style="italic" font-weight="bold">How urine is produced</text>
+
+    <!-- afferent/efferent arterioles -->
+    <path d="M 34,96 C 46,92 56,96 60,104" fill="none" stroke="#b35a4a" stroke-width="2.2"/>
+    <path d="M 60,104 C 70,98 80,98 88,104" fill="none" stroke="#974334" stroke-width="1.8"/>
+    <!-- glomerular tuft -->
+    <circle cx="58" cy="110" r="13" fill="url(#glomG)" stroke="#7d3526" stroke-width="1"/>
+    <path d="M 50,104 C 56,108 52,114 60,114 M 54,108 C 62,106 60,116 66,112 M 52,116 C 60,114 56,108 64,108"
+          fill="none" stroke="#e8b9ab" stroke-width="1" opacity="0.8"/>
+    <!-- Bowman's capsule outline -->
+    <circle cx="58" cy="110" r="18" fill="none" stroke="#caa292" stroke-width="1.4"/>
+    <text x="30" y="138" font-size="7" fill="#8a7f78">glomerulus in</text>
+    <text x="30" y="146" font-size="7" fill="#8a7f78">Bowman&#8217;s capsule</text>
+
+    <!-- proximal tubule -->
+    <path d="M 76,110 C 92,108 92,122 80,124 C 92,126 96,138 84,140" fill="none" stroke="#c97b63" stroke-width="3" stroke-linecap="round"/>
+    <text x="96" y="116" font-size="7" fill="#8a7f78">proximal</text>
+    <!-- loop of Henle -->
+    <path d="M 84,140 C 104,142 110,156 110,170 C 110,184 122,186 128,176" fill="none" stroke="#c97b63" stroke-width="3" stroke-linecap="round"/>
+    <text x="92" y="184" font-size="7" fill="#8a7f78">loop of Henle</text>
+    <!-- distal tubule -->
+    <path d="M 128,176 C 138,168 138,152 128,148 C 140,146 146,134 138,128" fill="none" stroke="#c97b63" stroke-width="3" stroke-linecap="round"/>
+    <text x="120" y="124" font-size="7" fill="#8a7f78">distal</text>
+    <!-- collecting duct -->
+    <path d="M 138,128 C 148,128 150,142 150,158 L 150,196" fill="none" stroke="#ad6048" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- filtrate -> urine arrow -->
+    <path d="M 150,196 L 150,202" fill="none" stroke="#8a7f78" stroke-width="1.6" marker-end="url(#insetArrow)"/>
+    <text x="100" y="206" font-size="7.5" fill="#3f7fb0" font-style="italic">filtrate &#8594; urine</text>
+  </g>
+  <!-- dotted leader from inset to left kidney -->
+  <path d="M 150,158 C 175,160 190,170 200,170" fill="none" stroke="#b8aca2" stroke-width="1" stroke-dasharray="2.5 3"/>
+
+  <!-- ============================ BACK-PRESSURE NOTE ============================ -->
+  <g>
+    <rect x="402" y="270" width="150" height="92" rx="5" fill="#fff6f4" stroke="#d9b3a8" stroke-width="1"/>
+    <text x="412" y="286" font-size="9" fill="#8a4733" font-weight="bold">back-pressure &#8593;</text>
+    <text x="412" y="300" font-size="7.6" fill="#6b6660">obstruction &#8594; consequences:</text>
+    <text x="412" y="314" font-size="7.6" fill="#6b6660">&#183; bladder wall thickened / distended</text>
+    <text x="412" y="326" font-size="7.6" fill="#6b6660">&#183; ureters dilated (hydroureter)</text>
+    <text x="412" y="338" font-size="7.6" fill="#6b6660">&#183; calyces ballooned</text>
+    <text x="412" y="350" font-size="7.6" fill="#6b6660">&#160;&#160;(hydronephrosis)</text>
+  </g>
+  <!-- leaders for back-pressure -->
+  <path d="M 402,330 C 360,300 320,270 300,240" fill="none" stroke="#d9b3a8" stroke-width="0.9" stroke-dasharray="2.5 3"/>
+
+  <!-- ============================ ANATOMICAL LABELS with leader lines ============================ -->
+  <g font-size="9" fill="#2a2320">
+    <!-- cortex -->
+    <line x1="208" y1="118" x2="245" y2="100" stroke="#8a7f78" stroke-width="0.7"/>
+    <text x="248" y="103">cortex</text>
+    <!-- medulla / pyramid -->
+    <line x1="200" y1="150" x2="245" y2="138" stroke="#8a7f78" stroke-width="0.7"/>
+    <text x="248" y="141">medulla (pyramid)</text>
+    <!-- calyx -->
+    <line x1="183" y1="160" x2="160" y2="148" stroke="#8a7f78" stroke-width="0.7"/>
+    <text x="150" y="151" text-anchor="end">calyx</text>
+    <!-- pelvis -->
+    <line x1="222" y1="178" x2="252" y2="186" stroke="#8a7f78" stroke-width="0.7"/>
+    <text x="255" y="189">renal pelvis</text>
+    <!-- kidney (right) -->
+    <line x1="390" y1="150" x2="430" y2="135" stroke="#8a7f78" stroke-width="0.7"/>
+    <text x="433" y="138">Kidney (whole)</text>
+    <!-- ureter -->
+    <line x1="318" y1="350" x2="360" y2="368" stroke="#8a7f78" stroke-width="0.7"/>
+    <text x="363" y="371">Ureter (dilated)</text>
+    <!-- bladder -->
+    <line x1="368" y1="430" x2="408" y2="424" stroke="#8a7f78" stroke-width="0.7"/>
+    <text x="411" y="427">Bladder</text>
+    <text x="411" y="438" font-size="7.5" fill="#8a4733">wall thickened</text>
+    <!-- trigone -->
+    <line x1="298" y1="484" x2="350" y2="466" stroke="#8a7f78" stroke-width="0.7"/>
+    <text x="353" y="469">Trigone</text>
+    <!-- prostate -->
+    <line x1="319" y1="535" x2="360" y2="528" stroke="#8a7f78" stroke-width="0.7"/>
+    <text x="363" y="531">Prostate</text>
+    <!-- urethra -->
+    <line x1="290" y1="635" x2="330" y2="630" stroke="#8a7f78" stroke-width="0.7"/>
+    <text x="333" y="633">Urethra</text>
+    <!-- stone -->
+    <line x1="296" y1="602" x2="338" y2="600" stroke="#6b6660" stroke-width="0.8"/>
+    <text x="341" y="597" fill="#4c4843" font-weight="bold">Stone</text>
+    <text x="341" y="608" font-size="7.5" fill="#6b6660">urethral obstruction</text>
+  </g>
+
+  <!-- ============================ LEGEND ============================ -->
+  <g font-size="8" fill="#6b6660" transform="translate(20,672)">
+    <rect x="0" y="0" width="11" height="6" fill="#0d9488"/><text x="15" y="6">sympathetic</text>
+    <rect x="92" y="0" width="11" height="6" fill="#7c3aed"/><text x="107" y="6">parasympathetic</text>
+    <rect x="200" y="0" width="11" height="6" fill="#7fb4d6"/><text x="215" y="6">urine flow</text>
+    <circle cx="290" cy="3" r="4" fill="#6b6660"/><text x="298" y="6">stone</text>
+  </g>
+</svg>

@@ -1,0 +1,206 @@
+<svg viewBox="0 0 440 560" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- bean silhouette reused for clipping hatch/stipple -->
+    <path id="bean" d="M 0,-55 C 25,-55 40,-35 40,-10 C 40,-5 30,-2 24,0 C 30,2 40,5 40,10 C 40,35 25,55 0,55 C -25,55 -42,35 -42,0 C -42,-35 -25,-55 0,-55 Z"/>
+    <clipPath id="clipL"><use href="#bean"/></clipPath>
+    <clipPath id="clipR"><use href="#bean"/></clipPath>
+    <!-- bladder body -->
+    <path id="bladder" d="M 220,335
+      C 180,335 150,360 148,398
+      C 146,432 168,460 220,462
+      C 272,460 294,432 292,398
+      C 290,360 260,335 220,335 Z"/>
+    <clipPath id="clipB"><use href="#bladder"/></clipPath>
+    <!-- subtle paper grain -->
+    <filter id="paper" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.04 0"/>
+      <feComposite operator="over" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+
+  <!-- background -->
+  <rect width="440" height="560" fill="#f7f3e9"/>
+  <rect width="440" height="560" fill="#f7f3e9" filter="url(#paper)"/>
+  <!-- faint plate border -->
+  <rect x="14" y="14" width="412" height="532" fill="none" stroke="#8a6d4a" stroke-width="0.6" opacity="0.5"/>
+  <rect x="18" y="18" width="404" height="524" fill="none" stroke="#8a6d4a" stroke-width="0.4" opacity="0.35"/>
+
+  <!-- title -->
+  <text x="28" y="40" font-family="Georgia, serif" font-size="13" font-style="italic" fill="#3a2c1a" opacity="0.75">Atlas engraving</text>
+  <text x="28" y="40" font-family="Georgia, serif" font-size="13" font-style="italic" fill="#3a2c1a" opacity="0">— Pl. VI · Organa Urinaria</text>
+  <text x="412" y="40" text-anchor="end" font-family="Georgia, serif" font-size="10.5" font-style="italic" fill="#8a6d4a" opacity="0.7">Pl. VI</text>
+
+  <!-- ============ URETERS (draw under organs) ============ -->
+  <g fill="none" stroke="#3a2c1a" stroke-linecap="round">
+    <!-- left ureter -->
+    <path d="M 150,118 C 168,160 176,230 182,280 C 186,312 190,332 188,345" stroke-width="2.4"/>
+    <path d="M 150,118 C 168,160 176,230 182,280 C 186,312 190,332 188,345" stroke="#8a6d4a" stroke-width="0.7" opacity="0.6"/>
+    <!-- right ureter -->
+    <path d="M 290,118 C 272,160 264,230 258,280 C 254,312 250,332 252,345" stroke-width="2.4"/>
+    <path d="M 290,118 C 272,160 264,230 258,280 C 254,312 250,332 252,345" stroke="#8a6d4a" stroke-width="0.7" opacity="0.6"/>
+  </g>
+  <!-- ureter cross-tick shading (gives engraved tube volume) -->
+  <g stroke="#3a2c1a" stroke-width="0.4" opacity="0.45">
+    <line x1="160" y1="150" x2="165" y2="151"/>
+    <line x1="170" y1="200" x2="175" y2="201"/>
+    <line x1="176" y1="250" x2="181" y2="251"/>
+    <line x1="183" y1="300" x2="188" y2="301"/>
+    <line x1="280" y1="150" x2="275" y2="151"/>
+    <line x1="270" y1="200" x2="265" y2="201"/>
+    <line x1="264" y1="250" x2="259" y2="251"/>
+    <line x1="257" y1="300" x2="252" y2="301"/>
+  </g>
+
+  <!-- ============ LEFT KIDNEY ============ -->
+  <g transform="translate(120,110)">
+    <use href="#bean" fill="#efe4cf"/>
+    <g clip-path="url(#clipL)">
+      <!-- shadow-side crosshatch (medial/right side toward center) -->
+      <g stroke="#3a2c1a" stroke-width="0.5" opacity="0.5">
+        <line x1="6" y1="-60" x2="46" y2="-20"/>
+        <line x1="2" y1="-60" x2="46" y2="-16"/>
+        <line x1="-2" y1="-58" x2="46" y2="-10"/>
+        <line x1="-6" y1="-54" x2="46" y2="-2"/>
+        <line x1="-10" y1="-48" x2="30" y2="-8"/>
+        <line x1="-4" y1="40" x2="46" y2="-6"/>
+        <line x1="0" y1="48" x2="46" y2="2"/>
+        <line x1="4" y1="56" x2="46" y2="14"/>
+        <line x1="8" y1="58" x2="44" y2="22"/>
+        <line x1="14" y1="60" x2="42" y2="32"/>
+      </g>
+      <g stroke="#3a2c1a" stroke-width="0.4" opacity="0.4">
+        <line x1="46" y1="-30" x2="10" y2="6"/>
+        <line x1="46" y1="-20" x2="14" y2="12"/>
+        <line x1="46" y1="-8" x2="18" y2="20"/>
+        <line x1="46" y1="6" x2="20" y2="32"/>
+        <line x1="46" y1="18" x2="24" y2="40"/>
+      </g>
+      <!-- lit-side stipple (lateral/left), sparse -->
+      <g fill="#3a2c1a" opacity="0.55">
+        <circle cx="-30" cy="-30" r="0.6"/><circle cx="-34" cy="-18" r="0.6"/>
+        <circle cx="-36" cy="-4" r="0.6"/><circle cx="-34" cy="10" r="0.6"/>
+        <circle cx="-30" cy="24" r="0.6"/><circle cx="-24" cy="36" r="0.6"/>
+        <circle cx="-26" cy="-22" r="0.6"/><circle cx="-30" cy="-8" r="0.6"/>
+        <circle cx="-28" cy="6" r="0.6"/><circle cx="-22" cy="20" r="0.6"/>
+        <circle cx="-18" cy="-34" r="0.6"/><circle cx="-12" cy="-40" r="0.6"/>
+      </g>
+      <!-- hilum vessel hint -->
+      <path d="M 40,0 C 30,-4 26,-2 22,0 C 26,2 30,4 40,0" fill="#8a6d4a" opacity="0.5"/>
+    </g>
+    <use href="#bean" fill="none" stroke="#3a2c1a" stroke-width="1.6"/>
+    <use href="#bean" fill="none" stroke="#3a2c1a" stroke-width="0.4" opacity="0.4" transform="scale(0.9)"/>
+  </g>
+
+  <!-- ============ RIGHT KIDNEY ============ -->
+  <g transform="translate(320,110) scale(-1,1)">
+    <use href="#bean" fill="#efe4cf"/>
+    <g clip-path="url(#clipR)">
+      <g stroke="#3a2c1a" stroke-width="0.5" opacity="0.5">
+        <line x1="6" y1="-60" x2="46" y2="-20"/>
+        <line x1="2" y1="-60" x2="46" y2="-16"/>
+        <line x1="-2" y1="-58" x2="46" y2="-10"/>
+        <line x1="-6" y1="-54" x2="46" y2="-2"/>
+        <line x1="-10" y1="-48" x2="30" y2="-8"/>
+        <line x1="-4" y1="40" x2="46" y2="-6"/>
+        <line x1="0" y1="48" x2="46" y2="2"/>
+        <line x1="4" y1="56" x2="46" y2="14"/>
+        <line x1="8" y1="58" x2="44" y2="22"/>
+        <line x1="14" y1="60" x2="42" y2="32"/>
+      </g>
+      <g stroke="#3a2c1a" stroke-width="0.4" opacity="0.4">
+        <line x1="46" y1="-30" x2="10" y2="6"/>
+        <line x1="46" y1="-20" x2="14" y2="12"/>
+        <line x1="46" y1="-8" x2="18" y2="20"/>
+        <line x1="46" y1="6" x2="20" y2="32"/>
+        <line x1="46" y1="18" x2="24" y2="40"/>
+      </g>
+      <g fill="#3a2c1a" opacity="0.55">
+        <circle cx="-30" cy="-30" r="0.6"/><circle cx="-34" cy="-18" r="0.6"/>
+        <circle cx="-36" cy="-4" r="0.6"/><circle cx="-34" cy="10" r="0.6"/>
+        <circle cx="-30" cy="24" r="0.6"/><circle cx="-24" cy="36" r="0.6"/>
+        <circle cx="-26" cy="-22" r="0.6"/><circle cx="-30" cy="-8" r="0.6"/>
+        <circle cx="-28" cy="6" r="0.6"/><circle cx="-22" cy="20" r="0.6"/>
+        <circle cx="-18" cy="-34" r="0.6"/><circle cx="-12" cy="-40" r="0.6"/>
+      </g>
+      <path d="M 40,0 C 30,-4 26,-2 22,0 C 26,2 30,4 40,0" fill="#8a6d4a" opacity="0.5"/>
+    </g>
+    <use href="#bean" fill="none" stroke="#3a2c1a" stroke-width="1.6"/>
+    <use href="#bean" fill="none" stroke="#3a2c1a" stroke-width="0.4" opacity="0.4" transform="scale(0.9)"/>
+  </g>
+
+  <!-- ============ BLADDER ============ -->
+  <use href="#bladder" fill="#efe4cf"/>
+  <g clip-path="url(#clipB)">
+    <!-- curved contour-following hatching, denser at base (shadow) -->
+    <g stroke="#3a2c1a" stroke-width="0.45" opacity="0.42" fill="none">
+      <path d="M 150,420 C 185,438 255,438 290,420"/>
+      <path d="M 152,430 C 185,448 255,448 288,430"/>
+      <path d="M 156,440 C 188,456 252,456 284,440"/>
+      <path d="M 162,448 C 190,462 250,462 278,448"/>
+      <path d="M 170,455 C 195,466 245,466 270,455"/>
+      <path d="M 150,408 C 185,426 255,426 290,408"/>
+      <path d="M 149,396 C 185,412 255,412 291,396"/>
+    </g>
+    <!-- cross set for shadow weave near base -->
+    <g stroke="#3a2c1a" stroke-width="0.35" opacity="0.3" fill="none">
+      <path d="M 175,460 C 178,440 178,410 172,390"/>
+      <path d="M 200,462 C 202,438 202,405 198,388"/>
+      <path d="M 240,462 C 238,438 238,405 242,388"/>
+      <path d="M 265,460 C 262,440 262,410 268,390"/>
+    </g>
+    <!-- stipple on lit upper dome, sparse -->
+    <g fill="#3a2c1a" opacity="0.4">
+      <circle cx="190" cy="352" r="0.6"/><circle cx="210" cy="346" r="0.6"/>
+      <circle cx="230" cy="346" r="0.6"/><circle cx="250" cy="352" r="0.6"/>
+      <circle cx="200" cy="360" r="0.6"/><circle cx="240" cy="360" r="0.6"/>
+      <circle cx="170" cy="372" r="0.6"/><circle cx="270" cy="372" r="0.6"/>
+      <circle cx="220" cy="350" r="0.6"/>
+    </g>
+  </g>
+  <use href="#bladder" fill="none" stroke="#3a2c1a" stroke-width="1.7"/>
+
+  <!-- ureter entry points (trigone) -->
+  <circle cx="188" cy="345" r="2.2" fill="#3a2c1a"/>
+  <circle cx="252" cy="345" r="2.2" fill="#3a2c1a"/>
+
+  <!-- ============ BLADDER NECK + URETHRA ============ -->
+  <g fill="none" stroke="#3a2c1a" stroke-linecap="round">
+    <path d="M 210,460 C 209,470 209,478 211,486 L 211,515" stroke-width="2.2"/>
+    <path d="M 230,460 C 231,470 231,478 229,486 L 229,515" stroke-width="2.2"/>
+  </g>
+  <!-- neck shading -->
+  <g stroke="#3a2c1a" stroke-width="0.4" opacity="0.4">
+    <line x1="212" y1="470" x2="228" y2="470"/>
+    <line x1="212" y1="480" x2="228" y2="480"/>
+    <line x1="212" y1="492" x2="228" y2="492"/>
+    <line x1="211" y1="502" x2="229" y2="502"/>
+  </g>
+
+  <!-- ============ LABELS ============ -->
+  <g font-family="Georgia, serif" font-size="13" font-style="italic" fill="#3a2c1a">
+    <!-- leader lines -->
+    <g stroke="#3a2c1a" stroke-width="0.6" fill="none" opacity="0.8">
+      <path d="M 78,95 C 60,92 48,90 40,90"/>
+      <path d="M 362,95 C 380,92 392,90 400,90"/>
+      <path d="M 176,235 C 130,235 96,236 70,238"/>
+      <path d="M 295,400 C 330,396 360,392 384,390"/>
+      <path d="M 220,498 C 220,520 200,530 176,532"/>
+      <path d="M 138,118 C 110,140 96,150 82,158"/>
+    </g>
+    <g fill="#3a2c1a">
+      <circle cx="78" cy="95" r="1.4"/><circle cx="362" cy="95" r="1.4"/>
+      <circle cx="176" cy="235" r="1.4"/><circle cx="295" cy="400" r="1.4"/>
+      <circle cx="220" cy="498" r="1.4"/><circle cx="138" cy="118" r="1.4"/>
+    </g>
+    <text x="36" y="93" text-anchor="end">Ren sinister</text>
+    <text x="36" y="106" text-anchor="end" font-size="10" fill="#8a6d4a">(left kidney)</text>
+    <text x="404" y="93">Ren dexter</text>
+    <text x="404" y="106" font-size="10" fill="#8a6d4a">(right kidney)</text>
+    <text x="66" y="240" text-anchor="end">Ureter</text>
+    <text x="388" y="394">Vesica urinaria</text>
+    <text x="388" y="407" font-size="10" fill="#8a6d4a">(bladder)</text>
+    <text x="172" y="536" text-anchor="end">Urethra</text>
+    <text x="78" y="161" font-size="10" fill="#8a6d4a">Hilum</text>
+  </g>
+</svg>

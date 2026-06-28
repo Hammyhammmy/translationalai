@@ -1,0 +1,130 @@
+<svg viewBox="0 0 440 560" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="leftKidneyClip">
+      <path d="M 0,-55 C 25,-55 40,-35 40,-10 C 40,-5 30,-2 24,0 C 30,2 40,5 40,10 C 40,35 25,55 0,55 C -25,55 -42,35 -42,0 C -42,-35 -25,-55 0,-55 Z"/>
+    </clipPath>
+    <clipPath id="bladderClip">
+      <path d="M 145,355 C 145,330 175,320 220,320 C 265,320 295,330 295,355 C 295,400 285,440 250,452 C 250,452 240,455 235,460 L 205,460 C 200,455 190,452 190,452 C 155,440 145,400 145,355 Z"/>
+    </clipPath>
+  </defs>
+
+  <rect width="440" height="560" fill="#ffffff"/>
+
+  <text x="18" y="28" font-family="-apple-system, sans-serif" font-size="13" fill="#78716c">Cross-section cutaway</text>
+
+  <!-- ============ RIGHT KIDNEY (whole, for context) ============ -->
+  <g transform="translate(320,110) scale(-1,1)">
+    <path d="M 0,-55 C 25,-55 40,-35 40,-10 C 40,-5 30,-2 24,0 C 30,2 40,5 40,10 C 40,35 25,55 0,55 C -25,55 -42,35 -42,0 C -42,-35 -25,-55 0,-55 Z"
+          fill="#16a34a" stroke="#1c1917" stroke-width="2"/>
+  </g>
+
+  <!-- ============ LEFT KIDNEY (cutaway) ============ -->
+  <g transform="translate(120,110)">
+    <!-- cortex / capsule base -->
+    <path d="M 0,-55 C 25,-55 40,-35 40,-10 C 40,-5 30,-2 24,0 C 30,2 40,5 40,10 C 40,35 25,55 0,55 C -25,55 -42,35 -42,0 C -42,-35 -25,-55 0,-55 Z"
+          fill="#16a34a" stroke="#1c1917" stroke-width="2"/>
+
+    <!-- inner contents, clipped to bean silhouette -->
+    <g clip-path="url(#leftKidneyClip)">
+      <!-- inner cortex band (paler interior region) -->
+      <path d="M -33,0 C -33,-30 -18,-46 0,-46 C 18,-46 32,-32 32,-12 C 32,-8 26,-5 22,-3 C 26,-1 32,2 32,12 C 32,32 18,46 0,46 C -18,46 -33,30 -33,0 Z"
+            fill="#dcfce7"/>
+
+      <!-- medullary pyramids (triangles pointing inward toward hilum) -->
+      <g fill="#86efac" stroke="#16a34a" stroke-width="1">
+        <path d="M -30,-30 L 6,-26 L -28,-12 Z"/>
+        <path d="M -32,-6 L 8,-3 L -32,6 Z"/>
+        <path d="M -30,30 L 6,26 L -28,12 Z"/>
+        <path d="M -16,-42 L 12,-20 L 4,-40 Z"/>
+        <path d="M -16,42 L 12,20 L 4,40 Z"/>
+      </g>
+
+      <!-- calyces cupping pyramid tips -->
+      <g fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round">
+        <path d="M 10,-26 C 16,-24 16,-18 12,-16"/>
+        <path d="M 12,-3 C 18,-2 18,2 12,3"/>
+        <path d="M 10,26 C 16,24 16,18 12,16"/>
+        <path d="M 14,-20 C 19,-16 19,-12 15,-10"/>
+        <path d="M 14,20 C 19,16 19,12 15,10"/>
+      </g>
+
+      <!-- renal pelvis funnelling to hilum -->
+      <path d="M 14,-22 C 26,-16 30,-8 30,0 C 30,8 26,16 14,22 C 22,14 24,8 24,0 C 24,-8 22,-14 14,-22 Z"
+            fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
+    </g>
+  </g>
+
+  <!-- ============ URETERS ============ -->
+  <!-- left ureter: from left hilum (150,115) to bladder (188,345) -->
+  <path d="M 150,118 C 168,150 172,210 180,260 C 184,290 186,320 188,345"
+        fill="none" stroke="#d97706" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 150,118 C 168,150 172,210 180,260 C 184,290 186,320 188,345"
+        fill="none" stroke="#fbbf24" stroke-width="2.4" stroke-linecap="round"/>
+
+  <!-- right ureter: from right hilum (290,115) to bladder (252,345) -->
+  <path d="M 290,118 C 272,150 268,210 260,260 C 256,290 254,320 252,345"
+        fill="none" stroke="#d97706" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 290,118 C 272,150 268,210 260,260 C 256,290 254,320 252,345"
+        fill="none" stroke="#fbbf24" stroke-width="2.4" stroke-linecap="round"/>
+
+  <!-- ============ BLADDER (cutaway) ============ -->
+  <!-- outer wall -->
+  <path d="M 145,355 C 145,330 175,320 220,320 C 265,320 295,330 295,355 C 295,400 285,440 250,452 C 250,452 240,455 235,460 L 205,460 C 200,455 190,452 190,452 C 155,440 145,400 145,355 Z"
+        fill="#f97316" stroke="#1c1917" stroke-width="2"/>
+
+  <!-- hollow lumen (lighter inner fill) -->
+  <g clip-path="url(#bladderClip)">
+    <path d="M 162,357 C 162,340 188,333 220,333 C 252,333 278,340 278,357 C 278,395 270,428 242,440 L 198,440 C 170,428 162,395 162,357 Z"
+          fill="#fed7aa"/>
+    <!-- ureteric openings into lumen -->
+    <circle cx="190" cy="350" r="3" fill="#d97706"/>
+    <circle cx="250" cy="350" r="3" fill="#d97706"/>
+
+    <!-- TRIGONE region at base (triangle between two ureteric openings and neck) -->
+    <path d="M 190,350 L 250,350 L 220,432 Z"
+          fill="#fb923c" stroke="#ea580c" stroke-width="1.5" opacity="0.9"/>
+  </g>
+
+  <!-- ============ BLADDER NECK + URETHRA ============ -->
+  <!-- urethra vertical from (220,455) to (220,515) -->
+  <path d="M 220,455 L 220,515"
+        fill="none" stroke="#7c3aed" stroke-width="9" stroke-linecap="round"/>
+  <path d="M 220,455 L 220,515"
+        fill="none" stroke="#c4b5fd" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- internal + external sphincters at the bladder neck -->
+  <g stroke="#5b21b6" stroke-width="2.5" stroke-linecap="round">
+    <path d="M 206,463 C 213,468 227,468 234,463" fill="none"/>
+    <path d="M 206,481 C 213,486 227,486 234,481" fill="none"/>
+  </g>
+
+  <!-- ============ LABELS WITH LEADER LINES ============ -->
+  <g font-family="-apple-system, sans-serif" font-size="13" fill="#1c1917">
+    <g stroke="#78716c" stroke-width="0.8" fill="none">
+      <!-- internal labels (left kidney) -->
+      <path d="M 95,68 L 118,76"/>      <!-- Cortex -->
+      <path d="M 92,108 L 110,108"/>    <!-- Medulla -->
+      <path d="M 165,92 L 137,98"/>     <!-- Calyx -->
+      <path d="M 178,120 L 152,114"/>   <!-- Renal pelvis -->
+      <!-- bladder internal -->
+      <path d="M 300,418 L 232,420"/>   <!-- Trigone -->
+      <path d="M 290,478 L 236,476"/>   <!-- Sphincter -->
+    </g>
+
+    <!-- kidney internal -->
+    <text x="28" y="60" text-anchor="start">Cortex</text>
+    <text x="24" y="112" text-anchor="start">Medulla</text>
+    <text x="170" y="90" text-anchor="start">Calyx</text>
+    <text x="182" y="124" text-anchor="start">Renal pelvis</text>
+
+    <!-- outer organ labels -->
+    <text x="350" y="78" text-anchor="start" fill="#16a34a">Kidney</text>
+    <text x="312" y="225" text-anchor="start" fill="#d97706">Ureter</text>
+    <text x="300" y="345" text-anchor="start" fill="#f97316">Bladder</text>
+
+    <!-- bladder internal -->
+    <text x="305" y="422" text-anchor="start">Trigone</text>
+    <text x="294" y="482" text-anchor="start">Sphincter</text>
+    <text x="232" y="535" text-anchor="middle" fill="#7c3aed">Urethra</text>
+  </g>
+</svg>

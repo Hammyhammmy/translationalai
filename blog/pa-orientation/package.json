@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "type": "module",
+  "description": "Marks .js files here as ES modules so the urinary-model engine can be unit-tested with node:test. Inert for the static site (browsers ignore this file)."
+}

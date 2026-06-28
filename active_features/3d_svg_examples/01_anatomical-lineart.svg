@@ -1,0 +1,84 @@
+<svg viewBox="0 0 440 560" xmlns="http://www.w3.org/2000/svg">
+  <rect width="440" height="560" fill="#ffffff"/>
+
+  <!-- style title -->
+  <text x="16" y="26" font-family="-apple-system, sans-serif" font-size="12" fill="#a8a29e" letter-spacing="0.5">Anatomical line-art</text>
+
+  <g fill="none" stroke="#1c1917" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+
+    <!-- ===== Left kidney (hilum faces right toward center) ===== -->
+    <g transform="translate(120,110)">
+      <path d="M 0,-55 C 25,-55 40,-35 40,-10 C 40,-5 30,-2 24,0 C 30,2 40,5 40,10 C 40,35 25,55 0,55 C -25,55 -42,35 -42,0 C -42,-35 -25,-55 0,-55 Z" fill="#ffffff"/>
+      <!-- sparse contour hatching to suggest rounded form -->
+      <g stroke-width="0.9" stroke="#57534e">
+        <path d="M -30,-26 C -22,-32 -10,-34 -2,-32"/>
+        <path d="M -33,-10 C -24,-18 -10,-21 2,-19"/>
+        <path d="M -33,6 C -24,-1 -10,-4 4,-2"/>
+        <path d="M -30,24 C -22,18 -10,15 2,17"/>
+        <path d="M -24,38 C -16,33 -6,31 2,33"/>
+      </g>
+      <!-- hilum / renal pelvis hint -->
+      <path d="M 24,0 C 18,-1 14,-3 12,-6" stroke-width="1.4"/>
+      <path d="M 24,0 C 18,1 14,3 12,6" stroke-width="1.4"/>
+    </g>
+
+    <!-- ===== Right kidney (mirrored) ===== -->
+    <g transform="translate(320,110) scale(-1,1)">
+      <path d="M 0,-55 C 25,-55 40,-35 40,-10 C 40,-5 30,-2 24,0 C 30,2 40,5 40,10 C 40,35 25,55 0,55 C -25,55 -42,35 -42,0 C -42,-35 -25,-55 0,-55 Z" fill="#ffffff"/>
+      <g stroke-width="0.9" stroke="#57534e">
+        <path d="M -30,-26 C -22,-32 -10,-34 -2,-32"/>
+        <path d="M -33,-10 C -24,-18 -10,-21 2,-19"/>
+        <path d="M -33,6 C -24,-1 -10,-4 4,-2"/>
+        <path d="M -30,24 C -22,18 -10,15 2,17"/>
+        <path d="M -24,38 C -16,33 -6,31 2,33"/>
+      </g>
+      <path d="M 24,0 C 18,-1 14,-3 12,-6" stroke-width="1.4"/>
+      <path d="M 24,0 C 18,1 14,3 12,6" stroke-width="1.4"/>
+    </g>
+
+    <!-- ===== Ureters (single-weight ink, curving to bladder) ===== -->
+    <!-- left: from left hilum (150,115) to bladder (188,345) -->
+    <path d="M 150,115 C 168,165 178,235 178,280 C 178,310 184,330 188,345"/>
+    <!-- right: from right hilum (290,115) to bladder (252,345) -->
+    <path d="M 290,115 C 272,165 262,235 262,280 C 262,310 256,330 252,345"/>
+
+    <!-- ===== Bladder (~150 wide x 120 tall, centered 220,395) ===== -->
+    <path d="M 220,338
+             C 268,338 295,366 295,402
+             C 295,440 268,455 220,455
+             C 172,455 145,440 145,402
+             C 145,366 172,338 220,338 Z" fill="#ffffff"/>
+    <!-- ureter entry points / trigone hint -->
+    <path d="M 188,345 C 196,352 204,356 210,357" stroke-width="1.4"/>
+    <path d="M 252,345 C 244,352 236,356 230,357" stroke-width="1.4"/>
+    <!-- sparse contour shading on bladder dome -->
+    <g stroke-width="0.9" stroke="#57534e">
+      <path d="M 170,375 C 190,365 250,365 270,375"/>
+      <path d="M 162,398 C 190,388 250,388 278,398"/>
+      <path d="M 172,422 C 195,432 245,432 268,422"/>
+    </g>
+
+    <!-- ===== Bladder neck + urethra ===== -->
+    <path d="M 210,455 C 210,470 212,455 213,470 L 213,512"/>
+    <path d="M 230,455 C 230,470 228,455 227,470 L 227,512"/>
+    <path d="M 213,512 C 215,516 225,516 227,512" stroke-width="1.6"/>
+
+  </g>
+
+  <!-- ===== Leader lines + labels ===== -->
+  <g stroke="#1c1917" stroke-width="0.9" fill="none">
+    <path d="M 95,150 L 78,178"/>
+    <path d="M 345,150 L 362,178"/>
+    <path d="M 262,250 L 300,250"/>
+    <path d="M 295,402 L 332,402"/>
+    <path d="M 227,500 L 300,500"/>
+  </g>
+
+  <g font-family="-apple-system, sans-serif" font-size="13" fill="#1c1917">
+    <text x="48" y="192">Kidney</text>
+    <text x="332" y="192">Kidney</text>
+    <text x="305" y="254">Ureter</text>
+    <text x="337" y="406">Bladder</text>
+    <text x="305" y="504">Urethra</text>
+  </g>
+</svg>

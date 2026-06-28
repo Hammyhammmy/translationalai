@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complete model — substrate mockups</title>
+<style>
+  :root { --bg:#fafaf9; --card:#fff; --border:#e7e5e4; --text:#1c1917; --muted:#78716c; --mono:"SF Mono","Fira Code",Consolas,monospace; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--text); padding:40px 24px 80px; }
+  .wrap { max-width:1240px; margin:0 auto; }
+  h1 { font-size:26px; font-weight:800; letter-spacing:-0.02em; margin-bottom:6px; }
+  .sub { color:var(--muted); font-size:15px; margin-bottom:8px; }
+  .note { color:var(--muted); font-size:13px; margin-bottom:30px; font-family:var(--mono); }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; align-items:start; }
+  @media (max-width:980px){ .grid{ grid-template-columns:1fr; } }
+  .cell { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+  .cell .frame { background:#fff; padding:14px; display:flex; align-items:center; justify-content:center; min-height:460px; }
+  .cell img { max-width:100%; max-height:520px; }
+  .cap { border-top:1px solid var(--border); padding:13px 16px; }
+  .cap .num { font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; }
+  .cap .name { font-weight:700; font-size:15px; margin-top:2px; }
+  .cap .desc { font-size:13px; color:var(--muted); margin-top:5px; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>The complete model — which substrate?</h1>
+  <p class="sub">One single, modifiable diagram that shows urine production + flow + innervation, and lets you toggle a lesion <em>into the same picture</em>.</p>
+  <p class="note">each mockup is static but draws every interactive state at once · A &amp; B are built/engine-driven · C is the existing atlas (fixed art)</p>
+  <div class="grid">
+    <div class="cell">
+      <div class="frame"><img src="A_schematic.svg" alt="schematic complete model"></div>
+      <div class="cap"><div class="num">Option A</div><div class="name">Schematic system board</div><div class="desc">Built vector diagram, engine-driven. Flow, innervation, and lesions drawn in place. On-brand with the reference's pipeline diagrams.</div></div>
+    </div>
+    <div class="cell">
+      <div class="frame"><img src="B_anatomical.svg" alt="anatomical complete model"></div>
+      <div class="cap"><div class="num">Option B</div><div class="name">Anatomical interactive figure</div><div class="desc">Built cross-section figure, engine-driven. Realistic anatomy + nephron zoom for production; lesions toggle into the same figure.</div></div>
+    </div>
+    <div class="cell">
+      <div class="frame"><img src="../../blog/pa-orientation/images/atlas2-p01.jpg" alt="real atlas plate"></div>
+      <div class="cap"><div class="num">Option C (reference)</div><div class="name">Real atlas plate — fixed art</div><div class="desc">Publication-grade, but a painting: can't toggle innervation on, can't add a lesion to it, can't animate production. Best as a "compare to the real plate" companion to A or B.</div></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
