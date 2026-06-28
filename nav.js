@@ -1,12 +1,12 @@
 // Shared nav/footer for v1-clinical
 (function () {
-    const current = (location.pathname.split('/').pop() || 'home.html');
+    const current = (location.pathname.split('/').pop() || 'index.html');
     const isActive = (p) => current === p ? ' active' : '';
 
     const navHTML = `
     <nav class="nav">
         <div class="nav-inner">
-            <a href="home.html" class="nav-logo">
+            <a href="/" class="nav-logo">
                 <span class="nav-logo-mark"></span>
                 TranslationalAI
             </a>
