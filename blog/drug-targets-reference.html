@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mechanisms of Action — A Five-Frame Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f4f0e8;--paper:#faf6ee;--paper2:#fffdf7;--ink:#2a2520;--muted:#6b6256;
+    --faint:#9a9082;--terra:#9c3318;--terra-soft:#c06a4d;--line:#ddd5c6;
+    --na:#9c3318;--k:#2f6b6b;--glu:#b07d12;--ca:#6b4a8a;--cl:#4a7a4a;--h:#5a5248;
+    --block:#b3261e;--uro:#1f6f78;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--cream);color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;font-size:17px;line-height:1.58;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px 140px;}
+
+  /* nav */
+  .topnav{position:sticky;top:0;z-index:50;background:rgba(244,240,232,.92);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .topnav .inner{max-width:1120px;margin:0 auto;padding:11px 22px;display:flex;
+    gap:12px;align-items:center;flex-wrap:wrap;}
+  .topnav .brand{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--terra);margin-right:6px;}
+  .topnav a{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--muted);
+    text-decoration:none;padding:5px 9px;border-radius:6px;border:1px solid transparent;}
+  .topnav a:hover{border-color:var(--line);color:var(--ink);}
+  .search{margin-left:auto;display:flex;align-items:center;gap:8px;}
+  .search input{font-family:"JetBrains Mono",monospace;font-size:13px;padding:6px 11px;
+    border:1px solid var(--line);border-radius:8px;background:var(--paper2);color:var(--ink);width:200px;}
+  .search input:focus{outline:2px solid var(--terra-soft);outline-offset:1px;}
+  #count{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--faint);}
+
+  header.top{padding:64px 0 30px;border-bottom:1px solid var(--line);}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--terra);margin-bottom:18px;}
+  h1{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(34px,5.5vw,62px);
+    line-height:1.03;letter-spacing:-.02em;margin:0 0 16px;}
+  h1 em{font-style:italic;color:var(--terra);}
+  .lede{font-size:20px;color:var(--muted);max-width:64ch;}
+  .lede b{color:var(--ink);font-weight:600;}
+
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin:26px 0 4px;
+    font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;}
+
+  /* frame section */
+  .frame{margin:66px 0 0;scroll-margin-top:70px;}
+  .frame-head{border-top:2px solid var(--ink);padding-top:18px;}
+  .frame-kicker{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--terra);}
+  .frame-head h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(26px,3.6vw,38px);
+    margin:6px 0 8px;letter-spacing:-.015em;}
+  .frame-head p{color:var(--muted);max-width:70ch;margin:0;}
+  .grouplabel{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--faint);margin:34px 0 2px;border-bottom:1px solid var(--line);
+    padding-bottom:6px;}
+
+  /* interactive panel (frames 1-2) */
+  .panel{background:var(--paper);border:1px solid var(--line);border-radius:15px;
+    margin:20px 0;overflow:hidden;}
+  .panel-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:9px 12px;
+    padding:20px 24px 15px;border-bottom:1px solid var(--line);}
+  .ptitle{font-family:"Fraunces",serif;font-weight:600;font-size:23px;letter-spacing:-.01em;}
+  .ploc{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.05em;}
+  .badge{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:11px;
+    padding:3px 9px;border-radius:20px;letter-spacing:.03em;white-space:nowrap;}
+  .badge.epi{background:#eef3ee;color:#3c5a3c;border:1px solid #cfe0cf;}
+  .badge.nonepi{background:#f3eef0;color:#7a3a52;border:1px solid #e2cdd6;}
+  .badge.gpcr{background:#eef1f3;color:#3a5466;border:1px solid #cdd9e2;}
+  .uroflag{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:#fff;
+    background:var(--uro);padding:2px 7px;border-radius:5px;letter-spacing:.04em;}
+
+  .panel-body{display:grid;grid-template-columns:minmax(0,400px) 1fr;}
+  @media(max-width:780px){.panel-body{grid-template-columns:1fr;}}
+  .stage{padding:18px 20px;border-right:1px solid var(--line);}
+  @media(max-width:780px){.stage{border-right:none;border-bottom:1px solid var(--line);}}
+  .stage svg{width:100%;height:auto;display:block;}
+  .toggle{display:inline-flex;background:var(--cream);border:1px solid var(--line);
+    border-radius:999px;padding:3px;margin-top:8px;}
+  .toggle button{border:none;background:transparent;color:var(--muted);cursor:pointer;
+    padding:6px 15px;border-radius:999px;font-family:"JetBrains Mono",monospace;font-size:12.5px;transition:.16s;}
+  .toggle button.active{background:var(--ink);color:var(--paper2);}
+  .toggle button.active.drugbtn{background:var(--block);}
+  .readout{padding:20px 24px;}
+  .readout h4{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--terra);margin:0 0 9px;}
+  .readout .sd h4{color:var(--block);}
+  .readout p{margin:0 0 12px;font-size:16px;}
+  .readout ul{margin:6px 0 0;padding-left:0;list-style:none;}
+  .readout li{position:relative;padding-left:22px;margin:7px 0;font-size:15.5px;}
+  .readout li::before{content:"→";position:absolute;left:0;color:var(--terra-soft);font-family:"JetBrains Mono",monospace;}
+  .readout .sd li::before{color:var(--block);}
+  .drugname{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:#f7e9e5;
+    color:var(--block);padding:2px 8px;border-radius:6px;border:1px solid #ecc9c0;}
+  .hide{display:none!important;}
+
+  /* reference cards (frames 3-5) */
+  .cardgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;margin-top:18px;}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:18px 20px;}
+  .card .ct{font-family:"Fraunces",serif;font-weight:600;font-size:19px;display:flex;
+    align-items:baseline;gap:8px;flex-wrap:wrap;}
+  .card .cl{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.05em;margin:2px 0 10px;}
+  .strip{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:"JetBrains Mono",monospace;
+    font-size:12px;margin:4px 0 12px;}
+  .node{padding:4px 9px;border-radius:7px;border:1px solid var(--line);background:var(--paper2);}
+  .node.tgt{border-color:var(--block);color:var(--block);position:relative;}
+  .node.tgt::after{content:"✕";position:absolute;top:-8px;right:-7px;color:var(--block);font-size:12px;font-weight:600;}
+  .arr{color:var(--faint);}
+  .card .drugname{font-size:12px;}
+  .card p{margin:9px 0 0;font-size:15px;}
+  .card .use{color:var(--muted);font-size:14.5px;margin-top:8px;}
+  .card .se{font-size:14px;color:var(--ink);margin-top:8px;}
+  .card .se b{color:var(--terra);}
+
+  .nores{font-family:"JetBrains Mono",monospace;color:var(--faint);padding:30px 0;display:none;}
+  footer{margin-top:80px;padding-top:26px;border-top:1px solid var(--line);color:var(--faint);font-size:14.5px;}
+  footer b{color:var(--muted);}
+  text{font-family:"JetBrains Mono",monospace;}
+</style>
+</head>
+<body>
+
+<nav class="topnav"><div class="inner">
+  <span class="brand">MoA Atlas</span>
+  <a href="#f1">1 · Ion movement</a>
+  <a href="#f2">2 · Messengers</a>
+  <a href="#f3">3 · Enzymes</a>
+  <a href="#f4">4 · Nuclear receptors</a>
+  <a href="#f5">5 · Biologics</a>
+  <span class="search"><input id="q" type="text" placeholder="filter: bladder, digoxin…" aria-label="filter"><span id="count"></span></span>
+</div></nav>
+
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">Mechanisms of Action · Organized by Target Type</div>
+  <h1>Five frames.<br>Every drug is in <em>one</em> of them.</h1>
+  <p class="lede">A drug's whole behavior — what it does, what it doesn't, its side effects — falls out of <b>what kind of thing its target is</b>. Sort the target into one of five frames and the rest follows. The first two frames are interactive: flip each between <b>native</b> physiology and the <b>drug</b> that acts on it. <span class="uroflag">URO</span> marks urology-relevant targets.</p>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--na)"></i>Na⁺</span>
+    <span><i class="dot" style="background:var(--k)"></i>K⁺</span>
+    <span><i class="dot" style="background:var(--ca)"></i>Ca²⁺</span>
+    <span><i class="dot" style="background:var(--cl)"></i>Cl⁻</span>
+    <span><i class="dot" style="background:var(--glu)"></i>solute</span>
+    <span><i class="dot" style="background:var(--h)"></i>H⁺</span>
+  </div>
+</header>
+
+<div class="nores" id="nores">No targets match that filter.</div>
+
+<!-- FRAME 1 -->
+<section class="frame" id="f1" data-frame="1">
+  <div class="frame-head">
+    <div class="frame-kicker">Frame 1</div>
+    <h2>Membrane ion movement</h2>
+    <p>The target is a protein that moves or gates an ion across a membrane: a pump, a channel, or a coupled transporter running on the sodium battery. Almost everything here is the same machine — one ATP pump builds the Na⁺ gradient; the rest spends it. A drug jams one door, and whatever used to ride through it piles up on one side. That pile-up is the clinical effect.</p>
+  </div>
+  <div id="f1-body"></div>
+</section>
+
+<!-- FRAME 2 -->
+<section class="frame" id="f2" data-frame="2">
+  <div class="frame-head">
+    <div class="frame-kicker">Frame 2</div>
+    <h2>Receptors → second messengers</h2>
+    <p>No ion crosses anything. A signal lands on a surface receptor (usually a GPCR), which switches on an internal messenger — cAMP, cGMP, or Ca²⁺ via IP₃. The messenger does the work, and an enzyme later destroys it. Drugs act anywhere on that chain: block the receptor, or block the enzyme that <em>degrades</em> the messenger so it piles up. This is where erections, the bladder, and the prostate live.</p>
+  </div>
+  <div id="f2-body"></div>
+</section>
+
+<!-- FRAME 3 -->
+<section class="frame" id="f3" data-frame="3">
+  <div class="frame-head">
+    <div class="frame-kicker">Frame 3</div>
+    <h2>Enzyme inhibition</h2>
+    <p>The simplest frame. The target is a catalyst that turns substrate into product. Block it and the product falls (or the substrate backs up). No membrane, no messenger — just a reaction switched off.</p>
+  </div>
+  <div class="cardgrid" id="f3-body"></div>
+</section>
+
+<!-- FRAME 4 -->
+<section class="frame" id="f4" data-frame="4">
+  <div class="frame-head">
+    <div class="frame-kicker">Frame 4</div>
+    <h2>Intracellular & nuclear receptors</h2>
+    <p>The target sits <em>inside</em> the cell. A lipophilic hormone diffuses through the membrane, binds a receptor that then changes which genes are transcribed. Effects are slow (hours to days) because they run through protein synthesis. Filing enzalutamide under "enzyme inhibitor" would be the same category error as calling a calcium channel a symporter — so it gets its own frame.</p>
+  </div>
+  <div class="cardgrid" id="f4-body"></div>
+</section>
+
+<!-- FRAME 5 -->
+<section class="frame" id="f5" data-frame="5">
+  <div class="frame-head">
+    <div class="frame-kicker">Frame 5</div>
+    <h2>Large molecules & DNA-level agents</h2>
+    <p>Targets too big or too fundamental for the frames above: extracellular proteins neutralized by antibodies, and the DNA/cytoskeleton machinery hit by classical chemotherapy. Kept brief — the point is to see where they sit relative to everything else.</p>
+  </div>
+  <div class="cardgrid" id="f5-body"></div>
+</section>
+
+<footer>
+  <p><b>How to use this.</b> When you meet a new drug, don't memorize it — ask what its target <em>is</em>. Pump, channel, or transporter → Frame 1, and its side effects are the ion pile-up. GPCR or PDE → Frame 2, and the effect is a messenger going up or down. Catalyst → Frame 3. Intracellular receptor → Frame 4. Antibody or DNA-level → Frame 5. The frame predicts the behavior.</p>
+  <p style="margin-top:12px;color:var(--faint);">A teaching reference, deliberately schematic — stoichiometry, subtypes, and segment detail are simplified for clarity, and a few mechanisms (SGLT2 cardioprotection, exact NCX directionality under digoxin, DCT calcium handling) remain genuinely debated. Not a prescribing resource.</p>
+</footer>
+</div>
+
+<script>
+/* ============ helpers ============ */
+const COL={na:'#9c3318',k:'#2f6b6b',glu:'#b07d12',ca:'#6b4a8a',cl:'#4a7a4a',h:'#5a5248',ink:'#2a2520',block:'#b3261e',muted:'#6b6256',faint:'#9a9082',terra:'#9c3318'};
+const SVGNS='http://www.w3.org/2000/svg';
+function E(t,a){const e=document.createElementNS(SVGNS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+function txt(p,x,y,s,c,sz,w,anch){const t=E('text',{x,y,fill:c||COL.ink,'font-size':sz||12,'text-anchor':anch||'middle','font-weight':w||400});t.textContent=s;p.appendChild(t);return t;}
+function marker(svg,c){let d=svg.querySelector('defs');if(!d){d=E('defs',{});svg.appendChild(d);}const id='a'+c.replace('#','');if(svg.querySelector('#'+id))return id;const m=E('marker',{id,markerWidth:7,markerHeight:7,refX:5.5,refY:3,orient:'auto'});m.appendChild(E('path',{d:'M0,0 L6,3 L0,6 Z',fill:c}));d.appendChild(m);return id;}
+function arr(svg,x1,y1,x2,y2,c){const id=marker(svg,c);svg.appendChild(E('line',{x1,y1,x2,y2,stroke:c,'stroke-width':2.3,'stroke-linecap':'round','marker-end':'url(#'+id+')'}));}
+function box(svg,cx,cy,w,h,label,fill,target,mode){
+  svg.appendChild(E('rect',{x:cx-w/2,y:cy-h/2,width:w,height:h,rx:7,fill:fill||'#fffdf7',stroke:COL.ink,'stroke-width':2}));
+  txt(svg,cx,cy+4,label,COL.ink,11.5,600);
+  if(target&&mode==='drug'){
+    svg.appendChild(E('circle',{cx,cy,r:16,fill:'none',stroke:COL.block,'stroke-width':2.4}));
+    svg.appendChild(E('line',{x1:cx-10,y1:cy-10,x2:cx+10,y2:cy+10,stroke:COL.block,'stroke-width':3.2,'stroke-linecap':'round'}));
+  }
+}
+
+/* ============ Frame 1 renderer ============ */
+function px(frac){return 30+frac*340;}
+function ionArrows(svg,tx,side,ions){
+  const n=ions.length;
+  ions.forEach((io,i)=>{
+    const c=COL[io.c]||COL.ink;
+    const x=tx+(i-(n-1)/2)*15;
+    let y1,y2,ly;
+    if(side==='apical'||side==='mem'){
+      if(io.dir==='in'){y1=side==='mem'?52:48;y2=130;ly=150;}
+      else{y1=side==='mem'?52:60;y2=side==='mem'?26:22;ly=side==='mem'?18:14;}
+    }else{ // baso
+      if(io.dir==='in'){y1=304;y2=222;ly=212;}
+      else{y1=222;y2=312;ly=326;}
+    }
+    arr(svg,x,y1,x,y2,c);
+    txt(svg,x,ly,io.n,c,11,600);
+  });
+}
+function renderCell(svg,spec,mode){
+  while(svg.firstChild)svg.removeChild(svg.firstChild);
+  Object.values(COL).forEach(c=>marker(svg,c));
+  const epi=spec.cellType==='epi';
+  if(epi){
+    svg.appendChild(E('rect',{x:0,y:0,width:400,height:52,fill:'#f0ece1'}));
+    svg.appendChild(E('rect',{x:0,y:278,width:400,height:52,fill:'#f7e7e3'}));
+    svg.appendChild(E('rect',{x:30,y:52,width:340,height:226,fill:'#fffdf7'}));
+    [[30,52,370,52],[30,278,370,278],[30,52,30,278],[370,52,370,278]].forEach(l=>svg.appendChild(E('line',{x1:l[0],y1:l[1],x2:l[2],y2:l[3],stroke:COL.ink,'stroke-width':2.5})));
+    txt(svg,200,18,'LUMEN — '+spec.lumen,COL.muted,11,600);
+    txt(svg,200,36,'apical ↑',COL.terra,10,400);
+    txt(svg,200,300,'basolateral ↓',COL.terra,10,400);
+    txt(svg,200,322,'BLOOD — '+spec.blood,COL.muted,11,600);
+    svg.appendChild(E('circle',{cx:30,cy:76,r:3,fill:COL.terra}));
+    svg.appendChild(E('circle',{cx:370,cy:76,r:3,fill:COL.terra}));
+  }else{
+    svg.appendChild(E('rect',{x:0,y:0,width:400,height:330,fill:'#f7e7e3'}));
+    svg.appendChild(E('rect',{x:44,y:58,width:312,height:214,rx:28,fill:'#fffdf7',stroke:COL.ink,'stroke-width':2.5}));
+    txt(svg,200,26,spec.outside||'OUTSIDE THE CELL',COL.muted,11,600);
+    txt(svg,200,44,'(interstitial fluid ≈ blood · no lumen)',COL.faint,10,400);
+    txt(svg,200,300,'one membrane, all around — not an epithelium',COL.terra,10,400);
+  }
+  spec.transporters.forEach(t=>{
+    const cx=px(t.x);
+    const cy=epi?(t.side==='apical'?52:278):58;
+    box(svg,cx,cy,t.w||72,30,t.label,t.fill,t.target,mode);
+    const blocked=t.target&&mode==='drug';
+    if(!blocked) ionArrows(svg,cx,epi?t.side:'mem',t.ions);
+  });
+  if(mode==='drug'&&spec.drugState.note) txt(svg,200,epi?166:240,spec.drugState.note,COL.block,11,600);
+  else if(mode==='native'&&spec.nativeNote) txt(svg,200,epi?166:240,spec.nativeNote,COL.muted,10.5,400);
+}
+
+/* ============ Frame 2 renderer (cascade) ============ */
+function renderCascade(svg,spec,mode){
+  while(svg.firstChild)svg.removeChild(svg.firstChild);
+  Object.values(COL).forEach(c=>marker(svg,c));
+  svg.appendChild(E('rect',{x:0,y:0,width:400,height:40,fill:'#f0ece1'}));
+  txt(svg,200,24,'SIGNAL: '+spec.signal,COL.muted,11,600);
+  // membrane line
+  svg.appendChild(E('line',{x1:0,y1:70,x2:400,y2:70,stroke:COL.ink,'stroke-width':2.5}));
+  txt(svg,360,64,'membrane',COL.faint,9,400,'end');
+  const nodes=spec.cascade; // array of {label,kind,target}
+  const startY=70, gap=(300-70)/(nodes.length); 
+  nodes.forEach((nd,i)=>{
+    const cy=70+gap*(i+0.5);
+    const w=nd.kind==='receptor'?150:(nd.kind==='effect'?210:150);
+    const fill=nd.kind==='messenger'?'#f1eaf3':(nd.kind==='effect'?'#eef3ee':'#fffdf7');
+    box(svg,200,cy,w,30,nd.label,fill,nd.target,mode);
+    if(i<nodes.length-1) arr(svg,200,cy+16,200,cy+gap-16,COL.muted);
+  });
+  // messenger direction annotation in drug mode
+  if(mode==='drug'&&spec.drugState.delta){
+    txt(svg,330,200,spec.drugState.delta,COL.block,13,600);
+  }
+}
+
+/* ============ DATA ============ */
+const DATA=[
+/* ---------- FRAME 1 ---------- */
+{f:1,group:'Renal tubule',name:'SGLT2',loc:'Proximal tubule',uro:1,cellType:'epi',lumen:'urine',blood:'blood',
+ transporters:[
+   {x:.28,side:'apical',label:'SGLT2',target:1,ions:[{n:'Na⁺',c:'na',dir:'in'},{n:'glu',c:'glu',dir:'in'}]},
+   {x:.28,side:'baso',label:'GLUT2',fill:'#f3ead8',ions:[{n:'glu',c:'glu',dir:'out'}]},
+   {x:.78,side:'baso',label:'Na/K-ATP',fill:'#efe4cf',ions:[{n:'Na⁺',c:'na',dir:'out'},{n:'K⁺',c:'k',dir:'in'}]}],
+ drug:'empagliflozin, dapagliflozin',badge:'epithelial · symporter',
+ native:{s:'Apical SGLT2 lets Na⁺ fall in from urine and drags glucose uphill with it; GLUT2 hands glucose to blood. ~90% of filtered glucose reabsorbed here.',p:['Na⁺ entry is bailed out the back by the ATPase']},
+ drugState:{s:'Block the door and glucose stays in the urine and leaves the body.',note:'glucose stays in lumen',p:['Glucosuria → insulin-independent glucose lowering','Osmotic diuresis → preload drop, BP fall','Resets tubuloglomerular feedback → renoprotection','Genital mycotic infection · euglycemic DKA risk']}},
+
+{f:1,group:'Renal tubule',name:'NHE3 + carbonic anhydrase',loc:'Proximal tubule',uro:1,cellType:'epi',lumen:'urine',blood:'blood',
+ transporters:[
+   {x:.3,side:'apical',label:'NHE3',target:1,w:64,ions:[{n:'Na⁺',c:'na',dir:'in'},{n:'H⁺',c:'h',dir:'out'}]},
+   {x:.75,side:'baso',label:'Na/HCO₃',fill:'#eef3ee',w:78,ions:[{n:'Na⁺',c:'na',dir:'out'},{n:'HCO₃',c:'cl',dir:'out'}]}],
+ drug:'acetazolamide',badge:'epithelial · antiporter',
+ native:{s:'NHE3 swaps Na⁺ in for H⁺ out; the secreted H⁺ + filtered bicarbonate become CO₂/H₂O via carbonic anhydrase, which is how bicarbonate gets reclaimed. CA is the enzyme that keeps the swap running.',p:['Most filtered bicarbonate is recovered here']},
+ drugState:{s:'Acetazolamide blocks carbonic anhydrase, so H⁺ recycling stalls and bicarbonate is lost in the urine.',note:'HCO₃⁻ lost in urine',p:['Mild diuresis + bicarbonate wasting → metabolic acidosis','Alkalinizes urine → dissolves uric-acid / cystine stones','Also: altitude sickness, glaucoma, IIH']}},
+
+{f:1,group:'Renal tubule',name:'NKCC2',loc:'Thick ascending limb',uro:1,cellType:'epi',lumen:'urine',blood:'blood',
+ transporters:[
+   {x:.26,side:'apical',label:'NKCC2',target:1,w:78,ions:[{n:'Na⁺',c:'na',dir:'in'},{n:'K⁺',c:'k',dir:'in'},{n:'2Cl',c:'cl',dir:'in'}]},
+   {x:.62,side:'apical',label:'ROMK',fill:'#eef3ee',w:56,ions:[{n:'K⁺',c:'k',dir:'out'}]},
+   {x:.82,side:'baso',label:'Na/K-ATP',fill:'#efe4cf',ions:[{n:'Na⁺',c:'na',dir:'out'},{n:'K⁺',c:'k',dir:'in'}]}],
+ drug:'furosemide, bumetanide',badge:'epithelial · symporter',
+ native:{s:'NKCC2 hauls Na⁺/K⁺/2Cl⁻ in together. K⁺ leaks back to the lumen via ROMK, making the lumen positive — and that voltage pushes Ca²⁺/Mg²⁺ between the cells back to blood.',p:['K⁺ recycling is what drives paracellular Ca²⁺/Mg²⁺ reabsorption']},
+ drugState:{s:'Loops jam NKCC2 → powerful loss of Na/K/Cl, and the lumen-positive voltage collapses.',note:'lumen voltage gone',p:['Strongest diuresis available','Hypocalcemia + hypomagnesemia (voltage lost) — useful in hypercalcemia','Downstream Na⁺ delivery → hypokalemia','Same transporter in the ear → ototoxicity']}},
+
+{f:1,group:'Renal tubule',name:'NCC',loc:'Distal convoluted tubule',uro:1,cellType:'epi',lumen:'urine',blood:'blood',
+ transporters:[
+   {x:.28,side:'apical',label:'NCC',target:1,w:60,ions:[{n:'Na⁺',c:'na',dir:'in'},{n:'Cl⁻',c:'cl',dir:'in'}]},
+   {x:.74,side:'baso',label:'Na/Ca-X',fill:'#f1eaf3',w:72,ions:[{n:'Na⁺',c:'na',dir:'in'},{n:'Ca²⁺',c:'ca',dir:'out'}]}],
+ drug:'hydrochlorothiazide, chlortalidone',badge:'epithelial · symporter',
+ native:{s:'NCC brings Na⁺ and Cl⁻ in together. Low intracellular Na⁺ lets a basolateral exchanger pull Ca²⁺ out to blood — so Na⁺ and Ca²⁺ handling are linked here.',p:['Fine-tuning segment: small Na⁺ load, large control']},
+ drugState:{s:'Thiazides block NCC. Intracellular Na⁺ drops further, so the exchanger pulls in even more Ca²⁺ — calcium is retained.',note:'Ca²⁺ retained',p:['Calcium retained → used for Ca stones & osteoporosis (opposite of loops)','Downstream Na⁺ → hypokalemia','Classic quartet: hyponatremia, hyperuricemia, hyperglycemia']}},
+
+{f:1,group:'Renal tubule',name:'ENaC + Na/K-ATPase',loc:'Collecting duct · principal cell',uro:1,cellType:'epi',lumen:'urine',blood:'blood',
+ transporters:[
+   {x:.26,side:'apical',label:'ENaC',target:1,w:60,ions:[{n:'Na⁺',c:'na',dir:'in'}]},
+   {x:.6,side:'apical',label:'ROMK',fill:'#eef3ee',w:54,ions:[{n:'K⁺',c:'k',dir:'out'}]},
+   {x:.82,side:'baso',label:'Na/K-ATP',fill:'#efe4cf',ions:[{n:'Na⁺',c:'na',dir:'out'},{n:'K⁺',c:'k',dir:'in'}]}],
+ drug:'amiloride (ENaC) · spironolactone (aldosterone)',badge:'epithelial · channel',
+ native:{s:'ENaC (a pure Na⁺ channel) lets Na⁺ in; pulling positive charge out of the lumen leaves it negative, which sucks K⁺ out into the urine. Aldosterone cranks up both ENaC and the pump.',p:['THE site of K⁺ loss — why every upstream diuretic wastes potassium']},
+ drugState:{s:'Block ENaC (or the aldosterone signal): less Na⁺ reabsorbed, lumen less negative, so K⁺ stays.',note:'K⁺ kept',p:['Potassium-sparing — the counterweight diuretic','Risk flips to hyperkalemia','Spironolactone also hits androgen receptors → gynecomastia']}},
+
+{f:1,group:'Other epithelia',name:'SGLT1',loc:'Enterocyte · small intestine',cellType:'epi',lumen:'gut contents',blood:'blood',
+ transporters:[
+   {x:.28,side:'apical',label:'SGLT1',target:0,ions:[{n:'Na⁺',c:'na',dir:'in'},{n:'glu',c:'glu',dir:'in'}]},
+   {x:.28,side:'baso',label:'GLUT2',fill:'#f3ead8',ions:[{n:'glu',c:'glu',dir:'out'}]},
+   {x:.78,side:'baso',label:'Na/K-ATP',fill:'#efe4cf',ions:[{n:'Na⁺',c:'na',dir:'out'},{n:'K⁺',c:'k',dir:'in'}]}],
+ drug:'oral rehydration salts (exploits it)',badge:'epithelial · symporter',nativeNote:'where Na⁺ goes, water follows',
+ native:{s:'Same machine as SGLT2, different lumen. Glucose-coupled Na⁺ uptake — and water follows the salt. This is the basis of oral rehydration.',p:['Glucose drives salt-and-water absorption']},
+ drugState:{s:'Cholera floods the gut but leaves SGLT1 working. Glucose + salt in the drink reopens water absorption mid-diarrhea.',note:'glucose + salt → water absorbed',p:['Glucose alone or salt alone fails — the coupling is the point','Cheap, one of medicine\u2019s highest-impact ideas']}},
+
+{f:1,group:'Other epithelia',name:'H⁺/K⁺-ATPase',loc:'Parietal cell · stomach',cellType:'epi',lumen:'stomach (acid)',blood:'blood',
+ transporters:[
+   {x:.3,side:'apical',label:'H/K-ATP',target:1,w:80,ions:[{n:'H⁺',c:'h',dir:'out'},{n:'K⁺',c:'k',dir:'in'}]},
+   {x:.78,side:'baso',label:'Cl/HCO₃',fill:'#eef3ee',w:78,ions:[{n:'Cl⁻',c:'cl',dir:'in'},{n:'HCO₃',c:'cl',dir:'out'}]}],
+ drug:'omeprazole, pantoprazole',badge:'epithelial · primary pump',
+ native:{s:'The exception that proves the rule: this pump burns ATP directly to push H⁺ into the stomach and pull K⁺ in — no sodium battery. It is the final common step of acid secretion.',p:['A primary pump, like Na/K-ATPase, just moving protons']},
+ drugState:{s:'PPIs covalently jam the pump itself — the last step — so acid shuts off regardless of upstream signals.',note:'acid shut off',p:['Heals ulcers, treats reflux','↓ absorption of B₁₂, iron, Ca, Mg','Long-term: C. difficile risk, rebound hypersecretion']}},
+
+{f:1,group:'Cardiac & muscle (non-epithelial)',name:'L-type Ca²⁺ channel',loc:'Smooth / cardiac muscle',cellType:'cell',outside:'OUTSIDE THE CELL',
+ transporters:[{x:.5,side:'mem',label:'Ca²⁺ channel',target:1,w:96,ions:[{n:'Ca²⁺',c:'ca',dir:'in'}]}],
+ drug:'amlodipine · verapamil · diltiazem',badge:'non-epithelial · channel',nativeNote:'voltage opens it → Ca²⁺ in → CONTRACTION',
+ native:{s:'NOT a symporter and no sodium is involved. A plain voltage-gated channel: depolarization opens it, Ca²⁺ falls in, contraction follows.',p:['No apical/basolateral — one membrane, opened by voltage']},
+ drugState:{s:'Block the channel → less Ca²⁺ → less contraction. Dihydropyridines (amlodipine) prefer vessels; non-DHPs also slow the heart.',note:'Ca²⁺ blocked → RELAXATION',p:['Vasodilation → ↓ afterload, ↓ BP','DHP: reflex tachycardia, ankle edema','Verapamil/diltiazem: rate & contractility control']}},
+
+{f:1,group:'Cardiac & muscle (non-epithelial)',name:'Na/K-ATPase + NCX',loc:'Cardiac myocyte',cellType:'cell',outside:'OUTSIDE THE CELL',
+ transporters:[
+   {x:.32,side:'mem',label:'NCX',w:70,ions:[{n:'3Na⁺',c:'na',dir:'in'},{n:'Ca²⁺',c:'ca',dir:'out'}]},
+   {x:.7,side:'mem',label:'Na/K-ATP',target:1,w:84,ions:[{n:'Na⁺',c:'na',dir:'out'},{n:'K⁺',c:'k',dir:'in'}]}],
+ drug:'digoxin',badge:'non-epithelial · antiporter',nativeNote:'pump keeps Na⁺ low → NCX throws Ca²⁺ out',
+ native:{s:'The antiporter your intuition was reaching for. NCX normally lets 3 Na⁺ fall in and throws 1 Ca²⁺ out, riding the Na⁺ battery — and it can reverse if Na⁺ piles up. That reversibility is the "in or out depending" you described.',p:['Low intracellular Na⁺ keeps Ca²⁺ being extruded between beats']},
+ drugState:{s:'Digoxin blocks the pump → intracellular Na⁺ rises → the battery weakens → NCX can\u2019t extrude Ca²⁺ → calcium builds up → stronger contraction.',note:'Na⁺↑ → Ca²⁺↑ inside',p:['Positive inotropy (old heart-failure drug)','↑ vagal tone slows AV node → AF rate control','Narrow window; hypokalemia worsens toxicity']}},
+
+{f:1,group:'Neurotransmitter transporters (Na⁺-coupled)',name:'SERT',loc:'Serotonergic nerve terminal',uro:1,cellType:'cell',outside:'SYNAPTIC CLEFT',
+ transporters:[{x:.5,side:'mem',label:'SERT',target:1,w:70,ions:[{n:'Na⁺',c:'na',dir:'in'},{n:'5-HT',c:'glu',dir:'in'}]}],
+ drug:'SSRIs · TCAs · cocaine',badge:'non-epithelial · symporter',nativeNote:'Na⁺ battery drags serotonin back in',
+ native:{s:'Exactly like SGLT — a Na⁺-coupled symporter, but pulling serotonin out of the synapse back into the neuron, ending the signal.',p:['Same engine as the glucose transporters, different cargo']},
+ drugState:{s:'Block SERT → serotonin lingers in the synapse, prolonging the signal.',note:'5-HT stays in synapse',p:['Antidepressant / anxiolytic effect','Delayed ejaculation → first-line for premature ejaculation (URO)','Cocaine blocks DAT/NET/SERT all at once']}},
+
+{f:1,group:'Neurotransmitter transporters (Na⁺-coupled)',name:'NET',loc:'Noradrenergic terminal',cellType:'cell',outside:'SYNAPTIC CLEFT',
+ transporters:[{x:.5,side:'mem',label:'NET',target:1,w:64,ions:[{n:'Na⁺',c:'na',dir:'in'},{n:'NE',c:'glu',dir:'in'}]}],
+ drug:'SNRIs · atomoxetine · TCAs',badge:'non-epithelial · symporter',
+ native:{s:'Na⁺-coupled reuptake of norepinephrine into the terminal.',p:[]},
+ drugState:{s:'Block NET → more synaptic NE.',note:'NE stays in synapse',p:['SNRIs: depression, neuropathic pain, stress incontinence (duloxetine)','Atomoxetine: non-stimulant ADHD']}},
+
+{f:1,group:'Neurotransmitter transporters (Na⁺-coupled)',name:'DAT',loc:'Dopaminergic terminal',cellType:'cell',outside:'SYNAPTIC CLEFT',
+ transporters:[{x:.5,side:'mem',label:'DAT',target:1,w:64,ions:[{n:'Na⁺',c:'na',dir:'in'},{n:'DA',c:'glu',dir:'in'}]}],
+ drug:'methylphenidate · cocaine',badge:'non-epithelial · symporter',
+ native:{s:'Na⁺-coupled reuptake of dopamine.',p:[]},
+ drugState:{s:'Block DAT → more synaptic dopamine.',note:'DA stays in synapse',p:['Methylphenidate: ADHD','Amphetamine also reverses the transporter (pushes DA out)']}},
+
+{f:1,group:'Voltage-gated channels',name:'Voltage-gated Na⁺ channel',loc:'Neuron / cardiac muscle',cellType:'cell',outside:'OUTSIDE THE CELL',
+ transporters:[{x:.5,side:'mem',label:'Naᵥ',target:1,w:64,ions:[{n:'Na⁺',c:'na',dir:'in'}]}],
+ drug:'lidocaine · class I antiarrhythmics · phenytoin',badge:'non-epithelial · channel',nativeNote:'opens to fire the action potential',
+ native:{s:'The channel that starts every action potential — depolarization opens it, Na⁺ rushes in, the spike propagates.',p:[]},
+ drugState:{s:'Block it → the nerve or myocyte can\u2019t fire (especially when firing fast — use-dependence).',note:'no action potential',p:['Local anesthesia (lidocaine)','Antiarrhythmic (class I)','Anticonvulsant (phenytoin, carbamazepine)']}},
+
+{f:1,group:'Voltage-gated channels',name:'K_ATP channel',loc:'Pancreatic β-cell',cellType:'cell',outside:'OUTSIDE THE CELL',
+ transporters:[{x:.5,side:'mem',label:'K_ATP',target:1,w:74,ions:[{n:'K⁺',c:'k',dir:'out'}]}],
+ drug:'sulfonylureas (close) · diazoxide (open)',badge:'non-epithelial · channel',nativeNote:'open K⁺ channel keeps the cell quiet',
+ native:{s:'When glucose is high, ATP rises and closes this K⁺ channel; the cell depolarizes, Ca²⁺ enters, insulin is released. The channel is the glucose sensor.',p:[]},
+ drugState:{s:'Sulfonylureas force it closed → insulin release regardless of glucose (hence hypoglycemia). Diazoxide forces it open → less insulin.',note:'closed → insulin released',p:['Sulfonylureas: type 2 diabetes, risk of hypoglycemia','Diazoxide / minoxidil open vascular K_ATP → vasodilation']}},
+
+{f:1,group:'Voltage-gated channels',name:'Cardiac K⁺ channel (hERG)',loc:'Cardiac myocyte',cellType:'cell',outside:'OUTSIDE THE CELL',
+ transporters:[{x:.5,side:'mem',label:'Kᵥ (hERG)',target:1,w:86,ions:[{n:'K⁺',c:'k',dir:'out'}]}],
+ drug:'sotalol · amiodarone (class III)',badge:'non-epithelial · channel',nativeNote:'K⁺ efflux repolarizes the cell',
+ native:{s:'The repolarizing K⁺ current that ends the cardiac action potential.',p:[]},
+ drugState:{s:'Block it → repolarization is delayed → longer action potential / refractory period.',note:'repolarization delayed → QT↑',p:['Antiarrhythmic (class III)','Off-target hERG block → drug-induced long QT / torsades']}},
+
+{f:1,group:'Ligand-gated channels',name:'GABA-A receptor',loc:'CNS neuron',cellType:'cell',outside:'SYNAPTIC CLEFT',
+ transporters:[{x:.5,side:'mem',label:'GABA-A',target:0,w:78,ions:[{n:'Cl⁻',c:'cl',dir:'in'}]}],
+ drug:'benzodiazepines · barbiturates · propofol',badge:'non-epithelial · channel',nativeNote:'GABA opens it → Cl⁻ in → inhibition',
+ native:{s:'A Cl⁻ channel opened by GABA. Cl⁻ flows in, hyperpolarizes the neuron, dampens firing — the brain\u2019s main brake.',p:[]},
+ drugState:{s:'These drugs don\u2019t block it — they potentiate it (more/longer opening), deepening inhibition.',note:'enhanced Cl⁻ entry → sedation',p:['Benzos ↑ frequency of opening; barbiturates ↑ duration','Sedation, anxiolysis, anticonvulsant, anesthesia','Alcohol and Z-drugs act here too']}},
+
+{f:1,group:'Ligand-gated channels',name:'Nicotinic ACh receptor',loc:'Neuromuscular junction',cellType:'cell',outside:'SYNAPTIC CLEFT',
+ transporters:[{x:.5,side:'mem',label:'nAChR',target:1,w:74,ions:[{n:'Na⁺',c:'na',dir:'in'}]}],
+ drug:'rocuronium · succinylcholine',badge:'non-epithelial · channel',nativeNote:'ACh opens it → muscle fires',
+ native:{s:'ACh from the motor nerve opens this cation channel, depolarizing the muscle to contract.',p:[]},
+ drugState:{s:'Neuromuscular blockers occupy it. Non-depolarizing (rocuronium) block ACh; depolarizing (succinylcholine) over-stimulate then desensitize.',note:'blocked → paralysis',p:['Surgical paralysis / intubation','Reversed by neostigmine (non-depolarizing)']}},
+
+{f:1,group:'Ligand-gated channels',name:'NMDA receptor',loc:'CNS neuron',cellType:'cell',outside:'SYNAPTIC CLEFT',
+ transporters:[{x:.5,side:'mem',label:'NMDA-R',target:1,w:78,ions:[{n:'Ca²⁺',c:'ca',dir:'in'},{n:'Na⁺',c:'na',dir:'in'}]}],
+ drug:'ketamine · memantine',badge:'non-epithelial · channel',nativeNote:'glutamate gate; Ca²⁺/Na⁺ in',
+ native:{s:'A glutamate-gated Ca²⁺/Na⁺ channel central to learning and pain signaling.',p:[]},
+ drugState:{s:'Channel blockers sit in the pore.',note:'blocked',p:['Ketamine: dissociative anesthesia, depression','Memantine: Alzheimer\u2019s','Excess block (alcohol, PCP) → dissociation']}},
+
+{f:1,group:'Ligand-gated channels',name:'5-HT₃ receptor',loc:'Vagal afferents / CTZ',cellType:'cell',outside:'OUTSIDE THE CELL',
+ transporters:[{x:.5,side:'mem',label:'5-HT₃',target:1,w:70,ions:[{n:'Na⁺',c:'na',dir:'in'}]}],
+ drug:'ondansetron',badge:'non-epithelial · channel',nativeNote:'serotonin-gated — triggers nausea',
+ native:{s:'A serotonin-gated cation channel (not a GPCR, unlike most 5-HT receptors) driving the vomiting reflex.',p:[]},
+ drugState:{s:'Block it → strong antiemetic effect.',note:'nausea signal blocked',p:['Chemo / post-op nausea','Can prolong QT']}},
+
+{f:1,group:'Ligand-gated channels',name:'Ryanodine receptor',loc:'Skeletal muscle SR',cellType:'cell',outside:'CYTOPLASM',
+ transporters:[{x:.5,side:'mem',label:'RyR',target:1,w:64,ions:[{n:'Ca²⁺',c:'ca',dir:'out'}]}],
+ drug:'dantrolene',badge:'non-epithelial · channel',nativeNote:'releases Ca²⁺ from SR for contraction',
+ native:{s:'Releases stored Ca²⁺ from the sarcoplasmic reticulum to trigger contraction.',p:[]},
+ drugState:{s:'Dantrolene blocks SR Ca²⁺ release.',note:'Ca²⁺ release blocked',p:['Malignant hyperthermia (the antidote)','Neuroleptic malignant syndrome, spasticity']}},
+
+{f:1,group:'Ligand-gated channels',name:'TRPV1 / vanilloid',loc:'Sensory nerve · bladder',uro:1,cellType:'cell',outside:'OUTSIDE THE CELL',
+ transporters:[{x:.5,side:'mem',label:'TRPV1',target:1,w:70,ions:[{n:'Ca²⁺',c:'ca',dir:'in'},{n:'Na⁺',c:'na',dir:'in'}]}],
+ drug:'capsaicin · resiniferatoxin',badge:'non-epithelial · channel',nativeNote:'heat/capsaicin gate on pain fibers',
+ native:{s:'A heat- and capsaicin-gated channel on C-fiber sensory neurons, including bladder afferents.',p:[]},
+ drugState:{s:'Agonists over-stimulate then defunctionalize the nerve — paradoxically reducing signaling long-term.',note:'afferent desensitized',p:['Intravesical capsaicin/RTX for refractory overactive bladder (URO)','Topical capsaicin for neuropathic pain']}},
+
+{f:1,group:'Other channels',name:'CFTR',loc:'Epithelial apical membrane',cellType:'epi',lumen:'airway / gut',blood:'blood',
+ transporters:[{x:.4,side:'apical',label:'CFTR',target:1,w:64,ions:[{n:'Cl⁻',c:'cl',dir:'out'}]}],
+ drug:'ivacaftor (potentiator)',badge:'epithelial · channel',
+ native:{s:'An apical Cl⁻ channel that hydrates secretions. Mutations (cystic fibrosis) leave it closed or absent → thick mucus.',p:[]},
+ drugState:{s:'Modulators reopen/rescue the channel.',note:'Cl⁻ secretion restored',p:['Ivacaftor potentiates gating; lumacaftor/elexacaftor fix folding','Mutation-specific therapy']}},
+
+/* ---------- FRAME 2 ---------- */
+{f:2,group:'Urology cluster',name:'PDE5',loc:'Penile / vascular smooth muscle',uro:1,badge:'enzyme on cGMP',
+ signal:'NO (from nerves/endothelium)',
+ cascade:[{label:'NO',kind:'receptor'},{label:'guanylyl cyclase',kind:'enzyme'},{label:'cGMP ↑',kind:'messenger'},{label:'smooth-muscle relaxation',kind:'effect'},{label:'PDE5 degrades cGMP',kind:'enzyme',target:1}],
+ drug:'sildenafil, tadalafil',
+ native:{s:'NO turns on guanylyl cyclase → cGMP → smooth muscle relaxes → inflow → erection. PDE5 then chews up cGMP to end it.',p:['No ion crosses anything — it\u2019s all messenger level']},
+ drugState:{s:'Block PDE5 → cGMP isn\u2019t destroyed → it piles up → relaxation is sustained.',delta:'cGMP ↑↑',p:['Erectile dysfunction','Also pulmonary hypertension; tadalafil for BPH symptoms','Contraindicated with nitrates (both raise cGMP → dangerous hypotension)']}},
+
+{f:2,group:'Urology cluster',name:'M₃ muscarinic receptor',loc:'Detrusor (bladder) muscle',uro:1,badge:'GPCR · Gq',
+ signal:'acetylcholine (parasympathetic)',
+ cascade:[{label:'ACh',kind:'receptor'},{label:'M₃ receptor (Gq)',kind:'receptor',target:1},{label:'IP₃ → Ca²⁺ ↑',kind:'messenger'},{label:'detrusor CONTRACTION',kind:'effect'}],
+ drug:'oxybutynin, solifenacin, tolterodine',
+ native:{s:'ACh hits M₃ → Gq → IP₃ releases Ca²⁺ → the bladder contracts to void.',p:['The "wet" side of bladder control']},
+ drugState:{s:'Antimuscarinics block M₃ → less detrusor contraction.',delta:'Ca²⁺ ↓',p:['Overactive bladder / urge incontinence','Anticholinergic load: dry mouth, constipation, cognitive effects in elderly','Pairs against β₃ below — opposite messengers, same muscle']}},
+
+{f:2,group:'Urology cluster',name:'β₃-adrenergic receptor',loc:'Detrusor (bladder) muscle',uro:1,badge:'GPCR · Gs',
+ signal:'norepinephrine (sympathetic)',
+ cascade:[{label:'NE',kind:'receptor'},{label:'β₃ receptor (Gs)',kind:'receptor',target:1},{label:'cAMP ↑',kind:'messenger'},{label:'detrusor RELAXATION',kind:'effect'}],
+ drug:'mirabegron (agonist)',
+ native:{s:'NE on β₃ → Gs → cAMP → the bladder relaxes to store urine.',p:['The "dry"/storage side — the mirror of M₃']},
+ drugState:{s:'Mirabegron is an agonist — it turns this up, enhancing relaxation/storage.',delta:'cAMP ↑',p:['Overactive bladder without anticholinergic side effects','Can raise blood pressure','M₃ contracts via Ca²⁺, β₃ relaxes via cAMP — the cleanest two-receptor pair in the body']}},
+
+{f:2,group:'Urology cluster',name:'α₁A-adrenergic receptor',loc:'Prostate / bladder neck',uro:1,badge:'GPCR · Gq',
+ signal:'norepinephrine',
+ cascade:[{label:'NE',kind:'receptor'},{label:'α₁A receptor (Gq)',kind:'receptor',target:1},{label:'Ca²⁺ ↑',kind:'messenger'},{label:'smooth-muscle tone / outflow obstruction',kind:'effect'}],
+ drug:'tamsulosin, alfuzosin',
+ native:{s:'NE on α₁A keeps prostatic/bladder-neck smooth muscle contracted — part of why BPH obstructs flow.',p:[]},
+ drugState:{s:'α-blockers relax that tone → easier flow.',delta:'tone ↓',p:['BPH / lower urinary tract symptoms — fast symptomatic relief','Orthostatic hypotension, retrograde ejaculation','Floppy iris syndrome in cataract surgery']}},
+
+{f:2,group:'Urology cluster',name:'V₂ vasopressin receptor',loc:'Collecting duct',uro:1,badge:'GPCR · Gs',
+ signal:'ADH (vasopressin)',
+ cascade:[{label:'ADH',kind:'receptor'},{label:'V₂ receptor (Gs)',kind:'receptor',target:1},{label:'cAMP ↑',kind:'messenger'},{label:'aquaporins → water reabsorbed',kind:'effect'}],
+ drug:'desmopressin (agonist) · tolvaptan (antagonist)',
+ native:{s:'ADH on V₂ → cAMP → aquaporins inserted → water reabsorbed, urine concentrated.',p:[]},
+ drugState:{s:'Desmopressin is an agonist (more water retention); tolvaptan blocks it (water diuresis).',delta:'water ↑ / ↓',p:['Desmopressin: nocturnal enuresis, nocturia, diabetes insipidus, von Willebrand','Tolvaptan: SIADH, hyponatremia, ADPKD']}},
+
+{f:2,group:'Cardiovascular & general',name:'β₁-adrenergic receptor',loc:'Heart',badge:'GPCR · Gs',
+ signal:'norepinephrine / epinephrine',
+ cascade:[{label:'NE/Epi',kind:'receptor'},{label:'β₁ receptor (Gs)',kind:'receptor',target:1},{label:'cAMP ↑',kind:'messenger'},{label:'↑ rate & contractility',kind:'effect'}],
+ drug:'metoprolol, bisoprolol (blockers)',
+ native:{s:'Sympathetic drive on β₁ → cAMP → faster, stronger heart.',p:[]},
+ drugState:{s:'β-blockers cut that drive.',delta:'cAMP ↓',p:['↓ rate, ↓ contractility, ↓ O₂ demand','HF, angina, post-MI, rate control','β₂ block → bronchospasm risk']}},
+
+{f:2,group:'Cardiovascular & general',name:'β₂-adrenergic receptor',loc:'Bronchial smooth muscle',badge:'GPCR · Gs',
+ signal:'epinephrine',
+ cascade:[{label:'Epi',kind:'receptor'},{label:'β₂ receptor (Gs)',kind:'receptor',target:1},{label:'cAMP ↑',kind:'messenger'},{label:'bronchodilation',kind:'effect'}],
+ drug:'albuterol, salmeterol (agonists)',
+ native:{s:'β₂ → cAMP → airway smooth muscle relaxes.',p:[]},
+ drugState:{s:'Agonists drive it → bronchodilation.',delta:'cAMP ↑',p:['Asthma / COPD rescue & maintenance','Tremor, tachycardia, hypokalemia']}},
+
+{f:2,group:'Cardiovascular & general',name:'AT₁ (angiotensin) receptor',loc:'Vasculature / kidney',uro:1,badge:'GPCR · Gq',
+ signal:'angiotensin II',
+ cascade:[{label:'Ang II',kind:'receptor'},{label:'AT₁ receptor (Gq)',kind:'receptor',target:1},{label:'Ca²⁺ ↑ / aldosterone',kind:'messenger'},{label:'vasoconstriction, Na⁺ retention',kind:'effect'}],
+ drug:'losartan, valsartan (ARBs)',
+ native:{s:'Ang II on AT₁ → vasoconstriction + aldosterone → BP up, Na⁺/water retained.',p:[]},
+ drugState:{s:'ARBs block AT₁ (ACE inhibitors cut Ang II upstream — see Frame 3).',delta:'tone ↓',p:['Hypertension, HF, diabetic nephroprotection','Hyperkalemia; teratogenic','No cough (vs ACE inhibitors)']}},
+
+{f:2,group:'Cardiovascular & general',name:'H₂ histamine receptor',loc:'Gastric parietal cell',badge:'GPCR · Gs',
+ signal:'histamine',
+ cascade:[{label:'histamine',kind:'receptor'},{label:'H₂ receptor (Gs)',kind:'receptor',target:1},{label:'cAMP ↑',kind:'messenger'},{label:'drives the proton pump → acid',kind:'effect'}],
+ drug:'famotidine',
+ native:{s:'Histamine on H₂ → cAMP → stimulates acid secretion (one tier above the PPI target in Frame 1).',p:[]},
+ drugState:{s:'Block H₂ → less stimulation of acid (weaker than PPIs, which hit the pump itself).',delta:'cAMP ↓',p:['Reflux, ulcers','Compare: H₂ blockers tune the signal, PPIs jam the final pump']}},
+
+{f:2,group:'Cardiovascular & general',name:'μ-opioid receptor',loc:'CNS / gut',badge:'GPCR · Gi',
+ signal:'endorphins / opioids',
+ cascade:[{label:'opioid',kind:'receptor'},{label:'μ receptor (Gi)',kind:'receptor',target:1},{label:'cAMP ↓ · K⁺ open',kind:'messenger'},{label:'↓ neuronal firing → analgesia',kind:'effect'}],
+ drug:'morphine (agonist) · naloxone (antagonist)',
+ native:{s:'A Gi receptor: lowers cAMP and opens K⁺ channels, quieting pain neurons.',p:[]},
+ drugState:{s:'Agonists analgesia; naloxone blocks (overdose reversal).',delta:'firing ↓',p:['Analgesia, but respiratory depression, constipation, tolerance','Naloxone for overdose']}},
+
+{f:2,group:'Cardiovascular & general',name:'D₂ dopamine receptor',loc:'CNS / CTZ',badge:'GPCR · Gi',
+ signal:'dopamine',
+ cascade:[{label:'dopamine',kind:'receptor'},{label:'D₂ receptor (Gi)',kind:'receptor',target:1},{label:'cAMP ↓',kind:'messenger'},{label:'modulates movement, mood, nausea, prolactin',kind:'effect'}],
+ drug:'antipsychotics · metoclopramide',
+ native:{s:'D₂ signaling tunes movement, reward, and the vomiting/prolactin axes.',p:[]},
+ drugState:{s:'Block D₂.',delta:'signal ↓',p:['Antipsychotic & antiemetic effect','Extrapyramidal symptoms, hyperprolactinemia']}},
+
+{f:2,group:'Cardiovascular & general',name:'PDE3',loc:'Heart / platelets / vessels',badge:'enzyme on cAMP',
+ signal:'(degrades cAMP)',
+ cascade:[{label:'cAMP present',kind:'messenger'},{label:'PDE3 degrades cAMP',kind:'enzyme',target:1},{label:'cAMP level set',kind:'messenger'},{label:'inotropy / vasodilation / anti-platelet',kind:'effect'}],
+ drug:'milrinone · cilostazol',
+ native:{s:'PDE3 breaks down cAMP in heart, vessels, and platelets.',p:['Same idea as PDE5 but on cAMP instead of cGMP']},
+ drugState:{s:'Block PDE3 → cAMP rises → more contractility + vasodilation.',delta:'cAMP ↑',p:['Milrinone: acute HF inotrope','Cilostazol: claudication (vasodilation + anti-platelet)']}},
+
+/* ---------- FRAME 3 ---------- */
+{f:3,group:'Urology & endocrine',name:'5α-reductase',uro:1,loc:'Prostate, skin',strip:['testosterone','5α-reductase','DHT'],
+ drug:'finasteride, dutasteride',use:'BPH, male-pattern hair loss.',
+ se:'Shrinks the prostate over months (slow — works on growth, not tone, unlike α-blockers). <b>↓ libido, gynecomastia</b>; lowers PSA ~50% (adjust screening).'},
+
+{f:3,group:'Urology & endocrine',name:'CYP17 (17α-hydroxylase)',uro:1,loc:'Adrenal, tumor',strip:['cholesterol','CYP17','androgens'],
+ drug:'abiraterone',use:'Metastatic castration-resistant prostate cancer.',
+ se:'Blocks androgen synthesis everywhere (not just testes). <b>Given with prednisone</b> to offset the mineralocorticoid surge (hypertension, hypokalemia).'},
+
+{f:3,group:'Urology & endocrine',name:'Aromatase',loc:'Fat, breast, tumor',strip:['androgens','aromatase','estrogen'],
+ drug:'anastrozole, letrozole',use:'ER-positive breast cancer (post-menopausal).',
+ se:'<b>↓ estrogen</b> → hot flashes, osteoporosis, arthralgia.'},
+
+{f:3,group:'Cardiovascular',name:'ACE',uro:1,loc:'Lung endothelium',strip:['angiotensin I','ACE','angiotensin II'],
+ drug:'lisinopril, ramipril',use:'Hypertension, HF, diabetic nephroprotection.',
+ se:'Cuts Ang II at the source (vs ARBs blocking the receptor). <b>Dry cough, angioedema</b> (bradykinin), hyperkalemia; teratogenic.'},
+
+{f:3,group:'Cardiovascular',name:'HMG-CoA reductase',loc:'Liver',strip:['HMG-CoA','reductase','cholesterol'],
+ drug:'statins',use:'Hyperlipidemia, cardiovascular prevention.',
+ se:'<b>↓ LDL</b>; myopathy, transaminitis. The rate-limiting step of cholesterol synthesis.'},
+
+{f:3,group:'Inflammation & gout',name:'Cyclooxygenase (COX)',loc:'Widespread',strip:['arachidonic acid','COX','prostaglandins'],
+ drug:'NSAIDs, aspirin',use:'Pain, inflammation, fever; aspirin anti-platelet.',
+ se:'<b>↓ prostaglandins</b> → analgesia but GI ulcers, renal impairment. Aspirin irreversibly blocks platelet COX-1.'},
+
+{f:3,group:'Inflammation & gout',name:'Xanthine oxidase',uro:1,loc:'Liver, widespread',strip:['purines','xanthine oxidase','uric acid'],
+ drug:'allopurinol, febuxostat',use:'Gout, uric-acid kidney stones, tumor lysis prevention.',
+ se:'<b>↓ uric acid</b>. Don\u2019t start during an acute flare; allopurinol hypersensitivity (HLA-B*5801).'},
+
+{f:3,group:'Diabetes',name:'DPP-4',loc:'Endothelium',strip:['GLP-1','(DPP-4 degrades it)','GLP-1 sustained'],
+ drug:'sitagliptin',use:'Type 2 diabetes.',
+ se:'Blocks the enzyme that degrades incretin GLP-1 → more insulin when glucose is high. Weight-neutral, low hypoglycemia risk.'},
+
+{f:3,group:'Neuro',name:'Acetylcholinesterase',loc:'Synapse, NMJ',strip:['ACh','(AChE degrades it)','ACh sustained'],
+ drug:'donepezil · neostigmine · (organophosphates)',use:'Alzheimer\u2019s; reverse NM blockade; myasthenia.',
+ se:'Block breakdown → more ACh. Cholinergic excess: <b>SLUDGE</b> (poisoning), bradycardia.'},
+
+{f:3,group:'Neuro',name:'Monoamine oxidase (MAO)',loc:'Nerve terminals',strip:['monoamines','(MAO degrades them)','more NE/5-HT/DA'],
+ drug:'MAOIs · selegiline',use:'Refractory depression; Parkinson\u2019s (MAO-B).',
+ se:'<b>Tyramine ("cheese") crisis</b>, serotonin syndrome with SSRIs.'},
+
+{f:3,group:'Hematology',name:'Factor Xa / thrombin',loc:'Coagulation cascade',strip:['prothrombin','Xa / thrombin','clot'],
+ drug:'rivaroxaban (Xa) · dabigatran (thrombin)',use:'Anticoagulation: AF, VTE.',
+ se:'Direct oral anticoagulants. <b>Bleeding</b> risk; specific reversal agents exist.'},
+
+{f:3,group:'Oncology',name:'Dihydrofolate reductase / thymidylate synthase',loc:'Dividing cells',strip:['folate','DHFR / TS','DNA bases'],
+ drug:'methotrexate · 5-fluorouracil',use:'Chemotherapy; MTX also for autoimmune disease.',
+ se:'Starves DNA synthesis. <b>Myelosuppression, mucositis</b>; leucovorin rescue for MTX.'},
+
+/* ---------- FRAME 4 ---------- */
+{f:4,group:'Urology & oncology',name:'Androgen receptor',uro:1,loc:'Cytoplasm → nucleus',strip:['testosterone/DHT','AR','gene transcription'],
+ drug:'enzalutamide, bicalutamide',use:'Prostate cancer.',
+ se:'NOT an enzyme — a nuclear receptor. Blocking it stops androgen-driven transcription. <b>Hot flashes, fatigue, gynecomastia</b>; enzalutamide → seizure risk.'},
+
+{f:4,group:'Urology & oncology',name:'Mineralocorticoid receptor',uro:1,loc:'Collecting duct cytoplasm',strip:['aldosterone','MR','ENaC/pump genes'],
+ drug:'spironolactone, eplerenone',use:'HF, resistant hypertension, hyperaldosteronism.',
+ se:'Same drug appears in Frame 1\u2019s ENaC story — because the receptor here drives the channel there. <b>Hyperkalemia</b>; spironolactone → gynecomastia (eplerenone avoids it).'},
+
+{f:4,group:'Oncology',name:'Estrogen receptor',loc:'Breast cytoplasm → nucleus',strip:['estrogen','ER','transcription'],
+ drug:'tamoxifen (SERM) · fulvestrant',use:'ER-positive breast cancer.',
+ se:'Tissue-selective: anti-estrogen in breast, pro-estrogen in uterus/bone. <b>VTE, endometrial cancer</b> risk; hot flashes.'},
+
+{f:4,group:'Inflammation',name:'Glucocorticoid receptor',loc:'Cytoplasm → nucleus',strip:['cortisol/prednisone','GR','anti-inflammatory genes'],
+ drug:'prednisone, dexamethasone',use:'Inflammation, immunosuppression, replacement.',
+ se:'Broad transcriptional reprogramming. <b>Hyperglycemia, osteoporosis, Cushingoid, adrenal suppression</b>.'},
+
+{f:4,group:'Diabetes',name:'PPARγ',loc:'Adipose / muscle nucleus',strip:['ligand','PPARγ','insulin-sensitivity genes'],
+ drug:'pioglitazone (thiazolidinedione)',use:'Type 2 diabetes (insulin resistance).',
+ se:'Slow onset (transcriptional). <b>Weight gain, edema, HF risk, fractures</b>.'},
+
+/* ---------- FRAME 5 ---------- */
+{f:5,group:'Monoclonal antibodies',name:'Anti-VEGF',loc:'Extracellular',strip:['VEGF','mAb binds it','no angiogenesis'],
+ drug:'bevacizumab · ranibizumab',use:'Cancer; wet macular degeneration (intravitreal).',
+ se:'Neutralizes a circulating growth factor — too big to enter cells. <b>Hypertension, bleeding, impaired healing</b>.'},
+
+{f:5,group:'Monoclonal antibodies',name:'Immune checkpoint (PD-1 / PD-L1)',uro:1,loc:'T-cell / tumor surface',strip:['PD-1 brake on','mAb blocks it','T-cells reactivated'],
+ drug:'pembrolizumab · nivolumab',use:'Bladder, renal, many cancers.',
+ se:'Releases the brake on T-cells. <b>Immune-related adverse events</b>: colitis, thyroiditis, pneumonitis, hepatitis.'},
+
+{f:5,group:'Monoclonal antibodies',name:'Anti-TNFα',loc:'Extracellular',strip:['TNFα','mAb binds it','↓ inflammation'],
+ drug:'infliximab · adalimumab',use:'RA, IBD, psoriasis.',
+ se:'<b>Reactivation of TB</b>, serious infections; screen first.'},
+
+{f:5,group:'Monoclonal antibodies',name:'Anti-CD20',loc:'B-cell surface',strip:['CD20 on B-cells','rituximab binds','B-cell depletion'],
+ drug:'rituximab',use:'Lymphoma, RA, autoimmune disease.',
+ se:'Depletes B-cells. <b>Infusion reactions, infections</b>, hepatitis B reactivation.'},
+
+{f:5,group:'DNA / cytoskeleton chemo',name:'Microtubules',loc:'Mitotic spindle',strip:['tubulin','taxane/vinca','mitosis blocked'],
+ drug:'paclitaxel · vincristine',use:'Many solid & hematologic cancers.',
+ se:'Taxanes stabilize, vincas prevent assembly — both halt mitosis. <b>Peripheral neuropathy, myelosuppression</b>.'},
+
+{f:5,group:'DNA / cytoskeleton chemo',name:'DNA cross-linking',loc:'Nucleus',strip:['DNA','alkylator/platinum','replication blocked'],
+ drug:'cisplatin · cyclophosphamide',use:'Broad chemotherapy.',
+ se:'Damages DNA directly. <b>Nephrotoxicity (cisplatin), hemorrhagic cystitis (cyclophosphamide)</b> — both urology-adjacent toxicities.'},
+];
+
+/* ============ BUILD ============ */
+let uid=0;
+function uro(d){return d.uro?'<span class="uroflag">URO</span>':'';}
+function badgeClass(d){if(d.f===1)return d.cellType==='epi'?'epi':'nonepi';if(d.f===2)return 'gpcr';return 'gpcr';}
+
+function buildInteractive(d){
+  const id='p'+(uid++);
+  const wrap=document.createElement('section');
+  wrap.className='panel';
+  wrap.id=id;
+  wrap.dataset.search=(d.name+' '+d.loc+' '+d.drug+' '+d.group+' '+(d.badge||'')).toLowerCase();
+  wrap.innerHTML=`
+    <div class="panel-head">
+      <span class="ptitle">${d.name}</span>
+      <span class="ploc">${d.loc}</span>${uro(d)}
+      <span class="badge ${badgeClass(d)}">${d.badge||''}</span>
+    </div>
+    <div class="panel-body">
+      <div class="stage"><svg viewBox="0 0 400 330"></svg>
+        <div class="toggle"><button class="active" data-m="native">Native</button><button class="drugbtn" data-m="drug">+ Drug</button></div>
+      </div>
+      <div class="readout">
+        <div class="sn">
+          <h4>Native physiology</h4>
+          <p>${d.native.s}</p>${list(d.native.p,'')}
+        </div>
+        <div class="sd hide">
+          <h4>Drug · <span class="drugname">${d.drug}</span></h4>
+          <p>${d.drugState.s}</p>${list(d.drugState.p,'')}
+        </div>
+      </div>
+    </div>`;
+  return {wrap,d};
+}
+function list(arr){if(!arr||!arr.length)return '';return '<ul>'+arr.map(x=>`<li>${x}</li>`).join('')+'</ul>';}
+
+function buildCard(d){
+  const div=document.createElement('div');
+  div.className='card';
+  div.dataset.search=(d.name+' '+d.loc+' '+d.drug+' '+d.group+' '+d.use).toLowerCase();
+  const strip=d.strip?`<div class="strip"><span class="node">${d.strip[0]}</span><span class="arr">→</span><span class="node tgt">${d.strip[1]}</span><span class="arr">→</span><span class="node">${d.strip[2]}</span></div>`:'';
+  div.innerHTML=`
+    <div class="ct">${d.name}${uro(d)}</div>
+    <div class="cl">${d.loc}</div>
+    ${strip}
+    <p><span class="drugname">${d.drug}</span></p>
+    <div class="use">${d.use}</div>
+    <div class="se">${d.se}</div>`;
+  return div;
+}
+
+const panels=[]; // for filtering
+DATA.forEach(d=>{
+  if(d.f===1||d.f===2){
+    const {wrap}=buildInteractive(d);
+    placeInGroup(d,wrap);
+    panels.push({el:wrap,search:wrap.dataset.search});
+    const svg=wrap.querySelector('svg');
+    const render=m=>{
+      if(d.f===1)renderCell(svg,d,m);else renderCascade(svg,d,m);
+      wrap.querySelector('.sn').classList.toggle('hide',m!=='native');
+      wrap.querySelector('.sd').classList.toggle('hide',m!=='drug');
+      wrap.querySelectorAll('.toggle button').forEach(b=>b.classList.toggle('active',b.dataset.m===m));
+    };
+    wrap.querySelectorAll('.toggle button').forEach(b=>b.addEventListener('click',()=>render(b.dataset.m)));
+    render('native');
+  }else{
+    const card=buildCard(d);
+    document.getElementById('f'+d.f+'-body').appendChild(card);
+    panels.push({el:card,search:card.dataset.search});
+  }
+});
+
+/* group headers within frames 1 & 2 */
+function placeInGroup(d,el){
+  const body=document.getElementById('f'+d.f+'-body');
+  let gid='g'+d.f+'-'+d.group.replace(/[^a-z0-9]/gi,'');
+  let g=document.getElementById(gid);
+  if(!g){g=document.createElement('div');g.className='grouplabel';g.id=gid;g.textContent=d.group;g.dataset.grouphdr='1';body.appendChild(g);}
+  body.appendChild(el);
+}
+
+/* ============ search filter ============ */
+const q=document.getElementById('q'), count=document.getElementById('count'), nores=document.getElementById('nores');
+function applyFilter(){
+  const v=q.value.trim().toLowerCase();
+  let shown=0;
+  panels.forEach(p=>{const m=!v||p.search.includes(v);p.el.classList.toggle('hide',!m);if(m)shown++;});
+  // hide empty group headers
+  document.querySelectorAll('[data-grouphdr]').forEach(h=>{
+    let n=h.nextElementSibling, any=false;
+    while(n&&!n.dataset.grouphdr){if(!n.classList.contains('hide')){any=true;break;}n=n.nextElementSibling;}
+    h.classList.toggle('hide',!any);
+  });
+  count.textContent=v?shown+' shown':panels.length+' targets';
+  nores.style.display=shown?'none':'block';
+}
+q.addEventListener('input',applyFilter);
+count.textContent=panels.length+' targets';
+</script>
+</body>
+</html>

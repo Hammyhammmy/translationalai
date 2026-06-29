@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trauma figure — show the consequence?</title>
+<style>
+  :root{--bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;--accent:#2563eb;--red:#dc2626;--orange:#d97706;--pink:#db2777}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.55;padding:28px 20px 70px}
+  .wrap{max-width:1200px;margin:0 auto}
+  h1{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:4px}
+  h2{font-size:15px;font-weight:800;margin:30px 0 12px;padding-top:18px;border-top:1px solid var(--border)}
+  .sub{color:var(--muted);font-size:14.5px;margin-bottom:6px;max-width:860px}
+  .note{font-size:12.5px;color:var(--muted);background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin:14px 0 4px;max-width:860px}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:980px){.grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:13px;display:flex;flex-direction:column}
+  .ptag{font:600 11px/1.3 "SF Mono",Consolas,monospace;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:2px}
+  .ptitle{font-size:14.5px;font-weight:800;margin-bottom:9px}
+  .stage{background:#f7f6f3;border:1px solid var(--border);border-radius:10px;padding:6px;margin-bottom:9px}
+  svg{display:block;width:100%;height:auto;max-height:340px}
+  .verdict{font-size:12px;color:var(--text)}
+  .x{color:var(--red);font-weight:700}.ok{color:#16a34a;font-weight:700}.mid{color:var(--orange);font-weight:700}
+  .legend{font-size:11px;color:var(--muted);margin-top:auto;padding-top:7px}
+  .ccard{border-left:4px solid var(--orange);background:#fff;border:1px solid var(--border);border-left-width:4px;border-radius:10px;padding:12px;margin-bottom:9px}
+  .ctitle{font-size:14px;font-weight:800;margin-bottom:2px}
+  .csub{font:600 10px/1.3 "SF Mono",monospace;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:8px}
+  .cbody{font-size:12px;color:var(--text);margin-bottom:8px}
+  .why{font-size:11px;color:var(--muted);font-style:italic;border-top:1px dashed var(--border);padding-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Should the Trauma figure show the consequence?</h1>
+  <p class="sub">"The pictures don't help unless we show consequences like haematuria." Agreed. Below: <b>renal trauma</b> four ways (top row = the decision), then the <b>consequence overlay applied to all four injuries</b> to see if it generalizes.</p>
+  <div class="note">Throwaway mockup for <code>/thoughtexperiment</code>. Real base anatomy (<code>urinary-base.svg</code>) + the outlet/scrotum shapes the live page draws in JS. Nothing here is wired in. View at <code>localhost:8001/active_features/thoughtexp_trauma-consequence_2026-06-29/gallery.html</code>.</div>
+
+  <h2>The decision — renal trauma, four ways</h2>
+  <div class="grid">
+
+    <!-- NOW = shipped Option B (freeze) -->
+    <div class="panel">
+      <div class="ptag">Shipped now</div>
+      <div class="ptitle">Freeze + spotlight</div>
+      <div class="stage">
+        <svg viewBox="0 0 510 905" aria-label="now">
+          <image href="/blog/pa-orientation/urinary-base.svg" x="0" y="0" width="510" height="670" style="filter:saturate(.2) opacity(.3)"/>
+          <circle cx="360" cy="178" r="29" fill="rgba(37,99,235,.12)" stroke="rgba(37,99,235,.6)" stroke-width="2.5" stroke-dasharray="5 4"/>
+        </svg>
+      </div>
+      <div class="verdict"><span class="x">✗</span> Dimmed picture + a circle. Localizes the kidney but shows no injury and no <i>sign</i>. This is what you flagged as not helping.</div>
+      <div class="legend">Current state.</div>
+    </div>
+
+    <!-- OPTION A: consequence via existing engine -->
+    <div class="panel">
+      <div class="ptag">Option A · consequence (reuse)</div>
+      <div class="ptitle">Haematuria stream + callout</div>
+      <div class="stage">
+        <svg viewBox="0 0 510 905" aria-label="consequence cheap">
+          <image href="/blog/pa-orientation/urinary-base.svg" x="0" y="0" width="510" height="670" style="filter:saturate(.2) opacity(.3)"/>
+          <!-- blush + marker at kidney -->
+          <ellipse cx="362" cy="182" rx="36" ry="32" fill="rgba(220,38,38,.20)"/>
+          <circle cx="360" cy="178" r="12" fill="#dc2626" stroke="#fff" stroke-width="2.5"/>
+          <!-- BLOOD dots from kidney down the tract (reuses particleColor='blood') -->
+          <circle cx="345" cy="250" r="4.5" fill="#b91c1c"/><circle cx="330" cy="330" r="4.5" fill="#b91c1c"/>
+          <circle cx="312" cy="405" r="4.5" fill="#b91c1c"/><circle cx="288" cy="490" r="4.5" fill="#b91c1c"/>
+          <circle cx="266" cy="560" r="4.5" fill="#b91c1c"/><circle cx="256" cy="612" r="4.5" fill="#b91c1c" opacity=".7"/>
+          <!-- callout -->
+          <line x1="339" y1="178" x2="150" y2="178" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <rect x="12" y="160" width="138" height="35" rx="7" fill="#dc2626"/>
+          <text x="81" y="175" font-size="11.5" font-weight="800" fill="#fff" text-anchor="middle">haematuria</text>
+          <text x="81" y="188" font-size="9.5" fill="#fee2e2" text-anchor="middle">but may be scant — grade ≠ blood</text>
+        </svg>
+      </div>
+      <div class="verdict"><span class="ok">✓</span> The <b>sign</b> is the picture: blood in the urine, from the kidney down. Reuses the red-dot blood-flow the conditions tab already animates + a callout. Teaches the trap (blood ≠ severity).</div>
+      <div class="legend">~1 evening: a 4-row consequence map + reuse blood flow.</div>
+    </div>
+
+    <!-- OPTION B: full bespoke -->
+    <div class="panel">
+      <div class="ptag">Option B · bespoke art</div>
+      <div class="ptitle">Drawn extravasation + grade</div>
+      <div class="stage">
+        <svg viewBox="0 0 510 905" aria-label="bespoke">
+          <image href="/blog/pa-orientation/urinary-base.svg" x="0" y="0" width="510" height="670" style="filter:saturate(.2) opacity(.3)"/>
+          <!-- detailed shattered kidney: laceration wedges + perinephric haematoma -->
+          <ellipse cx="362" cy="182" rx="44" ry="40" fill="rgba(124,45,18,.18)"/>
+          <path d="M352,150 l16,18 m4,8 l-14,16 m18,2 l-10,18" stroke="#7f1d1d" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path d="M340,196 q12,18 30,10" stroke="#b91c1c" stroke-width="2.5" fill="none"/>
+          <circle cx="360" cy="178" r="13" fill="#b91c1c" stroke="#fff" stroke-width="2.5"/>
+          <!-- urine leak / urinoma blob -->
+          <ellipse cx="392" cy="226" rx="20" ry="14" fill="rgba(224,185,78,.5)" stroke="#caa15a" stroke-width="1.5"/>
+          <text x="392" y="230" font-size="8.5" fill="#7c5e1e" text-anchor="middle">urinoma</text>
+          <!-- grade ladder -->
+          <rect x="14" y="150" width="130" height="58" rx="7" fill="#fff" stroke="#7f1d1d" stroke-width="1.5"/>
+          <text x="79" y="166" font-size="10.5" font-weight="800" fill="#7f1d1d" text-anchor="middle">AAST grade IV</text>
+          <text x="79" y="180" font-size="9" fill="#92400e" text-anchor="middle">deep lac → collecting</text>
+          <text x="79" y="192" font-size="9" fill="#92400e" text-anchor="middle">system · urine leak</text>
+          <text x="79" y="203" font-size="8.5" fill="#a8a29e" text-anchor="middle">delayed-phase CT</text>
+        </svg>
+      </div>
+      <div class="verdict"><span class="ok">✓</span> Most accurate &amp; richest. <span class="x">✗</span> Bespoke per-injury drawing — the exact thing the last thought experiment <b>rejected</b> on authoring cost. 4 hand-built scenes, hard to keep consistent.</div>
+      <div class="legend">2–3 evenings; reopens the rejected line.</div>
+    </div>
+
+    <!-- OPTION C: suppress -->
+    <div class="panel">
+      <div class="ptag">Option C · suppress</div>
+      <div class="ptitle">No figure, full-width text</div>
+      <div class="ccard">
+        <div class="ctitle">Renal trauma</div>
+        <div class="csub">GU trauma · kidney · draft</div>
+        <div class="cbody"><b>Haematuria degree does NOT track severity</b> — a pedicle avulsion can be blood-free. CT with a delayed phase catches the urine leak. Stable → conservative even for high grades.</div>
+        <div class="why">Figure hidden — same rule as CPPS/IC/infertility. The text already states every sign in words.</div>
+      </div>
+      <div class="verdict"><span class="ok">✓</span> Honest, free. <span class="x">✗</span> Concedes the figure can't teach trauma at all — a retreat, not a fix.</div>
+      <div class="legend">One predicate.</div>
+    </div>
+
+  </div>
+
+  <h2>Does Option A generalize? The four injuries, each showing its sign</h2>
+  <div class="grid">
+
+    <!-- RENAL -->
+    <div class="panel">
+      <div class="ptag">Renal</div>
+      <div class="ptitle">Haematuria (may be scant)</div>
+      <div class="stage">
+        <svg viewBox="0 0 510 905" aria-label="renal consequence">
+          <image href="/blog/pa-orientation/urinary-base.svg" x="0" y="0" width="510" height="670" style="filter:saturate(.2) opacity(.3)"/>
+          <ellipse cx="362" cy="182" rx="34" ry="30" fill="rgba(220,38,38,.20)"/>
+          <circle cx="360" cy="178" r="11" fill="#dc2626" stroke="#fff" stroke-width="2.5"/>
+          <circle cx="338" cy="300" r="4.5" fill="#b91c1c"/><circle cx="312" cy="405" r="4.5" fill="#b91c1c"/>
+          <circle cx="280" cy="510" r="4.5" fill="#b91c1c"/><circle cx="256" cy="600" r="4.5" fill="#b91c1c" opacity=".7"/>
+          <rect x="12" y="290" width="120" height="22" rx="6" fill="#dc2626"/>
+          <text x="72" y="305" font-size="10.5" font-weight="800" fill="#fff" text-anchor="middle">blood in urine</text>
+        </svg>
+      </div>
+      <div class="verdict">Red stream from kidney down. Reuses blood flow.</div>
+    </div>
+
+    <!-- BLADDER -->
+    <div class="panel">
+      <div class="ptag">Bladder</div>
+      <div class="ptitle">Leak + can't void</div>
+      <div class="stage">
+        <svg viewBox="0 0 510 905" aria-label="bladder consequence">
+          <image href="/blog/pa-orientation/urinary-base.svg" x="0" y="0" width="510" height="670" style="filter:saturate(.2) opacity(.3)"/>
+          <!-- bladder + leak -->
+          <circle cx="256" cy="600" r="30" fill="rgba(220,38,38,.16)" stroke="#dc2626" stroke-width="2"/>
+          <circle cx="256" cy="600" r="11" fill="#dc2626" stroke="#fff" stroke-width="2.5"/>
+          <!-- extravasation droplets escaping the bladder -->
+          <circle cx="296" cy="588" r="4" fill="#e0b94e"/><circle cx="312" cy="604" r="4" fill="#e0b94e"/>
+          <circle cx="218" cy="592" r="4" fill="#e0b94e"/><circle cx="206" cy="610" r="4" fill="#e0b94e"/>
+          <circle cx="256" cy="640" r="4" fill="#e0b94e"/>
+          <rect x="12" y="582" width="126" height="35" rx="7" fill="#dc2626"/>
+          <text x="75" y="597" font-size="10.5" font-weight="800" fill="#fff" text-anchor="middle">urine leaks out</text>
+          <text x="75" y="610" font-size="9" fill="#fee2e2" text-anchor="middle">+ pelvic # · can't void</text>
+        </svg>
+      </div>
+      <div class="verdict">Droplets escaping the bladder = rupture leak.</div>
+    </div>
+
+    <!-- URETHRAL -->
+    <div class="panel">
+      <div class="ptag">Urethral</div>
+      <div class="ptitle">Blood at meatus · DON'T cath</div>
+      <div class="stage">
+        <svg viewBox="0 0 510 905" aria-label="urethral consequence">
+          <image href="/blog/pa-orientation/urinary-base.svg" x="0" y="0" width="510" height="670" style="filter:saturate(.2) opacity(.3)"/>
+          <!-- outlet: urethra + high-riding prostate (drawn higher than normal 678) -->
+          <rect x="247" y="640" width="16" height="150" rx="8" fill="#b48ed6" stroke="#8b5cf6" stroke-width="1.5" opacity=".5"/>
+          <ellipse cx="255" cy="650" rx="33" ry="25" fill="#c9a24a" stroke="#9a7b2e" stroke-width="1.5"/>
+          <path d="M255,690 v22 M248,700 l7,-10 l7,10" stroke="#7c3aed" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="300" y="652" font-size="10" fill="#7c3aed" font-weight="700">high-riding</text>
+          <!-- blood at the meatus (exit ~812) -->
+          <circle cx="256" cy="800" r="10" fill="#b91c1c" stroke="#fff" stroke-width="2"/>
+          <circle cx="250" cy="815" r="3.5" fill="#b91c1c"/><circle cx="262" cy="820" r="3" fill="#b91c1c"/>
+          <rect x="12" y="784" width="130" height="34" rx="7" fill="#dc2626"/>
+          <text x="77" y="799" font-size="10.5" font-weight="800" fill="#fff" text-anchor="middle">blood at meatus</text>
+          <text x="77" y="812" font-size="9.5" fill="#fee2e2" text-anchor="middle">⛔ do NOT catheterise</text>
+        </svg>
+      </div>
+      <div class="verdict">The money figure: the sign + the golden rule.</div>
+    </div>
+
+    <!-- TESTICULAR -->
+    <div class="panel">
+      <div class="ptag">Testicular</div>
+      <div class="ptitle">Haematocele / rupture</div>
+      <div class="stage">
+        <svg viewBox="0 0 510 905" aria-label="testicular consequence">
+          <image href="/blog/pa-orientation/urinary-base.svg" x="0" y="0" width="510" height="670" style="filter:saturate(.2) opacity(.3)"/>
+          <!-- scrotum shapes (drawn by JS on live page) -->
+          <path d="M248,788 C238,812 232,824 226,840 M262,788 C272,812 278,824 284,840" fill="none" stroke="#caa15a" stroke-width="3" stroke-linecap="round"/>
+          <ellipse cx="222" cy="864" rx="22" ry="28" fill="#d9a38a" stroke="#a86b54" stroke-width="1.5"/>
+          <!-- injured testis: swollen, dark haematocele + disrupted contour -->
+          <ellipse cx="290" cy="866" rx="28" ry="34" fill="#7f1d1d" stroke="#dc2626" stroke-width="2.5"/>
+          <path d="M276,852 q14,8 28,-2" stroke="#fca5a5" stroke-width="2" fill="none"/>
+          <rect x="12" y="850" width="120" height="34" rx="7" fill="#dc2626"/>
+          <text x="72" y="865" font-size="10.5" font-weight="800" fill="#fff" text-anchor="middle">haematocele</text>
+          <text x="72" y="878" font-size="9.5" fill="#fee2e2" text-anchor="middle">USS · explore early</text>
+        </svg>
+      </div>
+      <div class="verdict">Swollen dark testis = rupture/haematocele.</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

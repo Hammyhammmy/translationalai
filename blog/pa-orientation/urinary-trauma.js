@@ -44,3 +44,19 @@ export const TRAUMA = {
 
 export const TRAUMA_TOPICS = Object.keys(TRAUMA);
 export function traumaFor(id) { return TRAUMA[id] || null; }
+
+// How the interactive figure depicts each injury — drawn as the CONSEQUENCE you diagnose on,
+// not just a spotlight on the organ. Reuses the model's blood-flow / blush / callout primitives.
+//   mark        — station to anchor the blush + marker + callout leader (a key in the figure's XY map)
+//   blood       — render the red haematuria stream from `mark` down the conduit (upper-tract only)
+//   leak        — urine droplets escaping the bladder (extravasation after rupture)
+//   meatusBlood — a blood-at-the-meatus marker at the urethral exit
+//   highRiding  — a "high-riding prostate" cue above the prostate
+//   haematocele — a swollen, dark testis glyph in the scrotum
+//   callout     — two plain-word lines (sign + the teaching trap / golden rule)
+export const TRAUMA_FIGURE = {
+  renal_trauma:      { mark: 'kidney',  blood: true,        callout: ['haematuria', 'but may be scant — grade ≠ blood'] },
+  bladder_trauma:    { mark: 'bladder', leak: true,         callout: ['urine leaks out', '+ pelvic # · can’t void'] },
+  urethral_trauma:   { mark: 'urethra', meatusBlood: true, highRiding: true, callout: ['blood at meatus', '⛔ do NOT catheterise'] },
+  testicular_trauma: { mark: 'testis',  haematocele: true,  callout: ['haematocele', 'USS · explore early'] },
+};

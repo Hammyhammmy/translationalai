@@ -1,0 +1,96 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prose formatting — options</title>
+<style>
+  :root{--text:#1c1917;--muted:#78716c;--border:#e7e5e4;--accent:#2563eb;--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  body{font-family:var(--font);color:var(--text);max-width:560px;margin:24px auto;padding:0 16px;background:#fafaf9}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin:30px 0 8px}
+  .note{font-size:12px;color:var(--muted);margin:-4px 0 10px}
+  .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+  .h{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:0 0 6px}
+  /* the SHIPPING style today */
+  .c-body{font-size:14.5px;line-height:1.58;margin-bottom:6px}
+  /* Option B/C additions */
+  .c-body p{margin:0 0 10px}
+  .c-body p:last-child{margin-bottom:0}
+  .c-body b{font-weight:700;color:var(--text)}
+  .dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14.5px;line-height:1.5}
+  .dl dt{font-weight:700;white-space:nowrap}
+  .dl dd{margin:0}
+  .lead{margin:0 0 10px;font-size:14.5px;line-height:1.58}
+</style></head><body>
+
+<h2>Option 0 — Current (shipping)</h2>
+<p class="note">One string → one &lt;div class="c-body"&gt;. A 1071-char wall.</p>
+<div class="card"><div class="h">Initial management</div>
+<div class="c-body" id="o0"></div></div>
+
+<h2>Option A — Render-time heuristic auto-paragraph</h2>
+<p class="note">No data edits. Helper splits on sentence + CAPS-label patterns, bolds CAPS heads. Risk: mis-breaks on "2–2.5 L", "S2–S4", "e.g.".</p>
+<div class="card"><div class="h">Initial management</div>
+<div class="c-body" id="oA"></div></div>
+
+<h2>Option B — Authored breaks (\n\n) + **bold**, shared mini-formatter</h2>
+<p class="note">Author inserts paragraph breaks + bold labels in the string; renderer splits. Always correct; backward-compatible (no break = one paragraph).</p>
+<div class="card"><div class="h">Initial management</div>
+<div class="c-body" id="oB"></div></div>
+
+<h2>Option C — Structured data (lead + labeled points)</h2>
+<p class="note">management becomes {lead, points:[{label,text}], caveat}. Renderer maps to a definition list. Richest, but schema churn across modules + renderers.</p>
+<div class="card"><div class="h">Initial management</div>
+<div class="c-body" id="oC"></div></div>
+
+<script>
+const CURRENT = "Universal advice for every stone-former: high fluids (urine output >2–2.5 L/day), reduce sodium and animal protein, and keep dietary calcium NORMAL — restricting calcium paradoxically raises oxalate absorption and stones. Then target by stone type and the 24-h abnormality. CALCIUM oxalate/phosphate: a THIAZIDE for hypercalciuria (it boosts distal tubular calcium reabsorption, lowering urinary calcium); POTASSIUM CITRATE for hypocitraturia (citrate binds calcium and inhibits crystallisation, and alkalinises the urine); cut dietary oxalate for hyperoxaluria. URIC ACID (forms in acidic urine): urinary ALKALINISATION with potassium citrate is first-line and can even DISSOLVE the stone, plus ALLOPURINOL (xanthine-oxidase inhibitor) if uric acid is high. STRUVITE: no medical prevention without source control — achieve complete stone clearance and eradicate the urease-producing infection. CYSTINE: high fluids, urinary alkalinisation, low sodium, and thiol binders (tiopronin/penicillamine) if refractory. Avoid acetazolamide (it promotes calcium-phosphate stones).";
+
+const esc = s => s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+// Option 0
+document.getElementById('o0').textContent = CURRENT;
+
+// Option A — heuristic: break before ALL-CAPS labels followed by ':' or '(', bold them
+function heuristic(t){
+  let s = esc(t);
+  // break before a run of >=5 caps that begins a clause
+  s = s.replace(/\. ((?:[A-Z][A-Z]+(?:[ \/][A-Z]+)*))(?=[:( ])/g, '.\n\n$1');
+  const paras = s.split(/\n\n/).map(p=>{
+    p = p.replace(/^((?:[A-Z][A-Z]+(?:[ \/][A-Z]+)*)[:(][^.]*?:?)/, m=>'<b>'+m+'</b>');
+    return '<p>'+p+'</p>';
+  });
+  return paras.join('');
+}
+document.getElementById('oA').innerHTML = heuristic(CURRENT);
+
+// Option B — authored markdown-subset string
+const AUTHORED =
+"Universal advice for every stone-former: high fluids (urine output >2–2.5 L/day), reduce sodium and animal protein, and keep dietary calcium **normal** — restricting calcium paradoxically raises oxalate absorption and stones. Then target by stone type and the 24-h abnormality.\n\n"+
+"**Calcium oxalate / phosphate** — a thiazide for hypercalciuria (boosts distal tubular calcium reabsorption, lowering urinary calcium); potassium citrate for hypocitraturia (citrate binds calcium and inhibits crystallisation, and alkalinises the urine); cut dietary oxalate for hyperoxaluria.\n\n"+
+"**Uric acid** (forms in acidic urine) — urinary alkalinisation with potassium citrate is first-line and can even dissolve the stone, plus allopurinol (xanthine-oxidase inhibitor) if uric acid is high.\n\n"+
+"**Struvite** — no medical prevention without source control: achieve complete stone clearance and eradicate the urease-producing infection.\n\n"+
+"**Cystine** — high fluids, urinary alkalinisation, low sodium, and thiol binders (tiopronin/penicillamine) if refractory.\n\n"+
+"Avoid acetazolamide (it promotes calcium-phosphate stones).";
+// shared mini-formatter: escape, then **bold**, then \n\n -> <p>
+function prose(t){
+  return t.split(/\n\n/).map(p=>'<p>'+esc(p).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')+'</p>').join('');
+}
+document.getElementById('oB').innerHTML = prose(AUTHORED);
+
+// Option C — structured data
+const STRUCT = {
+  lead:"Universal advice for every stone-former: high fluids (urine output >2–2.5 L/day), reduce sodium and animal protein, and keep dietary calcium normal — restricting calcium paradoxically raises oxalate absorption and stones. Then target by stone type and the 24-h abnormality.",
+  points:[
+    {label:"Calcium ox/phos", text:"thiazide for hypercalciuria (lowers urinary calcium); potassium citrate for hypocitraturia (binds calcium, alkalinises urine); cut dietary oxalate for hyperoxaluria."},
+    {label:"Uric acid", text:"alkalinise urine with potassium citrate (first-line, can dissolve the stone) + allopurinol if uric acid is high."},
+    {label:"Struvite", text:"no medical prevention without source control — complete stone clearance + eradicate the urease infection."},
+    {label:"Cystine", text:"high fluids, alkalinisation, low sodium, thiol binders (tiopronin/penicillamine) if refractory."},
+  ],
+  caveat:"Avoid acetazolamide (it promotes calcium-phosphate stones)."
+};
+function structured(o){
+  let h = '<p class="lead">'+esc(o.lead)+'</p>';
+  h += '<dl class="dl">'+o.points.map(p=>'<dt>'+esc(p.label)+'</dt><dd>'+esc(p.text)+'</dd>').join('')+'</dl>';
+  h += '<p style="margin-top:10px">'+esc(o.caveat)+'</p>';
+  return h;
+}
+document.getElementById('oC').innerHTML = structured(STRUCT);
+</script>
+</body></html>

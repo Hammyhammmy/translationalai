@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sodium Battery — Transporters, Drugs, and Why</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f4f0e8;
+    --paper:#faf6ee;
+    --paper2:#fffdf7;
+    --ink:#2a2520;
+    --muted:#6b6256;
+    --faint:#9a9082;
+    --terra:#9c3318;
+    --terra-soft:#c06a4d;
+    --line:#ddd5c6;
+    --na:#9c3318;     /* sodium */
+    --k:#2f6b6b;      /* potassium */
+    --glu:#b07d12;    /* glucose / solute */
+    --ca:#6b4a8a;     /* calcium */
+    --cl:#4a7a4a;     /* chloride */
+    --h:#5a5248;      /* proton */
+    --block:#b3261e;  /* drug block */
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--cream);color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;font-size:18px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px 120px;}
+
+  /* ---- header ---- */
+  header.top{padding:72px 0 36px;border-bottom:1px solid var(--line);}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--terra);margin-bottom:20px;}
+  h1{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(38px,6vw,68px);
+    line-height:1.02;letter-spacing:-.02em;margin:0 0 18px;}
+  h1 em{font-style:italic;color:var(--terra);}
+  .lede{font-size:21px;color:var(--muted);max-width:60ch;}
+  .lede b{color:var(--ink);font-weight:600;}
+
+  /* ---- the engine box ---- */
+  .engine{background:var(--paper2);border:1px solid var(--line);border-radius:14px;
+    padding:30px 32px;margin:40px 0 8px;}
+  .engine h2{font-family:"Fraunces",serif;font-weight:600;font-size:22px;margin:0 0 14px;letter-spacing:-.01em;}
+  .engine ol{margin:0;padding-left:22px;}
+  .engine li{margin:9px 0;}
+  .mono{font-family:"JetBrains Mono",monospace;font-size:14px;}
+  .chip{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:12.5px;
+    padding:2px 8px;border-radius:6px;border:1px solid var(--line);background:var(--paper);
+    color:var(--ink);white-space:nowrap;}
+
+  /* ---- section divider ---- */
+  .divider{margin:72px 0 8px;}
+  .divider .kicker{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--terra);}
+  .divider h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(28px,4vw,40px);
+    margin:6px 0 10px;letter-spacing:-.015em;}
+  .divider p{color:var(--muted);max-width:64ch;margin:0;}
+
+  /* ---- panel ---- */
+  .panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;
+    margin:28px 0;overflow:hidden;box-shadow:0 1px 0 #fff inset;}
+  .panel-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 14px;
+    padding:24px 28px 18px;border-bottom:1px solid var(--line);}
+  .pnum{font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--terra);
+    border:1px solid var(--terra);border-radius:50%;width:30px;height:30px;
+    display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+  .ptitle{font-family:"Fraunces",serif;font-weight:600;font-size:25px;letter-spacing:-.01em;}
+  .ploc{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.06em;}
+  .ptype{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:11.5px;
+    padding:4px 10px;border-radius:20px;letter-spacing:.04em;}
+  .ptype.epi{background:#eef3ee;color:#3c5a3c;border:1px solid #cfe0cf;}
+  .ptype.nonepi{background:#f3eef0;color:#7a3a52;border:1px solid #e2cdd6;}
+
+  .panel-body{display:grid;grid-template-columns:minmax(0,420px) 1fr;gap:0;}
+  @media(max-width:760px){.panel-body{grid-template-columns:1fr;}}
+  .stage{padding:22px 24px;border-right:1px solid var(--line);}
+  @media(max-width:760px){.stage{border-right:none;border-bottom:1px solid var(--line);}}
+  .stage svg{width:100%;height:auto;display:block;}
+
+  .toggle{display:inline-flex;background:var(--cream);border:1px solid var(--line);
+    border-radius:999px;padding:3px;margin-top:6px;font-family:"JetBrains Mono",monospace;font-size:13px;}
+  .toggle button{border:none;background:transparent;color:var(--muted);cursor:pointer;
+    padding:7px 16px;border-radius:999px;font-family:inherit;font-size:13px;transition:.18s;}
+  .toggle button.active{background:var(--ink);color:var(--paper2);}
+  .toggle button.active.drugbtn{background:var(--block);}
+
+  .readout{padding:24px 28px;}
+  .readout h4{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--terra);margin:0 0 10px;}
+  .readout .state-native h4{color:var(--terra);}
+  .readout .state-drug h4{color:var(--block);}
+  .readout p{margin:0 0 14px;font-size:17px;}
+  .readout ul{margin:6px 0 0;padding-left:0;list-style:none;}
+  .readout li{position:relative;padding-left:24px;margin:8px 0;font-size:16.5px;color:var(--ink);}
+  .readout li::before{content:"→";position:absolute;left:0;color:var(--terra-soft);
+    font-family:"JetBrains Mono",monospace;}
+  .readout .state-drug li::before{color:var(--block);}
+  .drugname{font-family:"JetBrains Mono",monospace;font-size:13px;background:#f7e9e5;
+    color:var(--block);padding:2px 9px;border-radius:6px;border:1px solid #ecc9c0;}
+  .hide{display:none;}
+
+  ion{font-family:"JetBrains Mono",monospace;font-weight:600;}
+  .nm{color:var(--na);} .km{color:var(--k);} .gm{color:var(--glu);}
+  .cm{color:var(--ca);} .clm{color:var(--cl);} .hm{color:var(--h);}
+
+  footer{margin-top:80px;padding-top:28px;border-top:1px solid var(--line);
+    color:var(--faint);font-size:15px;}
+  footer b{color:var(--muted);}
+
+  /* svg helpers */
+  text{font-family:"JetBrains Mono",monospace;}
+  .lumenfill{fill:#f0ece1;}
+  .bloodfill{fill:#f7e7e3;}
+  .cellfill{fill:#fffdf7;}
+  .memb{stroke:var(--ink);stroke-width:2.5;}
+  .compartlbl{font-size:11px;letter-spacing:.12em;}
+  .tlabel{font-size:11.5px;font-weight:600;}
+  .ionlabel{font-size:12.5px;font-weight:600;}
+  .blockX{stroke:var(--block);stroke-width:4;stroke-linecap:round;}
+  .blockring{fill:none;stroke:var(--block);stroke-width:2.5;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">Membrane Transport · One Battery, Many Drugs</div>
+  <h1>The cell is a wall.<br><em>Sodium</em> is the battery.</h1>
+  <p class="lede">Every panel below is the same machine wearing different clothes. <b>One</b> ATP pump builds a sodium gradient; <b>everything else</b> spends it. Flip each cell between its <b>native</b> state and the <b>drug</b> that jams it, and watch the downstream effects fall out of the geometry — not out of memory.</p>
+</header>
+
+<div class="engine">
+  <h2>The whole engine, in four lines</h2>
+  <ol>
+    <li><b>The one pump:</b> <span class="chip">Na⁺/K⁺-ATPase</span> sits basolateral, burns ATP, throws <ion class="nm">3 Na⁺</ion> out and pulls <ion class="km">2 K⁺</ion> in. This is the <em>only</em> primary active transporter here.</li>
+    <li><b>The consequence:</b> intracellular Na⁺ stays <em>low</em>. So everywhere else, Na⁺ "wants" to fall back in. That downhill pull is stored energy — the battery.</li>
+    <li><b>Two questions decode any other protein:</b> <span class="mono">(a) Na⁺-coupled?</span> then Na⁺ rides in. <span class="mono">(b) symporter or antiporter?</span> sym → partner rides <em>in</em> with it; anti → partner gets thrown <em>out</em>.</li>
+    <li><b>A drug usually jams one door.</b> Block it, and the things that used to ride on Na⁺ pile up where they were — and that pile-up <em>is</em> the clinical effect.</li>
+  </ol>
+</div>
+
+<!-- ================= SECTION 1 ================= -->
+<div class="divider">
+  <div class="kicker">Part I · Epithelia — cells with a front and a back</div>
+  <h2>When the cell is a wall between two worlds</h2>
+  <p>An epithelial cell separates a <b>lumen</b> (urine, gut, stomach) from <b>blood</b>. A tight junction belts it near the top, splitting its surface into two territories: <b>apical</b> (faces the lumen) and <b>basolateral</b> (faces blood). The pump lives on the blood side; the Na⁺-coupled entry door lives on the lumen side. That polarity is what lets the cell move things <em>across</em> itself in one direction.</p>
+</div>
+
+<!-- PANEL 1: SGLT2 -->
+<section class="panel" id="p1">
+  <div class="panel-head">
+    <span class="pnum">1</span>
+    <span class="ptitle">SGLT2</span>
+    <span class="ploc">Proximal tubule · kidney</span>
+    <span class="ptype epi">epithelial · polarized</span>
+  </div>
+  <div class="panel-body">
+    <div class="stage">
+      <svg viewBox="0 0 400 330" role="img" aria-label="SGLT2 cell diagram"></svg>
+      <div class="toggle" data-panel="1">
+        <button class="active" data-mode="native">Native</button>
+        <button class="drugbtn" data-mode="drug">+ Gliflozin</button>
+      </div>
+    </div>
+    <div class="readout" data-panel="1">
+      <div class="state-native">
+        <h4>Native physiology</h4>
+        <p>Apical <b>SGLT2</b> lets <ion class="nm">Na⁺</ion> fall in from the urine and <em>chains glucose to that fall</em> — glucose is dragged in uphill. It then slips out the back to blood through <b>GLUT2</b> (just flows down its gradient). Net: <b>glucose reabsorbed, urine → blood.</b></p>
+        <ul>
+          <li>~90% of filtered glucose is recovered here</li>
+          <li>The Na⁺ that came in is bailed out the back by the ATPase</li>
+        </ul>
+      </div>
+      <div class="state-drug hide">
+        <h4>Door jammed · <span class="drugname">empagliflozin, dapagliflozin</span></h4>
+        <p>Block apical SGLT2 and glucose can't be pulled out of the urine — it <b>stays in the lumen and leaves in the urine.</b></p>
+        <ul>
+          <li><b>Glucosuria</b> → lowers blood glucose independent of insulin</li>
+          <li>Glucose in the lumen drags water → <b>osmotic diuresis</b>, mild volume/preload drop</li>
+          <li>Lost Na⁺ delivery downstream resets tubuloglomerular feedback → <b>renoprotection</b></li>
+          <li>Sugary urine → <b>genital mycotic infections</b>; volume loss → <b>euglycemic DKA</b> risk</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PANEL 2: SGLT1 gut -->
+<section class="panel" id="p2">
+  <div class="panel-head">
+    <span class="pnum">2</span>
+    <span class="ptitle">SGLT1</span>
+    <span class="ploc">Enterocyte · small intestine</span>
+    <span class="ptype epi">epithelial · polarized</span>
+  </div>
+  <div class="panel-body">
+    <div class="stage">
+      <svg viewBox="0 0 400 330" role="img" aria-label="SGLT1 gut cell diagram"></svg>
+      <div class="toggle" data-panel="2">
+        <button class="active" data-mode="native">Native</button>
+        <button class="drugbtn" data-mode="drug">Cholera / ORS</button>
+      </div>
+    </div>
+    <div class="readout" data-panel="2">
+      <div class="state-native">
+        <h4>Native physiology · same machine as #1</h4>
+        <p>Identical logic, different lumen. Apical <b>SGLT1</b> couples <ion class="nm">Na⁺</ion> from gut contents to glucose uptake; <b>GLUT2</b> exits to blood. <b>Where Na⁺ goes, water follows.</b></p>
+        <ul>
+          <li>This is why glucose drives salt-and-water <em>absorption</em></li>
+        </ul>
+      </div>
+      <div class="state-drug hide">
+        <h4>Why oral rehydration works · <span class="drugname">ORS</span></h4>
+        <p>Cholera toxin floods the lumen with secreted fluid — but it <b>leaves SGLT1 untouched.</b> Put glucose <em>and</em> salt in the drink, and SGLT1 keeps pulling Na⁺ (and water) back in even mid-diarrhea.</p>
+        <ul>
+          <li>Glucose + salt together → the coupled door reopens water absorption</li>
+          <li>A few cents of sugar/salt solution; one of the highest-impact ideas in medicine</li>
+          <li>Glucose alone or salt alone won't do it — the <b>coupling</b> is the point</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PANEL 3: NKCC2 loop -->
+<section class="panel" id="p3">
+  <div class="panel-head">
+    <span class="pnum">3</span>
+    <span class="ptitle">NKCC2</span>
+    <span class="ploc">Thick ascending limb · kidney</span>
+    <span class="ptype epi">epithelial · polarized</span>
+  </div>
+  <div class="panel-body">
+    <div class="stage">
+      <svg viewBox="0 0 400 330" role="img" aria-label="NKCC2 loop diuretic diagram"></svg>
+      <div class="toggle" data-panel="3">
+        <button class="active" data-mode="native">Native</button>
+        <button class="drugbtn" data-mode="drug">+ Loop diuretic</button>
+      </div>
+    </div>
+    <div class="readout" data-panel="3">
+      <div class="state-native">
+        <h4>Native physiology</h4>
+        <p>Apical <b>NKCC2</b> hauls in <ion class="nm">Na⁺</ion>, <ion class="km">K⁺</ion>, and <ion class="clm">2 Cl⁻</ion> together on the Na⁺ fall. <ion class="km">K⁺</ion> leaks back into the lumen via apical <b>ROMK</b>, leaving the lumen <b>positive</b> — and that positive charge pushes <ion class="cm">Ca²⁺</ion>/Mg²⁺ between the cells, back to blood.</p>
+        <ul>
+          <li>The K⁺ recycling is what creates the voltage that drives Ca²⁺/Mg²⁺ reabsorption</li>
+        </ul>
+      </div>
+      <div class="state-drug hide">
+        <h4>Door jammed · <span class="drugname">furosemide, bumetanide</span></h4>
+        <p>Block NKCC2 → lose Na⁺, K⁺, Cl⁻ into urine (powerful diuresis). But the lumen-positive voltage <b>collapses too</b>, so Ca²⁺/Mg²⁺ stop being reabsorbed.</p>
+        <ul>
+          <li>Brisk natriuresis → strongest diuretics we have</li>
+          <li><b>Hypocalcemia + hypomagnesemia</b> (voltage gone) — useful in hypercalcemia</li>
+          <li>More Na⁺ delivered downstream → <b>hypokalemia</b></li>
+          <li>The same transporter sits in the inner ear → <b>ototoxicity</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PANEL 4: NCC thiazide -->
+<section class="panel" id="p4">
+  <div class="panel-head">
+    <span class="pnum">4</span>
+    <span class="ptitle">NCC</span>
+    <span class="ploc">Distal convoluted tubule · kidney</span>
+    <span class="ptype epi">epithelial · polarized</span>
+  </div>
+  <div class="panel-body">
+    <div class="stage">
+      <svg viewBox="0 0 400 330" role="img" aria-label="NCC thiazide diagram"></svg>
+      <div class="toggle" data-panel="4">
+        <button class="active" data-mode="native">Native</button>
+        <button class="drugbtn" data-mode="drug">+ Thiazide</button>
+      </div>
+    </div>
+    <div class="readout" data-panel="4">
+      <div class="state-native">
+        <h4>Native physiology</h4>
+        <p>Apical <b>NCC</b> brings <ion class="nm">Na⁺</ion> and <ion class="clm">Cl⁻</ion> in together. With less Na⁺ inside, a basolateral <ion class="nm">Na⁺</ion>/<ion class="cm">Ca²⁺</ion> exchanger pulls <ion class="cm">Ca²⁺</ion> out to blood — so Na⁺ handling and Ca²⁺ handling are linked here.</p>
+        <ul>
+          <li>Fine-tuning segment — only ~5% of Na⁺, but it sets the final urine</li>
+        </ul>
+      </div>
+      <div class="state-drug hide">
+        <h4>Door jammed · <span class="drugname">hydrochlorothiazide, chlortalidone</span></h4>
+        <p>Block NCC → modest natriuresis. Intracellular Na⁺ drops, which makes the basolateral exchanger pull in <em>more</em> Ca²⁺ from blood — so thiazides <b>retain calcium</b> (the opposite of loops).</p>
+        <ul>
+          <li><b>Calcium retained</b> → used for calcium kidney stones & osteoporosis</li>
+          <li>More Na⁺ delivered downstream → <b>hypokalemia</b></li>
+          <li>Also <b>hyponatremia, hyperuricemia, hyperglycemia</b> (the classic thiazide quartet)</li>
+          <li>Loop wastes Ca²⁺, thiazide saves it — same logic, opposite segment</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PANEL 5: ENaC -->
+<section class="panel" id="p5">
+  <div class="panel-head">
+    <span class="pnum">5</span>
+    <span class="ptitle">ENaC + Na⁺/K⁺-ATPase</span>
+    <span class="ploc">Collecting duct · principal cell</span>
+    <span class="ptype epi">epithelial · polarized</span>
+  </div>
+  <div class="panel-body">
+    <div class="stage">
+      <svg viewBox="0 0 400 330" role="img" aria-label="ENaC aldosterone diagram"></svg>
+      <div class="toggle" data-panel="5">
+        <button class="active" data-mode="native">Native</button>
+        <button class="drugbtn" data-mode="drug">+ K⁺-sparing</button>
+      </div>
+    </div>
+    <div class="readout" data-panel="5">
+      <div class="state-native">
+        <h4>Native physiology · the K⁺ story</h4>
+        <p>Apical <b>ENaC</b> (a pure channel, no coupling) lets <ion class="nm">Na⁺</ion> in; the basolateral pump bails it to blood. Pulling positive Na⁺ out of the lumen leaves it <b>negative</b>, which sucks <ion class="km">K⁺</ion> out through apical channels into the urine. <b>Aldosterone</b> cranks up ENaC and the pump.</p>
+        <ul>
+          <li>This is <em>the</em> site where K⁺ is lost — and why every upstream diuretic causes it</li>
+        </ul>
+      </div>
+      <div class="state-drug hide">
+        <h4>Door jammed · <span class="drugname">amiloride (ENaC) · spironolactone (aldosterone receptor)</span></h4>
+        <p>Block ENaC (or the aldosterone signal upstream of it) → less Na⁺ reabsorbed, lumen stays less negative, so <b>K⁺ stops leaving.</b></p>
+        <ul>
+          <li><b>Potassium-sparing</b> — the counterweight to loops/thiazides</li>
+          <li>Risk flips to <b>hyperkalemia</b></li>
+          <li>Spironolactone also hits androgen receptors → <b>gynecomastia</b> (eplerenone avoids this)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PANEL 6: PPI -->
+<section class="panel" id="p6">
+  <div class="panel-head">
+    <span class="pnum">6</span>
+    <span class="ptitle">H⁺/K⁺-ATPase</span>
+    <span class="ploc">Parietal cell · stomach</span>
+    <span class="ptype epi">epithelial · primary pump</span>
+  </div>
+  <div class="panel-body">
+    <div class="stage">
+      <svg viewBox="0 0 400 330" role="img" aria-label="Gastric proton pump diagram"></svg>
+      <div class="toggle" data-panel="6">
+        <button class="active" data-mode="native">Native</button>
+        <button class="drugbtn" data-mode="drug">+ PPI</button>
+      </div>
+    </div>
+    <div class="readout" data-panel="6">
+      <div class="state-native">
+        <h4>Native physiology · a different ATPase</h4>
+        <p>The exception that proves the rule: this apical pump burns ATP <em>directly</em> to push <ion class="hm">H⁺</ion> into the stomach lumen and pull <ion class="km">K⁺</ion> in — no sodium battery involved. It's the <b>final common step</b> of acid secretion. The basolateral <ion class="clm">Cl⁻</ion>/HCO₃⁻ swap creates the post-meal "alkaline tide."</p>
+        <ul>
+          <li>A primary active pump, like Na⁺/K⁺-ATPase — just moving protons</li>
+        </ul>
+      </div>
+      <div class="state-drug hide">
+        <h4>Door jammed · <span class="drugname">omeprazole, pantoprazole</span></h4>
+        <p>PPIs covalently jam the proton pump itself. Because it's the <b>last step</b>, blocking it shuts acid down no matter what's signaling upstream (histamine, gastrin, vagus).</p>
+        <ul>
+          <li>Profound acid suppression — heals ulcers, treats reflux</li>
+          <li>Less acid → worse absorption of <b>B₁₂, iron, calcium, magnesium</b></li>
+          <li>Long-term: <b>C. difficile</b> risk, possible fracture/rebound hypersecretion</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECTION 2 ================= -->
+<div class="divider">
+  <div class="kicker">Part II · Non-epithelial cells — no front, no back</div>
+  <h2>When there is no lumen at all</h2>
+  <p>Here's the answer to your myocyte question: <b>apical and basolateral mean nothing in a muscle cell.</b> A myocyte isn't an epithelium — no tight junction, no lumen, no two-compartment wall. Its membrane faces interstitial fluid all the way around, and that fluid is in equilibrium with blood. So it's "all blood side," exactly as you guessed. The polarity that matters in a myocyte isn't <em>spatial</em> (top vs. bottom) — it's <em>temporal</em> (voltage rising and falling over time). The drugs act on that.</p>
+</div>
+
+<!-- PANEL 7: L-type Ca channel CCB -->
+<section class="panel" id="p7">
+  <div class="panel-head">
+    <span class="pnum">7</span>
+    <span class="ptitle">L-type Ca²⁺ channel</span>
+    <span class="ploc">Smooth muscle / cardiac myocyte</span>
+    <span class="ptype nonepi">non-epithelial · not a symporter</span>
+  </div>
+  <div class="panel-body">
+    <div class="stage">
+      <svg viewBox="0 0 400 330" role="img" aria-label="L-type calcium channel diagram"></svg>
+      <div class="toggle" data-panel="7">
+        <button class="active" data-mode="native">Native</button>
+        <button class="drugbtn" data-mode="drug">+ CCB</button>
+      </div>
+    </div>
+    <div class="readout" data-panel="7">
+      <div class="state-native">
+        <h4>Native physiology · the correction</h4>
+        <p>This is <b>not</b> a symporter and <b>no sodium is involved.</b> It's a plain voltage-gated channel: when the membrane depolarizes, it opens and <ion class="cm">Ca²⁺</ion> simply falls in down its own gradient. That Ca²⁺ entry <b>triggers contraction</b> — vasoconstriction in vessels, force + pacemaker firing in the heart.</p>
+        <ul>
+          <li>No apical/basolateral — just one membrane, opened by voltage</li>
+          <li>More open channels → more Ca²⁺ in → more contraction</li>
+        </ul>
+      </div>
+      <div class="state-drug hide">
+        <h4>Door jammed · <span class="drugname">amlodipine (vessels) · verapamil, diltiazem (heart too)</span></h4>
+        <p>Block the channel → less Ca²⁺ enters → less contraction. <b>Dihydropyridines</b> (amlodipine) prefer vascular smooth muscle; <b>non-DHPs</b> also hit the heart.</p>
+        <ul>
+          <li>Vessel relaxation → <b>↓ afterload, ↓ blood pressure</b></li>
+          <li>Reflex tachycardia & <b>ankle edema</b> with dihydropyridines</li>
+          <li>Verapamil/diltiazem slow rate & contractility → used for rate control</li>
+          <li>Now contrast this with panel 8 — calcium, but via the Na⁺ battery</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PANEL 8: NCX digoxin -->
+<section class="panel" id="p8">
+  <div class="panel-head">
+    <span class="pnum">8</span>
+    <span class="ptitle">Na⁺/K⁺-ATPase + NCX</span>
+    <span class="ploc">Cardiac myocyte</span>
+    <span class="ptype nonepi">non-epithelial · the antiporter you meant</span>
+  </div>
+  <div class="panel-body">
+    <div class="stage">
+      <svg viewBox="0 0 400 330" role="img" aria-label="NCX digoxin diagram"></svg>
+      <div class="toggle" data-panel="8">
+        <button class="active" data-mode="native">Native</button>
+        <button class="drugbtn" data-mode="drug">+ Digoxin</button>
+      </div>
+    </div>
+    <div class="readout" data-panel="8">
+      <div class="state-native">
+        <h4>Native physiology · "Ca²⁺ in or out depending"</h4>
+        <p>This is the protein your intuition was reaching for. <b>NCX</b> is an antiporter: it normally lets <ion class="nm">3 Na⁺</ion> fall in and throws <ion class="cm">1 Ca²⁺</ion> out — riding the Na⁺ battery. Because it runs on that gradient, it <b>can reverse</b> if Na⁺ piles up inside. That reversibility is exactly the "in or out depending on what the body wants" you described.</p>
+        <ul>
+          <li>The pump keeps Na⁺ low → NCX keeps throwing Ca²⁺ out → relaxation between beats</li>
+        </ul>
+      </div>
+      <div class="state-drug hide">
+        <h4>Door jammed · <span class="drugname">digoxin</span></h4>
+        <p>Digoxin blocks the <b>Na⁺/K⁺-ATPase</b>. Intracellular Na⁺ climbs → the Na⁺ battery weakens → NCX can no longer extrude Ca²⁺ (and may reverse) → <ion class="cm">Ca²⁺</ion> <b>builds up inside</b> → stronger contraction.</p>
+        <ul>
+          <li><b>Positive inotropy</b> — the old heart-failure mechanism</li>
+          <li>Also boosts vagal tone → slows AV conduction (rate control in AF)</li>
+          <li>Narrow therapeutic window; <b>hypokalemia worsens toxicity</b> (K⁺ and digoxin compete at the pump)</li>
+          <li>Same calcium endpoint as a CCB — reached through the sodium battery, not a channel</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><b>One last frame.</b> Panels 7 and 8 both end at "intracellular calcium," but they get there by opposite routes — a CCB shuts a <em>channel</em>, digoxin disables the <em>pump</em> that powers an <em>exchanger</em>. That's the payoff of the model: once you see whether a protein is a pump, a channel, a symporter, or an antiporter, the drug's whole side-effect profile is just the geometry running in reverse.</p>
+  <p style="margin-top:14px;color:var(--faint);">A learning aid, deliberately schematic — stoichiometry and segment detail simplified for clarity. Mechanisms like SGLT2 cardioprotection remain genuinely debated.</p>
+</footer>
+
+</div>
+
+<script>
+/* ---------- ion glyph helper ---------- */
+const C = {na:'#9c3318',k:'#2f6b6b',glu:'#b07d12',ca:'#6b4a8a',cl:'#4a7a4a',h:'#5a5248',ink:'#2a2520',block:'#b3261e'};
+
+function svgEl(tag,attrs){
+  const e=document.createElementNS('http://www.w3.org/2000/svg',tag);
+  for(const k in attrs) e.setAttribute(k,attrs[k]);
+  return e;
+}
+/* directional arrow */
+function arrow(svg,x1,y1,x2,y2,color,cls){
+  const l=svgEl('line',{x1,y1,x2,y2,stroke:color,'stroke-width':2.4,'stroke-linecap':'round',
+    'marker-end':`url(#arrow-${color.replace('#','')})`});
+  if(cls) l.setAttribute('class',cls);
+  svg.appendChild(l);
+}
+function ensureMarker(svg,color){
+  let defs=svg.querySelector('defs');
+  if(!defs){defs=svgEl('defs',{});svg.appendChild(defs);}
+  const id=`arrow-${color.replace('#','')}`;
+  if(svg.querySelector('#'+id))return;
+  const m=svgEl('marker',{id,markerWidth:7,markerHeight:7,refX:5.5,refY:3,orient:'auto'});
+  m.appendChild(svgEl('path',{d:'M0,0 L6,3 L0,6 Z',fill:color}));
+  defs.appendChild(m);
+}
+function label(svg,x,y,txt,color,size,weight,anchor){
+  const t=svgEl('text',{x,y,fill:color||C.ink,'font-size':size||12.5,'text-anchor':anchor||'middle',
+    'font-weight':weight||400});
+  t.textContent=txt; svg.appendChild(t); return t;
+}
+/* a transporter "block" straddling a membrane */
+function gate(svg,cx,cy,w,h,name,fill){
+  const g=svgEl('g',{});
+  g.appendChild(svgEl('rect',{x:cx-w/2,y:cy-h/2,width:w,height:h,rx:7,fill:fill||'#fffdf7',
+    stroke:C.ink,'stroke-width':2}));
+  const t=svgEl('text',{x:cx,y:cy+4,fill:C.ink,'font-size':12,'text-anchor':'middle','font-weight':600});
+  t.textContent=name; g.appendChild(t);
+  svg.appendChild(g);
+  return g;
+}
+/* red block X over a gate */
+function blockX(svg,cx,cy,cls){
+  const g=svgEl('g',{class:cls||''});
+  g.appendChild(svgEl('circle',{cx,cy,r:17,fill:'none',stroke:C.block,'stroke-width':2.5}));
+  g.appendChild(svgEl('line',{x1:cx-11,y1:cy-11,x2:cx+11,y2:cy+11,stroke:C.block,'stroke-width':3.5,'stroke-linecap':'round'}));
+  svg.appendChild(g);
+  return g;
+}
+
+/* ---------- scaffold: lumen / cell / blood ---------- */
+function scaffold(svg,lumenTxt,bloodTxt,epithelial){
+  ['#9c3318','#2f6b6b','#b07d12','#6b4a8a','#4a7a4a','#5a5248','#2a2520'].forEach(c=>ensureMarker(svg,c));
+  // lumen strip
+  svg.appendChild(svgEl('rect',{x:0,y:0,width:400,height:54,fill:'#f0ece1'}));
+  // blood strip
+  svg.appendChild(svgEl('rect',{x:0,y:276,width:400,height:54,fill:'#f7e7e3'}));
+  // cell body
+  svg.appendChild(svgEl('rect',{x:30,y:54,width:340,height:222,fill:'#fffdf7',stroke:'none'}));
+  // apical membrane
+  svg.appendChild(svgEl('line',{x1:30,y1:54,x2:370,y2:54,stroke:C.ink,'stroke-width':2.5}));
+  // basolateral membrane
+  svg.appendChild(svgEl('line',{x1:30,y1:276,x2:370,y2:276,stroke:C.ink,'stroke-width':2.5}));
+  // side membranes
+  svg.appendChild(svgEl('line',{x1:30,y1:54,x2:30,y2:276,stroke:C.ink,'stroke-width':2.5}));
+  svg.appendChild(svgEl('line',{x1:370,y1:54,x2:370,y2:276,stroke:C.ink,'stroke-width':2.5}));
+  // labels
+  if(epithelial){
+    label(svg,200,20,'LUMEN — '+lumenTxt,C.muted||'#6b6256',11,600);
+    label(svg,200,40,'apical membrane ↑',C.terra||'#9c3318',10.5,400);
+    label(svg,200,308,'basolateral membrane ↓',C.terra||'#9c3318',10.5,400);
+    label(svg,200,326,'BLOOD — '+bloodTxt,'#6b6256',11,600);
+    // tight junction dots
+    svg.appendChild(svgEl('circle',{cx:30,cy:80,r:3.5,fill:C.terra}));
+    svg.appendChild(svgEl('circle',{cx:370,cy:80,r:3.5,fill:C.terra}));
+    label(svg,200,168,'CELL','#cabfad',12,600);
+  }
+}
+
+/* ---------- non-epithelial scaffold (one membrane all around) ---------- */
+function scaffoldCell(svg,outsideTxt){
+  ['#9c3318','#2f6b6b','#b07d12','#6b4a8a','#4a7a4a','#5a5248','#2a2520'].forEach(c=>ensureMarker(svg,c));
+  svg.appendChild(svgEl('rect',{x:0,y:0,width:400,height:330,fill:'#f7e7e3'}));
+  // rounded cell
+  svg.appendChild(svgEl('rect',{x:46,y:60,width:308,height:210,rx:30,fill:'#fffdf7',stroke:C.ink,'stroke-width':2.5}));
+  label(svg,200,28,outsideTxt,'#6b6256',11,600);
+  label(svg,200,46,'(interstitial fluid ≈ blood — no lumen)','#9a9082',10.5,400);
+  label(svg,200,300,'one membrane, all the way around','#9c3318',10.5,400);
+}
+
+/* ============================================================
+   PANEL BUILDERS
+   ============================================================ */
+const builders={};
+
+/* --- 1 SGLT2 --- */
+builders[1]=function(svg,mode){
+  scaffold(svg,'urine','blood',true);
+  // apical SGLT2 at x=130
+  gate(svg,130,54,70,30,'SGLT2');
+  // basolateral GLUT2 at x=130
+  gate(svg,130,276,66,30,'GLUT2','#f3ead8');
+  // basolateral pump at x=290
+  gate(svg,290,276,78,32,'Na/K-ATP','#efe4cf');
+  if(mode==='native'){
+    arrow(svg,118,90,118,250,C.na);      // Na in
+    label(svg,104,170,'Na⁺',C.na,12.5,600,'end');
+    arrow(svg,142,90,142,250,C.glu);     // glu in (dragged)
+    label(svg,158,170,'glu',C.glu,12.5,600,'start');
+    arrow(svg,130,250,130,300,C.glu);    // glu to blood via GLUT2
+    arrow(svg,278,250,278,300,C.na);     // Na out via pump
+    arrow(svg,302,300,302,250,C.k);      // K in via pump
+  } else {
+    blockX(svg,130,54);
+    // glucose stays in lumen
+    label(svg,130,30,'glucose stays →',C.block,11,600);
+    svg.appendChild(svgEl('circle',{cx:175,cy:30,r:6,fill:C.glu}));
+    svg.appendChild(svgEl('circle',{cx:195,cy:38,r:6,fill:C.glu}));
+    svg.appendChild(svgEl('circle',{cx:215,cy:26,r:6,fill:C.glu}));
+    // pump still runs
+    arrow(svg,278,250,278,300,C.na);
+    arrow(svg,302,300,302,250,C.k);
+  }
+};
+
+/* --- 2 SGLT1 gut --- */
+builders[2]=function(svg,mode){
+  scaffold(svg,'gut contents','blood',true);
+  gate(svg,130,54,70,30,'SGLT1');
+  gate(svg,130,276,66,30,'GLUT2','#f3ead8');
+  gate(svg,290,276,78,32,'Na/K-ATP','#efe4cf');
+  if(mode==='native'){
+    arrow(svg,118,90,118,250,C.na); label(svg,104,170,'Na⁺',C.na,12.5,600,'end');
+    arrow(svg,142,90,142,250,C.glu); label(svg,158,170,'glu',C.glu,12.5,600,'start');
+    arrow(svg,130,250,130,300,C.glu);
+    arrow(svg,278,250,278,300,C.na); arrow(svg,302,300,302,250,C.k);
+    // water follows
+    label(svg,255,120,'H₂O follows Na⁺',C.na,11,600);
+    arrow(svg,250,150,250,250,'#2f6b6b');
+  } else {
+    // ORS: door works, drives absorption against secretion
+    arrow(svg,118,90,118,250,C.na); label(svg,104,170,'Na⁺',C.na,12.5,600,'end');
+    arrow(svg,142,90,142,250,C.glu); label(svg,158,170,'glu',C.glu,12.5,600,'start');
+    arrow(svg,250,150,250,250,'#2f6b6b'); label(svg,255,120,'H₂O reabsorbed',C.k,11,600);
+    label(svg,200,46,'glucose + salt in the drink → door stays open',C.block,10,600);
+    arrow(svg,278,250,278,300,C.na); arrow(svg,302,300,302,250,C.k);
+  }
+};
+
+/* --- 3 NKCC2 --- */
+builders[3]=function(svg,mode){
+  scaffold(svg,'urine','blood',true);
+  gate(svg,120,54,78,30,'NKCC2');
+  gate(svg,235,54,56,28,'ROMK','#eef3ee');
+  gate(svg,300,276,78,32,'Na/K-ATP','#efe4cf');
+  if(mode==='native'){
+    arrow(svg,104,90,104,250,C.na); label(svg,92,150,'Na⁺',C.na,11.5,600,'end');
+    arrow(svg,120,90,120,250,C.k);  label(svg,120,250,'',C.k);
+    arrow(svg,136,90,136,250,C.cl); label(svg,150,150,'2Cl⁻',C.cl,11.5,600,'start');
+    // ROMK recycles K back to lumen
+    arrow(svg,235,82,235,30,C.k); label(svg,235,20,'K⁺ back ↑',C.k,11,600);
+    // lumen positive
+    label(svg,235,110,'lumen +',C.k,11,600);
+    // paracellular Ca/Mg
+    arrow(svg,30,150,15,200,C.ca);
+    label(svg,55,140,'Ca²⁺/Mg²⁺',C.ca,11,600);
+    label(svg,55,300,'(pushed between cells → blood)','#9a9082',9.5,400);
+    arrow(svg,288,250,288,300,C.na); arrow(svg,312,300,312,250,C.k);
+  } else {
+    blockX(svg,120,54);
+    label(svg,120,30,'Na/K/Cl lost in urine',C.block,10.5,600);
+    label(svg,235,110,'voltage gone',C.block,11,600);
+    label(svg,55,140,'Ca²⁺/Mg²⁺ NOT saved',C.block,10,600);
+    arrow(svg,288,250,288,300,C.na); arrow(svg,312,300,312,250,C.k);
+  }
+};
+
+/* --- 4 NCC --- */
+builders[4]=function(svg,mode){
+  scaffold(svg,'urine','blood',true);
+  gate(svg,120,54,64,30,'NCC');
+  gate(svg,280,276,72,30,'Na/Ca-X','#f1eaf3');
+  gate(svg,200,276,72,32,'Na/K-ATP','#efe4cf');
+  if(mode==='native'){
+    arrow(svg,108,90,108,250,C.na); label(svg,96,160,'Na⁺',C.na,12,600,'end');
+    arrow(svg,132,90,132,250,C.cl); label(svg,148,160,'Cl⁻',C.cl,12,600,'start');
+    arrow(svg,268,250,268,300,C.na); label(svg,255,240,'Na⁺',C.na,11,600,'end');
+    arrow(svg,292,300,292,250,C.ca); label(svg,308,240,'Ca²⁺ out',C.ca,11,600,'start');
+  } else {
+    blockX(svg,120,54);
+    label(svg,120,30,'Na⁺/Cl⁻ → urine',C.block,10.5,600);
+    // more Ca pulled in
+    arrow(svg,292,250,292,300,C.ca); label(svg,300,330,'',C.ca);
+    label(svg,300,240,'Ca²⁺ retained',C.ca,11,600,'start');
+    arrow(svg,308,300,308,250,C.ca);
+    arrow(svg,200,250,200,300,C.na);
+  }
+};
+
+/* --- 5 ENaC --- */
+builders[5]=function(svg,mode){
+  scaffold(svg,'urine','blood',true);
+  gate(svg,120,54,62,30,'ENaC');
+  gate(svg,235,54,54,28,'ROMK','#eef3ee');
+  gate(svg,290,276,78,32,'Na/K-ATP','#efe4cf');
+  if(mode==='native'){
+    arrow(svg,120,90,120,250,C.na); label(svg,120,250,'',C.na);
+    label(svg,104,150,'Na⁺',C.na,12,600,'end');
+    label(svg,160,150,'lumen −',C.na,11,600,'start');
+    // K secreted into lumen
+    arrow(svg,235,82,235,30,C.k); label(svg,235,20,'K⁺ lost ↑',C.k,11,600);
+    arrow(svg,278,250,278,300,C.na); arrow(svg,302,300,302,250,C.k);
+    label(svg,200,250,'aldosterone ↑ both',C.terra,10.5,600);
+  } else {
+    blockX(svg,120,54);
+    label(svg,120,30,'Na⁺ not reabsorbed',C.block,10.5,600);
+    // K stays
+    label(svg,235,40,'K⁺ kept',C.block,11,600);
+    svg.appendChild(svgEl('circle',{cx:235,cy:70,r:6,fill:C.k}));
+    arrow(svg,278,250,278,300,C.na); arrow(svg,302,300,302,250,C.k);
+  }
+};
+
+/* --- 6 PPI --- */
+builders[6]=function(svg,mode){
+  scaffold(svg,'stomach (acid)','blood',true);
+  gate(svg,130,54,80,32,'H/K-ATP','#f1ece2');
+  gate(svg,290,276,80,30,'Cl/HCO₃','#eef3ee');
+  if(mode==='native'){
+    arrow(svg,118,90,118,30,C.h); label(svg,118,20,'H⁺ → acid',C.h,11,600);
+    arrow(svg,142,30,142,90,C.k); label(svg,160,40,'K⁺ in',C.k,11,600,'start');
+    label(svg,130,130,'burns ATP directly',C.terra,10.5,600);
+    label(svg,130,150,'(no Na⁺ needed)','#9a9082',10,400);
+    arrow(svg,278,300,278,250,C.cl); label(svg,265,240,'Cl⁻',C.cl,11,600,'end');
+    arrow(svg,302,250,302,300,'#4a7a4a'); label(svg,320,240,'HCO₃⁻',C.cl,10.5,600,'start');
+  } else {
+    blockX(svg,130,54);
+    label(svg,130,30,'acid shut off',C.block,11,600);
+    label(svg,130,130,'final common step jammed',C.block,10.5,600);
+    arrow(svg,278,300,278,250,C.cl);
+  }
+};
+
+/* --- 7 L-type Ca channel (non-epithelial) --- */
+builders[7]=function(svg,mode){
+  scaffoldCell(svg,'OUTSIDE THE CELL');
+  // channel embedded in top membrane of rounded cell (y~60)
+  gate(svg,200,60,92,30,'Ca²⁺ channel','#f1eaf3');
+  label(svg,200,108,'voltage-gated · a plain channel',C.muted||'#6b6256',10.5,400);
+  if(mode==='native'){
+    arrow(svg,200,95,200,170,C.ca); label(svg,228,135,'Ca²⁺ in',C.ca,12.5,600,'start');
+    label(svg,200,205,'↓',C.ink,16,600);
+    label(svg,200,230,'CONTRACTION',C.terra,13,700);
+    label(svg,200,252,'(vasoconstriction / cardiac force)','#6b6256',10.5,400);
+  } else {
+    blockX(svg,200,60);
+    label(svg,200,140,'Ca²⁺ entry blocked',C.block,12,600);
+    label(svg,200,205,'↓',C.ink,16,600);
+    label(svg,200,230,'RELAXATION',C.block,13,700);
+    label(svg,200,252,'↓ afterload · ↓ blood pressure','#6b6256',10.5,400);
+  }
+};
+
+/* --- 8 NCX + pump (non-epithelial) --- */
+builders[8]=function(svg,mode){
+  scaffoldCell(svg,'OUTSIDE THE CELL');
+  gate(svg,135,60,78,30,'NCX','#f1eaf3');
+  gate(svg,275,60,86,32,'Na/K-ATP','#efe4cf');
+  if(mode==='native'){
+    // NCX: 3Na in, 1 Ca out
+    arrow(svg,122,95,122,160,C.na); label(svg,108,130,'3Na⁺',C.na,11,600,'end');
+    arrow(svg,148,160,148,95,C.ca); label(svg,164,130,'Ca²⁺ out',C.ca,11,600,'start');
+    // pump keeps Na low
+    arrow(svg,262,160,262,95,C.na); label(svg,248,130,'Na⁺',C.na,11,600,'end');
+    arrow(svg,288,95,288,160,C.k); label(svg,304,130,'K⁺',C.k,11,600,'start');
+    label(svg,200,225,'Na⁺ kept low → Ca²⁺ pumped out',C.muted||'#6b6256',10.5,400);
+    label(svg,200,248,'relaxation between beats','#9a9082',10.5,400);
+  } else {
+    blockX(svg,275,60);  // digoxin blocks the PUMP
+    label(svg,275,108,'pump jammed',C.block,11,600);
+    // Na rises
+    label(svg,150,135,'Na⁺ ↑ inside',C.block,11,600);
+    svg.appendChild(svgEl('circle',{cx:135,cy:155,r:5,fill:C.na}));
+    svg.appendChild(svgEl('circle',{cx:152,cy:165,r:5,fill:C.na}));
+    svg.appendChild(svgEl('circle',{cx:142,cy:178,r:5,fill:C.na}));
+    // NCX can't extrude / reverses -> Ca in
+    arrow(svg,135,95,135,160,C.ca); label(svg,118,200,'Ca²⁺ ↑',C.ca,12,600,'end');
+    label(svg,200,225,'Ca²⁺ builds up inside',C.ca,11.5,600);
+    label(svg,200,248,'↑ CONTRACTILITY (inotropy)',C.terra,11.5,700);
+  }
+};
+
+/* ============================================================
+   WIRE UP
+   ============================================================ */
+function render(panel,mode){
+  const svg=document.querySelector(`#p${panel} .stage svg`);
+  while(svg.firstChild) svg.removeChild(svg.firstChild);
+  builders[panel](svg,mode);
+  // readout
+  const ro=document.querySelector(`.readout[data-panel="${panel}"]`);
+  ro.querySelector('.state-native').classList.toggle('hide',mode!=='native');
+  ro.querySelector('.state-drug').classList.toggle('hide',mode!=='drug');
+  // toggle buttons
+  document.querySelectorAll(`.toggle[data-panel="${panel}"] button`).forEach(b=>{
+    b.classList.toggle('active',b.dataset.mode===mode);
+  });
+}
+document.querySelectorAll('.toggle button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const panel=btn.closest('.toggle').dataset.panel;
+    render(panel,btn.dataset.mode);
+  });
+});
+// initial render
+for(let i=1;i<=8;i++) render(i,'native');
+</script>
+</body>
+</html>

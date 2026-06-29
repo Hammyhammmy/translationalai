@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Figure relevance — before/after mockup</title>
+<style>
+  :root{--bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;--accent:#2563eb;--red:#dc2626;--orange:#d97706;--pink:#db2777}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:28px 20px 70px}
+  .wrap{max-width:1180px;margin:0 auto}
+  h1{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:4px}
+  .sub{color:var(--muted);font-size:14.5px;margin-bottom:6px;max-width:760px}
+  .note{font-size:12.5px;color:var(--muted);background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin:14px 0 22px;max-width:760px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;flex-direction:column}
+  .ptag{font:600 11px/1.3 "SF Mono",Consolas,monospace;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:2px}
+  .ptitle{font-size:16px;font-weight:800;margin-bottom:10px}
+  .stage{background:#f7f6f3;border:1px solid var(--border);border-radius:10px;padding:6px;margin-bottom:10px}
+  svg{display:block;width:100%;height:auto}
+  .verdict{font-size:13px;color:var(--text)}
+  .verdict b{color:var(--text)}
+  .x{color:var(--red);font-weight:700}.ok{color:#16a34a;font-weight:700}
+  .legend{font-size:12px;color:var(--muted);margin-top:auto;padding-top:8px}
+  /* option C content-first card */
+  .ccard{border-left:4px solid var(--pink);background:#fff;border:1px solid var(--border);border-left-width:4px;border-radius:10px;padding:14px;margin-bottom:10px}
+  .ctitle{font-size:15px;font-weight:800;margin-bottom:2px}
+  .csub{font:600 10px/1.3 "SF Mono",monospace;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:9px}
+  .cbody{font-size:13px;color:var(--text);margin-bottom:8px}
+  .why{font-size:11.5px;color:var(--muted);font-style:italic;border-top:1px dashed var(--border);padding-top:7px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Does the figure earn its place?</h1>
+  <p class="sub">Same condition — <b>ureteral stone</b> — drawn three ways. The question isn't "nicer image"; it's <b>does a reader instantly see where the defect is and what it does</b>.</p>
+  <div class="note">Throwaway mockup for <code>/thoughtexperiment</code>. Uses the real base anatomy (<code>urinary-base.svg</code>). Nothing here is wired into the live page.</div>
+
+  <div class="grid">
+
+    <!-- ============ NOW ============ -->
+    <div class="panel">
+      <div class="ptag">Option · current</div>
+      <div class="ptitle">As it is now</div>
+      <div class="stage">
+        <svg viewBox="0 0 510 670" role="img" aria-label="current treatment">
+          <image href="/blog/pa-orientation/urinary-base.svg" x="0" y="0" width="510" height="670" style="filter:saturate(.38) opacity(.55)"/>
+          <!-- faint selected-station ring + faint dilation, like today -->
+          <circle cx="300" cy="405" r="16" fill="rgba(37,99,235,.06)" stroke="rgba(37,99,235,.35)" stroke-width="1.5"/>
+          <circle cx="360" cy="178" r="26" fill="rgba(217,119,6,.18)" stroke="rgba(217,119,6,.5)" stroke-width="1.5"/>
+          <circle cx="300" cy="405" r="11" fill="#57534e" stroke="#fff" stroke-width="1.5" opacity=".8"/>
+        </svg>
+      </div>
+      <div class="verdict"><span class="x">✗</span> The base is the same faded picture every condition shows. The marker is a small dim dot — you have to already know the anatomy to read it. Looks decorative.</div>
+      <div class="legend">No label, no focus — the eye has nowhere to land.</div>
+    </div>
+
+    <!-- ============ LOUD ============ -->
+    <div class="panel">
+      <div class="ptag">Option A · sharpen</div>
+      <div class="ptitle">Loud + labelled + spotlight</div>
+      <div class="stage">
+        <svg viewBox="0 0 510 670" role="img" aria-label="sharpened treatment">
+          <defs>
+            <radialGradient id="spot" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#fff" stop-opacity=".0"/>
+              <stop offset="62%" stop-color="#fafaf9" stop-opacity=".0"/>
+              <stop offset="100%" stop-color="#fafaf9" stop-opacity=".82"/>
+            </radialGradient>
+          </defs>
+          <!-- base dimmed hard -->
+          <image href="/blog/pa-orientation/urinary-base.svg" x="0" y="0" width="510" height="670" style="filter:saturate(.25) opacity(.32)"/>
+          <!-- spotlight vignette focuses the lesion zone -->
+          <rect x="0" y="0" width="510" height="670" fill="url(#spot)"/>
+          <!-- dilation ABOVE: bright glow + tag -->
+          <circle cx="360" cy="178" r="30" fill="rgba(217,119,6,.30)" stroke="#d97706" stroke-width="2.5"/>
+          <path d="M360,150 v-18 M352,140 l8,-10 l8,10" stroke="#d97706" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="392" y="150" width="112" height="34" rx="7" fill="#fff" stroke="#d97706" stroke-width="1.5"/>
+          <text x="448" y="165" font-size="11" font-weight="700" fill="#b45309" text-anchor="middle">hydronephrosis</text>
+          <text x="448" y="178" font-size="10" fill="#92400e" text-anchor="middle">back-pressure ↑</text>
+          <!-- LESION: bright pulsing dot + leader + label -->
+          <line x1="300" y1="405" x2="150" y2="405" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <circle cx="300" cy="405" r="22" fill="none" stroke="#dc2626" stroke-width="2" opacity=".5"/>
+          <circle cx="300" cy="405" r="12" fill="#dc2626" stroke="#fff" stroke-width="2.5"/>
+          <rect x="14" y="388" width="132" height="34" rx="7" fill="#dc2626"/>
+          <text x="80" y="403" font-size="11.5" font-weight="800" fill="#fff" text-anchor="middle">STONE lodges here</text>
+          <text x="80" y="416" font-size="10" fill="#fee2e2" text-anchor="middle">flow stops</text>
+          <!-- BELOW: dry hint -->
+          <text x="256" y="556" font-size="11" fill="#a8a29e" text-anchor="middle" font-style="italic">↓ quiet below the block</text>
+        </svg>
+      </div>
+      <div class="verdict"><span class="ok">✓</span> The defect is the loudest thing on screen, named in plain words, with the consequence (dilation above, quiet below) shown as a directional story. Same one figure — just made to teach.</div>
+      <div class="legend">Reuses the existing overlay engine; ~1 evening of polish.</div>
+    </div>
+
+    <!-- ============ SUPPRESS ============ -->
+    <div class="panel">
+      <div class="ptag">Option C · suppress</div>
+      <div class="ptitle">No figure when it can't help</div>
+      <div class="ccard">
+        <div class="ctitle">Interstitial cystitis / BPS</div>
+        <div class="csub">bladder · inflammation · draft</div>
+        <div class="cbody">A sensitised, painful bladder with sterile urine. There's no flow block, no dilation, no mass — nothing the conduit diagram can point at.</div>
+        <div class="why">Figure hidden on purpose — the anatomy model has nothing spatial to add here, so the content gets the full width instead (same as the oncology "concept" pages already do).</div>
+      </div>
+      <div class="verdict"><span class="ok">✓</span> Honest: an empty-looking diagram is worse than none. Pain syndromes, functional/neurogenic, mood-driven, and concept pages drop the figure and read cleaner.</div>
+      <div class="legend">Almost free — one rule in <code>render()</code>, like <code>hideFig</code> today.</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

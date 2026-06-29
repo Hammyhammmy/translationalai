@@ -30,7 +30,7 @@ export const PRESENTATIONS = {
       'DRE for prostate size/consistency, and a focused neurological exam (anal tone, perineal sensation, lower-limb reflexes) if any red flag — the exam that catches cauda equina',
       'Renal ultrasound if creatinine is raised or the upper tracts are in doubt — hydronephrosis confirms the obstruction has reached the kidneys',
     ],
-    management: 'Decompress immediately: a urethral catheter usually does it, switching to a suprapubic catheter if urethral access fails (e.g. an impassable stricture). Then treat the underlying cause rather than just leaving the tube in — the catheter is the bridge, not the cure, so plan definitive treatment of the lesion (medical therapy or surgery for BPH, urethroplasty for stricture). Watch high-volume drains for post-obstructive diuresis with fluid and electrolyte monitoring, and refer urgently if cauda equina is suspected.',
+    management: '**Decompress immediately:** a urethral catheter usually does it, switching to a suprapubic catheter if urethral access fails (e.g. an impassable stricture).\n\n**Then treat the underlying cause** rather than just leaving the tube in — the catheter is the bridge, not the cure, so plan definitive treatment of the lesion (medical therapy or surgery for BPH, urethroplasty for stricture).\n\n**Watch high-volume drains** for post-obstructive diuresis with fluid and electrolyte monitoring, and refer urgently if cauda equina is suspected.',
     pearls: [
       'Always scan before you blame the prostate — anuria from an empty bladder is a different (kidney) problem from a blocked outlet',
       'Painless retention plus any neurological symptom = exclude cauda equina before anything else',
@@ -62,7 +62,7 @@ export const PRESENTATIONS = {
       'Cystoscopy — the lower-tract study, directly inspecting the bladder and urethra where CT is least sensitive; together CT urogram + cystoscopy form the complete haematuria workup',
       'Synthesis: the haematuria workup is upper tract (CT urogram) plus lower tract (cystoscopy) — neither alone is enough to clear a patient',
     ],
-    management: 'Treat the cause once found, and in the acute setting manage clot retention with a three-way catheter, clot evacuation and continuous bladder irrigation while resuscitating any heavy bleeder. Crucially, painless visible haematuria warrants urgent urology referral for the full upper- and lower-tract workup — do not write it off as a UTI without a positive culture that clears on repeat testing, because an unproven UTI is a common reason cancers are missed.',
+    management: '**Treat the cause once found,** and in the acute setting manage clot retention with a three-way catheter, clot evacuation and continuous bladder irrigation while resuscitating any heavy bleeder.\n\nCrucially, **painless visible haematuria warrants urgent urology referral** for the full upper- and lower-tract workup — do not write it off as a UTI without a positive culture that clears on repeat testing, because an unproven UTI is a common reason cancers are missed.',
     pearls: [
       'Painless visible haematuria = cancer until proven otherwise — image the upper tract (CT urogram) and scope the lower tract (cystoscopy)',
       'Never close the loop on “probable UTI” unless the culture is positive and the haematuria clears on a follow-up dip',
@@ -91,7 +91,7 @@ export const PRESENTATIONS = {
       'Non-contrast CT KUB — the gold standard: it confirms the stone, its size and position (which predict spontaneous passage), and shows obstruction',
       'Ultrasound when radiation should be avoided (pregnancy, young patients) — it shows hydronephrosis and larger stones but misses small ureteric ones, so a negative scan does not exclude a stone',
     ],
-    management: 'Give prompt analgesia — an NSAID is first-line (more effective than opioids for colic) — plus antiemetics, and most small distal stones pass spontaneously, helped by medical expulsive therapy with an α-blocker. The non-negotiable is urgent decompression with a ureteric stent or percutaneous nephrostomy when the kidney is obstructed and infected, or when a solitary/failing kidney is at risk — definitive stone clearance (ureteroscopy or shockwave lithotripsy) is deferred until any sepsis is controlled.',
+    management: '**Give prompt analgesia** — an NSAID is first-line (more effective than opioids for colic) — plus antiemetics, and most small distal stones pass spontaneously, helped by medical expulsive therapy with an α-blocker.\n\n**The non-negotiable is urgent decompression** with a ureteric stent or percutaneous nephrostomy when the kidney is obstructed and infected, or when a solitary/failing kidney is at risk — definitive stone clearance (ureteroscopy or shockwave lithotripsy) is deferred until any sepsis is controlled.',
     pearls: [
       'Obstruction + infection = drain it now; you decompress first and treat the stone later',
       'Stone size and position on CT KUB predict spontaneous passage — small distal stones usually pass',
@@ -116,7 +116,7 @@ export const PRESENTATIONS = {
       'Urinalysis ± STI testing — pyuria or a positive STI screen supports epididymo-orchitis, whereas a bland urine fits torsion',
       'Colour Doppler ultrasound only if it will not delay theatre — reduced/absent intratesticular flow supports torsion, but a normal scan cannot rule it out and must not stay the surgeon’s hand',
     ],
-    management: 'If torsion is suspected, proceed to emergency scrotal exploration — there is no time for prolonged investigation — with detorsion and bilateral orchidopexy (fixing both sides, since the predisposing anatomy is usually bilateral); manual detorsion can buy time but is not a substitute for surgery. If the picture is clearly epididymo-orchitis, treat with appropriate antibiotics, analgesia and scrotal support. The governing rule: when in doubt, treat it as torsion and explore.',
+    management: '**If torsion is suspected, proceed to emergency scrotal exploration** — there is no time for prolonged investigation — with detorsion and bilateral orchidopexy (fixing both sides, since the predisposing anatomy is usually bilateral); manual detorsion can buy time but is not a substitute for surgery.\n\n**If the picture is clearly epididymo-orchitis,** treat with appropriate antibiotics, analgesia and scrotal support.\n\n**The governing rule:** when in doubt, treat it as torsion and explore.',
     pearls: [
       'Torsion is a clinical diagnosis with a ~6-hour window — a normal Doppler never excludes it',
       'Absent cremasteric reflex + high-riding testis + negative Prehn = explore now; fix both testes',
@@ -146,7 +146,7 @@ export const PRESENTATIONS = {
       'Bladder scan for post-void residual — a high residual signals incomplete emptying and risk of complications, and steers therapy away from drugs that worsen retention',
       'Uroflowmetry to characterise the stream, and formal urodynamics when the picture is unclear or before surgery — to confirm obstruction versus an underactive or overactive bladder',
     ],
-    management: 'Treat to the dominant pattern. Voiding/BPH-type symptoms respond first to lifestyle measures and an α-blocker (rapid relief) with a 5α-reductase inhibitor added for larger prostates, escalating to surgery (e.g. TURP) when medical therapy fails or complications arise. Storage/overactive-bladder symptoms respond to bladder training and fluid advice plus an antimuscarinic or β3-agonist. Throughout, treat reversible contributors (constipation, polyuria, drugs) and refer promptly if any red flag appears.',
+    management: '**Treat to the dominant pattern.**\n\n**Voiding / BPH-type symptoms** respond first to lifestyle measures and an α-blocker (rapid relief) with a 5α-reductase inhibitor added for larger prostates, escalating to surgery (e.g. TURP) when medical therapy fails or complications arise.\n\n**Storage / overactive-bladder symptoms** respond to bladder training and fluid advice plus an antimuscarinic or β3-agonist.\n\nThroughout, treat reversible contributors (constipation, polyuria, drugs) and refer promptly if any red flag appears.',
     pearls: [
       'Split LUTS into storage vs voiding first — it dictates the drug class',
       'Check the post-void residual before treating: antimuscarinics can precipitate retention in a poorly emptying bladder',
@@ -155,6 +155,37 @@ export const PRESENTATIONS = {
   },
 
   // ---- Outpatient / findings ----
+  chronic_pelvic_pain: {
+    label: 'Chronic pelvic pain', group: 'outpatient', region: 'bladder',
+    complaint: 'Persistent or recurrent pelvic pain for at least 3–6 months, often non-cyclical and out of proportion to anything found on examination or imaging. The defining difficulty is that in many patients there is no single culprit lesion: the pain is multifactorial and maintained by central sensitisation (the nervous system turning the volume up), overlapping with IC/BPS, IBS, endometriosis in women, and chronic pelvic pain syndrome (CPPS) in men. The task is to exclude the treatable causes, then manage the syndrome itself.',
+    redFlags: [
+      'Visible haematuria, weight loss, or a pelvic mass — exclude malignancy before settling on a pain-syndrome label',
+      'Postcoital or postmenopausal bleeding, or new-onset pain after the menopause — points to gynaecological pathology needing its own workup',
+      'Fever or systemic upset — an infective/inflammatory cause (PID, prostatitis) rather than a chronic pain syndrome',
+      'New neurological symptoms or saddle anaesthesia — exclude cord/cauda equina compression',
+      'Strictly cyclical, menstruation-locked pain — think endometriosis/adenomyosis and refer to gynaecology',
+    ],
+    differential: [
+      { caseId: 'interstitial_cystitis', note: 'Bladder-centred pain that builds with filling and eases on voiding, with sterile urine — the urological core of chronic pelvic pain' },
+      { caseId: 'cpps', note: 'In men, chronic prostatitis / CPPS — pelvic pain and LUTS for ≥3 months with little systemic upset; mostly non-bacterial' },
+      { caseId: 'detrusor_overactivity', note: 'Storage symptoms (urgency/frequency) that coexist with and amplify the pain picture' },
+      { caseId: 'cystitis', note: 'Recurrent or treated infection must be excluded first — sterile urine is what reroutes you toward a pain syndrome' },
+    ],
+    workup: [
+      'Urinalysis and culture to exclude infection, plus STI testing where relevant — a treatable infective cause must be ruled out before labelling the pain as a syndrome',
+      'Targeted examination including the pelvic floor — a hypertonic, tender floor with trigger points is both common and directly treatable, and is easily missed if not specifically sought',
+      'Pelvic ultrasound (and MRI if indicated) to exclude a structural or gynaecological cause such as a mass, endometriosis or adenomyosis',
+      'Cystoscopy when the pain is bladder-centred (to assess for IC/BPS and exclude tumour/stone); in men, a symptom index (NIH-CPSI) and UPOINT phenotyping to direct treatment',
+      'Screen for the comorbid drivers — mood, sleep, IBS, fibromyalgia, and a history of physical or sexual trauma — because they shape both prognosis and management',
+    ],
+    management: 'Once red flags and treatable causes are excluded, manage it as a multimodal, biopsychosocial problem rather than chasing one cure.\n\n**Pelvic-floor physiotherapy is a cornerstone** — manual release and downtraining of the hypertonic floor, NOT strengthening/Kegels, which worsen the pain.\n\n**Layer on neuromodulating analgesia** (amitriptyline, gabapentin/pregabalin, or duloxetine) rather than escalating opioids, which do not help and harm; treat comorbid mood and sleep with CBT and, where indicated, an SSRI/SNRI.\n\nTrigger-point injections, mindfulness, and α-blockers (in male CPPS) are useful adjuncts.\n\n**The unifying principle is phenotype-directed care (UPOINT)** and an interprofessional team — physiotherapist, pain specialist, psychologist — because no single agent treats a centrally sensitised, multifactorial pain.',
+    pearls: [
+      'It is largely a diagnosis of exclusion plus central sensitisation — rule out infection, malignancy and gynae causes first',
+      'Pelvic-floor physiotherapy (relaxation/downtraining) is first-line non-drug therapy — Kegels make it worse',
+      'Opioids do not work for chronic pelvic pain; use neuromodulators (amitriptyline, gabapentinoids, duloxetine) and treat comorbid mood',
+      'Phenotype-directed, interprofessional care (UPOINT) beats one-size-fits-all',
+    ],
+  },
   microscopic_hematuria: {
     label: 'Asymptomatic microscopic haematuria', group: 'outpatient', region: 'bladder',
     complaint: 'No symptoms — blood found only on microscopy (≥3 RBC/hpf on a properly collected specimen). Dipstick alone is not enough (it also flags myoglobin/haemoglobin), so confirm on microscopy. The task is to risk-stratify, not reflexively scope everyone.',
@@ -234,7 +265,7 @@ export const PRESENTATIONS = {
       'Serum calcium and PTH (exclude primary hyperparathyroidism), urate, and electrolytes/bicarbonate — a persistently alkaline urine with calcium-phosphate stones suggests renal tubular acidosis',
       'Imaging to define stone burden and any anatomical contributor',
     ],
-    management: 'Universal advice for every stone-former: high fluids (urine output >2–2.5 L/day), reduce sodium and animal protein, and keep dietary calcium NORMAL — restricting calcium paradoxically raises oxalate absorption and stones. Then target by stone type and the 24-h abnormality. CALCIUM oxalate/phosphate: a THIAZIDE for hypercalciuria (it boosts distal tubular calcium reabsorption, lowering urinary calcium); POTASSIUM CITRATE for hypocitraturia (citrate binds calcium and inhibits crystallisation, and alkalinises the urine); cut dietary oxalate for hyperoxaluria. URIC ACID (forms in acidic urine): urinary ALKALINISATION with potassium citrate is first-line and can even DISSOLVE the stone, plus ALLOPURINOL (xanthine-oxidase inhibitor) if uric acid is high. STRUVITE: no medical prevention without source control — achieve complete stone clearance and eradicate the urease-producing infection. CYSTINE: high fluids, urinary alkalinisation, low sodium, and thiol binders (tiopronin/penicillamine) if refractory. Avoid acetazolamide (it promotes calcium-phosphate stones).',
+    management: 'Universal advice for every stone-former: high fluids (urine output >2–2.5 L/day), reduce sodium and animal protein, and keep dietary calcium normal — restricting calcium paradoxically raises oxalate absorption and stones. Then target by stone type and the 24-h abnormality.\n\n**Calcium oxalate / phosphate** — a thiazide for hypercalciuria (it boosts distal tubular calcium reabsorption, lowering urinary calcium); potassium citrate for hypocitraturia (citrate binds calcium and inhibits crystallisation, and alkalinises the urine); cut dietary oxalate for hyperoxaluria.\n\n**Uric acid** (forms in acidic urine) — urinary alkalinisation with potassium citrate is first-line and can even dissolve the stone, plus allopurinol (xanthine-oxidase inhibitor) if uric acid is high.\n\n**Struvite** — no medical prevention without source control: achieve complete stone clearance and eradicate the urease-producing infection.\n\n**Cystine** — high fluids, urinary alkalinisation, low sodium, and thiol binders (tiopronin/penicillamine) if refractory.\n\nAvoid acetazolamide (it promotes calcium-phosphate stones).',
     pearls: [
       'Fluids first — urine output >2–2.5 L/day prevents most recurrences',
       'Keep dietary calcium NORMAL — restricting it increases oxalate and stones',

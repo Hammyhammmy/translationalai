@@ -17,7 +17,7 @@ export const PHASES = {
 export function nextPhase(phase) { return phase === 'STORAGE' ? 'VOIDING' : 'STORAGE'; }
 
 export const MECHANISMS = [
-  'none', 'obstruction', 'bleeding', 'infection', 'malignancy',
+  'none', 'obstruction', 'bleeding', 'infection', 'inflammation', 'malignancy',
   'reflux', 'overactivity', 'structural', 'incontinence', 'neurogenic', 'vascular',
 ];
 
@@ -68,6 +68,8 @@ export const CASES = Object.fromEntries([
     'Bleeding into the bladder. Flow continues but the urine runs red from the bladder down.'),
   C('cystitis', 'bladder', 'bladder', 'infection', 'Cystitis',
     'Bladder infection — dysuria, frequency; afebrile. Same bugs as pyelonephritis, different station.', { systemic: false }),
+  C('interstitial_cystitis', 'bladder', 'bladder', 'inflammation', 'Interstitial cystitis / BPS',
+    'Bladder pain syndrome — pain/pressure that builds as the bladder fills and eases on voiding, with frequency and urgency lasting >6 weeks, but the urine is sterile. A sensitised, non-infectious bladder — not a bug to culture.', { noFigure: true }),
   C('detrusor_overactivity', 'bladder', 'bladder', 'overactivity', 'Detrusor overactivity',
     'Premature detrusor contractions during storage → urgency and frequency.'),
   C('bladder_hypertrophy', 'bladder', 'bladder', 'structural', 'Wall hypertrophy (outlet obstruction)',
@@ -97,8 +99,10 @@ export const CASES = Object.fromEntries([
     'The prostate compresses the urethra; the bladder distends and back-pressure reaches the kidneys.'),
   C('prostate_carcinoma', 'urethra', 'urethra', 'malignancy', 'Prostate carcinoma',
     'A nodular prostatic cancer; may obstruct the outlet and invade the bladder base.'),
-  C('prostatitis', 'urethra', 'urethra', 'infection', 'Prostatitis',
-    'Inflamed, tender prostate with multi-zone referred pain; can be systemically unwell.', { systemic: true }),
+  C('prostatitis', 'urethra', 'urethra', 'infection', 'Acute bacterial prostatitis',
+    'Acutely inflamed, tender prostate — febrile, dysuric, systemically unwell. A true bacterial infection of the gland.', { systemic: true }),
+  C('cpps', 'urethra', 'urethra', 'inflammation', 'Chronic prostatitis / CPPS',
+    'Pelvic pain and LUTS for ≥3 months with a tender pelvic floor, but the urine is sterile — mostly non-bacterial (NIH category III). The male mirror of interstitial cystitis.', { noFigure: true }),
   C('urethral_stricture', 'urethra', 'urethra', 'obstruction', 'Urethral stricture',
     'A scarred urethral segment from infection/instrumentation — weak stream, back-pressure.'),
   C('urethral_stone', 'urethra', 'urethra', 'obstruction', 'Urethral stone',
@@ -156,6 +160,12 @@ export function evaluateCase(caseId, phase = 'VOIDING') {
     case 'infection':
       r.inflamed = lesionStation;
       r.systemic = !!def.systemic;
+      break;
+    case 'inflammation':
+      // non-infectious inflammation/sensitisation (e.g. interstitial cystitis):
+      // the wall is inflamed and painful, but there is no organism and no obstruction
+      r.inflamed = lesionStation;
+      r.systemic = false;
       break;
     case 'malignancy':
       r.mass = lesionStation;
