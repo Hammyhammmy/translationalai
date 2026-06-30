@@ -1,0 +1,102 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Imaging tab — modality vs finding</title>
+<style>
+  :root{--bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;--accent:#2563eb;--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;--mono:"SF Mono",monospace}
+  body{font-family:var(--font);color:var(--text);background:var(--bg);max-width:900px;margin:22px auto;padding:0 16px;line-height:1.5}
+  .lede{font-size:13px;color:var(--muted);margin-bottom:14px}
+  .tabs{display:flex;gap:5px;border-bottom:2px solid var(--border);margin-bottom:14px;flex-wrap:wrap}
+  .tab{font-size:13px;font-weight:700;color:var(--muted);padding:7px 6px;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap}
+  .tab .em{font-weight:500;font-size:10.5px;display:block}
+  .tab.new{color:var(--text);border-bottom-color:var(--accent)}.tab.new .em{color:var(--accent)}
+  h2{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin:26px 0 4px}
+  .note{font-size:12px;color:var(--muted);margin:0 0 10px}
+  .layout{display:grid;grid-template-columns:160px 1fr;gap:16px;align-items:start}
+  @media(max-width:680px){.layout{grid-template-columns:1fr}}
+  .nav{background:#fff;border:1px solid var(--border);border-radius:11px;padding:9px}
+  .nav h3{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:5px 4px 4px}
+  .ni{display:block;font-size:12.5px;padding:5px 8px;border-radius:6px;color:var(--text);margin-bottom:2px}
+  .ni.cur{background:var(--accent);color:#fff;font-weight:600}
+  .card{background:#fff;border:1px solid var(--border);border-radius:11px;padding:14px 16px}
+  .ctitle{font-size:16px;font-weight:800}
+  .csub{font-size:10.5px;color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em;margin-bottom:9px}
+  .h{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:11px 0 3px}
+  .b{font-size:13.5px;margin:0}
+  ul.k{margin:2px 0 0;padding-left:16px}ul.k li{font-size:13px;margin-bottom:2px}
+  .imgrow{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 2px}
+  .ph{flex:1;min-width:120px;background:#1c1917;color:#d6d3d1;border-radius:7px;height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;text-align:center;font-family:var(--mono);position:relative;overflow:hidden}
+  .ph .mod{position:absolute;top:5px;left:6px;font-size:9px;color:#a8a29e}
+  .ph .arrow{color:#fbbf24;font-size:22px}
+  .cap{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .link{color:var(--accent);font-size:12px;text-decoration:none;border-bottom:1px dotted var(--accent)}
+</style></head><body>
+
+<p class="lede"><b>"Imaging" tab — two ways to organize.</b> Same tab in the bar (em: <i>X-ray · US · CT · MRI</i>); the question is how the entries are sliced. Image boxes are placeholders — real free Commons radiology images exist for every one of these (verified). The figure panel would show the radiology image itself (reusing the existing image slot).</p>
+
+<div class="tabs">
+  <div class="tab">Normal physiology<span class="em">anatomy · flow</span></div>
+  <div class="tab">Presentations<span class="em">symptom → Rx</span></div>
+  <div class="tab">What can go wrong<span class="em">~30 conditions</span></div>
+  <div class="tab">Oncology<span class="em">targets → Rx</span></div>
+  <div class="tab">Trauma<span class="em">renal · bladder</span></div>
+  <div class="tab">Hardware<span class="em">drains · stents</span></div>
+  <div class="tab new">Imaging<span class="em">X-ray · US · CT · MRI</span></div>
+</div>
+
+<h2>Option A — by MODALITY ("how to read each")</h2>
+<p class="note">Entries are the modalities. Each teaches what it's for, when it's chosen, a reading approach, and key findings (linking out to the conditions).</p>
+<div class="layout">
+  <div class="nav">
+    <h3>Plain & cross-section</h3>
+    <span class="ni">X-ray / KUB</span>
+    <span class="ni cur">Ultrasound</span>
+    <span class="ni">CT (KUB / urogram)</span>
+    <span class="ni">MRI</span>
+    <h3>Functional & contrast</h3>
+    <span class="ni">Fluoroscopy (IVU/RUG/MCUG)</span>
+    <span class="ni">Nuclear (DMSA/MAG3)</span>
+  </div>
+  <div class="card">
+    <div class="ctitle">Ultrasound</div>
+    <div class="csub">no radiation · first-line upper tract · draft · verify</div>
+    <div class="imgrow"><div class="ph"><span class="mod">US · renal</span><span class="arrow">↘</span>dilated pelvicalyceal system<br>(hydronephrosis)</div></div>
+    <div class="cap">Free Commons example: "Ultrasound of right kidney moderate hydronephrosis" (CC BY-SA 4.0)</div>
+    <div class="h">What it's for</div>
+    <p class="b">First-line, radiation-free look at the kidneys and bladder: detects hydronephrosis, stones (with shadowing), masses, and post-void residual. Operator-dependent; poor for mid-ureter.</p>
+    <div class="h">How to read it</div>
+    <ul class="k"><li>Both kidneys: size, cortex, and is the central echo (pelvis) <b>split</b> by black urine = hydronephrosis?</li><li>Echogenic focus + posterior <b>acoustic shadow</b> = stone</li><li>Bladder: wall, volume, and post-void residual</li></ul>
+    <div class="h">Key findings → open the condition</div>
+    <p class="b"><a class="link" href="#">Hydronephrosis →</a> &nbsp; <a class="link" href="#">Renal stone →</a> &nbsp; <a class="link" href="#">Bladder retention →</a></p>
+  </div>
+</div>
+
+<h2>Option B — by FINDING ("what it looks like across modalities")</h2>
+<p class="note">Entries are the pathologies; each shows the same finding on several modalities, side by side — pattern recognition.</p>
+<div class="layout">
+  <div class="nav">
+    <h3>Obstruction</h3>
+    <span class="ni cur">Hydronephrosis</span>
+    <span class="ni">Ureteric stone</span>
+    <h3>Masses</h3>
+    <span class="ni">Renal mass</span>
+    <span class="ni">Bladder tumour</span>
+    <h3>Lower tract</h3>
+    <span class="ni">Stricture (RUG)</span>
+    <span class="ni">Reflux (MCUG)</span>
+  </div>
+  <div class="card">
+    <div class="ctitle">Hydronephrosis</div>
+    <div class="csub">obstruction · across modalities · draft · verify</div>
+    <div class="imgrow">
+      <div class="ph"><span class="mod">US</span><span class="arrow">↘</span>ballooned pelvis</div>
+      <div class="ph"><span class="mod">CT</span><span class="arrow">↘</span>dilated system + stone</div>
+      <div class="ph"><span class="mod">MAG3</span><span class="arrow">↘</span>delayed drainage</div>
+    </div>
+    <div class="cap">One finding, three modalities — how the same problem appears on each.</div>
+    <div class="h">The sign</div>
+    <p class="b">Back-pressure dilates the collecting system. US shows a black, ballooned pelvis; CT adds the cause (stone, mass) and level; a MAG3 renogram shows whether it's truly obstructing.</p>
+    <div class="h">Don't be fooled</div>
+    <ul class="k"><li>An extrarenal pelvis or full bladder mimics mild dilation</li><li>Dilation ≠ obstruction — function (MAG3) settles it</li></ul>
+    <p class="b"><a class="link" href="#">Open: ureteric stone →</a></p>
+  </div>
+</div>
+</body></html>

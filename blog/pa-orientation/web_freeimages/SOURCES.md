@@ -42,3 +42,17 @@ Blausen.com sta | [Commons](https://commons.wikimedia.org/wiki/File%3ABlausen_05
 | `hardware__neobladder.svg` | Bladder reconstruction / neobladder (CRUK) | CC BY-SA 4.0 | Cancer Research UK | [Commons](https://commons.wikimedia.org/wiki/File:Diagram_showing_bladder_reconstruction_CRUK_111.svg) |
 | `hardware__artificial_urinary_sphincter.jpg` | Artificial urinary sphincter — implanted | CC BY-SA 4.0 | HovhannesKarapetyan | [Commons](https://commons.wikimedia.org/wiki/File:Implanted_AMS_800.jpg) |
 | `hardware__penile_prosthesis.jpg` | Penile prosthesis pumps — comparison | CC BY-SA 4.0 | HovhannesKarapetyan | [Commons](https://commons.wikimedia.org/wiki/File:Penile_implant_pump_design_comparison.jpg) |
+
+
+## Imaging (radiology examples)
+
+| file | what | license | author | source |
+|---|---|---|---|---|
+| `imaging__us_hydronephrosis.png` | Hydronephrosis on ultrasound | CC BY-SA 4.0 | Cerevisae | [Commons](https://commons.wikimedia.org/wiki/File:Ultrasound_image_of_right_kidney_hydronephrosis_with_colour_doppler.png) |
+| `imaging__ct_stone.jpg` | Staghorn calculi — 3D CT | CC BY 4.0 | Goleisureintl | [Commons](https://commons.wikimedia.org/wiki/File:CT_KUB_Scan_(Computed_Tomography_of_Kidneys,_Ureters,_and_Bladder).jpg) |
+| `imaging__mri_prostate.jpg` | Prostate on T2 MRI | CC BY-SA 3.0 | Pkcemail | [Commons](https://commons.wikimedia.org/wiki/File:Prostate_spacer.jpg) |
+| `imaging__ct_renal_mass.jpg` | Renal mass on CT | CC BY 3.0 | Kristie Guite, Louis Hinshaw and Fred Lee | [Commons](https://commons.wikimedia.org/wiki/File:Corticomedullary_phase_CT_in_axial_and_coronal_plane,_and_parenchymal_phase,_of_renal_cell_carcinoma.jpg) |
+| `imaging__us_renal_mass.jpg` | Renal mass on ultrasound | CC BY 4.0 | Kristoffer Lindskov Hansen, Michael Bachmann Nielsen and Caroline Ewer | [Commons](https://commons.wikimedia.org/wiki/File:Renal_cell_carcinoma_with_both_cystic_and_solid_components.jpg) |
+| `imaging__kub_stone.jpg` | Opaque stone on KUB | CC BY-SA 3.0 | Nevit Dilmen (talk) | [Commons](https://commons.wikimedia.org/wiki/File:Staghorn_Kidney_Stone_08779.jpg) |
+| `imaging__rug_stricture.jpg` | Urethral stricture — retrograde urethrogram | CC BY 3.0 | STofffuchs | [Commons](https://commons.wikimedia.org/wiki/File:Urethra_stricture.jpg) |
+| `imaging__mcug_reflux.jpg` | Vesicoureteric reflux — cystogram | CC BY-SA 3.0 | RadsWiki | [Commons](https://commons.wikimedia.org/wiki/File:Vesicoureteral-reflux-004.jpg) |

@@ -39,6 +39,7 @@ continence/andrology: artificial urinary sphincter, penile prosthesis, mid-ureth
 
 ## Status log
 - 2026-06-29 — plan written. Baseline 139/139.
+- 2026-06-29 — all 4 slices done, committed 86efcbc. Full suite 146/146 (+7 hardware catalog tests). 10 devices; 7th tab wired (button/dispatch/nav/render/overlay); deep-link + search index include hardware (200 entries); 8 Commons images (CC/PD) downloaded + attributed; 3-way catheter and mid-urethral sling left photo-less (no suitable free image — sling candidate was an intimate post-op photo, rejected). Browser-verified stent, nephrostomy, suprapubic, Foley (SVG). NOT deployed.
 
 ## Out of scope
 - Insertion/procedure technique (this is what/why/care, not how-to-insert).

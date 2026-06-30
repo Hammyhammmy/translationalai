@@ -76,6 +76,16 @@ test('hardware devices are indexed with a tab+id href', () => {
   assert.ok(neph && neph.text.includes('nephrostomy'), 'nephrostomy not indexed');
 });
 
+test('imaging modalities and findings are both indexed', () => {
+  const us = byKey('imaging', 'ultrasound');
+  assert.ok(us, 'ultrasound modality missing from index');
+  assert.equal(us.href, 'Urinary Interactive.html?tab=imaging&id=ultrasound');
+  assert.ok(us.text.includes('ultrasound'), 'modality text not indexed');
+  const hn = byKey('imaging', 'hydronephrosis');
+  assert.ok(hn, 'hydronephrosis finding missing from index');
+  assert.ok(hn.text.includes('hydronephrosis'), 'finding text not indexed');
+});
+
 test('normal physiology stations are indexed', () => {
   for (const id of ['overview', 'kidney', 'nephron', 'ureter', 'bladder', 'sphincters', 'urethra']) {
     const e = byKey('normal', id);

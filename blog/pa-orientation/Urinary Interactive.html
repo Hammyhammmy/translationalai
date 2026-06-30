@@ -71,6 +71,13 @@
   .pat-dl dt{font-weight:700;font-size:12.5px;margin-top:9px;color:#292524}.pat-dl dt:first-of-type{margin-top:0}
   .pat-dl dd{margin:1px 0 0;font-size:14px;line-height:1.57}.pat-dl dd p{margin:0 0 6px}.pat-dl dd p:last-child{margin:0}.pat-dl dd b{font-weight:700}
   .pat-foot{font-size:11px;color:var(--muted);margin-top:11px;font-style:italic}
+  .img-toggle{display:flex;gap:4px;margin-bottom:9px;background:#f0efed;border-radius:8px;padding:3px}
+  .img-tog{flex:1;font-family:var(--font);font-size:12px;font-weight:600;border:none;background:none;color:var(--muted);padding:6px 4px;border-radius:6px;cursor:pointer}
+  .img-tog.on{background:#fff;color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+  .img-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px;margin:2px 0 6px}
+  .img-cell{margin:0}.img-cell img{width:100%;height:auto;border:1px solid var(--border);border-radius:8px;background:#000;display:block}
+  .img-ph{height:118px;border:1px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-family:var(--mono);font-size:12px;background:#fafaf9}
+  .img-cell figcaption{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
   .dev-photo{display:block;max-width:260px;width:100%;height:auto;border:1px solid var(--border);border-radius:9px;margin:4px 0 6px;background:#fff}
   .h{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:13px 0 7px;display:flex;gap:8px;align-items:center}
   .draft{font-family:var(--mono);font-size:9px;font-weight:600;color:#b45309;background:#fffbeb;border:1px solid #fde7c3;border-radius:999px;padding:2px 6px}
@@ -147,6 +154,7 @@
   <button class="tab" id="t-andro" role="tab" aria-selected="false">Andrology<span class="em">testosterone · fertility</span></button>
   <button class="tab" id="t-trauma" role="tab" aria-selected="false">Trauma<span class="em">renal · bladder · urethra</span></button>
   <button class="tab" id="t-hw" role="tab" aria-selected="false">Hardware<span class="em">drains · stents · stomas</span></button>
+  <button class="tab" id="t-img" role="tab" aria-selected="false">Imaging<span class="em">X-ray · US · CT · MRI</span></button>
 </div>
 
 <noscript><p>This interactive model needs JavaScript. See <a href="The Urinary Tract.html">The Urinary Tract — A Conduit</a>.</p></noscript>
@@ -199,6 +207,7 @@ import { parseDeepLink } from './search-deeplink.js';
 import { prose } from './prose.js';
 import { patientHTML, patientCopyText } from './patient.js';
 import { HARDWARE, HW_GROUPS, hardwareFor } from './urinary-hardware.js';
+import { MODALITIES, FINDINGS, MOD_GROUPS, modalityFor, findingFor } from './urinary-imaging.js';
 
 const NS='http://www.w3.org/2000/svg', el=id=>document.getElementById(id);
 const mk=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
@@ -218,6 +227,7 @@ const cap=s=>s[0].toUpperCase()+s.slice(1);
 
 let tab='normal', phase='STORAGE';
 let selN='kidney', selP='retention', selC=null, selO='prostate_ca', selA='hpg_axis', selT='renal_trauma', selH='ureteric_stent', state=null;
+let imgView='modality', selMod='ultrasound', selFind='hydronephrosis';
 
 (function(){const g=el('innervation');
   g.append(mk('path',{id:'symp',d:'M70,150 C84,300 120,520 232,632',fill:'none',stroke:'#0d9488','stroke-width':4.5,'stroke-linecap':'round','stroke-dasharray':'9 5',opacity:.9}),
@@ -242,6 +252,15 @@ function buildNav(){const n=el('nav');n.innerHTML='';
         grp('Treatment concepts',ONC_CONCEPTS.map(id=>[ONCOLOGY[id].label,id,id===selO,()=>{selO=id;render();}]));}
   else if(tab==='andrology')grp('Andrology',ANDRO_TOPICS.map(id=>[ANDROLOGY[id].label,id,id===selA,()=>{selA=id;render();}]));
   else if(tab==='hardware'){for(const{key,label}of HW_GROUPS){const ids=Object.keys(HARDWARE).filter(id=>HARDWARE[id].group===key);if(ids.length)grp(label,ids.map(id=>[HARDWARE[id].label,id,id===selH,()=>{selH=id;render();}]));}}
+  else if(tab==='imaging'){
+    const tog=document.createElement('div');tog.className='img-toggle';
+    [['modality','By modality'],['finding','By finding']].forEach(([v,lab])=>{const b=document.createElement('button');b.className='img-tog'+(imgView===v?' on':'');b.textContent=lab;b.onclick=()=>{imgView=v;render();};tog.appendChild(b);});
+    n.appendChild(tog);
+    if(imgView==='modality'){for(const{key,label}of MOD_GROUPS){const ids=Object.keys(MODALITIES).filter(id=>MODALITIES[id].group===key);if(ids.length)grp(label,ids.map(id=>[MODALITIES[id].label,id,id===selMod,()=>{selMod=id;render();}]));}}
+    else{const up=['kidney','ureter'];const upIds=Object.keys(FINDINGS).filter(id=>up.includes(FINDINGS[id].station)),loIds=Object.keys(FINDINGS).filter(id=>!up.includes(FINDINGS[id].station));
+      if(upIds.length)grp('Upper tract',upIds.map(id=>[FINDINGS[id].label,id,id===selFind,()=>{selFind=id;render();}]));
+      if(loIds.length)grp('Lower tract',loIds.map(id=>[FINDINGS[id].label,id,id===selFind,()=>{selFind=id;render();}]));}
+  }
   else grp('GU trauma',TRAUMA_TOPICS.map(id=>[TRAUMA[id].label,id,id===selT,()=>{selT=id;render();}]));
 }
 
@@ -297,6 +316,7 @@ function drawModel(){
   else if(tab==='andrology'){buildHot([]);hl=XY[ANDROLOGY[selA].region];}
   else if(tab==='trauma'){buildHot([]);drawTrauma(lz,bp);}  // consequence overlay (haematuria / leak / blood at meatus / haematocele)
   else if(tab==='hardware'){buildHot([]);drawHardware(lz,bp);hl=null;}  // device placement overlay
+  else if(tab==='imaging'){buildHot([]);hl=(imgView==='finding')?XY[FINDINGS[selFind].station]:null;}  // mark the finding's station
   else if(tab==='conditions'&&selC){buildHot([]);
     const def=CASES[selC];
     (state.dilatedStations||[]).forEach(s=>{if(!XY[s])return;const[x,y]=XY[s];bp.appendChild(mk('circle',{cx:x,cy:y,r:26,fill:'rgba(217,119,6,.3)',stroke:'rgba(217,119,6,.8)','stroke-width':2}));});
@@ -332,15 +352,15 @@ function render(){
   buildNav();
   // figure: real image when a concept has one; else the interactive model
   const curId=tab==='normal'?selN:tab==='conditions'?selC:tab==='oncology'?selO:null;
-  const curEntry=tab==='normal'?NORMAL_TEACH[selN]:tab==='conditions'?(selC?CASES[selC]:null):tab==='oncology'?ONCOLOGY[selO]:tab==='andrology'?ANDROLOGY[selA]:tab==='presentations'?PRESENTATIONS[selP]:tab==='trauma'?TRAUMA[selT]:tab==='hardware'?HARDWARE[selH]:null;
-  const hideFig=!showsFigure({tab,entry:curEntry,hasImage:!!(curId&&IMAGES[curId])});
-  const imgPath=(tab==='presentations'||tab==='andrology'||tab==='trauma'||tab==='hardware')?null:(curId?IMAGES[curId]:null);
+  const curEntry=tab==='normal'?NORMAL_TEACH[selN]:tab==='conditions'?(selC?CASES[selC]:null):tab==='oncology'?ONCOLOGY[selO]:tab==='andrology'?ANDROLOGY[selA]:tab==='presentations'?PRESENTATIONS[selP]:tab==='trauma'?TRAUMA[selT]:tab==='hardware'?HARDWARE[selH]:tab==='imaging'?(imgView==='modality'?MODALITIES[selMod]:FINDINGS[selFind]):null;
+  const imgPath=tab==='imaging'?(imgView==='modality'?(MODALITIES[selMod].img||null):((FINDINGS[selFind].images[0]||{}).img||null)):((tab==='presentations'||tab==='andrology'||tab==='trauma'||tab==='hardware')?null:(curId?IMAGES[curId]:null));
+  const hideFig=!showsFigure({tab,entry:curEntry,hasImage:!!imgPath||!!(curId&&IMAGES[curId])});
   const fig=el('figure'),fimg=el('figimg'),svg=el('stage');
   if(hideFig){fig.style.display='none';}               // content-only (onc concept / non-anatomical andrology)
   else{fig.style.display='';
     if(imgPath){fimg.src=imgPath;fimg.style.display='block';svg.style.display='none';fig.classList.remove('focus');}
     else{fimg.style.display='none';svg.style.display='block';drawModel();}}
-  if(tab==='normal')renderNormal();else if(tab==='presentations')renderPres();else if(tab==='oncology')renderOnc();else if(tab==='andrology')renderAndro();else if(tab==='trauma')renderTrauma();else if(tab==='hardware')renderHardware();else renderCond();
+  if(tab==='normal')renderNormal();else if(tab==='presentations')renderPres();else if(tab==='oncology')renderOnc();else if(tab==='andrology')renderAndro();else if(tab==='trauma')renderTrauma();else if(tab==='hardware')renderHardware();else if(tab==='imaging')renderImaging();else renderCond();
 }
 
 function renderNormal(){const t=NORMAL_TEACH[selN],c=el('content');
@@ -402,6 +422,26 @@ function renderHardware(){const d=HARDWARE[selH],c=el('content');
     pearlsHTML(d.pearls)+`</div>`+patientHTML(d.patient);
   c.innerHTML=html;wireCopy(c,d.patient);}
 
+function renderImaging(){const c=el('content');
+  if(imgView==='modality'){const m=MODALITIES[selMod];
+    const links=(m.findings||[]).map(cid=>CASES[cid]?`<button class="dx" data-case="${cid}">${CASES[cid].label}</button>`:'').join('');
+    c.innerHTML=`<div class="card"><div class="c-title">${m.label}</div><div class="c-sub">imaging · how to read <span class="draft">draft · verify</span></div>`+
+      (m.img?`<img class="dev-photo" src="${m.img}" alt="${m.label}" loading="lazy">`:'')+
+      `<div class="h">What it's for</div><div class="c-body">${prose(m.whatFor)}</div>`+
+      `<div class="h">How to read it</div><ul class="steps">${m.howRead.map(s=>`<li>${s}</li>`).join('')}</ul>`+
+      (links?`<div class="h">Key findings — open the condition</div><div>${links}</div>`:'')+
+      pearlsHTML(m.pearls)+`</div>`;
+  } else {const f=FINDINGS[selFind];
+    const imgs=f.images.map(im=>`<figure class="img-cell">${im.img?`<img src="${im.img}" alt="${f.label} on ${im.modality}" loading="lazy">`:`<div class="img-ph">${im.modality}</div>`}<figcaption><b>${im.modality}</b> · ${im.caption}</figcaption></figure>`).join('');
+    c.innerHTML=`<div class="card"><div class="c-title">${f.label}</div><div class="c-sub">imaging · the sign across modalities <span class="draft">draft · verify</span></div>`+
+      `<div class="img-grid">${imgs}</div>`+
+      `<div class="h">The sign</div><div class="c-body">${prose(f.sign)}</div>`+
+      `<div class="h">Don’t be fooled</div><ul class="pearls">${f.pitfalls.map(x=>`<li>${x}</li>`).join('')}</ul>`+
+      (CASES[f.caseId]?`<div class="compare"><a href="#" data-case="${f.caseId}">open the condition →</a></div>`:'')+`</div>`;
+  }
+  c.querySelectorAll('[data-case]').forEach(b=>b.onclick=e=>{e.preventDefault();tab='conditions';selC=b.dataset.case;render();});
+}
+
 // Device placement overlay on the shared tract figure (like drawTrauma).
 function drawHardware(lz,bp){const d=HARDWARE[selH];if(!d)return;const BLU='#2563eb',EXT='#d97706';
   const internal=d.stations.filter(s=>s!=='external'&&XY[s]);
@@ -457,7 +497,7 @@ function tick(ts){const dt=Math.min((ts-last)/1000,.05)||.016;last=ts;
   requestAnimationFrame(tick);}
 
 el('t-normal').onclick=()=>{tab='normal';render();};el('t-pres').onclick=()=>{tab='presentations';render();};
-el('t-cond').onclick=()=>{tab='conditions';render();};el('t-onc').onclick=()=>{tab='oncology';render();};el('t-andro').onclick=()=>{tab='andrology';render();};el('t-trauma').onclick=()=>{tab='trauma';render();};el('t-hw').onclick=()=>{tab='hardware';render();};
+el('t-cond').onclick=()=>{tab='conditions';render();};el('t-onc').onclick=()=>{tab='oncology';render();};el('t-andro').onclick=()=>{tab='andrology';render();};el('t-trauma').onclick=()=>{tab='trauma';render();};el('t-hw').onclick=()=>{tab='hardware';render();};el('t-img').onclick=()=>{tab='imaging';render();};
 el('figtoggle').onclick=()=>{const f=el('figure');const c=f.classList.toggle('collapsed');el('figtoggle').textContent=c?'Show diagram':'Hide diagram';};
 
 // --- global search: index every entry across all six tabs, jump on select ---
@@ -483,6 +523,7 @@ function sClose(){sRes.hidden=true;sIn.setAttribute('aria-expanded','false');sAc
 function sGo(it){if(!it)return;tab=it.tab;
   if(tab==='normal')selN=it.id;else if(tab==='presentations')selP=it.id;else if(tab==='conditions')selC=it.id;
   else if(tab==='oncology')selO=it.id;else if(tab==='andrology')selA=it.id;else if(tab==='trauma')selT=it.id;else if(tab==='hardware')selH=it.id;
+  else if(tab==='imaging'){if(MODALITIES[it.id]){imgView='modality';selMod=it.id;}else if(FINDINGS[it.id]){imgView='finding';selFind=it.id;}}
   sIn.value='';sClose();render();el('content').scrollIntoView({behavior:'smooth',block:'nearest'});}
 function sPaint(){const q=sIn.value;
   if(!q.trim()){sList=[];sClose();return;}
@@ -501,7 +542,7 @@ document.addEventListener('click',e=>{if(!el('search').contains(e.target))sClose
 document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement!==sIn&&!/^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement||{}).tagName||'')){e.preventDefault();sIn.focus();}});
 
 // Deep link from the global site search: ?tab=&id= → jump to that entry.
-const DL_DATA={normal:NORMAL_TEACH,presentations:PRESENTATIONS,conditions:CASES,oncology:ONCOLOGY,andrology:ANDROLOGY,trauma:TRAUMA,hardware:HARDWARE};
+const DL_DATA={normal:NORMAL_TEACH,presentations:PRESENTATIONS,conditions:CASES,oncology:ONCOLOGY,andrology:ANDROLOGY,trauma:TRAUMA,hardware:HARDWARE,imaging:{...MODALITIES,...FINDINGS}};
 const dl=parseDeepLink(location.search,(t,i)=>DL_DATA[t]&&DL_DATA[t][i]);
 if(dl){tab=dl.tab;if(dl.id)sGo({tab:dl.tab,id:dl.id});}
 render();requestAnimationFrame(tick);

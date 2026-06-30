@@ -2,7 +2,7 @@
 // `has(tab, id)` returns truthy if that id is a real entry in that tab's data.
 // Returns {tab, id} when both valid, {tab, id:null} when the tab is valid but the
 // id is missing/unknown (switch the tab anyway), or null when there's nothing to do.
-const TABS = ['normal', 'presentations', 'conditions', 'oncology', 'andrology', 'trauma', 'hardware'];
+const TABS = ['normal', 'presentations', 'conditions', 'oncology', 'andrology', 'trauma', 'hardware', 'imaging'];
 
 export function parseDeepLink(search, has) {
   const p = new URLSearchParams(search || '');

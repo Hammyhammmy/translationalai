@@ -13,6 +13,7 @@ import { ANDROLOGY, ANDRO_TOPICS } from './urinary-andrology.js';
 import { TRAUMA, TRAUMA_TOPICS } from './urinary-trauma.js';
 import { clinicalFor } from './urinary-clinical.js';
 import { HARDWARE } from './urinary-hardware.js';
+import { MODALITIES, FINDINGS } from './urinary-imaging.js';
 import { plain } from './prose.js';
 
 const INTERACTIVE = 'Urinary Interactive.html';
@@ -49,6 +50,8 @@ function interactiveEntries() {
     ...ANDRO_TOPICS.map((id) => interactiveEntry('andrology', id, ANDROLOGY[id], 'Andrology')),
     ...TRAUMA_TOPICS.map((id) => interactiveEntry('trauma', id, TRAUMA[id], 'Trauma')),
     ...Object.keys(HARDWARE).map((id) => interactiveEntry('hardware', id, { ...HARDWARE[id], img: undefined }, 'Hardware')),
+    ...Object.keys(MODALITIES).map((id) => interactiveEntry('imaging', id, { ...MODALITIES[id], img: undefined }, 'Imaging · modality')),
+    ...Object.keys(FINDINGS).map((id) => interactiveEntry('imaging', id, { ...FINDINGS[id], images: FINDINGS[id].images.map((im) => ({ modality: im.modality, caption: im.caption })) }, 'Imaging · finding')),
   ];
 }
 

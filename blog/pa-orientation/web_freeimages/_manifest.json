@@ -278,5 +278,93 @@
   "group": "hardware",
   "label": "Penile prosthesis pumps \u2014 comparison",
   "bytes": 41576
+ },
+ {
+  "title": "File:Ultrasound image of right kidney hydronephrosis with colour doppler.png",
+  "page": "https://commons.wikimedia.org/wiki/File:Ultrasound_image_of_right_kidney_hydronephrosis_with_colour_doppler.png",
+  "lic": "CC BY-SA 4.0",
+  "artist": "Cerevisae",
+  "mime": "image/png",
+  "file": "imaging__us_hydronephrosis.png",
+  "group": "imaging",
+  "label": "Hydronephrosis on ultrasound",
+  "bytes": 545715
+ },
+ {
+  "title": "File:CT KUB Scan (Computed Tomography of Kidneys, Ureters, and Bladder).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:CT_KUB_Scan_(Computed_Tomography_of_Kidneys,_Ureters,_and_Bladder).jpg",
+  "lic": "CC BY 4.0",
+  "artist": "Goleisureintl",
+  "mime": "image/jpeg",
+  "file": "imaging__ct_stone.jpg",
+  "group": "imaging",
+  "label": "Staghorn calculi \u2014 3D CT",
+  "bytes": 98321
+ },
+ {
+  "title": "File:Prostate spacer.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Prostate_spacer.jpg",
+  "lic": "CC BY-SA 3.0",
+  "artist": "Pkcemail",
+  "mime": "image/jpeg",
+  "file": "imaging__mri_prostate.jpg",
+  "group": "imaging",
+  "label": "Prostate on T2 MRI",
+  "bytes": 11669
+ },
+ {
+  "title": "File:Corticomedullary phase CT in axial and coronal plane, and parenchymal phase, of renal cell carcinoma.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Corticomedullary_phase_CT_in_axial_and_coronal_plane,_and_parenchymal_phase,_of_renal_cell_carcinoma.jpg",
+  "lic": "CC BY 3.0",
+  "artist": "Kristie Guite, Louis Hinshaw and Fred Lee",
+  "mime": "image/jpeg",
+  "file": "imaging__ct_renal_mass.jpg",
+  "group": "imaging",
+  "label": "Renal mass on CT",
+  "bytes": 86877
+ },
+ {
+  "title": "File:Renal cell carcinoma with both cystic and solid components.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Renal_cell_carcinoma_with_both_cystic_and_solid_components.jpg",
+  "lic": "CC BY 4.0",
+  "artist": "Kristoffer Lindskov Hansen, Michael Bachmann Nielsen and Caroline Ewer",
+  "mime": "image/jpeg",
+  "file": "imaging__us_renal_mass.jpg",
+  "group": "imaging",
+  "label": "Renal mass on ultrasound",
+  "bytes": 95652
+ },
+ {
+  "title": "File:Staghorn Kidney Stone 08779.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Staghorn_Kidney_Stone_08779.jpg",
+  "lic": "CC BY-SA 3.0",
+  "artist": "Nevit Dilmen (talk)",
+  "mime": "image/jpeg",
+  "file": "imaging__kub_stone.jpg",
+  "group": "imaging",
+  "label": "Opaque stone on KUB",
+  "bytes": 121281
+ },
+ {
+  "title": "File:Urethra stricture.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Urethra_stricture.jpg",
+  "lic": "CC BY 3.0",
+  "artist": "STofffuchs",
+  "mime": "image/jpeg",
+  "file": "imaging__rug_stricture.jpg",
+  "group": "imaging",
+  "label": "Urethral stricture \u2014 retrograde urethrogram",
+  "bytes": 353955
+ },
+ {
+  "title": "File:Vesicoureteral-reflux-004.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Vesicoureteral-reflux-004.jpg",
+  "lic": "CC BY-SA 3.0",
+  "artist": "RadsWiki",
+  "mime": "image/jpeg",
+  "file": "imaging__mcug_reflux.jpg",
+  "group": "imaging",
+  "label": "Vesicoureteric reflux \u2014 cystogram",
+  "bytes": 46251
  }
 ]

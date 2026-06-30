@@ -11,6 +11,8 @@
 export function showsFigure({ tab, entry, hasImage = false } = {}) {
   if (!entry) return true;                  // defensive: show by default
   if (entry.noFigure) return false;         // explicit opt-out (e.g. interstitial cystitis, CPPS, male infertility)
+  // imaging: show the scan when there is one; findings also mark their station on the model
+  if (tab === 'imaging') return hasImage || !!entry.station;
   // an oncology "concept" page has no anatomy of its own — show only if a real plate exists
   if (tab === 'oncology' && entry.kind === 'concept' && !hasImage) return false;
   // andrology topics with no body region (hormonal axis, ED, PE, Peyronie's) and no plate are non-spatial
