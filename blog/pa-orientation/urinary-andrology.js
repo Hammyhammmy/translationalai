@@ -11,6 +11,12 @@ export const ANDROLOGY = {
       { h: 'Why it matters clinically', body: 'Reading LH/FSH against testosterone localises the problem: low testosterone with HIGH LH/FSH = primary (testicular) failure; low testosterone with LOW or inappropriately normal LH/FSH = secondary (hypothalamic–pituitary). It also explains the central andrology trade-off — giving exogenous testosterone suppresses GnRH/LH/FSH and therefore shuts down intratesticular testosterone and sperm production, which is why TRT behaves like a contraceptive and why fertility is instead preserved with hCG/gonadotropins that drive the axis rather than replace its output.' },
     ],
     pearls: ['LH → Leydig → testosterone; FSH + testosterone → Sertoli → sperm', 'High LH/FSH = primary (testicular); low/normal LH/FSH = secondary (central)', 'Exogenous testosterone suppresses the axis → impairs fertility'],
+    patient: {
+      whatItIs: 'The hormone loop between the brain and the testicles — the **hypothalamic-pituitary-gonadal (HPG) axis** — that runs both testosterone and sperm production.',
+      whyItMatters: 'It explains test results: low testosterone with high pituitary hormones (**LH**, **FSH**) points to a testicle problem, while low pituitary hormones point to a brain or pituitary cause.',
+      whatIsDone: 'Blood tests measure **testosterone** alongside **LH** and **FSH** to locate where the loop has broken down.',
+      whatToWatch: 'Taking **testosterone** from outside switches the loop off, which lowers sperm production — important for anyone hoping to father children.',
+    },
   },
   hypogonadism: {
     label: 'Hypogonadism & testosterone replacement', kind: 'condition', region: null,
@@ -22,6 +28,12 @@ export const ANDROLOGY = {
       { h: 'Risks & monitoring', body: 'TRT raises haematocrit (polycythaemia), suppresses spermatogenesis (counsel and consider sperm-banking first), can worsen sleep apnoea, and needs prostate monitoring (it does not cause prostate cancer but is avoided in active disease). Monitor testosterone, haematocrit and PSA on therapy.' },
     ],
     pearls: ['Confirm with TWO fasting morning testosterones before diagnosing', 'LH/FSH splits primary (high) from secondary (low/normal)', 'TRT suppresses fertility — use hCG/gonadotropins if fertility is wanted', 'Monitor haematocrit and PSA on TRT'],
+    patient: {
+      whatItIs: 'Low testosterone with symptoms — **hypogonadism** — caused either by the testicles themselves or by the brain and pituitary.',
+      whyItMatters: 'It can cause low sex drive, erection problems, tiredness, low mood, loss of muscle, and over time weaker bones; sometimes there is a treatable underlying cause such as a pituitary tumour (**prolactinoma**).',
+      whatIsDone: 'Diagnosis needs a low **fasting morning testosterone** confirmed twice; treatment is **testosterone replacement therapy (TRT)** as gels or injections, or treating the underlying cause.',
+      whatToWatch: '**TRT** lowers sperm production, so anyone wanting children should store sperm or use **hCG**/gonadotropins instead; blood count (**haematocrit**) and **PSA** are monitored during treatment.',
+    },
   },
   infertility: {
     label: 'Male infertility workup', kind: 'condition', region: 'testis', noFigure: true,
@@ -32,6 +44,12 @@ export const ANDROLOGY = {
       { h: 'Treatment', body: 'Treat reversible causes: stop testosterone/steroids, treat endocrine disease (gonadotropins/hCG for hypogonadotropic hypogonadism, dopamine agonists for a prolactinoma), and repair a clinically significant varicocele. For obstruction, reconstruct or retrieve sperm; for non-obstructive azoospermia, surgical sperm extraction (TESE) feeding IVF/ICSI. Many couples reach parenthood via assisted reproduction (ICSI).' },
     ],
     pearls: ['Semen analysis ×2 is the central test', 'Azoospermia: obstructive (normal FSH, normal testes) vs non-obstructive (high FSH, small testes)', 'Exogenous testosterone / anabolic steroids are a common reversible cause', 'Severe cases → genetic testing (Klinefelter, Y-microdeletion, CFTR)'],
+    patient: {
+      whatItIs: 'Difficulty fathering a child after about a year of trying, where a male factor is involved — found in roughly half of couples.',
+      whyItMatters: 'Causes range from hormone problems and a **varicocele** to blocked tubes or genetic conditions such as **Klinefelter syndrome**; some, like the use of **testosterone or anabolic steroids**, are reversible.',
+      whatIsDone: 'The key test is a **semen analysis** done twice, with blood hormone tests and an examination; severe cases add **genetic testing** and a scrotal **ultrasound**.',
+      whatToWatch: 'Many couples still succeed through assisted reproduction such as **IVF/ICSI**, sometimes after surgical sperm retrieval (**TESE**).',
+    },
   },
   varicocele: {
     label: 'Varicocele', kind: 'condition', region: 'testis',
@@ -42,6 +60,12 @@ export const ANDROLOGY = {
       { h: 'Treatment', body: 'Repair is by indication, not by size — and the varicocele must be clinically palpable (subclinical, ultrasound-only varicoceles are not repaired, as fixing them does not improve fertility).\n\n**Indications:** (1) male-factor infertility with a palpable varicocele AND abnormal semen in a couple seeking conception; (2) bothersome pain not settling with conservative measures; (3) in adolescents, testicular growth arrest/hypotrophy (or abnormal semen). An asymptomatic palpable varicocele with normal semen and no fertility concern is simply monitored, however large or visible.\n\nRepair is by radiological embolisation or surgical ligation. **Microsurgical subinguinal varicocelectomy is the gold standard** — recurrence ~1–2% and essentially no hydrocele (it spares the lymphatics and testicular artery), with the highest spontaneous-pregnancy rates (~42–45%). Embolisation avoids an incision and hydrocele but has a slightly higher recurrence (~4%, up to ~9%) and lower pregnancy (~33%).\n\nSemen parameters improve in the majority, yet spontaneous conception still occurs in only ~40% even with the best technique — counsel that repair improves the odds, not a guarantee, and many couples still proceed to IVF/ICSI. (Figures are pooled estimates from meta-analyses; ranges vary by study.)' },
     ],
     pearls: ['Left-sided, "bag of worms", decompresses on lying down', 'Commonest correctable cause of male infertility (heat + reflux)', 'Repair by indication, not size: must be PALPABLE + (infertility-with-abnormal-semen, pain, or adolescent hypotrophy)', 'Subclinical (ultrasound-only) varicoceles are NOT repaired; asymptomatic + normal semen = observe', 'Microsurgical subinguinal = gold standard: recurrence ~1–2%, ~0% hydrocele, pregnancy ~42–45% (embolisation ~33%, recurrence ~4%)', 'Even with the best repair, spontaneous conception is only ~40% — improves odds, not a guarantee', 'Right-sided or non-decompressing → image for a retroperitoneal/renal tumour'],
+    patient: {
+      whatItIs: 'Enlarged veins above the testicle — a **varicocele** — often felt as a "bag of worms" in the scrotum, usually on the left, that flattens when lying down.',
+      whyItMatters: 'It is the commonest correctable cause of male infertility because pooled blood warms the testicle and can shrink it; most cause no symptoms, but some bring a dull dragging ache.',
+      whatIsDone: 'It is checked by examination standing up and a scrotal **Doppler ultrasound**, with a **semen analysis**; repair (by **microsurgical subinguinal varicocelectomy** or **embolisation**) is offered only for a palpable varicocele causing fertility problems, pain, or arrested testicular growth in adolescents.',
+      whatToWatch: 'A right-sided varicocele, or one that does not flatten on lying down, needs abdominal imaging to rule out a kidney or abdominal tumour.',
+    },
   },
   hcg_gonadotropins: {
     label: 'hCG & gonadotropins (fertility-sparing)', kind: 'therapy', region: null,
@@ -51,6 +75,12 @@ export const ANDROLOGY = {
       { h: 'In practice', body: 'Used to induce fertility in hypogonadotropic hypogonadism, to preserve fertility in men needing androgen support, and to recover the axis after anabolic-steroid or testosterone use. Often paired with a SERM such as clomifene, which raises endogenous LH/FSH by blocking oestrogen feedback. (hCG is also a testicular-cancer tumour marker — the same molecule, a different use.)' },
     ],
     pearls: ['hCG mimics LH → intratesticular testosterone → sperm', 'Use hCG/gonadotropins (not TRT) when fertility is wanted', 'Clomifene (a SERM) raises endogenous LH/FSH by blocking feedback'],
+    patient: {
+      whatItIs: 'Fertility-sparing hormone treatment — **hCG** plus **FSH**/gonadotropins — that prompts the testicles to make their own testosterone and sperm.',
+      whyItMatters: 'Unlike testosterone from outside, which switches off sperm production, these drugs work with the body\'s own loop, so they support or restart fertility.',
+      whatIsDone: 'It is used to trigger fertility when the brain or pituitary under-produces hormones, and to recover sperm production after **testosterone** or **anabolic steroid** use; a tablet (**clomifene**, a **SERM**) can raise the body\'s own hormones too.',
+      whatToWatch: 'This is the route to choose over **testosterone replacement** whenever fathering a child is the goal.',
+    },
   },
   erectile_dysfunction: {
     label: 'Erectile dysfunction', kind: 'condition', region: null,
@@ -61,6 +91,12 @@ export const ANDROLOGY = {
       { h: 'Treatment', body: 'Lifestyle and cardiovascular-risk reduction first (weight, exercise, smoking, glycaemic control), review culprit drugs, and treat low testosterone. First-line medical therapy is a PDE5 inhibitor (sildenafil, tadalafil) — CONTRAINDICATED with nitrates (dangerous hypotension). Second-line: intracavernosal alprostadil injection, intraurethral prostaglandin, or a vacuum device. Refractory disease → penile prosthesis. Address psychological factors throughout.' },
     ],
     pearls: ['NO → cGMP → smooth-muscle relaxation; PDE5 inhibitors block cGMP breakdown', 'Organic ED is a cardiovascular warning — it can precede coronary disease', 'PDE5 inhibitors are CONTRAINDICATED with nitrates', 'Check and treat low testosterone — it improves the PDE5-inhibitor response'],
+    patient: {
+      whatItIs: 'Difficulty getting or keeping an erection — **erectile dysfunction (ED)**.',
+      whyItMatters: 'Because penile arteries are small, organic ED can be an early warning of **heart and blood-vessel disease**, and it may also flag low **testosterone**.',
+      whatIsDone: 'Treatment starts with lifestyle and cardiovascular-risk changes; first-line tablets are **PDE5 inhibitors** (**sildenafil**, **tadalafil**), with **alprostadil** injections, a **vacuum device**, or a **penile prosthesis** as further options.',
+      whatToWatch: '**PDE5 inhibitors** must never be combined with **nitrate** heart medicines, which can cause a dangerous drop in blood pressure.',
+    },
   },
   premature_ejaculation: {
     label: 'Premature ejaculation', kind: 'condition', region: null,
@@ -70,6 +106,12 @@ export const ANDROLOGY = {
       { h: 'Treatment', body: 'Behavioural techniques (stop–start, squeeze) and addressing relationship/psychological factors. Pharmacology exploits serotonin’s delaying effect — SSRIs (off-label daily, or on-demand dapoxetine where licensed) — plus topical anaesthetic creams/sprays to reduce glans sensitivity, and a PDE5 inhibitor when there is coexisting ED. Always treat an underlying cause (ED, prostatitis, thyroid).' },
     ],
     pearls: ['Three elements: short latency + poor control + distress', 'Lifelong (serotonergic) vs acquired (look for ED, prostatitis, thyroid)', 'Treat coexisting ED first — it often drives PE', 'SSRIs/dapoxetine and topical anaesthetics are the mainstays'],
+    patient: {
+      whatItIs: 'Ejaculation that consistently happens sooner than wanted, with little control and real distress — **premature ejaculation (PE)**.',
+      whyItMatters: 'Lifelong PE is largely down to brain chemistry, while new (acquired) PE often points to a treatable companion such as **erectile dysfunction**, prostate inflammation (**prostatitis**), or a **thyroid** problem.',
+      whatIsDone: 'Options include behavioural techniques (**stop-start**, **squeeze**), serotonin-acting tablets (**SSRIs**, or **dapoxetine** where licensed), and numbing creams or sprays (**topical anaesthetics**).',
+      whatToWatch: 'Coexisting erection problems are treated first, as they frequently drive the early ejaculation.',
+    },
   },
   peyronies: {
     label: 'Peyronie’s disease', kind: 'condition', region: null,
@@ -79,6 +121,12 @@ export const ANDROLOGY = {
       { h: 'Treatment', body: 'In the acute phase, manage conservatively (it may stabilise; intralesional collagenase clostridium histolyticum can reduce curvature and traction therapy is adjunctive). Operate only once the disease is STABLE (≈3–12 months without change): options are plication (shorter penises/smaller curves), plaque incision/grafting (larger curves), or a penile prosthesis when there is concurrent refractory ED. Set realistic expectations — the goal is functional, straight-enough intercourse, not perfection.' },
     ],
     pearls: ['Tunica albuginea plaque → curvature ± pain ± ED; linked to Dupuytren’s', 'Two phases — operate only when STABLE (≈3–12 months unchanged)', 'Acute: conservative ± collagenase/traction; stable deformity: plication or grafting', 'Concurrent refractory ED → consider a prosthesis'],
+    patient: {
+      whatItIs: 'A scar (plaque) in the wall of the penis — **Peyronie\'s disease** — that bends it, can hurt during erections, and sometimes shortens it or affects erections.',
+      whyItMatters: 'It can make intercourse difficult or painful; it is linked to a hand condition (**Dupuytren\'s contracture**) and to diabetes, and it passes through an early painful phase before settling.',
+      whatIsDone: 'The early phase is managed without surgery (**traction therapy**, or **collagenase** injections); once the bend is stable, surgery such as **plication**, **plaque incision and grafting**, or a **penile prosthesis** for accompanying erection problems is considered.',
+      whatToWatch: 'Surgery is delayed until the curve has been stable for several months, as operating too early risks the deformity changing again.',
+    },
   },
 };
 

@@ -15,6 +15,12 @@ export const NORMAL_TEACH = {
       'Storage is at LOW pressure by design — sustained high bladder pressure damages the kidneys.',
       'Upper tract (kidney + ureter) vs lower tract (bladder + urethra) frames most clinical problems.',
     ],
+    patient: {
+      whatItIs: 'The **urinary tract** as a whole — the **kidneys**, **ureters**, **bladder** and **urethra** working as one continuous, one-way plumbing system.',
+      whatItDoes: 'Makes urine, carries it down to the bladder, stores it at low pressure, then passes it out under voluntary control.',
+      howKeptWell: 'Good hydration, control of **blood pressure** and **diabetes**, and not ignoring a blockage anywhere downstream (a stone or an enlarged **prostate**), since back-pressure can reach the kidneys.',
+      whatToWatch: 'Blood in the urine, difficulty passing urine, or pain in the loin or lower abdomen is worth getting checked.',
+    },
   },
   kidney: {
     label: 'Kidney',
@@ -31,6 +37,12 @@ export const NORMAL_TEACH = {
       'CKD therefore causes hypertension, anaemia and renal bone disease — not just low urine output.',
       'Receives ~20% of cardiac output to sense and regulate the blood, not for its own metabolic needs.',
     ],
+    patient: {
+      whatItIs: 'One of two bean-shaped organs in the back of the abdomen that filter the blood and make urine — the **nephron** is its filtering unit.',
+      whatItDoes: 'Clears waste and surplus water, balances the body\'s salts and acid, and helps control **blood pressure**, red-blood-cell production and **vitamin D**.',
+      howKeptWell: 'Good hydration, control of **blood pressure** and **diabetes**, and caution with regular **NSAID** painkillers, which can strain it.',
+      whatToWatch: 'Swelling, a marked change in urine output, blood in the urine, or unexplained tiredness (a sign of anaemia) is worth reviewing.',
+    },
   },
   nephron: {
     label: 'Nephron — how urine is produced',
@@ -50,6 +62,12 @@ export const NORMAL_TEACH = {
       'Final urine concentration is set in the collecting duct: aldosterone = Na/K, ADH = water.',
       'Diuretics are classified by tubular segment — each drug class maps onto one transporter above.',
     ],
+    patient: {
+      whatItIs: 'The kidney\'s microscopic filtering unit — about a million per kidney — each a tiny filter (**glomerulus**) feeding a long tubule.',
+      whatItDoes: 'Filters the blood, then reclaims almost all the water, salts and glucose the body needs, fine-tuning what finally leaves as urine.',
+      howKeptWell: 'Control of **blood pressure** and **diabetes** protects the delicate filters, and caution with regular **NSAID** painkillers, which can reduce filtration.',
+      whatToWatch: 'Frothy urine (a sign of protein leaking through) or blood in the urine can point to filter damage and is worth checking.',
+    },
   },
   ureter: {
     label: 'Ureter',
@@ -64,6 +82,12 @@ export const NORMAL_TEACH = {
       'The oblique entry through the bladder wall is a flap-valve that prevents reflux.',
       'Obstruction matters because back-pressure damages the kidney upstream — colic is the warning.',
     ],
+    patient: {
+      whatItIs: 'One of two narrow muscular tubes carrying urine from each **kidney** down to the **bladder**.',
+      whatItDoes: 'Squeezes urine downward in active one-way waves (**peristalsis**), with a flap-valve at the bladder that stops it flowing back toward the kidney.',
+      howKeptWell: 'Good hydration lowers the risk of **kidney stones**, the main thing that blocks a ureter.',
+      whatToWatch: 'Severe, gripping pain that travels from the loin to the groin, often with blood in the urine, suggests a stone and needs urgent review.',
+    },
   },
   bladder: {
     label: 'Bladder',
@@ -79,6 +103,12 @@ export const NORMAL_TEACH = {
       'Detrusor (M3 to contract, β3 to relax) is the pharmacological target in overactive bladder.',
       'The trigone is smooth, sensory-rich, and developmentally distinct from the rest of the wall.',
     ],
+    patient: {
+      whatItIs: 'A hollow, stretchy muscular reservoir (its muscle wall is the **detrusor**) that holds urine.',
+      whatItDoes: 'Stores roughly 400–500 mL at low pressure, then squeezes to empty completely when it is convenient to go.',
+      howKeptWell: 'Good hydration, not holding on excessively, and treating any outlet blockage so the bladder is not forced to push against high pressure.',
+      whatToWatch: 'Sudden urgency, leaking, needing to pass urine very often, or being unable to empty fully is worth reviewing.',
+    },
   },
   sphincters: {
     label: 'Sphincters & innervation',
@@ -94,6 +124,12 @@ export const NORMAL_TEACH = {
       'Mnemonic: sympathetic Stores, ParasympatheticPees.',
       'Dyssynergia (sphincter shut while detrusor contracts) = high pressure, no flow — threatens kidneys.',
     ],
+    patient: {
+      whatItIs: 'Two ring-like valves below the bladder — an involuntary **internal sphincter** at the bladder neck and a voluntary **external sphincter** that can be squeezed at will.',
+      whatItDoes: 'Stay shut to hold urine in during storage and relax together to let it out during voiding, coordinated by a switch in the brainstem.',
+      howKeptWell: '**Pelvic-floor** exercises strengthen the voluntary sphincter and help with continence.',
+      whatToWatch: 'Leaking urine, or being unable to start or stop the stream, is worth getting checked.',
+    },
   },
   urethra: {
     label: 'Urethra & prostate',
@@ -110,6 +146,12 @@ export const NORMAL_TEACH = {
       'BPH has two components: static (gland bulk → 5α-reductase inhibitors) and dynamic (smooth-muscle tone → α1 blockers).',
       'Outlet obstruction back-pressures the whole tract up to the kidneys — never just a "flow" nuisance.',
     ],
+    patient: {
+      whatItIs: 'The final tube carrying urine out of the **bladder** — short in women, longer in men, where it passes through the **prostate** gland.',
+      whatItDoes: 'Conducts urine out of the body; in men the surrounding prostate can narrow it as it enlarges with age (**BPH**).',
+      howKeptWell: 'Not ignoring a weakening stream, since an untreated outlet blockage raises pressure back through the whole tract to the kidneys.',
+      whatToWatch: 'A weak or hesitant stream, incomplete emptying, or being suddenly unable to pass urine at all (a medical emergency) warrants review.',
+    },
   },
 };
 
