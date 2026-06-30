@@ -61,6 +61,16 @@
   .c-body{font-size:14.5px;line-height:1.58;margin-bottom:6px}
   .c-body p{margin:0 0 9px}.c-body p:last-child{margin-bottom:0}
   .c-body b{font-weight:700;color:var(--text)}
+  .card.patient{border-left:4px solid var(--green);background:#f6fdf9}
+  .pat-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+  .pat-title{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--green)}
+  .pat-copy{font-family:var(--font);font-size:11.5px;font-weight:600;color:var(--muted);background:#fff;border:1px solid var(--border);border-radius:6px;padding:4px 9px;cursor:pointer}
+  .pat-copy:hover{border-color:var(--accent);color:var(--accent)}
+  .pat-copy.done{color:var(--green);border-color:var(--green)}
+  .pat-dl{margin:0}
+  .pat-dl dt{font-weight:700;font-size:12.5px;margin-top:9px;color:#292524}.pat-dl dt:first-of-type{margin-top:0}
+  .pat-dl dd{margin:1px 0 0;font-size:14px;line-height:1.57}.pat-dl dd p{margin:0 0 6px}.pat-dl dd p:last-child{margin:0}.pat-dl dd b{font-weight:700}
+  .pat-foot{font-size:11px;color:var(--muted);margin-top:11px;font-style:italic}
   .h{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:13px 0 7px;display:flex;gap:8px;align-items:center}
   .draft{font-family:var(--mono);font-size:9px;font-weight:600;color:#b45309;background:#fffbeb;border:1px solid #fde7c3;border-radius:999px;padding:2px 6px}
   .row{display:flex;flex-wrap:wrap;gap:7px}
@@ -185,6 +195,7 @@ import { TRAUMA, TRAUMA_TOPICS, TRAUMA_FIGURE } from './urinary-trauma.js';
 import { showsFigure } from './urinary-figure.js';
 import { parseDeepLink } from './search-deeplink.js';
 import { prose } from './prose.js';
+import { patientHTML, patientCopyText } from './patient.js';
 
 const NS='http://www.w3.org/2000/svg', el=id=>document.getElementById(id);
 const mk=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
@@ -337,21 +348,22 @@ function renderNormal(){const t=NORMAL_TEACH[selN],c=el('content');
   // storage/voiding is a lower-tract (bladder + outlet) function — only show the state machine where it's the actual physiology, not on the kidney/nephron/ureter
   if(['bladder','sphincters'].includes(selN))
     html+=`<div class="card"><div class="h">Storage / voiding state machine</div><div class="row"><button class="btn storage" data-phase="STORAGE" aria-pressed="${phase==='STORAGE'}">Storage</button><button class="btn voiding" data-phase="VOIDING" aria-pressed="${phase==='VOIDING'}">Voiding</button></div><div class="c-body" style="margin-top:9px">${phase==='STORAGE'?'<b>Storage</b> (sympathetic, T10–L2): detrusor relaxed (β3), internal sphincter closed (α1) — the bladder fills at low pressure.':'<b>Voiding</b> (parasympathetic, S2–S4): detrusor contracts (M3), sphincters open — the bladder empties.'}</div></div>`;
-  c.innerHTML=html;c.querySelectorAll('button[data-phase]').forEach(b=>b.onclick=()=>{phase=b.dataset.phase;render();});}
+  html+=patientHTML(t.patient);
+  c.innerHTML=html;c.querySelectorAll('button[data-phase]').forEach(b=>b.onclick=()=>{phase=b.dataset.phase;render();});wireCopy(c,t.patient);}
 
 function renderPres(){const p=PRESENTATIONS[selP],c=el('content');
   c.innerHTML=`<div class="card lead"><div class="c-title">${p.label}</div><div class="c-sub">symptom → workup → treatment</div><div class="c-body">${prose(p.complaint)}</div>`+
     `<div class="h">Red flags</div><ul class="flags">${p.redFlags.map(f=>`<li>${f}</li>`).join('')}</ul>`+
     `<div class="h">Differential — tap to open the condition</div><div>${p.differential.map(d=>`<button class="dx" data-case="${d.caseId}">${CASES[d.caseId].label} <span class="n">· ${d.note}</span></button>`).join('')}</div>`+
     `<div class="h">Workup</div><ul class="steps">${p.workup.map(s=>`<li>${s}</li>`).join('')}</ul>`+
-    `<div class="h">Initial management <span class="draft">draft · verify</span></div><div class="c-body">${prose(p.management)}</div>`+pearlsHTML(p.pearls)+`</div>`;
-  c.querySelectorAll('button[data-case]').forEach(b=>b.onclick=()=>{tab='conditions';selC=b.dataset.case;render();});}
+    `<div class="h">Initial management <span class="draft">draft · verify</span></div><div class="c-body">${prose(p.management)}</div>`+pearlsHTML(p.pearls)+`</div>`+patientHTML(p.patient);
+  c.querySelectorAll('button[data-case]').forEach(b=>b.onclick=()=>{tab='conditions';selC=b.dataset.case;render();});wireCopy(c,p.patient);}
 
 function renderOnc(){const o=ONCOLOGY[selO],c=el('content');
   const pearls=p=>`<div class="h">Teaching pearls</div><ul class="pearls">${p.map(x=>`<li>${x}</li>`).join('')}</ul>`;
   if(o.kind==='concept'){c.innerHTML=`<div class="card concept"><div class="c-title">${o.label}</div><div class="c-sub">treatment concept · molecular basis <span class="draft">draft · verify</span></div>`+
     `<div class="h">How it works</div><div class="c-body">${prose(o.mechanism)}</div>`+
-    `<div class="h">Used in</div><div class="c-body">${prose(o.usedIn)}</div>`+pearls(o.pearls)+`</div>`;return;}
+    `<div class="h">Used in</div><div class="c-body">${prose(o.usedIn)}</div>`+pearls(o.pearls)+`</div>`+patientHTML(o.patient);wireCopy(c,o.patient);return;}
   let html=`<div class="card cancer"><div class="c-title">${o.label}</div><div class="c-sub">${o.organ} · molecular oncology <span class="draft">draft · verify</span></div>`+
     `<div class="h">The lesion</div><div class="c-body">${prose(o.lesion)}</div>`+
     `<div class="h">Molecular driver</div><div class="c-body">${prose(o.driver)}</div>`+
@@ -361,18 +373,18 @@ function renderOnc(){const o=ONCOLOGY[selO],c=el('content');
     o.treatments.map(t=>`<div class="tx"><span class="k">${t.class}<span class="dr">${t.drug}</span></span><span>${t.rationale}</span></div>`).join('')+
     pearls(o.pearls);
   if(o.caseId)html+=`<div class="compare"><a href="#" data-case="${o.caseId}">see the condition →</a></div>`;
-  html+=`</div>`;c.innerHTML=html;
-  c.querySelectorAll('a[data-case]').forEach(a=>a.onclick=e=>{e.preventDefault();tab='conditions';selC=a.dataset.case;render();});}
+  html+=`</div>`+patientHTML(o.patient);c.innerHTML=html;
+  c.querySelectorAll('a[data-case]').forEach(a=>a.onclick=e=>{e.preventDefault();tab='conditions';selC=a.dataset.case;render();});wireCopy(c,o.patient);}
 
 function renderAndro(){const a=ANDROLOGY[selA],c=el('content');
   let html=`<div class="card lead"><div class="c-title">${a.label}</div><div class="c-sub">andrology · ${a.kind} <span class="draft">draft · verify</span></div>`;
   a.sections.forEach(s=>html+=`<div class="h">${s.h}</div><div class="c-body">${prose(s.body)}</div>`);
-  html+=pearlsHTML(a.pearls)+`</div>`;c.innerHTML=html;}
+  html+=pearlsHTML(a.pearls)+`</div>`+patientHTML(a.patient);c.innerHTML=html;wireCopy(c,a.patient);}
 
 function renderTrauma(){const t=TRAUMA[selT],c=el('content');
   let html=`<div class="card obstruction"><div class="c-title">${t.label}</div><div class="c-sub">GU trauma · ${t.region} <span class="draft">draft · verify</span></div>`;
   t.sections.forEach(s=>html+=`<div class="h">${s.h}</div><div class="c-body">${prose(s.body)}</div>`);
-  html+=pearlsHTML(t.pearls)+`</div>`;c.innerHTML=html;}
+  html+=pearlsHTML(t.pearls)+`</div>`+patientHTML(t.patient);c.innerHTML=html;wireCopy(c,t.patient);}
 
 function renderCond(){const c=el('content');
   if(!selC){c.innerHTML=`<div class="card lead"><div class="c-title">Pick a condition</div><div class="c-body">Choose from the list to see what it wrecks and how it’s worked up.</div></div>`;return;}
@@ -390,7 +402,15 @@ function renderCond(){const c=el('content');
     (fp?`<div class="c-body"><span class="tag ${fp==='storage'?'':'dilate'}">${cap(fp)}-phase problem</span> the phase is fixed by the diagnosis.</div>`:'')+
     `<div class="c-body">${prose(def.note)}</div><div class="chips">${out.join('')}</div></div>`;
   if(w)html+=`<div class="card"><div class="h">Clinical workup <span class="draft">draft · verify</span></div>`+FIELDS.map(f=>`<div class="wrow"><span class="wk">${cap(f)}</span><span>${w[f]}</span></div>`).join('')+pearlsHTML(w.pearls)+`<div class="compare"><a href="Atlas Viewer.html">compare with the real atlas plates →</a></div></div>`;
-  c.innerHTML=html;}
+  html+=patientHTML(w&&w.patient);
+  c.innerHTML=html;wireCopy(c,w&&w.patient);}
+
+// Wire the "In plain words" Copy button to copy clean plain text.
+function wireCopy(c,patient){const b=c.querySelector('.pat-copy');if(!b||!patient)return;
+  b.onclick=()=>{const t=patientCopyText(patient);
+    if(navigator.clipboard)navigator.clipboard.writeText(t);
+    b.textContent='Copied ✓';b.classList.add('done');
+    setTimeout(()=>{b.textContent='Copy';b.classList.remove('done');},1400);};}
 
 let last=0;
 function tick(ts){const dt=Math.min((ts-last)/1000,.05)||.016;last=ts;

@@ -1,0 +1,89 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Patient education — named/specific</title>
+<style>
+  :root{--text:#1c1917;--muted:#78716c;--border:#e7e5e4;--accent:#2563eb;--green:#16a34a;--bg:#fafaf9;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  body{font-family:var(--font);color:var(--text);max-width:640px;margin:24px auto;padding:0 16px;background:var(--bg)}
+  .lede{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.5}
+  .kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin:26px 0 6px}
+  .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:15px 18px;margin-bottom:6px}
+  .patient{border-left:4px solid var(--green);background:#f6fdf9}
+  .pat-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+  .pat-title{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--green)}
+  .copy{font-family:var(--font);font-size:11.5px;font-weight:600;color:var(--muted);background:#fff;border:1px solid var(--border);border-radius:6px;padding:4px 9px;cursor:pointer}
+  .copy:hover{border-color:var(--accent);color:var(--accent)}.copy.done{color:var(--green);border-color:var(--green)}
+  .concept{font-size:15px;font-weight:800;margin-bottom:1px}
+  dl{margin:0}
+  dt{font-weight:700;font-size:12.5px;margin-top:9px;color:#292524}dt:first-of-type{margin-top:0}
+  dd{margin:1px 0 0;font-size:14px;line-height:1.57}
+  dd b{font-weight:600}
+  .copybox{font-size:11px;color:var(--muted);margin:0 0 4px}
+  .copybox pre{white-space:pre-wrap;background:#f5f5f4;border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-family:var(--font);font-size:11.5px;color:#57534e;margin-top:3px}
+</style></head><body>
+
+<p class="lede"><b>Named &amp; specific — class-first rule.</b> Same Option B skeleton, impersonal "the…" voice. The <b>drug class</b> is the primary searchable handle; a specific generic is named only where one agent dominates or the patient chooses between named options (tamsulosin, the PDE5 inhibitors). Interchangeable members stay at the class (an <b>NSAID</b>, not "diclofenac"). Procedures are named. Bold marks the googleable terms.</p>
+
+<div id="root"></div>
+
+<script>
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+const strip=s=>s.replace(/\*\*(.+?)\*\*/g,'$1');
+
+const ITEMS = [
+  {concept:"BPH — benign prostatic enlargement", type:"Condition", rows:[
+    ["What it is","An enlargement of the prostate gland — **benign prostatic hyperplasia (BPH)** — common with age, and not a cancer."],
+    ["Why it matters","The prostate surrounds the urethra, so as it grows it narrows the channel: a weaker stream, hesitancy, a stop–start flow, dribbling, and incomplete emptying."],
+    ["What is done","An **alpha-blocker** such as **tamsulosin (Flomax)** relaxes the muscle for relief within days; a **5-alpha-reductase inhibitor** such as **finasteride (Proscar)** or **dutasteride (Avodart)** slowly shrinks the gland over 3–6 months (the two are sometimes combined). When medication is not enough: **TURP (transurethral resection of the prostate)**, or newer options such as **Rezūm** (steam) and **UroLift** (implants)."],
+    ["What to watch for","A sudden, complete inability to pass urine is an emergency — **acute urinary retention**. A long-standing blockage can raise pressure back toward the kidneys."],
+  ]},
+  {concept:"Overactive bladder", type:"Condition / storage symptoms", rows:[
+    ["What it is","A sudden, hard-to-defer urge to pass urine, often with frequency and waking at night — **overactive bladder (OAB)**."],
+    ["Why it matters","The bladder muscle (**detrusor**) contracts before the bladder is full, driving the urgency."],
+    ["What is done","**Bladder training** and fluid timing first; then an **antimuscarinic** (e.g. **solifenacin**) or a **beta-3 agonist** (**mirabegron**). Resistant cases: **bladder Botox** injections, or nerve stimulation — **PTNS** or **sacral neuromodulation**."],
+    ["What to watch for","New blood in the urine, pain, or fever points away from simple OAB and is reviewed."],
+  ]},
+  {concept:"Kidney stones — renal colic", type:"Presentation", rows:[
+    ["What it is","A stone formed in the kidney that causes severe loin-to-groin pain as it moves into the ureter — **renal (ureteric) colic**."],
+    ["Why it matters","A stone can block the kidney; a blocked **and** infected kidney is an emergency."],
+    ["What is done","Strong anti-inflammatory pain relief (an **NSAID**), anti-sickness medicine, and fluids; small stones often pass, helped by an **alpha-blocker** (**tamsulosin**) — known as **medical expulsive therapy**. Larger or stuck stones: **shockwave lithotripsy (ESWL)** or a telescope-and-laser procedure (**ureteroscopy**); an obstructed infected kidney is drained urgently with a **stent** or **nephrostomy**."],
+    ["What to watch for","Fever with the pain, or being unable to keep fluids down, needs urgent care."],
+  ]},
+  {concept:"Erectile dysfunction", type:"Andrology", rows:[
+    ["What it is","Difficulty getting or keeping an erection — **erectile dysfunction (ED)**."],
+    ["Why it matters","Common and usually treatable; it can be an early warning of **heart or blood-vessel disease**, or of low testosterone."],
+    ["What is done","First-line tablets are **PDE5 inhibitors** — **sildenafil (Viagra)**, **tadalafil (Cialis)**, **vardenafil (Levitra)**. Other options: a **vacuum pump**, **alprostadil** (pellet or injection), or a **penile implant**. Lifestyle, blood-pressure and diabetes control, and a **testosterone** check matter too."],
+    ["What to watch for","ED with chest pain or breathlessness on exertion warrants a heart check before treatment."],
+  ]},
+  {concept:"Prostate cancer", type:"Oncology", rows:[
+    ["What it is","A cancer arising in the prostate — **prostate adenocarcinoma**. Many are slow-growing."],
+    ["Why it matters","Behaviour varies widely; the **Gleason score / ISUP grade group**, the **stage**, and the **PSA** guide the plan, not the diagnosis alone."],
+    ["What is done","**Active surveillance** (close monitoring) for low-risk disease; or **radical prostatectomy** (surgery), **radiotherapy**, and **hormone therapy** that lowers testosterone — **ADT** (e.g. **goserelin / Zoladex**), with agents such as **abiraterone** or **enzalutamide** for advanced disease."],
+    ["What to watch for","New bone pain, or urinary changes in known disease, are reported promptly."],
+  ]},
+  {concept:"The kidney", type:"Normal anatomy · adapted labels", rows:[
+    ["What it is","One of two bean-shaped organs that filter the blood and make urine — the **nephron** is its filtering unit."],
+    ["What it does","Clears waste and surplus water, balances salts, and helps control **blood pressure** (renin) and red-blood-cell production (**erythropoietin**) — so its health affects far more than urine."],
+    ["How it is kept well","Hydration, control of **blood pressure** and **diabetes**, and caution with regular **NSAID** painkillers (e.g. ibuprofen), which can strain it."],
+    ["What to watch for","Swelling, a marked change in urine output, or blood in the urine is worth reviewing."],
+  ]},
+];
+
+document.getElementById('root').innerHTML = ITEMS.map((it,i)=>{
+  const clip = it.rows.map(([h,b])=>h+': '+strip(b)).join('\n');
+  return `<div class="kicker">${esc(it.type)}</div>
+  <div class="card patient">
+    <div class="concept">${esc(it.concept)}</div>
+    <div class="pat-head"><span class="pat-title">In plain words</span><button class="copy" data-i="${i}">Copy</button></div>
+    <dl>${it.rows.map(([h,b])=>`<dt>${esc(h)}</dt><dd>${md(b)}</dd>`).join('')}</dl>
+  </div>
+  <div class="copybox">Clipboard gets:<pre id="clip${i}">${esc(clip)}</pre></div>`;
+}).join('');
+
+document.querySelectorAll('.copy').forEach(b=>b.onclick=()=>{
+  const t=document.getElementById('clip'+b.dataset.i).textContent;
+  navigator.clipboard?.writeText(t); b.textContent='Copied ✓'; b.classList.add('done');
+  setTimeout(()=>{b.textContent='Copy';b.classList.remove('done');},1400);
+});
+</script>
+</body></html>

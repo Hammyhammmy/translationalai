@@ -1,0 +1,89 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Patient education — options</title>
+<style>
+  :root{--text:#1c1917;--muted:#78716c;--border:#e7e5e4;--accent:#2563eb;--green:#16a34a;--bg:#fafaf9;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  body{font-family:var(--font);color:var(--text);max-width:600px;margin:24px auto;padding:0 16px;background:var(--bg)}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin:30px 0 4px}
+  .note{font-size:12px;color:var(--muted);margin:0 0 10px}
+  .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:15px 18px}
+  /* the patient-education block */
+  .patient{border-left:4px solid var(--green);background:#f6fdf9}
+  .pat-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .pat-title{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--green)}
+  .copy{font-family:var(--font);font-size:11.5px;font-weight:600;color:var(--muted);background:#fff;border:1px solid var(--border);border-radius:6px;padding:4px 9px;cursor:pointer}
+  .copy:hover{border-color:var(--accent);color:var(--accent)}
+  .copy.done{color:var(--green);border-color:var(--green)}
+  .pat-body{font-size:14.5px;line-height:1.62}
+  .pat-body p{margin:0 0 9px}.pat-body p:last-child{margin:0}
+  .pat-body b{font-weight:700}
+  .pat-dl dt{font-weight:700;font-size:13px;margin-top:8px}
+  .pat-dl dt:first-child{margin-top:0}
+  .pat-dl dd{margin:1px 0 0;font-size:14px;line-height:1.55}
+  ul.plain{margin:0;padding-left:18px}ul.plain li{font-size:14px;line-height:1.5;margin-bottom:4px}
+  .copybox{margin-top:8px;font-size:11px;color:var(--muted)}
+  .copybox pre{white-space:pre-wrap;background:#f5f5f4;border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-family:var(--font);font-size:12px;color:#44403c;margin-top:3px}
+</style></head><body>
+
+<h2>Option A — One plain-language paragraph ("In plain words")</h2>
+<p class="note">A flowing explainer with background. Copies as one clean paragraph.</p>
+<div class="card patient">
+  <div class="pat-head"><span class="pat-title">In plain words — for your patient</span><button class="copy" data-t="A">Copy</button></div>
+  <div class="pat-body" id="A"></div>
+</div>
+<div class="copybox">Clipboard gets: <pre id="A-clip"></pre></div>
+
+<h2>Option B — Structured explainer (what / why / do / watch)</h2>
+<p class="note">A predictable skeleton. Scannable; copies as a short labelled block.</p>
+<div class="card patient">
+  <div class="pat-head"><span class="pat-title">In plain words — for your patient</span><button class="copy" data-t="B">Copy</button></div>
+  <dl class="pat-dl" id="B"></dl>
+</div>
+<div class="copybox">Clipboard gets: <pre id="B-clip"></pre></div>
+
+<h2>Option C — Plain-language bullets (patient pearls)</h2>
+<p class="note">Mirrors teaching pearls, plainer words. Cheapest to build; less "story".</p>
+<div class="card patient">
+  <div class="pat-head"><span class="pat-title">In plain words — for your patient</span><button class="copy" data-t="C">Copy</button></div>
+  <ul class="plain" id="C"></ul>
+</div>
+<div class="copybox">Clipboard gets: <pre id="C-clip"></pre></div>
+
+<script>
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const prose=t=>t.split(/\n{2,}/).map(p=>'<p>'+esc(p).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')+'</p>').join('');
+const plain=t=>t.replace(/\*\*(.+?)\*\*/g,'$1').replace(/[ \t]+/g,' ').trim();
+
+// ---- BPH content, three shapes ----
+const A = "Your prostate is a small gland that sits right around the tube you pee through. As men get older it often grows a little, and because it wraps around that tube, a bigger prostate can squeeze it — so the stream gets weaker, takes longer to start, stops and starts, or leaves you feeling you haven't fully emptied. This is very common and it is **not cancer**.\n\nThere are two main ways we treat it with tablets: one kind relaxes the muscle around the prostate for fairly quick relief, and another slowly shrinks the gland itself over a few months. If tablets aren't enough, a small operation can trim away the inner part that's doing the blocking.\n\nWe take it seriously rather than calling it just a nuisance, because a long-standing blockage can build up pressure all the way back to the kidneys — so it's worth sorting out properly.";
+
+const B = [
+  ["What it is","An enlarged prostate gland — very common with age, and not cancer."],
+  ["Why it matters to you","The prostate wraps around your urine tube, so when it grows it can squeeze the flow: a weaker stream, starting and stopping, going more often, or not feeling fully empty."],
+  ["What we can do","Tablets that relax the muscle for quicker relief, or tablets that slowly shrink the gland — and a small operation if tablets aren't enough."],
+  ["What to watch for","If you suddenly can't pass urine at all, that's an emergency — come straight in. Treating the blockage also protects your kidneys."],
+];
+
+const C = [
+  "An enlarged prostate is common as men age, and it is not cancer.",
+  "It wraps around your urine tube, so it can weaken or slow the stream.",
+  "Some tablets relax the muscle for fast relief; others slowly shrink the gland.",
+  "If you suddenly can't pass urine at all, that's an emergency.",
+  "A long blockage can strain the kidneys, so it's worth treating properly.",
+];
+
+// render
+document.getElementById('A').innerHTML = prose(A);
+document.getElementById('A-clip').textContent = plain(A.replace(/\n\n/g,'\n\n'));
+document.getElementById('B').innerHTML = B.map(([h,b])=>`<dt>${esc(h)}</dt><dd>${esc(b)}</dd>`).join('');
+document.getElementById('B-clip').textContent = B.map(([h,b])=>h+': '+b).join('\n');
+document.getElementById('C').innerHTML = C.map(x=>`<li>${esc(x)}</li>`).join('');
+document.getElementById('C-clip').textContent = C.map(x=>'• '+x).join('\n');
+
+document.querySelectorAll('.copy').forEach(btn=>btn.onclick=()=>{
+  const t=btn.dataset.t; const txt=document.getElementById(t+'-clip').textContent;
+  navigator.clipboard?.writeText(txt); btn.textContent='Copied ✓'; btn.classList.add('done');
+  setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('done');},1400);
+});
+</script>
+</body></html>

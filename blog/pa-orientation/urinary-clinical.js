@@ -14,6 +14,12 @@ export const CLINICAL = {
     imaging: 'Renal ultrasound is for context, not diagnosis: it confirms two kidneys, sizes them (small/echogenic suggests chronicity) and excludes a structural mimic, but is usually normal early. Glomerular bleeding is diagnosed on urine and blood, not on imaging, so do not let a normal scan reassure you out of a nephritic workup.',
     treatment: 'Treatment is of the underlying glomerulonephritis rather than the bleeding itself: blood-pressure control with an ACE inhibitor/ARB reduces proteinuria and slows progression, and cause-specific immunosuppression (e.g. steroids ± cytotoxics for vasculitis/lupus) is added as indicated. Refer to nephrology early — a rapidly rising creatinine signals a crescentic/rapidly progressive course that needs urgent biopsy and treatment.',
     pearls: ['RBC casts and dysmorphic RBCs = glomerular source — stop the urological workup', 'Synpharyngitic (same-day) haematuria → IgA; 2–3 week lag → post-strep', 'Rising creatinine = possible RPGN, an emergency for biopsy/immunosuppression'],
+    patient: {
+      whatItIs: 'Bleeding into the urine that comes from the kidney\'s filtering units (the glomeruli) — **glomerulonephritis** — rather than from the bladder or lower urinary tract.',
+      whyItMatters: 'The urine often looks tea- or cola-coloured and is usually painless, and it can come with raised blood pressure, body swelling and falling kidney function rather than bleeding alone.',
+      whatIsDone: 'Urine and blood tests (looking for distorted red cells and red-cell casts, and checking kidney function and immune markers) point to a filter source, while an **ultrasound** gives context. Treatment targets the cause — blood-pressure control with an **ACE inhibitor** or **ARB** to cut protein leak, and immune-suppressing drugs such as **steroids** for inflammatory types.',
+      whatToWatch: 'A fast-rising creatinine (rapidly worsening kidney function) is an emergency that may need an urgent kidney **biopsy** and stronger treatment.',
+    },
   },
   pyelonephritis: {
     history: 'Look for the upper-tract triad — fever with rigors, flank pain and nausea/vomiting — often following a few days of cystitis symptoms as infection ascends the ureter. Actively seek risk factors that change management: obstruction or stones, pregnancy, diabetes and immunosuppression all predict a complicated course and a lower threshold for imaging and admission.',
@@ -22,6 +28,12 @@ export const CLINICAL = {
     imaging: 'Imaging is not needed for a straightforward case, but renal ultrasound or CT is mandatory if the patient is septic, fails to improve within 48–72h, or has known stones — its job is to find the two things that make antibiotics alone fail: obstruction and abscess.',
     treatment: 'Start empirical antibiotics per local guidance (IV if unwell) with fluids, then narrow to culture. The can\'t-miss point: an obstructed, infected kidney (pyonephrosis) is a urological emergency — antibiotics cannot sterilise pus behind a blockage, so it must be decompressed urgently with a ureteric stent or percutaneous nephrostomy.',
     pearls: ['Obstructed + infected kidney = emergency decompression (stent/nephrostomy) — antibiotics alone fail', 'CVA tenderness + fever localises to upper tract', 'Not improving by 48–72h → image for abscess/obstruction'],
+    patient: {
+      whatItIs: 'A kidney infection — **pyelonephritis** — usually bacteria that have travelled up from the bladder.',
+      whyItMatters: 'It causes fever with shaking chills, pain in the flank (loin) and nausea, and it can tip into a dangerous whole-body infection (sepsis). Diabetes, pregnancy, a stone or a blockage make it more serious.',
+      whatIsDone: 'Urine and blood tests confirm the infection and check kidney function, and an **ultrasound** or **CT** scan is used if recovery stalls or a stone is suspected. Treatment is **antibiotics** (into a vein if unwell) with fluids.',
+      whatToWatch: 'A blocked, infected kidney is an emergency — the pus must be drained with a **ureteric stent** or a **nephrostomy** (a tube through the back), because antibiotics alone cannot clear infection trapped behind a blockage.',
+    },
   },
   renal_mass: {
     history: 'Most renal masses are now found incidentally on imaging done for something else; the classic triad of flank pain, mass and haematuria is a late, ominous presentation. Ask about constitutional symptoms (weight loss, fatigue) and paraneoplastic clues, since RCC can announce itself systemically before it bleeds.',
@@ -30,6 +42,12 @@ export const CLINICAL = {
     imaging: 'Contrast CT of abdomen and pelvis is the workhorse: enhancement after contrast is what separates a solid (likely malignant) mass from a benign cyst, and it characterises and stages local extent and venous involvement. Add chest CT to complete staging, since the lungs are the commonest site of metastasis.',
     treatment: 'Partial nephrectomy is preferred where feasible to preserve nephrons; radical nephrectomy for larger/central tumours, and active surveillance or ablation for small masses in frail patients. RCC is chemo- and radio-resistant, so metastatic disease is treated with targeted/immune therapy — refer to urology.',
     pearls: ['Solid, enhancing mass on contrast CT = renal cancer until proven otherwise', 'New left varicocele that won\'t empty supine → suspect renal vein tumour thrombus', 'Partial nephrectomy spares nephrons; RCC resists chemo/radiotherapy'],
+    patient: {
+      whatItIs: 'A solid growth in the kidney — most often **renal cell carcinoma (RCC)**, a kidney cancer — though many are now found by chance on scans done for something else.',
+      whyItMatters: 'Early on there are usually no symptoms; later it can cause blood in the urine, flank pain, a lump, weight loss or tiredness.',
+      whatIsDone: 'A **contrast CT** scan tells a solid (likely cancerous) lump from a harmless cyst and shows how far it has spread, with a chest CT to complete staging. Treatment is surgery — **partial nephrectomy** (removing just the tumour) where possible, or **radical nephrectomy** (removing the kidney) for larger ones; small tumours in frail people may be watched or treated with **ablation**.',
+      whatToWatch: 'Kidney cancer resists chemotherapy and radiotherapy, so spread is treated with **targeted or immune therapies** — a urology referral matters.',
+    },
   },
   staghorn_stone: {
     history: 'Often surprisingly few symptoms for the size — a vague flank ache and recurrent UTIs rather than classic colic, because the stone grows to fill the collecting system rather than obstructing acutely. The history of repeated infections is the clue: most staghorns are struvite, formed when urease-producing organisms split urea and alkalinise the urine.',
@@ -38,6 +56,12 @@ export const CLINICAL = {
     imaging: 'Non-contrast CT KUB defines the stone\'s size and the full extent of its branches through the calyces — essential surgical planning — while a plain KUB is useful afterwards for cheap follow-up if the stone is radio-opaque.',
     treatment: 'Percutaneous nephrolithotomy (PCNL) is the mainstay because only a percutaneous tract can clear this volume of stone; the goal is complete clearance, since any retained infected fragment regrows. Treat the infection and add metabolic prevention to cut the high recurrence rate.',
     pearls: ['Most staghorns are struvite from urease-splitting organisms (Proteus) — treat the infection too', 'PCNL is first-line; aim for complete clearance or it regrows', 'A retained fragment is an infected nidus — recurrence is the rule if left'],
+    patient: {
+      whatItIs: 'A large branching stone that fills the kidney\'s drainage system — a **staghorn stone** — most often a **struvite** stone formed by urine infections.',
+      whyItMatters: 'It often causes surprisingly little pain, showing up instead as repeated urine infections and a vague flank ache; left alone it harbours infection and damages the kidney.',
+      whatIsDone: 'A **CT scan** maps the stone for surgery. The main treatment is **percutaneous nephrolithotomy (PCNL)** — keyhole removal through the back — aiming to clear every fragment, alongside treating the infection and steps to prevent regrowth.',
+      whatToWatch: 'Any leftover piece acts as an infected seed and the stone regrows, so complete clearance matters; a large infected stone can also seed a bloodstream infection.',
+    },
   },
   // ---- Ureter ----
   ureteral_stone: {
@@ -47,6 +71,12 @@ export const CLINICAL = {
     imaging: 'Non-contrast CT KUB is the gold standard — it detects essentially all stones, gives size and exact location (which predict spontaneous passage), and excludes mimics. Use ultrasound first when radiation is best avoided, above all in pregnancy.',
     treatment: 'NSAIDs are first-line analgesia (they reduce ureteric wall oedema and the prostaglandin-driven contractions, beating opioids for renal colic), with antiemetics and fluids. Small distal stones often pass with an α-blocker (medical expulsive therapy, which relaxes ureteric smooth muscle); larger or non-passing stones need ureteroscopy or ESWL. The can\'t-miss: an obstructed, infected stone needs urgent decompression before definitive stone treatment.',
     pearls: ['NSAIDs beat opioids for colic — they cut ureteric oedema and prostaglandin-driven spasm', 'Stone size + position predict passage; distal/small most likely to pass on α-blocker', 'Fever + obstructing stone = emergency decompression first, treat the stone later'],
+    patient: {
+      whatItIs: 'A stone stuck in the **ureter**, the tube draining a kidney to the bladder — causing **renal (ureteric) colic**.',
+      whyItMatters: 'It causes sudden, severe, cramping pain from the flank to the groin, often with nausea, vomiting and blood in the urine, and the person typically cannot get comfortable.',
+      whatIsDone: 'A **CT scan (CT KUB)** confirms the stone and its size and position (in pregnancy an **ultrasound** is used instead). An **NSAID** is the first-choice painkiller; small low stones often pass with an **alpha-blocker** to relax the tube, while larger ones need **ureteroscopy** or **shockwave lithotripsy (ESWL)**.',
+      whatToWatch: 'A stone causing a blockage together with fever or infection is an emergency needing urgent drainage (a **stent** or **nephrostomy**) before the stone itself is treated.',
+    },
   },
   ureteral_stone_brim: {
     history: 'A stone at the pelvic brim (where the ureter crosses the iliac vessels, one of three natural narrowings) gives colicky pain referred to the abdomen/iliac fossa — so it convincingly mimics appendicitis on the right and diverticulitis on the left. Haematuria and the colicky, can\'t-settle quality are the clues that point back to the ureter.',
@@ -55,6 +85,12 @@ export const CLINICAL = {
     imaging: 'Non-contrast CT KUB both confirms the stone at the brim and rules out the appendicitis/diverticulitis it imitates; ultrasound is the alternative in pregnancy.',
     treatment: 'Analgesia (NSAIDs) with antiemetics and medical expulsive therapy gives many mid-ureteric stones a chance to pass; ureteroscopy or ESWL if that fails. Decompress urgently if the system is obstructed and infected.',
     pearls: ['Brim stone (ureter over iliac vessels) mimics appendicitis/diverticulitis — haematuria gives it away', 'CT KUB both finds the stone and excludes the surgical abdomen', 'One of three natural ureteric narrowings where stones lodge'],
+    patient: {
+      whatItIs: 'A stone lodged where the **ureter** crosses the pelvic brim (over the iliac blood vessels), one of its natural narrow points.',
+      whyItMatters: 'It gives cramping pain in the lower abdomen that can closely mimic **appendicitis** on the right or **diverticulitis** on the left; blood in the urine and the restless, cramping quality point back to a stone.',
+      whatIsDone: 'A **CT scan (CT KUB)** both confirms the stone and rules out the surgical conditions it imitates (an **ultrasound** is used in pregnancy). Treatment is an **NSAID** painkiller with an **alpha-blocker** to aid passage, escalating to **ureteroscopy** or **shockwave lithotripsy (ESWL)** if it does not pass.',
+      whatToWatch: 'A blocked, infected system needs urgent drainage with a **stent** or **nephrostomy**.',
+    },
   },
   ureteral_stone_uvj: {
     history: 'A stone at the vesicoureteric junction — the narrowest point of the ureter — refers pain to the groin, testicle or labia and characteristically adds irritative bladder symptoms (dysuria, frequency, urgency) because it sits right at the bladder wall. The reassuring point is that distal stones are the most likely to pass spontaneously.',
@@ -63,6 +99,12 @@ export const CLINICAL = {
     imaging: 'Non-contrast CT KUB confirms a UVJ stone and its size; ultrasound (which can show the stone at the UVJ and ureteric jets) is preferred in pregnancy.',
     treatment: 'Analgesia plus an α-blocker is especially effective here, since UVJ smooth-muscle relaxation is exactly what medical expulsive therapy targets and most small distal stones pass. Ureteroscopy or ESWL is reserved for failure to pass, large stones, or intractable symptoms.',
     pearls: ['UVJ = narrowest point, but distal stones pass most often', 'α-blocker (MET) works best for distal/UVJ stones', 'Irritative symptoms can masquerade as cystitis — look for the colic and haematuria'],
+    patient: {
+      whatItIs: 'A stone sitting at the **vesicoureteric junction (UVJ)**, where the ureter enters the bladder — the narrowest point of the tube.',
+      whyItMatters: 'It refers pain to the groin, testicle or labia and adds bladder irritation (burning, frequency, urgency) that can feel like a urine infection; reassuringly, stones this low are the most likely to pass on their own.',
+      whatIsDone: 'A **CT scan (CT KUB)** confirms the stone (an **ultrasound** in pregnancy). An **alpha-blocker** with painkillers works especially well here, with **ureteroscopy** or **shockwave lithotripsy (ESWL)** kept for stones that will not pass.',
+      whatToWatch: 'Fever or a blockage on top of the stone needs urgent attention and drainage.',
+    },
   },
   ureteral_stricture: {
     history: 'A narrowed ureter usually has a cause in the history: prior stone or its treatment, ureteroscopy or surgery, pelvic radiation, or TB. It may be silent until it presents with flank pain, recurrent UTI, or an incidentally found hydronephrosis with declining function.',
@@ -71,6 +113,12 @@ export const CLINICAL = {
     imaging: 'CT urogram shows the level and the upstream dilatation; a MAG3 diuretic renogram answers the two questions that drive management — how much that kidney still works and whether it actually drains (true obstruction vs baggy but non-obstructed). A retrograde pyelogram precisely defines stricture length for surgical planning.',
     treatment: 'Short strictures may respond to balloon dilation or endoureterotomy; longer or recurrent ones need surgical reconstruction (e.g. reimplant, Boari flap, ileal interposition). A ureteric stent or nephrostomy temporises and, above all, relieves obstruction to protect the kidney while you plan.',
     pearls: ['MAG3 renogram answers: does the kidney work, and does it actually drain?', 'Short → dilation/endoureterotomy; long/recurrent → reconstruction', 'Silent obstruction destroys nephrons — decompress to preserve function'],
+    patient: {
+      whatItIs: 'A scarred narrowing of the **ureter** — a **ureteric stricture** — often after a previous stone, surgery, radiation or infection.',
+      whyItMatters: 'It can be silent while it quietly blocks urine flow and damages the kidney, or it may cause flank pain and repeated infections.',
+      whatIsDone: 'A **CT urogram** shows the narrowing and a **MAG3 renogram** checks how well that kidney works and whether it actually drains. Short narrowings may be stretched (**balloon dilation**) or cut open (**endoureterotomy**); longer ones need surgical **reconstruction**, with a **stent** or **nephrostomy** protecting the kidney meanwhile.',
+      whatToWatch: 'A silent blockage steadily destroys kidney tissue, so relieving it promptly matters.',
+    },
   },
   ureteral_compression: {
     history: 'Compression from outside the ureter — known malignancy, retroperitoneal fibrosis, abdominal aortic aneurysm, or prior pelvic surgery/radiation — tends to be insidious and painless. Bilateral compression can present dramatically as unexplained renal failure with little to find on examination.',
@@ -79,6 +127,12 @@ export const CLINICAL = {
     imaging: 'CT abdomen/pelvis identifies the cause and the degree of hydronephrosis, and distinguishes intrinsic from extrinsic obstruction — the periaortic rind of retroperitoneal fibrosis, for example, looks quite different from nodal disease.',
     treatment: 'Relieve the obstruction first (ureteric stent or nephrostomy — extrinsic compression often defeats internal stents, favouring nephrostomy), then treat the cause: steroids ± tamoxifen for retroperitoneal fibrosis, oncology referral for malignant compression, vascular management for an aneurysm.',
     pearls: ['Bilateral extrinsic obstruction can present as silent renal failure', 'Extrinsic compression often crushes internal stents — nephrostomy may be needed', 'Decompress, then expect and manage a post-obstructive diuresis'],
+    patient: {
+      whatItIs: 'A **ureter** squeezed from the outside — by a tumour, scar tissue (**retroperitoneal fibrosis**), an aneurysm or past surgery — rather than blocked from within.',
+      whyItMatters: 'It tends to be slow and painless; when both sides are squeezed it can show up dramatically as unexplained kidney failure.',
+      whatIsDone: 'A **CT scan** finds the cause and the degree of back-pressure. The blockage is relieved first (a **stent** or, often, a **nephrostomy**, since outside pressure can crush an internal stent), then the cause is treated — **steroids** for fibrosis, an oncology referral for cancer, vascular care for an aneurysm.',
+      whatToWatch: 'After the blockage clears the kidneys can pour out large volumes of urine (a post-obstructive diuresis) that needs monitoring.',
+    },
   },
   vesicoureteral_reflux: {
     history: 'Suspect reflux in a child with recurrent febrile UTIs or one picked up after antenatal hydronephrosis, and ask about family history (it is heritable). The concern is not the reflux itself but that refluxing infected urine scars the growing kidney.',
@@ -87,6 +141,12 @@ export const CLINICAL = {
     imaging: 'A voiding cystourethrogram (VCUG) makes the diagnosis and grades severity I–V, which drives management; a DMSA scan detects renal scarring (and differential function), and ultrasound screens and follows the upper tracts.',
     treatment: 'Low grades commonly resolve as the child grows, so management is surveillance with or without prophylactic antibiotics. High grades, breakthrough febrile infections, or new scarring tip toward intervention — endoscopic injection at the ureteric orifice or surgical ureteric reimplantation.',
     pearls: ['Grade on VCUG drives management; DMSA shows scarring', 'Low grades self-resolve with growth — surveillance ± prophylaxis', 'The danger is scarring from infected refluxed urine → hypertension/CKD'],
+    patient: {
+      whatItIs: 'A condition, mostly in children, where urine flows backwards from the bladder up the **ureters** toward the kidneys — **vesicoureteral reflux (VUR)**.',
+      whyItMatters: 'The danger is not the backflow itself but that infected urine reaching a growing kidney can scar it, leading over time to high blood pressure and kidney damage; it often shows as repeated feverish urine infections.',
+      whatIsDone: 'A bladder X-ray test (**voiding cystourethrogram, VCUG**) confirms and grades it, and a **DMSA scan** looks for scarring. Low grades often resolve as the child grows, managed by watchful follow-up with or without preventive **antibiotics**; high grades may need an **endoscopic injection** or surgical **reimplantation** of the ureter.',
+      whatToWatch: 'Breakthrough feverish infections or new kidney scarring signal a need to step up treatment.',
+    },
   },
   // ---- Bladder ----
   bladder_hematuria: {
@@ -96,6 +156,12 @@ export const CLINICAL = {
     imaging: 'The standard haematuria workup pairs CT urogram (to image the upper tracts and ureters) with cystoscopy (to inspect the bladder directly) — neither alone is sufficient, because urothelial cancer can arise anywhere along the tract.',
     treatment: 'Treat the underlying cause. For clot retention, place a large three-way catheter, evacuate clots and run continuous bladder irrigation; any tumour found is resected cystoscopically (TURBT). Correct coagulopathy but still complete the workup.',
     pearls: ['Painless visible haematuria = bladder cancer until proven otherwise', 'Full workup = CT urogram (upper tracts) + cystoscopy (bladder) — not one or the other', 'Clot retention needs a 3-way catheter, clot evacuation and irrigation'],
+    patient: {
+      whatItIs: 'Visible blood in the urine coming from the bladder or lower urinary tract — and, when painless, **bladder cancer** until proven otherwise.',
+      whyItMatters: 'Painless visible blood, especially in an older smoker, is a red flag; clots can block the bladder and cause a painful inability to pass urine (clot retention).',
+      whatIsDone: 'The standard work-up pairs a **CT urogram** (to image the kidneys and ureters) with a **cystoscopy** (a camera look inside the bladder) — both are needed because cancer can arise anywhere along the tract — and the urine is tested for cancer cells and infection. Any tumour is removed through the bladder (**TURBT**).',
+      whatToWatch: 'A painful, distended bladder full of clot is an emergency needing a large (**three-way**) **catheter** with washout and continuous irrigation.',
+    },
   },
   cystitis: {
     history: 'Classic lower-tract symptoms — dysuria, frequency, urgency, suprapubic discomfort and cloudy/offensive urine in an afebrile patient, typically a young sexually active woman. The presence of fever or flank pain should reroute you toward pyelonephritis; vaginal discharge or irritation points instead to vaginitis/STI.',
@@ -104,6 +170,12 @@ export const CLINICAL = {
     imaging: 'Not routine. Image (ultrasound/CT) when infections are recurrent, occur in a male, or are atypical, to look for a structural cause such as stones, incomplete emptying or anatomical abnormality.',
     treatment: 'A short course of an appropriate antibiotic per local resistance patterns (e.g. nitrofurantoin or trimethoprim) with fluids and analgesia. Note nitrofurantoin needs adequate renal function and does not treat pyelonephritis (it does not reach therapeutic tissue levels), so confirm the infection is lower-tract.',
     pearls: ['Classic symptoms + positive dipstick in a young woman = treat empirically, no culture needed', 'Culture if complicated: male, pregnant, recurrent, catheterised, or treatment failure', 'Fever/flank pain means it is no longer simple cystitis — reassess for pyelonephritis'],
+    patient: {
+      whatItIs: 'A bladder infection — **cystitis**, the common lower urinary tract infection — most often in young women.',
+      whyItMatters: 'It causes burning on passing urine, needing to go often and urgently, and lower-tummy discomfort with cloudy urine, but without fever.',
+      whatIsDone: 'A urine dipstick is often enough to start a short course of an **antibiotic** (such as **nitrofurantoin** or **trimethoprim**) with fluids; a urine culture is sent when the infection is complicated (in men, in pregnancy, recurrent, or catheter-related).',
+      whatToWatch: 'Fever or flank pain means the infection may have reached the kidney (pyelonephritis) and needs reassessing — note **nitrofurantoin** does not treat a kidney infection.',
+    },
   },
   interstitial_cystitis: {
     history: 'The defining story is bladder pain or pressure that worsens as the bladder fills and is relieved, at least briefly, by voiding — the opposite emphasis to infection, where dysuria dominates. Layer on frequency (day and night) and urgency driven by pain rather than fear of leaking, symptoms lasting more than 6 weeks, and dyspareunia. Ask about flare triggers, because they are diagnostic in their own right: classic dietary culprits are citrus, tomatoes, coffee, chocolate, alcohol and carbonated/caffeinated drinks, and many patients flare with stress or, in women, around menstruation. Screen for the associated central-sensitivity conditions — IBS, fibromyalgia, chronic pelvic pain — which both support the diagnosis and shape treatment. It is fundamentally a diagnosis of exclusion.',
@@ -112,6 +184,12 @@ export const CLINICAL = {
     imaging: 'No imaging makes the diagnosis. Cystoscopy is used to exclude other pathology (tumour, stone) and to identify Hunner lesions — a distinct, treatable phenotype — with hydrodistension under anaesthesia both assessing capacity and offering some therapeutic benefit. Urodynamics, if done, typically shows a small-capacity bladder with pain on filling. Reserve these for diagnostic uncertainty or before escalating treatment.',
     treatment: 'Management is phased and multimodal (AUA). Start conservative: patient education, an elimination diet to find personal triggers, stress management, and — crucially — manual pelvic-floor physical therapy to release the hypertonic floor. The pearl here is that pelvic-floor STRENGTHENING (Kegels) is the wrong move and tends to worsen IC/BPS; the physio must be relaxation/downtraining, not strengthening. Next come oral agents (amitriptyline, an antihistamine such as hydroxyzine, or pentosan polysulfate) and intravesical therapy (DMSO, or heparin/lidocaine instillations). A Hunner lesion is fulgurated or injected with triamcinolone. Refractory disease escalates to botulinum toxin or sacral neuromodulation, then ciclosporin, with major reconstructive surgery a true last resort. Throughout, the goal is symptom control and quality of life — there is no cure, only remission.',
     pearls: ['Pain that builds with filling and eases on voiding, with STERILE urine — not infection', 'Pelvic-floor physiotherapy helps, but Kegels (strengthening) make it worse — downtrain, don\'t strengthen', 'Diagnosis of exclusion: negative culture and (in at-risk patients) cytology to exclude carcinoma in situ', 'Hunner lesions are a distinct phenotype treated by fulguration/steroid injection'],
+    patient: {
+      whatItIs: 'A long-term, non-infective bladder pain condition — **interstitial cystitis / bladder pain syndrome (IC/BPS)** — diagnosed once other causes are excluded.',
+      whyItMatters: 'The hallmark is bladder pain or pressure that builds as the bladder fills and eases briefly on passing urine, with frequency day and night; flares are often triggered by certain foods (citrus, tomatoes, coffee, alcohol, fizzy drinks) and stress.',
+      whatIsDone: 'A sterile urine culture (and sometimes urine **cytology** and **cystoscopy**) rules out infection, cancer and stones. Care is stepped and combined: diet changes, stress management and **pelvic-floor physiotherapy** to relax a tight floor, then tablets (**amitriptyline**, an **antihistamine**, or **pentosan polysulfate**) and bladder instillations, with **Hunner lesions** treated directly.',
+      whatToWatch: 'Blood in the urine should always be investigated, since a bladder cancer (**carcinoma in situ**) can mimic this condition; and note that pelvic-floor strengthening (**Kegels**) tends to worsen it — the physiotherapy must relax the floor, not strengthen it.',
+    },
   },
   detrusor_overactivity: {
     history: 'The syndrome is storage-dominant: urgency (the defining symptom), frequency, nocturia and urge incontinence. Quantify caffeine, alcohol and fluid intake (modifiable drivers) and screen for neurological symptoms, because identical symptoms from a neurogenic cause are managed with the kidneys in mind.',
@@ -120,6 +198,12 @@ export const CLINICAL = {
     imaging: 'A bladder scan for post-void residual ensures the urgency is not actually overflow from poor emptying; reserve urodynamics for refractory cases or diagnostic uncertainty, where it confirms involuntary detrusor contractions during filling.',
     treatment: 'Start conservatively — bladder training, timed voiding and fluid/caffeine modification — then escalate to an antimuscarinic (blocks detrusor muscarinic contraction) or a β3-agonist (mirabegron, promotes storage with fewer anticholinergic effects). Refractory cases go to intravesical botulinum toxin or sacral neuromodulation.',
     pearls: ['Urgency is the cardinal symptom; check a post-void residual to exclude overflow', 'Escalate: behavioural → antimuscarinic/β3-agonist → botulinum toxin/neuromodulation', 'Mind anticholinergic load (cognition, constipation) in older patients — favour β3'],
+    patient: {
+      whatItIs: 'An overactive bladder muscle that squeezes when it should be storing — **detrusor overactivity / overactive bladder**.',
+      whyItMatters: 'It causes a sudden urgent need to pass urine, going often, waking at night, and sometimes leaking before reaching the toilet.',
+      whatIsDone: 'Urine is checked to exclude infection and a bladder scan confirms the bladder empties properly. Treatment starts with bladder training and cutting caffeine and alcohol, then an **antimuscarinic** or a **beta-3 agonist** (**mirabegron**) tablet; stubborn cases can have bladder **botulinum toxin** injections or **sacral neuromodulation**.',
+      whatToWatch: 'In older people the anticholinergic effect of antimuscarinics can affect memory and cause constipation, so a **beta-3 agonist** is often preferred.',
+    },
   },
   bladder_hypertrophy: {
     history: 'A thick-walled bladder is a consequence, not a primary disease: long-standing outlet obstruction (usually BPH in men) forces the detrusor to hypertrophy to push urine past resistance. The history is therefore of chronic voiding symptoms — weak stream, hesitancy, straining and incomplete emptying — that long predate any structural finding.',
@@ -128,6 +212,12 @@ export const CLINICAL = {
     imaging: 'A bladder scan quantifies the post-void residual; ultrasound shows the thickened, trabeculated wall and any diverticula formed where mucosa herniates between hypertrophied muscle bundles. Urodynamics confirms high-pressure voiding against outlet resistance.',
     treatment: 'Treat the cause by relieving the outlet obstruction (see BPH) — the thickened wall is the downstream effect, so targeting it directly is pointless; lowering the pressure protects the upper tracts and limits diverticula.',
     pearls: ['Wall thickening/trabeculation is the result of obstruction — treat the obstruction, not the wall', 'High detrusor pressures threaten the kidneys — relieve outlet resistance', 'Trabeculation can progress to diverticula'],
+    patient: {
+      whatItIs: 'A thickened bladder wall — **bladder hypertrophy** — that builds up when the muscle has to push hard against a blockage at the outlet (usually an enlarged prostate).',
+      whyItMatters: 'It is a consequence of long-standing blockage, so the symptoms are those of obstruction: a weak stream, hesitancy, straining and incomplete emptying.',
+      whatIsDone: 'A bladder scan measures leftover urine and an **ultrasound** shows the thickened, ridged wall. Treatment targets the underlying blockage (see **benign prostatic hyperplasia (BPH)**) rather than the wall itself, which lowers the pressure and protects the kidneys.',
+      whatToWatch: 'High bladder pressures can back up to the kidneys, and the thickened wall can develop pouches (**diverticula**), so relieving the blockage matters.',
+    },
   },
   bladder_diverticulum: {
     history: 'Often silent and found incidentally, but ask about recurrent UTIs, a sense of incomplete emptying and double voiding (the diverticulum fills as the bladder empties, then drains back), and occasional haematuria. Most are acquired from chronic outlet obstruction, so a voiding-symptom history usually sits behind it.',
@@ -136,6 +226,12 @@ export const CLINICAL = {
     imaging: 'A cystogram or CT demonstrates the outpouching; cystoscopy is important to assess the diverticular neck and, critically, to exclude a tumour within the diverticulum — its thin, muscle-poor wall means any cancer there stages and behaves worse.',
     treatment: 'Relieve any outlet obstruction (the cause); diverticulectomy is indicated when the diverticulum is symptomatic, harbours stones or tumour, or causes refractory infection due to stasis.',
     pearls: ['Stasis → recurrent UTI and double voiding; most are secondary to obstruction', 'Scope the diverticulum — tumour in its thin wall behaves aggressively', 'Treat the underlying obstruction or it recurs'],
+    patient: {
+      whatItIs: 'A pouch ballooning out from the bladder wall — a **bladder diverticulum** — usually formed by long-standing outlet blockage.',
+      whyItMatters: 'It often causes no symptoms, but urine pooling in the pouch can lead to repeated infections, a feeling of incomplete emptying, and passing urine twice in quick succession (double voiding).',
+      whatIsDone: 'A **CT** or bladder X-ray (**cystogram**) shows the pouch, and a **cystoscopy** checks its neck and, importantly, looks for a tumour inside it. Treatment relieves any outlet blockage, and the pouch is removed (**diverticulectomy**) if it causes trouble.',
+      whatToWatch: 'The pouch wall is thin, so a cancer arising in it behaves more aggressively — which is why it is inspected with a camera.',
+    },
   },
   urothelial_carcinoma: {
     history: 'The hallmark is painless visible haematuria; press hard on the two biggest risk factors — smoking and occupational exposure to aromatic amines (dyes, rubber, chemicals) — and note age. Irritative symptoms (urgency, frequency) can also occur, particularly with carcinoma in situ.',
@@ -144,6 +240,12 @@ export const CLINICAL = {
     imaging: 'CT urogram plus cystoscopy is diagnostic, the same paired workup as for any visible haematuria, because urothelium is at risk from renal pelvis to urethra (field change); staging CT follows a confirmed cancer.',
     treatment: 'TURBT resects and stages non-muscle-invasive disease, followed by intravesical BCG or chemotherapy to cut recurrence/progression. Muscle-invasive disease needs radical cystectomy (often with neoadjuvant platinum chemotherapy) or bladder-preserving chemoradiation. Lifelong surveillance is essential because the field defect keeps recurring.',
     pearls: ['Smoking and aromatic-amine exposure are the dominant risk factors', 'Muscle invasion is the pivotal staging question — it changes everything', 'Field-change cancer recurs — lifelong cystoscopic surveillance'],
+    patient: {
+      whatItIs: 'A cancer of the lining of the urinary tract — **urothelial carcinoma** — most often in the bladder.',
+      whyItMatters: 'The classic sign is painless visible blood in the urine; smoking and workplace chemical exposure (aromatic amines, found in dyes and rubber) are the main risks.',
+      whatIsDone: 'A **CT urogram** plus **cystoscopy** with urine **cytology** makes the diagnosis. Surface tumours are removed through the bladder (**TURBT**) and treated with bladder washes (**BCG** or chemotherapy); muscle-invasive cancer needs bladder removal (**radical cystectomy**), often with chemotherapy, or **chemoradiation**.',
+      whatToWatch: 'Because the whole lining is at risk it tends to come back, so lifelong camera check-ups (**surveillance cystoscopy**) are needed.',
+    },
   },
   bladder_stone: {
     history: 'Suprapubic pain, intermittent interruption of the urinary stream (the stone rolls onto the bladder neck like a ball-valve), terminal haematuria and recurrent UTIs. Most form secondary to urinary stasis from outlet obstruction, a chronic catheter, or a neurogenic bladder, so the underlying cause is part of the story.',
@@ -152,6 +254,12 @@ export const CLINICAL = {
     imaging: 'KUB or CT confirms the stone; cystoscopy visualises it directly and assesses the bladder neck and prostate for the underlying obstruction.',
     treatment: 'Cystolitholapaxy fragments and removes the stone endoscopically, but the cure is incomplete unless you also correct the underlying outlet obstruction or stasis — otherwise stones simply re-form.',
     pearls: ['Positional stream interruption suggests a mobile bladder stone', 'Almost always secondary to stasis — treat the cause (obstruction/catheter/neurogenic) or it recurs', 'Chronic stone/inflammation is a risk for squamous cell carcinoma'],
+    patient: {
+      whatItIs: 'A stone that forms inside the bladder — a **bladder stone** — usually because urine is not draining well (a blockage, a catheter, or a nerve-affected bladder).',
+      whyItMatters: 'It causes lower-tummy pain, a stream that stops and starts as the stone rolls over the outlet, blood at the end of passing urine, and repeated infections.',
+      whatIsDone: 'A **CT** or X-ray confirms the stone and a **cystoscopy** lets it be seen and the outlet checked. The stone is broken up and removed through a camera (**cystolitholapaxy**), but the underlying drainage problem must also be fixed.',
+      whatToWatch: 'If the cause is not corrected the stones simply re-form, and long-standing stones with inflammation raise the risk of a bladder cancer.',
+    },
   },
   // ---- Control: sphincters & neural ----
   stress_incontinence: {
@@ -161,6 +269,12 @@ export const CLINICAL = {
     imaging: 'Not routine. Urodynamics is reserved for a mixed picture, prior failed surgery, or before an operation, to confirm the mechanism and exclude detrusor overactivity.',
     treatment: 'Supervised pelvic-floor muscle training is first-line (plus weight loss, which reduces abdominal pressure). Surgical options — mid-urethral sling or colposuspension, or urethral bulking agents — re-support the urethra; men with post-prostatectomy incontinence may need an artificial urinary sphincter.',
     pearls: ['Leak on effort with no urge = sphincter/support failure', 'Pelvic-floor training first; surgery (sling/colposuspension) if it fails', 'Post-prostatectomy stress incontinence may need an artificial sphincter'],
+    patient: {
+      whatItIs: 'Leaking urine on coughing, laughing, sneezing or exertion — **stress urinary incontinence** — from a weakened bladder outlet or its support.',
+      whyItMatters: 'The leak happens with a rise in tummy pressure and without any warning urge; common causes are childbirth, the menopause, and in men a prostate operation.',
+      whatIsDone: 'A cough test and an assessment of pelvic-floor strength confirm it. First-line treatment is supervised **pelvic-floor muscle training** (plus weight loss); if that fails, surgery such as a **mid-urethral sling**, **colposuspension** or **urethral bulking** re-supports the outlet.',
+      whatToWatch: 'Men with leakage after prostate surgery may need an **artificial urinary sphincter**.',
+    },
   },
   detrusor_sphincter_dyssynergia: {
     history: 'Occurs with neurological lesions between the pons and the sacral cord — classically spinal cord injury and MS — where the coordinating pontine micturition centre is disconnected. The detrusor and external sphincter contract simultaneously instead of in sequence, so the patient has poor emptying, recurrent UTIs and, above the lesion of T6, may get autonomic dysreflexia.',
@@ -169,6 +283,12 @@ export const CLINICAL = {
     imaging: 'Video-urodynamics is diagnostic, showing the detrusor contracting against a closed sphincter and generating dangerously high bladder pressures; upper-tract ultrasound surveillance is essential to catch hydronephrosis early.',
     treatment: 'The overriding aim is to protect the upper tracts from high-pressure damage: clean intermittent catheterisation to empty, antimuscarinics/botulinum toxin to lower storage pressure, and α-blockers or sphincterotomy to reduce outlet resistance, alongside managing the neurological disease.',
     pearls: ['Detrusor contracts against a closed sphincter → high pressures threaten the kidneys', 'Lesion sits between pons and sacral cord (SCI, MS)', 'Above T6 watch for autonomic dysreflexia — a hypertensive emergency'],
+    patient: {
+      whatItIs: 'A loss of coordination between the bladder and its outlet valve after a spinal nerve injury — **detrusor-sphincter dyssynergia** — seen with spinal cord injury and **multiple sclerosis (MS)**.',
+      whyItMatters: 'The bladder squeezes against a closed valve, so it empties poorly, causes repeated infections, and builds dangerously high pressures that threaten the kidneys.',
+      whatIsDone: 'A **video-urodynamics** test makes the diagnosis and an **ultrasound** keeps watch on the kidneys. The aim is to protect the kidneys: emptying with **intermittent catheterisation**, lowering pressure with **antimuscarinics** or **botulinum toxin**, and easing the outlet with **alpha-blockers**.',
+      whatToWatch: 'With a spinal lesion above the mid-back (T6), a blocked or over-full bladder can trigger **autonomic dysreflexia**, a dangerous surge in blood pressure that is a medical emergency.',
+    },
   },
   neurogenic_umn: {
     history: 'An upper-motor-neuron (suprasacral) lesion — stroke, MS, suprasacral spinal cord injury — releases the bladder from cortical inhibition, producing a small-capacity, overactive bladder: urgency, frequency and incontinence. Establish the neurological diagnosis, because the management goal differs from idiopathic overactivity.',
@@ -177,6 +297,12 @@ export const CLINICAL = {
     imaging: 'Urodynamics shows detrusor overactivity, sometimes with high storage pressures; the key is upper-tract surveillance ultrasound, because sustained high pressure — not the incontinence itself — is what damages the kidneys.',
     treatment: 'Lower storage pressure and improve capacity with antimuscarinics, a β3-agonist, or botulinum toxin; add CISC if this causes retention. Throughout, protect the kidneys and treat the underlying neurological cause.',
     pearls: ['Suprasacral lesion → small, overactive bladder', 'High storage pressure (not leakage) is what destroys kidneys — survey upper tracts', 'Lower pressure pharmacologically; add CISC if retention results'],
+    patient: {
+      whatItIs: 'An overactive, small-capacity bladder caused by injury to the nerve pathways above the lower spine — an **upper-motor-neuron neurogenic bladder** — after a stroke, **multiple sclerosis (MS)** or spinal cord injury.',
+      whyItMatters: 'It causes urgency, frequency and leaking; the hidden danger is high storage pressure, which damages the kidneys silently rather than the leaking itself.',
+      whatIsDone: 'A **urodynamics** test shows the overactivity and an **ultrasound** keeps watch on the kidneys. Treatment lowers pressure and improves capacity with **antimuscarinics**, a **beta-3 agonist** or **botulinum toxin**, adding **intermittent catheterisation** if the bladder then retains urine.',
+      whatToWatch: 'Because high pressure quietly harms the kidneys, regular upper-tract surveillance scans are essential.',
+    },
   },
   neurogenic_lmn: {
     history: 'A lower-motor-neuron (sacral or infrasacral) lesion — cauda equina, sacral injury, diabetic/peripheral autonomic neuropathy, or radical pelvic surgery — denervates the detrusor, giving an areflexic, acontractile bladder: poor emptying, chronic retention and overflow incontinence. New back pain with bladder dysfunction must trigger cauda equina screening.',
@@ -185,6 +311,12 @@ export const CLINICAL = {
     imaging: 'Urodynamics demonstrates an areflexic/acontractile detrusor; ultrasound assesses the upper tracts and quantifies retention.',
     treatment: 'Clean intermittent self-catheterisation is the mainstay, emptying the flaccid bladder and avoiding the overdistension that further damages the detrusor. Treat the cause — and remember cauda equina syndrome is a surgical emergency needing urgent MRI and decompression to preserve bladder and bowel function.',
     pearls: ['Cauda equina (saddle anaesthesia, loss of anal tone, retention) = surgical emergency — urgent MRI/decompression', 'Areflexic bladder → retention/overflow; CISC is the mainstay', 'Avoid overdistension — it worsens an already flaccid detrusor'],
+    patient: {
+      whatItIs: 'A weak, non-squeezing bladder caused by damage to the lower (sacral) nerves — a **lower-motor-neuron neurogenic bladder** — from **cauda equina**, a sacral injury, diabetic nerve damage or pelvic surgery.',
+      whyItMatters: 'The bladder cannot empty, so it overfills and leaks (overflow), and the stagnant urine invites infection.',
+      whatIsDone: 'A **urodynamics** test confirms the floppy bladder and an **ultrasound** measures retained urine. The mainstay is **clean intermittent self-catheterisation** to empty the bladder and avoid overstretching it.',
+      whatToWatch: 'New back pain with bladder trouble, numbness in the saddle area or loss of bowel control suggests **cauda equina syndrome** — a surgical emergency needing an urgent **MRI** and decompression.',
+    },
   },
   // ---- Urethra / outlet ----
   bph: {
@@ -194,6 +326,12 @@ export const CLINICAL = {
     imaging: 'A bladder scan for post-void residual and ultrasound for prostate size and upper-tract changes; uroflowmetry shows a low, prolonged flow, and urodynamics clarifies cases where obstruction versus detrusor weakness is uncertain.',
     treatment: 'Mild symptoms — watchful waiting and lifestyle measures. Medical therapy steps up to an α-blocker (tamsulosin relaxes prostatic/bladder-neck smooth muscle for rapid symptom relief) and, for larger glands, a 5α-reductase inhibitor (shrinks the gland over months by blocking DHT). Surgery (TURP, HoLEP, UroLift) for failure or complications; catheterise acute retention promptly.',
     pearls: ['α-blockers relax smooth muscle (fast relief); 5α-reductase inhibitors shrink the gland (slow, volume-dependent)', 'Smooth symmetrical gland = BPH; hard nodule/asymmetry → suspect cancer', 'Acute retention → catheterise; watch for post-obstructive diuresis'],
+    patient: {
+      whatItIs: 'An enlargement of the prostate gland — **benign prostatic hyperplasia (BPH)** — common with age, and not a cancer.',
+      whyItMatters: 'The prostate surrounds the urethra, so as it grows it narrows the channel: a weaker stream, hesitancy, a stop–start flow, dribbling, and a sense of incomplete emptying.',
+      whatIsDone: 'An **alpha-blocker** (such as **tamsulosin**) relaxes the muscle for relief within days; a **5-alpha-reductase inhibitor** (such as **finasteride** or **dutasteride**) slowly shrinks the gland over 3–6 months, and the two are sometimes combined. When medication is not enough: **TURP (transurethral resection of the prostate)**, or newer options such as **Rezūm** (steam) and **UroLift** (implants).',
+      whatToWatch: 'A sudden, complete inability to pass urine is an emergency — **acute urinary retention**. A long-standing blockage can raise pressure back toward the kidneys, so the condition is treated properly rather than dismissed.',
+    },
   },
   prostate_carcinoma: {
     history: 'Frequently asymptomatic and PSA-detected, because it arises in the peripheral zone away from the urethra; symptoms (LUTS) are usually from coexisting BPH, while bone pain or weight loss signals advanced disease. Take a family history and ask about risk factors (age, ethnicity, BRCA/hereditary risk).',
@@ -202,6 +340,12 @@ export const CLINICAL = {
     imaging: 'Multiparametric MRI of the prostate localises suspicious lesions for targeted biopsy and assesses local (T) stage; PSMA PET (or bone scan + CT) stages for nodal and bone metastases, which are characteristically osteoblastic.',
     treatment: 'Management is risk-stratified: active surveillance for low-risk disease (avoid over-treating an indolent cancer), radical prostatectomy or radiotherapy for localised disease intended for cure, and androgen-deprivation therapy ± ARPI/chemotherapy for advanced disease — because the cancer remains androgen-receptor driven.',
     pearls: ['Peripheral-zone origin → often asymptomatic and PSA-detected; osteoblastic bone mets', 'Risk = PSA + Grade Group + stage; mpMRI guides targeted biopsy', 'Low-risk → active surveillance; advanced → ADT ± ARPI (AR-driven)'],
+    patient: {
+      whatItIs: 'A cancer of the prostate gland — **prostate cancer** — often slow-growing and frequently found through a blood test rather than symptoms.',
+      whyItMatters: 'Early disease usually causes no symptoms (it arises away from the urine channel); bone pain or weight loss can signal advanced disease, which characteristically spreads to bone.',
+      whatIsDone: 'A **PSA** blood test and a **prostate MRI** guide a **biopsy**, which grades the cancer (Gleason / Grade Group), and further scans (**PSMA PET** or bone scan) check for spread. Low-risk cancer may simply be monitored (**active surveillance**); localised cancer is treated for cure by surgery (**radical prostatectomy**) or **radiotherapy**; advanced disease is controlled with **androgen-deprivation therapy** because the cancer is driven by male hormones.',
+      whatToWatch: 'PSA also rises with benign enlargement and infection, so a raised level needs careful interpretation rather than panic.',
+    },
   },
   prostatitis: {
     history: 'The acute bacterial picture is dramatic and unmistakable: rapid onset of fever and rigors, perineal/pelvic and low-back pain, dysuria, frequency and sometimes acute obstructive symptoms or retention, in a systemically unwell patient. Ask about recent instrumentation/catheterisation and UTI, the usual routes by which uropathogens seed the gland. (Its chronic, non-infectious counterpart — chronic prostatitis/CPPS — is a separate entity; see that entry.)',
@@ -210,6 +354,12 @@ export const CLINICAL = {
     imaging: 'Not routine. Reserve TRUS, CT or MRI for a suspected prostatic abscess — the patient who fails to defervesce on appropriate antibiotics after 48–72h — which needs drainage rather than antibiotics alone.',
     treatment: 'A prolonged course (typically 2–4 weeks) of an antibiotic that penetrates inflamed prostate tissue — a fluoroquinolone or trimethoprim — with analgesia and fluids; admit and give IV therapy if septic. Drain an abscess. Manage acute retention with a catheter (suprapubic is often preferred to avoid traumatising the inflamed urethra).',
     pearls: ['Acute bacterial prostatitis: gentle DRE only — vigorous massage risks bacteraemia', 'Antibiotics must penetrate the prostate (fluoroquinolone/trimethoprim) and run 2–4 weeks', 'Don\'t interpret PSA during acute inflammation; image only if abscess is suspected', 'This is the infective entity — chronic non-bacterial pelvic pain is CPPS, treated quite differently'],
+    patient: {
+      whatItIs: 'A sudden bacterial infection of the prostate gland — **acute bacterial prostatitis**.',
+      whyItMatters: 'It causes rapid fever and chills, pain in the perineum, pelvis and lower back, and burning or difficulty passing urine, and the person is often very unwell.',
+      whatIsDone: 'Urine and blood tests identify the bacteria. Treatment is a long (2–4 week) course of an **antibiotic** that penetrates the prostate (a **fluoroquinolone** or **trimethoprim**), given into a vein if severely unwell, and retention is relieved with a **catheter** (often **suprapubic**).',
+      whatToWatch: 'A fever that does not settle after a few days of antibiotics may mean an **abscess** needing drainage; the prostate examination must be gentle, as vigorous pressing can push bacteria into the bloodstream.',
+    },
   },
   cpps: {
     history: 'Chronic prostatitis / chronic pelvic pain syndrome (NIH category III) is the commonest "prostatitis" and is mostly NON-bacterial. The defining story is pelvic, perineal, suprapubic or ejaculatory pain with variable LUTS for at least 3 months, with little or no systemic upset — the opposite of the acute bacterial picture. Ask about flare pattern, sexual dysfunction, and the central-sensitivity companions (IBS, chronic fatigue, anxiety/depression), because CPPS behaves like a centrally-sensitised pain syndrome rather than an infection.',
@@ -218,6 +368,12 @@ export const CLINICAL = {
     imaging: 'Not diagnostic and not routine. Image only to chase a specific concern (ultrasound/MRI for a suspected abscess or stone, a post-void residual if emptying is poor). The diagnosis is clinical, by exclusion.',
     treatment: 'Multimodal and phenotype-directed (UPOINT), exactly like its female counterpart interstitial cystitis. Pelvic-floor physiotherapy is a cornerstone — manual release/downtraining of the hypertonic floor, NOT strengthening. Layer on an α-blocker (for voiding symptoms), neuromodulating analgesia (amitriptyline, a gabapentinoid, or duloxetine) rather than escalating opioids, and treat comorbid mood/sleep with CBT. A time-limited antibiotic trial is reasonable only if there is any suggestion of bacterial involvement; otherwise antibiotics do not help. The goal is symptom control and function, not cure.',
     pearls: ['Commonest "prostatitis" is non-bacterial CPPS — sterile urine, chronic pain, little systemic upset', 'Pelvic-floor physiotherapy (downtraining, not Kegels) is a cornerstone — the male mirror of IC/BPS', 'Phenotype-directed care (UPOINT); neuromodulators over opioids; treat comorbid mood', 'Antibiotics only if there is genuine evidence of infection — not reflexively'],
+    patient: {
+      whatItIs: 'Long-term pelvic pain linked to the prostate but, in most cases, NOT an infection — **chronic prostatitis / chronic pelvic pain syndrome (CPPS)**.',
+      whyItMatters: 'It causes pelvic, perineal or ejaculatory pain lasting months with variable urinary symptoms, but little fever or systemic upset, and it often comes with stress, low mood or bowel symptoms.',
+      whatIsDone: 'A sterile urine culture mainly excludes infection — it is a diagnosis by exclusion. Care is multimodal: **pelvic-floor physiotherapy** to relax a tight floor, an **alpha-blocker** for urinary symptoms, and nerve-pain modulators (**amitriptyline**, a **gabapentinoid**, or **duloxetine**) rather than opioids.',
+      whatToWatch: 'Pelvic-floor strengthening (**Kegels**) tends to worsen it — the physiotherapy must relax the floor. Antibiotics help only if there is genuine evidence of infection.',
+    },
   },
   urethral_stricture: {
     history: 'A weak stream, spraying, splitting, straining and recurrent UTIs from a fibrotic narrowing. The history usually reveals the cause — prior catheterisation/instrumentation, urethritis (gonococcal), or straddle/perineal trauma — which also predicts the site (bulbar after trauma, penile after instrumentation).',
@@ -226,6 +382,12 @@ export const CLINICAL = {
     imaging: 'A retrograde urethrogram is the key study, defining the exact site and length that determine the operation; flexible cystoscopy gives a direct view, and uroflowmetry shows a characteristic low, flat (plateau) curve.',
     treatment: 'Short strictures can be managed by dilation or internal (optical) urethrotomy, but recurrence is common; recurrent or longer strictures are best cured by urethroplasty (excision/anastomosis or graft), the definitive reconstruction.',
     pearls: ['Retrograde urethrogram defines site and length — which dictates treatment', 'Plateau-shaped flow curve is classic', 'Dilation/urethrotomy often recur; urethroplasty is definitive for long/recurrent strictures'],
+    patient: {
+      whatItIs: 'A scarred narrowing of the **urethra**, the tube carrying urine out — a **urethral stricture**.',
+      whyItMatters: 'It causes a weak or sprayed stream, splitting, straining and repeated infections; common causes are past catheter use, infection or a straddle injury.',
+      whatIsDone: 'An X-ray of the urethra (**retrograde urethrogram**) maps the site and length, which decides treatment. Short narrowings can be stretched (**dilation**) or cut (**optical urethrotomy**), but these often recur; longer or recurring ones are cured by surgical reconstruction (**urethroplasty**).',
+      whatToWatch: 'Repeated narrowing after simple stretching points toward needing the definitive reconstruction.',
+    },
   },
   urethral_stone: {
     history: 'Sudden painful obstruction during voiding, dribbling and terminal haematuria, usually from a stone that has migrated down from the bladder and lodged in the urethra; it may cause acute retention if it impacts.',
@@ -234,6 +396,12 @@ export const CLINICAL = {
     imaging: 'KUB or CT localises the stone; a urethrogram can define an impacted stone and any associated stricture (strictures predispose to urethral stones).',
     treatment: 'Options are to gently push the stone back into the bladder and fragment it endoscopically, or remove it at the meatus/endoscopically; relieve any retention. Look for and treat an underlying stricture that caused it to lodge.',
     pearls: ['Usually a bladder stone that has migrated and impacted in the urethra', 'Can cause acute retention — relieve it', 'Hunt for an underlying stricture predisposing to impaction'],
+    patient: {
+      whatItIs: 'A stone stuck in the **urethra**, the outflow tube — a **urethral stone** — usually one that has travelled down from the bladder.',
+      whyItMatters: 'It causes sudden painful blockage during passing urine, dribbling and blood at the end, and can stop urine coming out altogether.',
+      whatIsDone: 'An X-ray or **CT** locates the stone. It is gently pushed back into the bladder and broken up, or removed directly through a camera, and any retention is relieved.',
+      whatToWatch: 'A urethral narrowing (**stricture**) is looked for and treated, since it may have caused the stone to lodge and can let it happen again.',
+    },
   },
   meatal_stenosis: {
     history: 'A narrow, high-velocity or deflected urinary spray with prolonged voiding and straining, from a pinpoint meatus. In boys it commonly follows circumcision or meatal inflammation (ammoniacal dermatitis); in adults consider lichen sclerosus (BXO) as the underlying cause.',
@@ -242,6 +410,12 @@ export const CLINICAL = {
     imaging: 'Generally none; uroflowmetry can document the obstruction objectively if needed.',
     treatment: 'Meatal dilation may suffice for mild cases, but meatotomy or meatoplasty is the definitive treatment; if lichen sclerosus is the cause, treat it (topical steroids) since it tends to recur and can involve more of the urethra.',
     pearls: ['Pinpoint, deflected spray from a narrowed meatus', 'Common after circumcision in boys; consider lichen sclerosus in adults', 'Meatotomy/meatoplasty is definitive — treat underlying lichen sclerosus or it recurs'],
+    patient: {
+      whatItIs: 'A narrowing of the opening at the tip of the penis (the meatus) — **meatal stenosis**.',
+      whyItMatters: 'It causes a thin, high-speed or deflected spray of urine, prolonged voiding and straining; in boys it often follows circumcision, and in adults a skin condition (**lichen sclerosus**) can be the cause.',
+      whatIsDone: 'The diagnosis is made by looking at the opening. Mild cases may be stretched (**dilation**), but the lasting treatment is a small surgical widening (**meatotomy** or **meatoplasty**); if **lichen sclerosus** is the cause it is treated with **topical steroids**.',
+      whatToWatch: 'If lichen sclerosus is not treated the narrowing tends to recur and can involve more of the urethra.',
+    },
   },
   posterior_urethral_valve: {
     history: 'The commonest cause of bladder outlet obstruction in male infants. Often suspected antenatally from bilateral hydronephrosis and oligohydramnios; the neonate presents with a poor urinary stream, palpable bladder, UTI, failure to thrive, or established renal impairment from the back-pressure on developing kidneys.',
@@ -250,6 +424,12 @@ export const CLINICAL = {
     imaging: 'A voiding cystourethrogram is diagnostic, showing the dilated posterior urethra above the obstructing valves; renal ultrasound assesses hydronephrosis and renal parenchyma.',
     treatment: 'Drain the bladder immediately (catheter) to relieve obstruction and stabilise renal function, then perform cystoscopic valve ablation as definitive treatment. Long-term management addresses the renal and bladder dysfunction that often persists; refer to paediatric urology.',
     pearls: ['Commonest cause of outlet obstruction in male infants — antenatal hydronephrosis/oligohydramnios', 'Assess for pulmonary hypoplasia — the early life threat', 'Catheter-drain first, then cystoscopic valve ablation; renal/bladder sequelae often persist'],
+    patient: {
+      whatItIs: 'Extra flaps of tissue blocking the **urethra** in a baby boy — **posterior urethral valves** — the commonest cause of bladder outlet blockage in male infants.',
+      whyItMatters: 'The back-pressure can damage the developing kidneys; it is often suspected before birth (kidney swelling and low fluid around the baby), and the newborn may have a poor stream, a full bladder, infections or poor growth.',
+      whatIsDone: 'A bladder X-ray test (**voiding cystourethrogram, VCUG**) makes the diagnosis and an **ultrasound** checks the kidneys. The bladder is drained at once with a **catheter**, then the valves are removed through a camera (**valve ablation**).',
+      whatToWatch: 'Low fluid around the baby before birth can underdevelop the lungs (pulmonary hypoplasia), which can be the immediate threat at birth, and kidney and bladder problems often persist and need long-term follow-up.',
+    },
   },
   // ---- Scrotum / testis ----
   testicular_torsion: {
@@ -259,6 +439,12 @@ export const CLINICAL = {
     imaging: 'Colour Doppler ultrasound shows absent or reduced testicular blood flow, but obtain it only if it does not delay theatre; a convincing clinical picture goes straight to exploration.',
     treatment: 'EMERGENCY scrotal exploration with detorsion and bilateral orchidopexy (the contralateral testis shares the predisposing bell-clapper anatomy) ideally within ~6 hours; a non-viable testis is removed. Manual detorsion can temporise while arranging surgery.',
     pearls: ['Time-critical: salvage falls after ~6h — explore, do not wait for imaging', 'High-riding transverse testis, absent cremasteric reflex, negative Prehn sign', 'Fix both sides (bilateral orchidopexy) — the anatomy is bilateral'],
+    patient: {
+      whatItIs: 'A twisting of the testicle that cuts off its blood supply — **testicular torsion** — a surgical emergency, usually in adolescents and young men.',
+      whyItMatters: 'It causes sudden severe pain in one testicle, often with nausea and vomiting; the testicle dies without blood, and the chance of saving it falls sharply after about 6 hours.',
+      whatIsDone: 'It is diagnosed clinically and goes straight to **emergency scrotal exploration** — surgery is not delayed for tests. The testicle is untwisted and stitched in place, and the other side is fixed too (**bilateral orchidopexy**) because it shares the same risky anatomy; a testicle that cannot be saved is removed.',
+      whatToWatch: 'Sudden severe testicle pain must be treated as torsion until proven otherwise — every hour counts, so emergency care is needed immediately.',
+    },
   },
   epididymo_orchitis: {
     history: 'A more gradual unilateral scrotal pain and swelling over days (versus the sudden onset of torsion). The likely organism tracks with age and exposure: an STI (chlamydia/gonorrhoea) in men under ~35 with urethral discharge, or coliforms from a UTI in older men or after instrumentation; fever is common.',
@@ -267,6 +453,12 @@ export const CLINICAL = {
     imaging: 'Doppler ultrasound shows increased flow (hyperaemia), and its main role is to exclude torsion whenever the clinical picture is ambiguous.',
     treatment: 'Antibiotics targeted to the likely organism (STI cover, e.g. for gonorrhoea/chlamydia, versus coliform cover in older men), with NSAID analgesia and scrotal support/elevation. If an STI is the cause, treat sexual partners and screen for other infections.',
     pearls: ['Gradual onset, positive Prehn, present cremasteric reflex — but exclude torsion if unsure', 'Organism by age: STI in young men, coliforms in older men', 'STI cause → treat partners and screen for co-infections'],
+    patient: {
+      whatItIs: 'Infection and inflammation of the testicle and the tube behind it — **epididymo-orchitis**.',
+      whyItMatters: 'It causes gradually worsening pain and swelling in one testicle over days, often with fever; in younger men it is usually a sexually transmitted infection, and in older men a urine-type infection.',
+      whatIsDone: 'Urine tests (and a swab or urine test for **chlamydia** and **gonorrhoea** when relevant) identify the cause, and an **ultrasound** is mainly used to rule out torsion. Treatment is **antibiotics** aimed at the likely organism, with an **NSAID** painkiller and scrotal support.',
+      whatToWatch: 'A sudden rather than gradual onset, or any doubt, must be treated as possible **testicular torsion** — an emergency. If a sexually transmitted infection is the cause, partners need treatment too.',
+    },
   },
 };
 

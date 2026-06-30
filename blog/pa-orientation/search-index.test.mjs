@@ -46,6 +46,14 @@ test('every condition (except normal) is indexed', () => {
   }
 });
 
+test('a condition patient-education block is searchable', () => {
+  // bph has an authored patient block; its plain-language handles should be findable
+  const e = byKey('conditions', 'bph');
+  assert.ok(e, 'bph present');
+  assert.ok(e.text.includes('in plain words') || e.text.includes('dutasteride'),
+    'patient-block text not indexed for bph');
+});
+
 test('oncology, andrology, trauma topics are indexed', () => {
   for (const id of ONC_CANCERS.concat(ONC_CONCEPTS)) {
     assert.ok(byKey('oncology', id), `oncology ${id} missing`);

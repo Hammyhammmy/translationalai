@@ -11,6 +11,7 @@ import { PRESENTATIONS } from './urinary-presentations.js';
 import { ONCOLOGY, ONC_CANCERS, ONC_CONCEPTS } from './urinary-oncology.js';
 import { ANDROLOGY, ANDRO_TOPICS } from './urinary-andrology.js';
 import { TRAUMA, TRAUMA_TOPICS } from './urinary-trauma.js';
+import { clinicalFor } from './urinary-clinical.js';
 import { plain } from './prose.js';
 
 const INTERACTIVE = 'Urinary Interactive.html';
@@ -42,7 +43,7 @@ function interactiveEntries() {
   return [
     ...NORMAL_IDS.map((id) => interactiveEntry('normal', id, NORMAL_TEACH[id], 'Normal physiology')),
     ...Object.keys(PRESENTATIONS).map((id) => interactiveEntry('presentations', id, PRESENTATIONS[id], 'Presentation')),
-    ...Object.keys(CASES).filter((id) => id !== 'normal').map((id) => interactiveEntry('conditions', id, CASES[id], 'Condition')),
+    ...Object.keys(CASES).filter((id) => id !== 'normal').map((id) => interactiveEntry('conditions', id, { ...CASES[id], patient: clinicalFor(id)?.patient }, 'Condition')),
     ...ONC_CANCERS.concat(ONC_CONCEPTS).map((id) => interactiveEntry('oncology', id, ONCOLOGY[id], ONCOLOGY[id].kind === 'concept' ? 'Oncology · concept' : 'Oncology')),
     ...ANDRO_TOPICS.map((id) => interactiveEntry('andrology', id, ANDROLOGY[id], 'Andrology')),
     ...TRAUMA_TOPICS.map((id) => interactiveEntry('trauma', id, TRAUMA[id], 'Trauma')),

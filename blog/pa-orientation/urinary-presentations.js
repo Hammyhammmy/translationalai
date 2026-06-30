@@ -36,6 +36,12 @@ export const PRESENTATIONS = {
       'Painless retention plus any neurological symptom = exclude cauda equina before anything else',
       'High-pressure chronic retention can cause a brisk post-obstructive diuresis — monitor output, fluids and electrolytes after decompression',
     ],
+    patient: {
+      whatItIs: 'An inability to pass urine despite a full, often painful bladder — the bladder swells in the lower abdomen and only a few overflow dribbles may escape.',
+      whyItMatters: 'The trapped urine is painful, can become infected, and the back-pressure can harm the kidneys; the cause may be a blocked outlet (an enlarged prostate, a narrowing) or a bladder that cannot contract.',
+      whatIsDone: 'A **bladder scan** confirms the trapped volume and a **catheter** is passed to drain it for relief; the underlying cause is then treated (medication or surgery for the prostate, **urethroplasty** for a narrowing) rather than leaving the tube in.',
+      whatToWatch: 'A sudden, complete inability to pass urine is an emergency; blood with clots, fever, or new numbness around the back passage or leg weakness need urgent attention.',
+    },
   },
   hematuria: {
     label: 'Visible haematuria',
@@ -68,6 +74,12 @@ export const PRESENTATIONS = {
       'Never close the loop on “probable UTI” unless the culture is positive and the haematuria clears on a follow-up dip',
       'Dysmorphic red cells, casts and proteinuria point to a glomerular (nephrology) cause, not a urological one',
     ],
+    patient: {
+      whatItIs: 'Blood in the urine — either visibly red or tea-coloured, or detected only on a dipstick or microscope test.',
+      whyItMatters: 'Painless blood in the urine can be the only sign of a cancer of the bladder, kidney or urinary tract, so it is always taken seriously even if it settles; it can also come from stones or infection.',
+      whatIsDone: 'The urine is tested and cultured, and the workup looks at both the upper tract with a **CT urogram** (imaging the kidneys and ureters) and the lower tract with a **cystoscopy** (a camera inspecting the bladder); the cause is then treated.',
+      whatToWatch: 'Painless visible blood always needs urgent assessment; clots that block the flow and cause a painful, full bladder, or heavy bleeding with dizziness, are emergencies.',
+    },
   },
   renal_colic: {
     label: 'Renal colic',
@@ -97,6 +109,12 @@ export const PRESENTATIONS = {
       'Stone size and position on CT KUB predict spontaneous passage — small distal stones usually pass',
       'A normal ultrasound does not exclude a ureteric stone; CT KUB is the definitive study when radiation is acceptable',
     ],
+    patient: {
+      whatItIs: 'A sudden, severe, gripping pain that sweeps from the loin round to the groin — usually a kidney stone passing down the tube (the ureter) toward the bladder, often with nausea and blood in the urine.',
+      whyItMatters: 'The pain comes from a stone blocking the drainage of a kidney; if that blocked kidney also becomes infected, or it is a single or already-failing kidney, the situation becomes dangerous quickly.',
+      whatIsDone: 'A **CT KUB** scan confirms the stone, its size and position; pain is treated with an **NSAID** (more effective than a strong opioid here) and small stones often pass on their own, helped by an **alpha-blocker**. A blocked, infected kidney is drained urgently with a **stent** or **nephrostomy**, and larger stones are cleared later by **ureteroscopy** or **shockwave lithotripsy (ESWL)**.',
+      whatToWatch: 'Fever or feeling very unwell alongside the pain means a blocked kidney may be infected — a urological emergency needing immediate drainage.',
+    },
   },
   acute_scrotum: {
     label: 'Acute scrotum',
@@ -122,6 +140,12 @@ export const PRESENTATIONS = {
       'Absent cremasteric reflex + high-riding testis + negative Prehn = explore now; fix both testes',
       'When you cannot confidently exclude torsion, operate — a negative exploration beats a lost testis',
     ],
+    patient: {
+      whatItIs: 'Sudden pain (often with swelling) in a testicle, sometimes with nausea, that can begin abruptly or wake someone from sleep.',
+      whyItMatters: 'The pressing question is whether the testicle has twisted on its cord — **testicular torsion** — which cuts off its blood supply; it is salvageable only within roughly 6 hours, after which the testicle can be lost. The main alternative is an infection (**epididymo-orchitis**).',
+      whatIsDone: 'This is mainly a clinical diagnosis: when torsion is suspected the treatment is emergency surgery (**scrotal exploration**) to untwist and stitch both testicles in place, and imaging must not delay it. If it is clearly infection, an **antibiotic**, pain relief and scrotal support are used.',
+      whatToWatch: 'Any sudden, severe testicular pain is time-critical and needs to be assessed immediately — when in doubt it is treated as torsion.',
+    },
   },
   luts: {
     label: 'LUTS (lower urinary tract symptoms)',
@@ -152,6 +176,12 @@ export const PRESENTATIONS = {
       'Check the post-void residual before treating: antimuscarinics can precipitate retention in a poorly emptying bladder',
       'LUTS plus haematuria is never “just the prostate” — it earns a haematuria workup',
     ],
+    patient: {
+      whatItIs: 'A bothersome, long-term mix of urinary symptoms — a weak or hesitant stream, straining and a sense of incomplete emptying (voiding symptoms), and/or frequency, urgency and waking at night to pass urine (storage symptoms).',
+      whyItMatters: 'Sorting which pattern dominates points to the cause: voiding symptoms often come from an enlarged prostate blocking the outlet, while storage symptoms often come from an overactive bladder — and each is treated differently.',
+      whatIsDone: 'A symptom score, a bladder diary, a urine test, a **bladder scan** for leftover urine and sometimes flow tests sort it out. Voiding/prostate symptoms respond to an **alpha-blocker** (such as **tamsulosin**), with a **5-alpha-reductase inhibitor** for larger prostates and surgery (**TURP**) if needed; storage symptoms respond to bladder training plus an **antimuscarinic** or **beta-3 agonist**.',
+      whatToWatch: 'Blood in the urine is never just a prostate symptom and needs its own cancer workup; recurrent infections, or new leg weakness or numbness, also need prompt review.',
+    },
   },
 
   // ---- Outpatient / findings ----
@@ -185,6 +215,12 @@ export const PRESENTATIONS = {
       'Opioids do not work for chronic pelvic pain; use neuromodulators (amitriptyline, gabapentinoids, duloxetine) and treat comorbid mood',
       'Phenotype-directed, interprofessional care (UPOINT) beats one-size-fits-all',
     ],
+    patient: {
+      whatItIs: 'Persistent or recurrent pelvic pain lasting at least 3 to 6 months, often with no single lesion to blame — the nervous system amplifies the pain (central sensitisation), overlapping with bladder pain syndrome, irritable bowel and, in men, chronic pelvic pain syndrome (CPPS).',
+      whyItMatters: 'Because there is often no single curable cause, the aim is to rule out the treatable causes (infection, cancer, gynaecological disease) and then manage the pain syndrome itself rather than chase one cure.',
+      whatIsDone: 'Urine tests, a pelvic-floor examination and a **pelvic ultrasound** (or **MRI**) exclude other causes, and **cystoscopy** is used for bladder-centred pain. Treatment is multimodal: **pelvic-floor physiotherapy** (relaxation, not Kegels) is a cornerstone, with nerve-calming medicines (**amitriptyline**, a **gabapentinoid**, or **duloxetine**) rather than opioids, plus attention to mood and sleep.',
+      whatToWatch: 'Blood in the urine, weight loss, a lump, fever, bleeding after sex or after the menopause, or new numbness or leg weakness all need urgent assessment before settling on a pain-syndrome label.',
+    },
   },
   microscopic_hematuria: {
     label: 'Asymptomatic microscopic haematuria', group: 'outpatient', region: 'bladder',
@@ -215,6 +251,12 @@ export const PRESENTATIONS = {
       'Risk-stratify (AUA low/intermediate/high): high-risk older smoker → cystoscopy + CT urogram',
       'Any VISIBLE haematuria skips straight to the full workup',
     ],
+    patient: {
+      whatItIs: 'Blood in the urine that cannot be seen and is found only under the microscope (at least 3 red cells per high-power field on a properly collected sample); a dipstick alone is not enough to confirm it.',
+      whyItMatters: 'It can be harmless, but it can also be an early clue to a urinary cancer or a kidney (medical) problem, so the amount of investigation is matched to a person\'s risk rather than scoping everyone.',
+      whatIsDone: 'The finding is confirmed on microscopy and benign causes (infection, periods, vigorous exercise) are excluded, then the risk is graded. Higher-risk people (older, smokers) have a **cystoscopy** plus a **CT urogram**, while a kidney pattern (abnormal red cells, casts, protein) is sent to a kidney specialist (**nephrology**) instead.',
+      whatToWatch: 'Any visible (red) blood in the urine skips the risk-grading and goes straight to the full, urgent workup.',
+    },
   },
   recurrent_uti: {
     label: 'Recurrent UTI', group: 'outpatient', region: 'bladder',
@@ -245,6 +287,12 @@ export const PRESENTATIONS = {
       'Treat the enabling lesion (stone/residual/prostate), not just each episode',
       'Prevention ladder: behavioural + vaginal oestrogen → methenamine → antibiotic prophylaxis',
     ],
+    patient: {
+      whatItIs: 'Repeated urinary infections — at least two in six months or three in a year, ideally each confirmed by a urine culture.',
+      whyItMatters: 'In otherwise-healthy women this is usually just reinfection, but in a man, a child, or with unusual bacteria it is a warning that there may be an underlying problem (a stone, an enlarged prostate, a narrowing, or a bladder that does not empty).',
+      whatIsDone: 'Recurrences are documented with cultures, a **bladder scan** checks emptying, and imaging (**ultrasound**, sometimes **CT**) or **cystoscopy** hunts for an underlying lesion in higher-risk people. Prevention works up a ladder: fluids and voiding habits, topical vaginal **oestrogen** after the menopause, **methenamine hippurate**, and only then an **antibiotic** for prevention — while treating any underlying cause found.',
+      whatToWatch: 'Recurrent infections in a man always need investigation; so do unusual bacteria (which can point to a stone), or blood in the urine that persists between infections.',
+    },
   },
   stone_prevention: {
     label: 'Kidney-stone prevention', group: 'outpatient', region: 'kidney',
@@ -273,6 +321,12 @@ export const PRESENTATIONS = {
       'Drug logic: thiazide ↓ urinary calcium · K-citrate ↑ citrate + alkalinises · allopurinol ↓ uric acid',
       'Uric-acid stones form in ACID urine and can be dissolved by alkalinisation',
     ],
+    patient: {
+      whatItIs: 'An approach for people who keep forming kidney stones — shifting the goal from treating the current stone to preventing the next one, since recurrence over a lifetime is common.',
+      whyItMatters: 'Stones recur often, and knowing the stone type (most are calcium oxalate; others are calcium phosphate, uric acid, struvite/infection, or cystine) shows which prevention will actually work.',
+      whatIsDone: 'A passed stone is analysed and a **24-hour urine collection** plus blood tests pinpoint the abnormality to target. For everyone: plenty of fluid, less salt and animal protein, and a normal amount of dietary calcium (cutting calcium paradoxically worsens stones). Then by type — a **thiazide** diuretic and **potassium citrate** for calcium stones, alkalinising the urine with **potassium citrate** plus **allopurinol** for uric-acid stones, and fully clearing the stone and the infection for struvite stones.',
+      whatToWatch: 'Infection (struvite) stones must be cleared completely along with the infection or they regrow; recurrent, bilateral, or solitary-kidney stones warrant a full metabolic workup.',
+    },
   },
   elevated_psa: {
     label: 'Elevated PSA', group: 'outpatient', region: 'urethra',
@@ -299,6 +353,12 @@ export const PRESENTATIONS = {
       'Transient raisers: ejaculation, cycling, UTI/prostatitis, catheter, recent DRE',
       'MRI-first reduces unnecessary biopsies; an abnormal DRE → refer regardless of PSA',
     ],
+    patient: {
+      whatItIs: 'A raised level of PSA, a protein made by the prostate, found on a blood test — this is not by itself a cancer diagnosis.',
+      whyItMatters: 'PSA rises with prostate cancer but also with benign enlargement, infection, and even recent ejaculation or cycling, so it has to be interpreted in context before any reflex biopsy.',
+      whatIsDone: 'The PSA is repeated after a few weeks, the prostate is examined (a **DRE**), and any infection is treated and the test rechecked. If it stays high or the examination is abnormal, a prostate **MRI** is done, with an MRI-targeted **biopsy** for suspicious areas; many low-risk cancers are then watched with **active surveillance**.',
+      whatToWatch: 'A hard lump on prostate examination, a very high PSA, or new bone pain prompt referral regardless of the exact number.',
+    },
   },
   asymptomatic_bacteriuria: {
     label: 'Asymptomatic bacteriuria', group: 'outpatient', region: 'bladder',
@@ -322,6 +382,12 @@ export const PRESENTATIONS = {
       'Do not treat in older/catheterised/diabetic patients — antibiotics harm without benefit',
       '“Cloudy/smelly urine” is not an indication; look for a non-urinary cause of confusion',
     ],
+    patient: {
+      whatItIs: 'Bacteria found in a urine sample in someone who has NO urinary symptoms — often picked up by chance, especially in older adults and people with a catheter.',
+      whyItMatters: 'This is usually not an infection that needs treating; treating it with antibiotics causes harm (resistance, side-effects) without benefit, so restraint is the key point.',
+      whatIsDone: 'The main step is to confirm there really are no urinary symptoms and to avoid sending or acting on a culture without a reason. An **antibiotic** is given in only two situations: pregnancy, and before a urological procedure that breaks the lining.',
+      whatToWatch: 'Genuine new urinary symptoms or signs of sepsis mean a real infection that should be treated; cloudy or smelly urine on its own is not a reason for antibiotics.',
+    },
   },
 };
 
