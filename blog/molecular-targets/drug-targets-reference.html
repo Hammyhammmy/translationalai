@@ -12,7 +12,7 @@
     --cream:#f4f0e8;--paper:#faf6ee;--paper2:#fffdf7;--ink:#2a2520;--muted:#6b6256;
     --faint:#9a9082;--terra:#9c3318;--terra-soft:#c06a4d;--line:#ddd5c6;
     --na:#9c3318;--k:#2f6b6b;--glu:#b07d12;--ca:#6b4a8a;--cl:#4a7a4a;--h:#5a5248;
-    --block:#b3261e;--uro:#1f6f78;
+    --block:#b3261e;--enh:#2e7d4f;--mix:#9a6b12;--uro:#1f6f78;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -23,8 +23,8 @@
   /* nav */
   .topnav{position:sticky;top:0;z-index:50;background:rgba(244,240,232,.92);
     backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
-  .topnav .inner{max-width:1120px;margin:0 auto;padding:11px 22px;display:flex;
-    gap:12px;align-items:center;flex-wrap:wrap;}
+  .topnav .inner{max-width:1120px;margin:0 auto;padding:8px 22px;display:flex;
+    gap:7px;align-items:center;flex-wrap:wrap;}
   .topnav .brand{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--terra);margin-right:6px;}
   .topnav a{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--muted);
@@ -32,7 +32,7 @@
   .topnav a:hover{border-color:var(--line);color:var(--ink);}
   .search{margin-left:auto;display:flex;align-items:center;gap:8px;}
   .search input{font-family:"JetBrains Mono",monospace;font-size:13px;padding:6px 11px;
-    border:1px solid var(--line);border-radius:8px;background:var(--paper2);color:var(--ink);width:200px;}
+    border:1px solid var(--line);border-radius:8px;background:var(--paper2);color:var(--ink);width:150px;}
   .search input:focus{outline:2px solid var(--terra-soft);outline-offset:1px;}
   #count{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--faint);}
 
@@ -114,6 +114,17 @@
   .node{padding:4px 9px;border-radius:7px;border:1px solid var(--line);background:var(--paper2);}
   .node.tgt{border-color:var(--block);color:var(--block);position:relative;}
   .node.tgt::after{content:"✕";position:absolute;top:-8px;right:-7px;color:var(--block);font-size:12px;font-weight:600;}
+  /* drug ACTION direction: block = red ✕ (default) · agonist/potentiator = green ▲ · mixed = amber ± */
+  .act-up .toggle button.active.drugbtn{background:var(--enh);}
+  .act-up .readout .sd h4,.act-up .readout .sd li::before{color:var(--enh);}
+  .act-up .drugname{background:#e7f2eb;color:var(--enh);border-color:#c2e0cd;}
+  .act-up .node.tgt{border-color:var(--enh);color:var(--enh);}
+  .act-up .node.tgt::after{content:"▲";color:var(--enh);}
+  .act-mix .toggle button.active.drugbtn{background:var(--mix);}
+  .act-mix .readout .sd h4,.act-mix .readout .sd li::before{color:var(--mix);}
+  .act-mix .drugname{background:#f4ecdb;color:var(--mix);border-color:#e4d4ab;}
+  .act-mix .node.tgt{border-color:var(--mix);color:var(--mix);}
+  .act-mix .node.tgt::after{content:"±";color:var(--mix);}
   .arr{color:var(--faint);}
   .card .drugname{font-size:12px;}
   .card p{margin:9px 0 0;font-size:15px;}
@@ -214,18 +225,25 @@
 
 <script>
 /* ============ helpers ============ */
-const COL={na:'#9c3318',k:'#2f6b6b',glu:'#b07d12',ca:'#6b4a8a',cl:'#4a7a4a',h:'#5a5248',ink:'#2a2520',block:'#b3261e',muted:'#6b6256',faint:'#9a9082',terra:'#9c3318'};
+const COL={na:'#9c3318',k:'#2f6b6b',glu:'#b07d12',ca:'#6b4a8a',cl:'#4a7a4a',h:'#5a5248',ink:'#2a2520',block:'#b3261e',enh:'#2e7d4f',mix:'#9a6b12',muted:'#6b6256',faint:'#9a9082',terra:'#9c3318'};
+const actCol=a=>a==='up'?COL.enh:a==='mix'?COL.mix:COL.block;
 const SVGNS='http://www.w3.org/2000/svg';
 function E(t,a){const e=document.createElementNS(SVGNS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
 function txt(p,x,y,s,c,sz,w,anch){const t=E('text',{x,y,fill:c||COL.ink,'font-size':sz||12,'text-anchor':anch||'middle','font-weight':w||400});t.textContent=s;p.appendChild(t);return t;}
 function marker(svg,c){let d=svg.querySelector('defs');if(!d){d=E('defs',{});svg.appendChild(d);}const id='a'+c.replace('#','');if(svg.querySelector('#'+id))return id;const m=E('marker',{id,markerWidth:7,markerHeight:7,refX:5.5,refY:3,orient:'auto'});m.appendChild(E('path',{d:'M0,0 L6,3 L0,6 Z',fill:c}));d.appendChild(m);return id;}
 function arr(svg,x1,y1,x2,y2,c){const id=marker(svg,c);svg.appendChild(E('line',{x1,y1,x2,y2,stroke:c,'stroke-width':2.3,'stroke-linecap':'round','marker-end':'url(#'+id+')'}));}
-function box(svg,cx,cy,w,h,label,fill,target,mode){
+function box(svg,cx,cy,w,h,label,fill,target,mode,act){
   svg.appendChild(E('rect',{x:cx-w/2,y:cy-h/2,width:w,height:h,rx:7,fill:fill||'#fffdf7',stroke:COL.ink,'stroke-width':2}));
   txt(svg,cx,cy+4,label,COL.ink,11.5,600);
   if(target&&mode==='drug'){
-    svg.appendChild(E('circle',{cx,cy,r:16,fill:'none',stroke:COL.block,'stroke-width':2.4}));
-    svg.appendChild(E('line',{x1:cx-10,y1:cy-10,x2:cx+10,y2:cy+10,stroke:COL.block,'stroke-width':3.2,'stroke-linecap':'round'}));
+    const c=actCol(act);
+    svg.appendChild(E('circle',{cx,cy,r:16,fill:'none',stroke:c,'stroke-width':2.4}));
+    if(act==='up')       // agonist / potentiator → up-chevron (boosted), NOT a block slash
+      svg.appendChild(E('path',{d:`M${cx-7},${cy+5} L${cx},${cy-6} L${cx+7},${cy+5}`,fill:'none',stroke:c,'stroke-width':3.2,'stroke-linecap':'round','stroke-linejoin':'round'}));
+    else if(act==='mix') // both agonist & antagonist drugs → neutral bar (modulated)
+      svg.appendChild(E('line',{x1:cx-9,y1:cy,x2:cx+9,y2:cy,stroke:c,'stroke-width':3.2,'stroke-linecap':'round'}));
+    else                 // blocker / inhibitor / antagonist → slash
+      svg.appendChild(E('line',{x1:cx-10,y1:cy-10,x2:cx+10,y2:cy+10,stroke:c,'stroke-width':3.2,'stroke-linecap':'round'}));
   }
 }
 
@@ -273,11 +291,12 @@ function renderCell(svg,spec,mode){
   spec.transporters.forEach(t=>{
     const cx=px(t.x);
     const cy=epi?(t.side==='apical'?52:278):58;
-    box(svg,cx,cy,t.w||72,30,t.label,t.fill,t.target,mode);
-    const blocked=t.target&&mode==='drug';
-    if(!blocked) ionArrows(svg,cx,epi?t.side:'mem',t.ions);
+    box(svg,cx,cy,t.w||72,30,t.label,t.fill,t.target,mode,spec.act);
+    // a blocker stops the flow (hide arrows); an agonist/potentiator OPENS the channel — keep the flow
+    const stopped=t.target&&mode==='drug'&&spec.act!=='up';
+    if(!stopped) ionArrows(svg,cx,epi?t.side:'mem',t.ions);
   });
-  if(mode==='drug'&&spec.drugState.note) txt(svg,200,epi?166:240,spec.drugState.note,COL.block,11,600);
+  if(mode==='drug'&&spec.drugState.note) txt(svg,200,epi?166:240,spec.drugState.note,actCol(spec.act),11,600);
   else if(mode==='native'&&spec.nativeNote) txt(svg,200,epi?166:240,spec.nativeNote,COL.muted,10.5,400);
 }
 
@@ -296,12 +315,12 @@ function renderCascade(svg,spec,mode){
     const cy=70+gap*(i+0.5);
     const w=nd.kind==='receptor'?150:(nd.kind==='effect'?210:150);
     const fill=nd.kind==='messenger'?'#f1eaf3':(nd.kind==='effect'?'#eef3ee':'#fffdf7');
-    box(svg,200,cy,w,30,nd.label,fill,nd.target,mode);
+    box(svg,200,cy,w,30,nd.label,fill,nd.target,mode,spec.act);
     if(i<nodes.length-1) arr(svg,200,cy+16,200,cy+gap-16,COL.muted);
   });
   // messenger direction annotation in drug mode
   if(mode==='drug'&&spec.drugState.delta){
-    txt(svg,330,200,spec.drugState.delta,COL.block,13,600);
+    txt(svg,330,200,spec.drugState.delta,actCol(spec.act),13,600);
   }
 }
 
@@ -386,7 +405,7 @@ const DATA=[
  transporters:[{x:.5,side:'mem',label:'SERT',target:1,w:70,ions:[{n:'Na⁺',c:'na',dir:'in'},{n:'5-HT',c:'glu',dir:'in'}]}],
  drug:'SSRIs · TCAs · cocaine',badge:'non-epithelial · symporter',nativeNote:'Na⁺ battery drags serotonin back in',
  native:{s:'Exactly like SGLT — a Na⁺-coupled symporter, but pulling serotonin out of the synapse back into the neuron, ending the signal.',p:['Same engine as the glucose transporters, different cargo']},
- drugState:{s:'Block SERT → serotonin lingers in the synapse, prolonging the signal.',note:'5-HT stays in synapse',p:['Antidepressant / anxiolytic effect','Delayed ejaculation → first-line for premature ejaculation (URO)','Cocaine blocks DAT/NET/SERT all at once']}},
+ drugState:{s:'Block SERT → serotonin lingers in the synapse, prolonging the signal. SSRIs do this cleanly; tricyclics do it dirtily.',note:'5-HT stays in synapse',p:['<b>SSRIs</b> (fluoxetine, sertraline, escitalopram) — selective: antidepressant / anxiolytic with few off-target effects','Delayed ejaculation → first-line for premature ejaculation (URO)','<b>TCAs</b> (amitriptyline/Elavil, nortriptyline) block SERT + NET <em>and</em> H₁ (sedation, weight gain), M₁ (dry mouth, constipation, urinary retention) and α₁ (orthostatic hypotension); Na-channel block makes overdose cardiotoxic','Cocaine blocks DAT/NET/SERT all at once']}},
 
 {f:1,group:'Neurotransmitter transporters (Na⁺-coupled)',name:'NET',loc:'Noradrenergic terminal',cellType:'cell',outside:'SYNAPTIC CLEFT',
  transporters:[{x:.5,side:'mem',label:'NET',target:1,w:64,ions:[{n:'Na⁺',c:'na',dir:'in'},{n:'NE',c:'glu',dir:'in'}]}],
@@ -408,7 +427,7 @@ const DATA=[
 
 {f:1,group:'Voltage-gated channels',name:'K_ATP channel',loc:'Pancreatic β-cell',cellType:'cell',outside:'OUTSIDE THE CELL',
  transporters:[{x:.5,side:'mem',label:'K_ATP',target:1,w:74,ions:[{n:'K⁺',c:'k',dir:'out'}]}],
- drug:'sulfonylureas (close) · diazoxide (open)',badge:'non-epithelial · channel',nativeNote:'open K⁺ channel keeps the cell quiet',
+ act:'mix', drug:'sulfonylureas (close) · diazoxide (open)',badge:'non-epithelial · channel',nativeNote:'open K⁺ channel keeps the cell quiet',
  native:{s:'When glucose is high, ATP rises and closes this K⁺ channel; the cell depolarizes, Ca²⁺ enters, insulin is released. The channel is the glucose sensor.',p:[]},
  drugState:{s:'Sulfonylureas force it closed → insulin release regardless of glucose (hence hypoglycemia). Diazoxide forces it open → less insulin.',note:'closed → insulin released',p:['Sulfonylureas: type 2 diabetes, risk of hypoglycemia','Diazoxide / minoxidil open vascular K_ATP → vasodilation']}},
 
@@ -420,13 +439,13 @@ const DATA=[
 
 {f:1,group:'Ligand-gated channels',name:'GABA-A receptor',loc:'CNS neuron',cellType:'cell',outside:'SYNAPTIC CLEFT',
  transporters:[{x:.5,side:'mem',label:'GABA-A',target:0,w:78,ions:[{n:'Cl⁻',c:'cl',dir:'in'}]}],
- drug:'benzodiazepines · barbiturates · propofol',badge:'non-epithelial · channel',nativeNote:'GABA opens it → Cl⁻ in → inhibition',
+ act:'up', drug:'benzodiazepines · barbiturates · propofol',badge:'non-epithelial · channel',nativeNote:'GABA opens it → Cl⁻ in → inhibition',
  native:{s:'A Cl⁻ channel opened by GABA. Cl⁻ flows in, hyperpolarizes the neuron, dampens firing — the brain\u2019s main brake.',p:[]},
  drugState:{s:'These drugs don\u2019t block it — they potentiate it (more/longer opening), deepening inhibition.',note:'enhanced Cl⁻ entry → sedation',p:['Benzos ↑ frequency of opening; barbiturates ↑ duration','Sedation, anxiolysis, anticonvulsant, anesthesia','Alcohol and Z-drugs act here too']}},
 
 {f:1,group:'Ligand-gated channels',name:'Nicotinic ACh receptor',loc:'Neuromuscular junction',cellType:'cell',outside:'SYNAPTIC CLEFT',
  transporters:[{x:.5,side:'mem',label:'nAChR',target:1,w:74,ions:[{n:'Na⁺',c:'na',dir:'in'}]}],
- drug:'rocuronium · succinylcholine',badge:'non-epithelial · channel',nativeNote:'ACh opens it → muscle fires',
+ act:'mix', drug:'rocuronium · succinylcholine',badge:'non-epithelial · channel',nativeNote:'ACh opens it → muscle fires',
  native:{s:'ACh from the motor nerve opens this cation channel, depolarizing the muscle to contract.',p:[]},
  drugState:{s:'Neuromuscular blockers occupy it. Non-depolarizing (rocuronium) block ACh; depolarizing (succinylcholine) over-stimulate then desensitize.',note:'blocked → paralysis',p:['Surgical paralysis / intubation','Reversed by neostigmine (non-depolarizing)']}},
 
@@ -450,13 +469,13 @@ const DATA=[
 
 {f:1,group:'Ligand-gated channels',name:'TRPV1 / vanilloid',loc:'Sensory nerve · bladder',uro:1,cellType:'cell',outside:'OUTSIDE THE CELL',
  transporters:[{x:.5,side:'mem',label:'TRPV1',target:1,w:70,ions:[{n:'Ca²⁺',c:'ca',dir:'in'},{n:'Na⁺',c:'na',dir:'in'}]}],
- drug:'capsaicin · resiniferatoxin',badge:'non-epithelial · channel',nativeNote:'heat/capsaicin gate on pain fibers',
+ act:'up', drug:'capsaicin · resiniferatoxin',badge:'non-epithelial · channel',nativeNote:'heat/capsaicin gate on pain fibers',
  native:{s:'A heat- and capsaicin-gated channel on C-fiber sensory neurons, including bladder afferents.',p:[]},
  drugState:{s:'Agonists over-stimulate then defunctionalize the nerve — paradoxically reducing signaling long-term.',note:'afferent desensitized',p:['Intravesical capsaicin/RTX for refractory overactive bladder (URO)','Topical capsaicin for neuropathic pain']}},
 
 {f:1,group:'Other channels',name:'CFTR',loc:'Epithelial apical membrane',cellType:'epi',lumen:'airway / gut',blood:'blood',
  transporters:[{x:.4,side:'apical',label:'CFTR',target:1,w:64,ions:[{n:'Cl⁻',c:'cl',dir:'out'}]}],
- drug:'ivacaftor (potentiator)',badge:'epithelial · channel',
+ act:'up', drug:'ivacaftor (potentiator)',badge:'epithelial · channel',
  native:{s:'An apical Cl⁻ channel that hydrates secretions. Mutations (cystic fibrosis) leave it closed or absent → thick mucus.',p:[]},
  drugState:{s:'Modulators reopen/rescue the channel.',note:'Cl⁻ secretion restored',p:['Ivacaftor potentiates gating; lumacaftor/elexacaftor fix folding','Mutation-specific therapy']}},
 
@@ -478,7 +497,7 @@ const DATA=[
 {f:2,group:'Urology cluster',name:'β₃-adrenergic receptor',loc:'Detrusor (bladder) muscle',uro:1,badge:'GPCR · Gs',
  signal:'norepinephrine (sympathetic)',
  cascade:[{label:'NE',kind:'receptor'},{label:'β₃ receptor (Gs)',kind:'receptor',target:1},{label:'cAMP ↑',kind:'messenger'},{label:'detrusor RELAXATION',kind:'effect'}],
- drug:'mirabegron (agonist)',
+ act:'up', drug:'mirabegron (agonist)',
  native:{s:'NE on β₃ → Gs → cAMP → the bladder relaxes to store urine.',p:['The "dry"/storage side — the mirror of M₃']},
  drugState:{s:'Mirabegron is an agonist — it turns this up, enhancing relaxation/storage.',delta:'cAMP ↑',p:['Overactive bladder without anticholinergic side effects','Can raise blood pressure','M₃ contracts via Ca²⁺, β₃ relaxes via cAMP — the cleanest two-receptor pair in the body']}},
 
@@ -492,7 +511,7 @@ const DATA=[
 {f:2,group:'Urology cluster',name:'V₂ vasopressin receptor',loc:'Collecting duct',uro:1,badge:'GPCR · Gs',
  signal:'ADH (vasopressin)',
  cascade:[{label:'ADH',kind:'receptor'},{label:'V₂ receptor (Gs)',kind:'receptor',target:1},{label:'cAMP ↑',kind:'messenger'},{label:'aquaporins → water reabsorbed',kind:'effect'}],
- drug:'desmopressin (agonist) · tolvaptan (antagonist)',
+ act:'mix', drug:'desmopressin (agonist) · tolvaptan (antagonist)',
  native:{s:'ADH on V₂ → cAMP → aquaporins inserted → water reabsorbed, urine concentrated.',p:[]},
  drugState:{s:'Desmopressin is an agonist (more water retention); tolvaptan blocks it (water diuresis).',delta:'water ↑ / ↓',p:['Desmopressin: nocturnal enuresis, nocturia, diabetes insipidus, von Willebrand','Tolvaptan: SIADH, hyponatremia, ADPKD']}},
 
@@ -506,7 +525,7 @@ const DATA=[
 {f:2,group:'Cardiovascular & general',name:'β₂-adrenergic receptor',loc:'Bronchial smooth muscle',badge:'GPCR · Gs',
  signal:'epinephrine',
  cascade:[{label:'Epi',kind:'receptor'},{label:'β₂ receptor (Gs)',kind:'receptor',target:1},{label:'cAMP ↑',kind:'messenger'},{label:'bronchodilation',kind:'effect'}],
- drug:'albuterol, salmeterol (agonists)',
+ act:'up', drug:'albuterol, salmeterol (agonists)',
  native:{s:'β₂ → cAMP → airway smooth muscle relaxes.',p:[]},
  drugState:{s:'Agonists drive it → bronchodilation.',delta:'cAMP ↑',p:['Asthma / COPD rescue & maintenance','Tremor, tachycardia, hypokalemia']}},
 
@@ -527,7 +546,7 @@ const DATA=[
 {f:2,group:'Cardiovascular & general',name:'μ-opioid receptor',loc:'CNS / gut',badge:'GPCR · Gi',
  signal:'endorphins / opioids',
  cascade:[{label:'opioid',kind:'receptor'},{label:'μ receptor (Gi)',kind:'receptor',target:1},{label:'cAMP ↓ · K⁺ open',kind:'messenger'},{label:'↓ neuronal firing → analgesia',kind:'effect'}],
- drug:'morphine (agonist) · naloxone (antagonist)',
+ act:'mix', drug:'morphine (agonist) · naloxone (antagonist)',
  native:{s:'A Gi receptor: lowers cAMP and opens K⁺ channels, quieting pain neurons.',p:[]},
  drugState:{s:'Agonists analgesia; naloxone blocks (overdose reversal).',delta:'firing ↓',p:['Analgesia, but respiratory depression, constipation, tolerance','Naloxone for overdose']}},
 
@@ -604,15 +623,15 @@ const DATA=[
  se:'Same drug appears in Frame 1\u2019s ENaC story — because the receptor here drives the channel there. <b>Hyperkalemia</b>; spironolactone → gynecomastia (eplerenone avoids it).'},
 
 {f:4,group:'Oncology',name:'Estrogen receptor',loc:'Breast cytoplasm → nucleus',strip:['estrogen','ER','transcription'],
- drug:'tamoxifen (SERM) · fulvestrant',use:'ER-positive breast cancer.',
+ act:'mix', drug:'tamoxifen (SERM) · fulvestrant',use:'ER-positive breast cancer.',
  se:'Tissue-selective: anti-estrogen in breast, pro-estrogen in uterus/bone. <b>VTE, endometrial cancer</b> risk; hot flashes.'},
 
 {f:4,group:'Inflammation',name:'Glucocorticoid receptor',loc:'Cytoplasm → nucleus',strip:['cortisol/prednisone','GR','anti-inflammatory genes'],
- drug:'prednisone, dexamethasone',use:'Inflammation, immunosuppression, replacement.',
+ act:'up', drug:'prednisone, dexamethasone',use:'Inflammation, immunosuppression, replacement.',
  se:'Broad transcriptional reprogramming. <b>Hyperglycemia, osteoporosis, Cushingoid, adrenal suppression</b>.'},
 
 {f:4,group:'Diabetes',name:'PPARγ',loc:'Adipose / muscle nucleus',strip:['ligand','PPARγ','insulin-sensitivity genes'],
- drug:'pioglitazone (thiazolidinedione)',use:'Type 2 diabetes (insulin resistance).',
+ act:'up', drug:'pioglitazone (thiazolidinedione)',use:'Type 2 diabetes (insulin resistance).',
  se:'Slow onset (transcriptional). <b>Weight gain, edema, HF risk, fractures</b>.'},
 
 /* ---------- FRAME 5 ---------- */
@@ -643,15 +662,69 @@ const DATA=[
 
 /* ============ BUILD ============ */
 let uid=0;
+// ---- search: keyword aliases + unicode normalization ----------------------
+// Drug-class abbreviations & variants a user might type, keyed by card name. These
+// are invisible search-only tokens (e.g. "5ari" → 5α-reductase). Substring match, so
+// "ari" also hits "5ari". Add freely — they only widen what the filter catches.
+const KW={
+  '5α-reductase':'5ari ari 5-alpha-reductase inhibitor antiandrogen finasteride dutasteride',
+  'CYP17 (17α-hydroxylase)':'cyp17 17-alpha-hydroxylase abiraterone',
+  'Aromatase':'aromatase inhibitor ai anastrozole letrozole',
+  'ACE':'acei ace-inhibitor pril',
+  'AT₁ (angiotensin) receptor':'arb angiotensin-receptor-blocker sartan',
+  'HMG-CoA reductase':'statin',
+  'Cyclooxygenase (COX)':'nsaid cox1 cox2 coxib',
+  'Xanthine oxidase':'xoi allopurinol gout',
+  'DPP-4':'gliptin dpp4i incretin',
+  'Acetylcholinesterase':'ache anticholinesterase cholinesterase-inhibitor',
+  'Monoamine oxidase (MAO)':'maoi phenelzine nardil tranylcypromine parnate selegiline isocarboxazid moclobemide',
+  'Factor Xa / thrombin':'doac noac xaban anticoagulant',
+  'Dihydrofolate reductase / thymidylate synthase':'dhfr antifolate methotrexate',
+  'SGLT2':'sglt2i gliflozin flozin',
+  'SGLT1':'sglt1',
+  'H⁺/K⁺-ATPase':'ppi proton-pump-inhibitor',
+  'L-type Ca²⁺ channel':'ccb calcium-channel-blocker dihydropyridine',
+  'SERT':'ssri tca tricyclic antidepressant sertraline zoloft fluoxetine prozac paroxetine paxil citalopram celexa escitalopram lexapro fluvoxamine amitriptyline elavil nortriptyline pamelor imipramine tofranil clomipramine anafranil',
+  'NET':'snri tca tricyclic venlafaxine effexor desvenlafaxine duloxetine cymbalta atomoxetine strattera amitriptyline nortriptyline desipramine norpramin',
+  'DAT':'stimulant methylphenidate ritalin concerta amphetamine adderall dextroamphetamine lisdexamfetamine vyvanse bupropion wellbutrin cocaine',
+  '5-HT₃ receptor':'5ht3 setron antiemetic',
+  'GABA-A receptor':'gaba benzodiazepine bzd',
+  'Nicotinic ACh receptor':'nachr nicotinic',
+  'NMDA receptor':'nmda glutamate',
+  'M₃ muscarinic receptor':'m3 antimuscarinic anticholinergic',
+  'β₃-adrenergic receptor':'b3 beta3 beta-3-agonist mirabegron',
+  'α₁A-adrenergic receptor':'a1 alpha1 alpha-blocker tamsulosin',
+  'β₁-adrenergic receptor':'b1 beta-blocker bb',
+  'β₂-adrenergic receptor':'b2 beta-agonist saba laba',
+  'H₂ histamine receptor':'h2 h2ra h2-blocker',
+  'μ-opioid receptor':'mu opioid',
+  'D₂ dopamine receptor':'d2 antipsychotic neuroleptic',
+  'PDE5':'pde5i',
+  'V₂ vasopressin receptor':'v2 adh vaptan',
+  'Mineralocorticoid receptor':'mra aldosterone-antagonist',
+  'Estrogen receptor':'serm',
+  'PPARγ':'ppar gamma glitazone tzd',
+  'Anti-VEGF':'vegf',
+  'Immune checkpoint (PD-1 / PD-L1)':'checkpoint-inhibitor immunotherapy pd1 pdl1 io',
+  'Anti-TNFα':'tnf tnf-alpha biologic',
+  'Anti-CD20':'cd20',
+};
+// fold greek/subscripts/superscripts to plain ascii so "beta3" matches "β₃", "h2" matches "H₂", etc.
+const GREEK={'α':'alpha','β':'beta','γ':'gamma','δ':'delta','κ':'kappa','λ':'lambda','μ':'mu','σ':'sigma'};
+const SUBSUP={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9','⁺':'+','⁻':'-','¹':'1','²':'2','³':'3'};
+function norm(s){return (s||'').toLowerCase()
+  .replace(/[αβγδκλμσ]/g,c=>GREEK[c]||c)
+  .replace(/[₀-₉⁺⁻¹²³]/g,c=>SUBSUP[c]||c);}
+function searchText(d,extra){return norm(d.name+' '+d.loc+' '+d.drug+' '+d.group+' '+extra+' '+(KW[d.name]||''));}
 function uro(d){return d.uro?'<span class="uroflag">URO</span>':'';}
 function badgeClass(d){if(d.f===1)return d.cellType==='epi'?'epi':'nonepi';if(d.f===2)return 'gpcr';return 'gpcr';}
 
 function buildInteractive(d){
   const id='p'+(uid++);
   const wrap=document.createElement('section');
-  wrap.className='panel';
+  wrap.className='panel'+(d.act?' act-'+d.act:'');
   wrap.id=id;
-  wrap.dataset.search=(d.name+' '+d.loc+' '+d.drug+' '+d.group+' '+(d.badge||'')).toLowerCase();
+  wrap.dataset.search=searchText(d,d.badge||'');
   wrap.innerHTML=`
     <div class="panel-head">
       <span class="ptitle">${d.name}</span>
@@ -679,8 +752,8 @@ function list(arr){if(!arr||!arr.length)return '';return '<ul>'+arr.map(x=>`<li>
 
 function buildCard(d){
   const div=document.createElement('div');
-  div.className='card';
-  div.dataset.search=(d.name+' '+d.loc+' '+d.drug+' '+d.group+' '+d.use).toLowerCase();
+  div.className='card'+(d.act?' act-'+d.act:'');
+  div.dataset.search=searchText(d,d.use||'');
   const strip=d.strip?`<div class="strip"><span class="node">${d.strip[0]}</span><span class="arr">→</span><span class="node tgt">${d.strip[1]}</span><span class="arr">→</span><span class="node">${d.strip[2]}</span></div>`:'';
   div.innerHTML=`
     <div class="ct">${d.name}${uro(d)}</div>
@@ -726,7 +799,7 @@ function placeInGroup(d,el){
 /* ============ search filter ============ */
 const q=document.getElementById('q'), count=document.getElementById('count'), nores=document.getElementById('nores');
 function applyFilter(){
-  const v=q.value.trim().toLowerCase();
+  const v=norm(q.value.trim());
   let shown=0;
   panels.forEach(p=>{const m=!v||p.search.includes(v);p.el.classList.toggle('hide',!m);if(m)shown++;});
   // hide empty group headers
@@ -741,5 +814,6 @@ function applyFilter(){
 q.addEventListener('input',applyFilter);
 count.textContent=panels.length+' targets';
 </script>
+<script src="nav.js" defer></script>
 </body>
 </html>
