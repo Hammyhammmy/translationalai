@@ -72,7 +72,7 @@ export const FINDINGS = {
     ],
     images: [
       { modality: 'US', caption: 'Ballooned, connected anechoic pelvicalyceal system', img: 'web_freeimages/imaging__us_hydronephrosis.png' },
-      { modality: 'CT', caption: 'Dilated system, often with the obstructing stone and level' },
+      { modality: 'CT', caption: 'Markedly dilated pelvicalyceal system (arrows)', img: 'web_freeimages/imaging__ct_hydronephrosis.png' },
     ],
   },
   ureteric_stone: {
@@ -110,7 +110,7 @@ export const FINDINGS = {
       'A negative scan does not exclude flat carcinoma in situ',
     ],
     images: [
-      { modality: 'CT', caption: 'Soft-tissue filling defect on the bladder wall' },
+      { modality: 'CT', caption: 'Soft-tissue filling defect projecting into the bladder', img: 'web_freeimages/imaging__ct_bladder_tumour.jpg' },
       { modality: 'US', caption: 'Polypoid wall mass projecting into urine' },
     ],
   },

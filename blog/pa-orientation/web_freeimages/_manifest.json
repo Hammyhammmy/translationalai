@@ -366,5 +366,27 @@
   "group": "imaging",
   "label": "Vesicoureteric reflux \u2014 cystogram",
   "bytes": 46251
+ },
+ {
+  "title": "File:Hydronephrosis.png",
+  "page": "https://commons.wikimedia.org/wiki/File:Hydronephrosis.png",
+  "lic": "CC BY-SA 3.0",
+  "artist": "James Heilman, MD",
+  "mime": "image/png",
+  "file": "imaging__ct_hydronephrosis.png",
+  "group": "imaging",
+  "label": "Hydronephrosis on CT",
+  "bytes": 251742
+ },
+ {
+  "title": "File:Bladder Transition Cell Carcinoma.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Bladder_Transition_Cell_Carcinoma.jpg",
+  "lic": "CC BY-SA 4.0",
+  "artist": "James Heilman, MD",
+  "mime": "image/jpeg",
+  "file": "imaging__ct_bladder_tumour.jpg",
+  "group": "imaging",
+  "label": "Bladder TCC on CT",
+  "bytes": 107725
  }
 ]

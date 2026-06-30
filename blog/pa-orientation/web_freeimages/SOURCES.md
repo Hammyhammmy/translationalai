@@ -56,3 +56,5 @@ Blausen.com sta | [Commons](https://commons.wikimedia.org/wiki/File%3ABlausen_05
 | `imaging__kub_stone.jpg` | Opaque stone on KUB | CC BY-SA 3.0 | Nevit Dilmen (talk) | [Commons](https://commons.wikimedia.org/wiki/File:Staghorn_Kidney_Stone_08779.jpg) |
 | `imaging__rug_stricture.jpg` | Urethral stricture — retrograde urethrogram | CC BY 3.0 | STofffuchs | [Commons](https://commons.wikimedia.org/wiki/File:Urethra_stricture.jpg) |
 | `imaging__mcug_reflux.jpg` | Vesicoureteric reflux — cystogram | CC BY-SA 3.0 | RadsWiki | [Commons](https://commons.wikimedia.org/wiki/File:Vesicoureteral-reflux-004.jpg) |
+| `imaging__ct_hydronephrosis.png` | Hydronephrosis on CT (arrows) | CC BY-SA 3.0 | James Heilman, MD | [Commons](https://commons.wikimedia.org/wiki/File:Hydronephrosis.png) |
+| `imaging__ct_bladder_tumour.jpg` | Bladder TCC on CT (filling defect) | CC BY-SA 4.0 | James Heilman, MD | [Commons](https://commons.wikimedia.org/wiki/File:Bladder_Transition_Cell_Carcinoma.jpg) |
