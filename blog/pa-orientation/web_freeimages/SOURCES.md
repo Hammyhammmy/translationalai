@@ -28,3 +28,17 @@ Blausen.com sta | [Commons](https://commons.wikimedia.org/wiki/File%3ABlausen_05
 ## Added later
 | `scrotum__epididymo_orchitis.jpg` | Doppler ultrasound of epididymitis (hyperaemia) | CC BY 2.5 | Wikimedia Commons | [Commons](https://commons.wikimedia.org/wiki/File:Doppler_ultrasound_of_epididymitis.jpg) |
 | `scrotum__testicular_torsion.jpg` | Scrotal ultrasonography of testicular torsion | CC BY 3.0 | Wikimedia Commons | [Commons](https://commons.wikimedia.org/wiki/File:Scrotal_ultrasonography_of_testicular_torsion.jpg) |
+
+
+## Hardware (device images)
+
+| file | what | license | author | source |
+|---|---|---|---|---|
+| `hardware__ureteric_stent.jpg` | Ureteric (double-J) stent — 3D CT | CC BY-SA 3.0 | Steven Fruitsmaak | [Commons](https://commons.wikimedia.org/wiki/File:Ureterstent_double_J_3D_legend.jpg) |
+| `hardware__nephrostomy_tube.jpg` | Nephrostomy tube — plain film | CC BY-SA 3.0 | Jmarchn | [Commons](https://commons.wikimedia.org/wiki/File:Nephrostomy,_case_1,_X-ray_1.jpg) |
+| `hardware__foley_catheter.svg` | Foley catheter — labelled diagram | CC BY-SA 3.0 | Olek Remesz (wiki-pl: Orem, commons: Orem) | [Commons](https://commons.wikimedia.org/wiki/File:Foley_catheter_EN.svg) |
+| `hardware__suprapubic_catheter.png` | Suprapubic catheter (Blausen) | CC BY-SA 4.0 | BruceBlaus | [Commons](https://commons.wikimedia.org/wiki/File:Male_Suprapubic_Catheter.png) |
+| `hardware__ileal_conduit.svg` | Ileal conduit / urostomy (CRUK) | CC BY-SA 4.0 | Cancer Research UK | [Commons](https://commons.wikimedia.org/wiki/File:Diagram_showing_how_a_urostomy_is_made_(ileal_conduit)_CRUK_124.svg) |
+| `hardware__neobladder.svg` | Bladder reconstruction / neobladder (CRUK) | CC BY-SA 4.0 | Cancer Research UK | [Commons](https://commons.wikimedia.org/wiki/File:Diagram_showing_bladder_reconstruction_CRUK_111.svg) |
+| `hardware__artificial_urinary_sphincter.jpg` | Artificial urinary sphincter — implanted | CC BY-SA 4.0 | HovhannesKarapetyan | [Commons](https://commons.wikimedia.org/wiki/File:Implanted_AMS_800.jpg) |
+| `hardware__penile_prosthesis.jpg` | Penile prosthesis pumps — comparison | CC BY-SA 4.0 | HovhannesKarapetyan | [Commons](https://commons.wikimedia.org/wiki/File:Penile_implant_pump_design_comparison.jpg) |

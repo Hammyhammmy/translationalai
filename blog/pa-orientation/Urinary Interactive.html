@@ -71,6 +71,7 @@
   .pat-dl dt{font-weight:700;font-size:12.5px;margin-top:9px;color:#292524}.pat-dl dt:first-of-type{margin-top:0}
   .pat-dl dd{margin:1px 0 0;font-size:14px;line-height:1.57}.pat-dl dd p{margin:0 0 6px}.pat-dl dd p:last-child{margin:0}.pat-dl dd b{font-weight:700}
   .pat-foot{font-size:11px;color:var(--muted);margin-top:11px;font-style:italic}
+  .dev-photo{display:block;max-width:260px;width:100%;height:auto;border:1px solid var(--border);border-radius:9px;margin:4px 0 6px;background:#fff}
   .h{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:13px 0 7px;display:flex;gap:8px;align-items:center}
   .draft{font-family:var(--mono);font-size:9px;font-weight:600;color:#b45309;background:#fffbeb;border:1px solid #fde7c3;border-radius:999px;padding:2px 6px}
   .row{display:flex;flex-wrap:wrap;gap:7px}
@@ -145,6 +146,7 @@
   <button class="tab" id="t-onc" role="tab" aria-selected="false">Oncology<span class="em">molecular targets → Rx</span></button>
   <button class="tab" id="t-andro" role="tab" aria-selected="false">Andrology<span class="em">testosterone · fertility</span></button>
   <button class="tab" id="t-trauma" role="tab" aria-selected="false">Trauma<span class="em">renal · bladder · urethra</span></button>
+  <button class="tab" id="t-hw" role="tab" aria-selected="false">Hardware<span class="em">drains · stents · stomas</span></button>
 </div>
 
 <noscript><p>This interactive model needs JavaScript. See <a href="The Urinary Tract.html">The Urinary Tract — A Conduit</a>.</p></noscript>
@@ -196,6 +198,7 @@ import { showsFigure } from './urinary-figure.js';
 import { parseDeepLink } from './search-deeplink.js';
 import { prose } from './prose.js';
 import { patientHTML, patientCopyText } from './patient.js';
+import { HARDWARE, HW_GROUPS, hardwareFor } from './urinary-hardware.js';
 
 const NS='http://www.w3.org/2000/svg', el=id=>document.getElementById(id);
 const mk=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
@@ -214,7 +217,7 @@ const GROUPS=[['kidney','Kidney'],['ureter','Ureter'],['bladder','Bladder'],['co
 const cap=s=>s[0].toUpperCase()+s.slice(1);
 
 let tab='normal', phase='STORAGE';
-let selN='kidney', selP='retention', selC=null, selO='prostate_ca', selA='hpg_axis', selT='renal_trauma', state=null;
+let selN='kidney', selP='retention', selC=null, selO='prostate_ca', selA='hpg_axis', selT='renal_trauma', selH='ureteric_stent', state=null;
 
 (function(){const g=el('innervation');
   g.append(mk('path',{id:'symp',d:'M70,150 C84,300 120,520 232,632',fill:'none',stroke:'#0d9488','stroke-width':4.5,'stroke-linecap':'round','stroke-dasharray':'9 5',opacity:.9}),
@@ -238,6 +241,7 @@ function buildNav(){const n=el('nav');n.innerHTML='';
   else if(tab==='oncology'){grp('GU cancers',ONC_CANCERS.map(id=>[ONCOLOGY[id].label,id,id===selO,()=>{selO=id;render();}]));
         grp('Treatment concepts',ONC_CONCEPTS.map(id=>[ONCOLOGY[id].label,id,id===selO,()=>{selO=id;render();}]));}
   else if(tab==='andrology')grp('Andrology',ANDRO_TOPICS.map(id=>[ANDROLOGY[id].label,id,id===selA,()=>{selA=id;render();}]));
+  else if(tab==='hardware'){for(const{key,label}of HW_GROUPS){const ids=Object.keys(HARDWARE).filter(id=>HARDWARE[id].group===key);if(ids.length)grp(label,ids.map(id=>[HARDWARE[id].label,id,id===selH,()=>{selH=id;render();}]));}}
   else grp('GU trauma',TRAUMA_TOPICS.map(id=>[TRAUMA[id].label,id,id===selT,()=>{selT=id;render();}]));
 }
 
@@ -292,6 +296,7 @@ function drawModel(){
   else if(tab==='oncology'){buildHot([]);hl=XY[ONCOLOGY[selO].organ];}
   else if(tab==='andrology'){buildHot([]);hl=XY[ANDROLOGY[selA].region];}
   else if(tab==='trauma'){buildHot([]);drawTrauma(lz,bp);}  // consequence overlay (haematuria / leak / blood at meatus / haematocele)
+  else if(tab==='hardware'){buildHot([]);drawHardware(lz,bp);hl=null;}  // device placement overlay
   else if(tab==='conditions'&&selC){buildHot([]);
     const def=CASES[selC];
     (state.dilatedStations||[]).forEach(s=>{if(!XY[s])return;const[x,y]=XY[s];bp.appendChild(mk('circle',{cx:x,cy:y,r:26,fill:'rgba(217,119,6,.3)',stroke:'rgba(217,119,6,.8)','stroke-width':2}));});
@@ -327,15 +332,15 @@ function render(){
   buildNav();
   // figure: real image when a concept has one; else the interactive model
   const curId=tab==='normal'?selN:tab==='conditions'?selC:tab==='oncology'?selO:null;
-  const curEntry=tab==='normal'?NORMAL_TEACH[selN]:tab==='conditions'?(selC?CASES[selC]:null):tab==='oncology'?ONCOLOGY[selO]:tab==='andrology'?ANDROLOGY[selA]:tab==='presentations'?PRESENTATIONS[selP]:tab==='trauma'?TRAUMA[selT]:null;
+  const curEntry=tab==='normal'?NORMAL_TEACH[selN]:tab==='conditions'?(selC?CASES[selC]:null):tab==='oncology'?ONCOLOGY[selO]:tab==='andrology'?ANDROLOGY[selA]:tab==='presentations'?PRESENTATIONS[selP]:tab==='trauma'?TRAUMA[selT]:tab==='hardware'?HARDWARE[selH]:null;
   const hideFig=!showsFigure({tab,entry:curEntry,hasImage:!!(curId&&IMAGES[curId])});
-  const imgPath=(tab==='presentations'||tab==='andrology'||tab==='trauma')?null:(curId?IMAGES[curId]:null);
+  const imgPath=(tab==='presentations'||tab==='andrology'||tab==='trauma'||tab==='hardware')?null:(curId?IMAGES[curId]:null);
   const fig=el('figure'),fimg=el('figimg'),svg=el('stage');
   if(hideFig){fig.style.display='none';}               // content-only (onc concept / non-anatomical andrology)
   else{fig.style.display='';
     if(imgPath){fimg.src=imgPath;fimg.style.display='block';svg.style.display='none';fig.classList.remove('focus');}
     else{fimg.style.display='none';svg.style.display='block';drawModel();}}
-  if(tab==='normal')renderNormal();else if(tab==='presentations')renderPres();else if(tab==='oncology')renderOnc();else if(tab==='andrology')renderAndro();else if(tab==='trauma')renderTrauma();else renderCond();
+  if(tab==='normal')renderNormal();else if(tab==='presentations')renderPres();else if(tab==='oncology')renderOnc();else if(tab==='andrology')renderAndro();else if(tab==='trauma')renderTrauma();else if(tab==='hardware')renderHardware();else renderCond();
 }
 
 function renderNormal(){const t=NORMAL_TEACH[selN],c=el('content');
@@ -386,6 +391,33 @@ function renderTrauma(){const t=TRAUMA[selT],c=el('content');
   t.sections.forEach(s=>html+=`<div class="h">${s.h}</div><div class="c-body">${prose(s.body)}</div>`);
   html+=pearlsHTML(t.pearls)+`</div>`+patientHTML(t.patient);c.innerHTML=html;wireCopy(c,t.patient);}
 
+function renderHardware(){const d=HARDWARE[selH],c=el('content');
+  const grpLabel=(HW_GROUPS.find(g=>g.key===d.group)||{}).label||d.group;
+  let html=`<div class="card"><div class="c-title">${d.label}</div><div class="c-sub">${grpLabel} <span class="draft">draft · verify</span></div>`+
+    (d.img?`<img class="dev-photo" src="${d.img}" alt="${d.label}" loading="lazy">`:'')+
+    `<div class="h">Where it sits</div><div class="c-body">${prose(d.whatItSits)}</div>`+
+    `<div class="h">Why it's placed</div><div class="c-body">${prose(d.whyPlaced)}</div>`+
+    `<div class="h">How it works</div><div class="c-body">${prose(d.howWorks)}</div>`+
+    `<div class="h">What goes wrong</div><ul class="pearls">${d.complications.map(x=>`<li>${x}</li>`).join('')}</ul>`+
+    pearlsHTML(d.pearls)+`</div>`+patientHTML(d.patient);
+  c.innerHTML=html;wireCopy(c,d.patient);}
+
+// Device placement overlay on the shared tract figure (like drawTrauma).
+function drawHardware(lz,bp){const d=HARDWARE[selH];if(!d)return;const BLU='#2563eb',EXT='#d97706';
+  const internal=d.stations.filter(s=>s!=='external'&&XY[s]);
+  if(internal.length>=2&&internal.every(s=>s in NODE)){            // device spans a stretch of tract → dotted line along it
+    const ns=internal.map(s=>NODE[s]).sort((a,b)=>a-b);const a=ns[0],b=ns[ns.length-1];
+    for(let k=0;k<=12;k++){const node=a+(b-a)*(k/12);const[x,y]=samp(cum[node]/TOT);bp.appendChild(mk('circle',{cx:x,cy:y,r:3.4,fill:BLU,opacity:.9}));}
+  }
+  internal.forEach(s=>{const[x,y]=XY[s];bp.appendChild(mk('circle',{cx:x,cy:y,r:11,fill:'rgba(37,99,235,.14)',stroke:BLU,'stroke-width':3}));});
+  if(d.stations.includes('external')){                              // exits the body (nephrostomy / SP / urostomy)
+    const anchor=internal[0]||'bladder';const[x,y]=XY[anchor]||XY.bladder;const up=anchor==='kidney';
+    const ex=x+ (up?78:96), ey=y-(up?30:0);
+    bp.appendChild(mk('line',{x1:x,y1:y,x2:ex,y2:ey,stroke:EXT,'stroke-width':3.4,'stroke-linecap':'round'}));
+    bp.appendChild(mk('circle',{cx:ex,cy:ey,r:6,fill:EXT}));
+  }
+}
+
 function renderCond(){const c=el('content');
   if(!selC){c.innerHTML=`<div class="card lead"><div class="c-title">Pick a condition</div><div class="c-body">Choose from the list to see what it wrecks and how it’s worked up.</div></div>`;return;}
   const def=CASES[selC],fp=def.faultPhase;const out=[];const add=(t,cl)=>out.push(tagh(t,cl));
@@ -421,11 +453,11 @@ function tick(ts){const dt=Math.min((ts-last)/1000,.05)||.016;last=ts;
   for(let i=0;i<dots.length;i++){const p=dots[i];p.t+=p.v*(active?1:.35)*dt*(rev?-1:1);if(p.t>=1)p.t-=1;if(p.t<0)p.t+=1;
     let t=p.t;if(!rev&&t>bF)t=Math.max(0,bF-0.02*((i%4)+1));const[x,y]=samp(t);p.el.setAttribute('cx',x);p.el.setAttribute('cy',y);
     p.el.setAttribute('fill',(state&&state.particleColor==='blood'&&t>=cF)?'#b91c1c':'#e0b94e');p.el.setAttribute('opacity',(state&&state.exitFlow==='blocked'&&t>.95)?0:.92);}
-  el('cap').textContent=tab==='normal'?`normal · ${phase.toLowerCase()}`:tab==='presentations'?PRESENTATIONS[selP].label.toLowerCase():tab==='oncology'?ONCOLOGY[selO].label.toLowerCase():tab==='andrology'?ANDROLOGY[selA].label.toLowerCase():tab==='trauma'?TRAUMA[selT].label.toLowerCase():(selC?CASES[selC].label.toLowerCase():'pick a condition');
+  el('cap').textContent=tab==='normal'?`normal · ${phase.toLowerCase()}`:tab==='presentations'?PRESENTATIONS[selP].label.toLowerCase():tab==='oncology'?ONCOLOGY[selO].label.toLowerCase():tab==='andrology'?ANDROLOGY[selA].label.toLowerCase():tab==='trauma'?TRAUMA[selT].label.toLowerCase():tab==='hardware'?HARDWARE[selH].label.toLowerCase():(selC?CASES[selC].label.toLowerCase():'pick a condition');
   requestAnimationFrame(tick);}
 
 el('t-normal').onclick=()=>{tab='normal';render();};el('t-pres').onclick=()=>{tab='presentations';render();};
-el('t-cond').onclick=()=>{tab='conditions';render();};el('t-onc').onclick=()=>{tab='oncology';render();};el('t-andro').onclick=()=>{tab='andrology';render();};el('t-trauma').onclick=()=>{tab='trauma';render();};
+el('t-cond').onclick=()=>{tab='conditions';render();};el('t-onc').onclick=()=>{tab='oncology';render();};el('t-andro').onclick=()=>{tab='andrology';render();};el('t-trauma').onclick=()=>{tab='trauma';render();};el('t-hw').onclick=()=>{tab='hardware';render();};
 el('figtoggle').onclick=()=>{const f=el('figure');const c=f.classList.toggle('collapsed');el('figtoggle').textContent=c?'Show diagram':'Hide diagram';};
 
 // --- global search: index every entry across all six tabs, jump on select ---
@@ -450,7 +482,7 @@ function sSnip(text,terms){let i=-1;for(const t of terms){const j=text.indexOf(t
 function sClose(){sRes.hidden=true;sIn.setAttribute('aria-expanded','false');sActive=-1;}
 function sGo(it){if(!it)return;tab=it.tab;
   if(tab==='normal')selN=it.id;else if(tab==='presentations')selP=it.id;else if(tab==='conditions')selC=it.id;
-  else if(tab==='oncology')selO=it.id;else if(tab==='andrology')selA=it.id;else if(tab==='trauma')selT=it.id;
+  else if(tab==='oncology')selO=it.id;else if(tab==='andrology')selA=it.id;else if(tab==='trauma')selT=it.id;else if(tab==='hardware')selH=it.id;
   sIn.value='';sClose();render();el('content').scrollIntoView({behavior:'smooth',block:'nearest'});}
 function sPaint(){const q=sIn.value;
   if(!q.trim()){sList=[];sClose();return;}
@@ -469,7 +501,7 @@ document.addEventListener('click',e=>{if(!el('search').contains(e.target))sClose
 document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement!==sIn&&!/^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement||{}).tagName||'')){e.preventDefault();sIn.focus();}});
 
 // Deep link from the global site search: ?tab=&id= → jump to that entry.
-const DL_DATA={normal:NORMAL_TEACH,presentations:PRESENTATIONS,conditions:CASES,oncology:ONCOLOGY,andrology:ANDROLOGY,trauma:TRAUMA};
+const DL_DATA={normal:NORMAL_TEACH,presentations:PRESENTATIONS,conditions:CASES,oncology:ONCOLOGY,andrology:ANDROLOGY,trauma:TRAUMA,hardware:HARDWARE};
 const dl=parseDeepLink(location.search,(t,i)=>DL_DATA[t]&&DL_DATA[t][i]);
 if(dl){tab=dl.tab;if(dl.id)sGo({tab:dl.tab,id:dl.id});}
 render();requestAnimationFrame(tick);

@@ -46,7 +46,7 @@ export const CLINICAL = {
       whatItIs: 'A solid growth in the kidney — most often **renal cell carcinoma (RCC)**, a kidney cancer — though many are now found by chance on scans done for something else.',
       whyItMatters: 'Early on there are usually no symptoms; later it can cause blood in the urine, flank pain, a lump, weight loss or tiredness.',
       whatIsDone: 'A **contrast CT** scan tells a solid (likely cancerous) lump from a harmless cyst and shows how far it has spread, with a chest CT to complete staging. Treatment is surgery — **partial nephrectomy** (removing just the tumour) where possible, or **radical nephrectomy** (removing the kidney) for larger ones; small tumours in frail people may be watched or treated with **ablation**.',
-      whatToWatch: 'Kidney cancer resists chemotherapy and radiotherapy, so spread is treated with **targeted or immune therapies** — a urology referral matters.',
+      whatToWatch: 'Blood in the urine — even a single, painless episode that clears on its own — should always be checked, as should a new lump, persistent flank pain, or unexplained weight loss, fevers or tiredness.',
     },
   },
   staghorn_stone: {

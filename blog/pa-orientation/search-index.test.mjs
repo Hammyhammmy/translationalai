@@ -66,6 +66,16 @@ test('oncology, andrology, trauma topics are indexed', () => {
   }
 });
 
+test('hardware devices are indexed with a tab+id href', () => {
+  const e = byKey('hardware', 'ureteric_stent');
+  assert.ok(e, 'ureteric_stent missing from index');
+  assert.equal(e.href, 'Urinary Interactive.html?tab=hardware&id=ureteric_stent');
+  assert.ok(e.text.includes('stent'), 'device text not indexed');
+  // a device should be findable by its patient-facing words too
+  const neph = byKey('hardware', 'nephrostomy_tube');
+  assert.ok(neph && neph.text.includes('nephrostomy'), 'nephrostomy not indexed');
+});
+
 test('normal physiology stations are indexed', () => {
   for (const id of ['overview', 'kidney', 'nephron', 'ureter', 'bladder', 'sphincters', 'urethra']) {
     const e = byKey('normal', id);

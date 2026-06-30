@@ -190,5 +190,93 @@
   "group": "overview",
   "label": "Urinary system \u2014 vector overview",
   "bytes": 297880
+ },
+ {
+  "title": "File:Ureterstent double J 3D legend.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Ureterstent_double_J_3D_legend.jpg",
+  "lic": "CC BY-SA 3.0",
+  "artist": "Steven Fruitsmaak",
+  "mime": "image/jpeg",
+  "file": "hardware__ureteric_stent.jpg",
+  "group": "hardware",
+  "label": "Ureteric (double-J) stent \u2014 3D CT",
+  "bytes": 37864
+ },
+ {
+  "title": "File:Nephrostomy, case 1, X-ray 1.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Nephrostomy,_case_1,_X-ray_1.jpg",
+  "lic": "CC BY-SA 3.0",
+  "artist": "Jmarchn",
+  "mime": "image/jpeg",
+  "file": "hardware__nephrostomy_tube.jpg",
+  "group": "hardware",
+  "label": "Nephrostomy tube \u2014 plain film",
+  "bytes": 217925
+ },
+ {
+  "title": "File:Foley catheter EN.svg",
+  "page": "https://commons.wikimedia.org/wiki/File:Foley_catheter_EN.svg",
+  "lic": "CC BY-SA 3.0",
+  "artist": "Olek Remesz (wiki-pl: Orem, commons: Orem)",
+  "mime": "image/svg+xml",
+  "file": "hardware__foley_catheter.svg",
+  "group": "hardware",
+  "label": "Foley catheter \u2014 labelled diagram",
+  "bytes": 38722
+ },
+ {
+  "title": "File:Male Suprapubic Catheter.png",
+  "page": "https://commons.wikimedia.org/wiki/File:Male_Suprapubic_Catheter.png",
+  "lic": "CC BY-SA 4.0",
+  "artist": "BruceBlaus",
+  "mime": "image/png",
+  "file": "hardware__suprapubic_catheter.png",
+  "group": "hardware",
+  "label": "Suprapubic catheter (Blausen)",
+  "bytes": 614022
+ },
+ {
+  "title": "File:Diagram showing how a urostomy is made (ileal conduit) CRUK 124.svg",
+  "page": "https://commons.wikimedia.org/wiki/File:Diagram_showing_how_a_urostomy_is_made_(ileal_conduit)_CRUK_124.svg",
+  "lic": "CC BY-SA 4.0",
+  "artist": "Cancer Research UK",
+  "mime": "image/svg+xml",
+  "file": "hardware__ileal_conduit.svg",
+  "group": "hardware",
+  "label": "Ileal conduit / urostomy (CRUK)",
+  "bytes": 182497
+ },
+ {
+  "title": "File:Diagram showing bladder reconstruction CRUK 111.svg",
+  "page": "https://commons.wikimedia.org/wiki/File:Diagram_showing_bladder_reconstruction_CRUK_111.svg",
+  "lic": "CC BY-SA 4.0",
+  "artist": "Cancer Research UK",
+  "mime": "image/svg+xml",
+  "file": "hardware__neobladder.svg",
+  "group": "hardware",
+  "label": "Bladder reconstruction / neobladder (CRUK)",
+  "bytes": 190274
+ },
+ {
+  "title": "File:Implanted AMS 800.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Implanted_AMS_800.jpg",
+  "lic": "CC BY-SA 4.0",
+  "artist": "HovhannesKarapetyan",
+  "mime": "image/jpeg",
+  "file": "hardware__artificial_urinary_sphincter.jpg",
+  "group": "hardware",
+  "label": "Artificial urinary sphincter \u2014 implanted",
+  "bytes": 111878
+ },
+ {
+  "title": "File:Penile implant pump design comparison.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Penile_implant_pump_design_comparison.jpg",
+  "lic": "CC BY-SA 4.0",
+  "artist": "HovhannesKarapetyan",
+  "mime": "image/jpeg",
+  "file": "hardware__penile_prosthesis.jpg",
+  "group": "hardware",
+  "label": "Penile prosthesis pumps \u2014 comparison",
+  "bytes": 41576
  }
 ]

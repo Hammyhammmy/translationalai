@@ -1,0 +1,138 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hardware tab — mockup</title>
+<style>
+  :root{--bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;--accent:#2563eb;--green:#16a34a;--orange:#d97706;--purple:#7c3aed;--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;--mono:"SF Mono",monospace}
+  body{font-family:var(--font);color:var(--text);background:var(--bg);max-width:880px;margin:22px auto;padding:0 16px;line-height:1.5}
+  .lede{font-size:13px;color:var(--muted);margin-bottom:14px}
+  /* tab bar mimic */
+  .tabs{display:flex;gap:4px;border-bottom:2px solid var(--border);margin-bottom:18px;flex-wrap:wrap}
+  .tab{font-size:14px;font-weight:700;color:var(--muted);padding:8px 7px;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap}
+  .tab .em{font-weight:500;color:var(--muted);font-size:11px;display:block}
+  .tab.new{color:var(--text);border-bottom-color:var(--accent)}
+  .tab.new .em{color:var(--accent)}
+  .layout{display:grid;grid-template-columns:188px 1fr;gap:18px;align-items:start}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+  .nav{background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px}
+  .nav h3{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:6px 4px 5px}
+  .nav h3:first-child{margin-top:0}
+  .ni{display:block;font-size:13px;padding:6px 9px;border-radius:7px;color:var(--text);margin-bottom:2px}
+  .ni.cur{background:var(--accent);color:#fff;font-weight:600}
+  .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:15px 18px;margin-bottom:12px}
+  .dev{display:grid;grid-template-columns:96px 1fr;gap:16px}
+  @media(max-width:520px){.dev{grid-template-columns:1fr}}
+  .c-title{font-size:17px;font-weight:800;margin-bottom:1px}
+  .c-sub{font-size:11px;color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px}
+  .h{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:11px 0 4px}
+  .b{font-size:14px;margin:0}
+  .b b{font-weight:700}
+  ul.cx{margin:3px 0 0;padding-left:17px}ul.cx li{font-size:13.5px;margin-bottom:2px}
+  .patient{border-left:4px solid var(--green);background:#f6fdf9;border-radius:10px;padding:11px 13px;margin-top:11px}
+  .pat-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--green);margin-bottom:5px}
+  .patient dl{margin:0}.patient dt{font-weight:700;font-size:12px;margin-top:6px}.patient dt:first-child{margin-top:0}.patient dd{margin:0;font-size:13.5px}
+  .fig{background:#f7f6f3;border:1px solid var(--border);border-radius:10px;padding:6px}
+  .fig svg{display:block;width:100%;height:auto}
+  .cap{font-size:9px;font-family:var(--mono);color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:.04em;margin-top:3px}
+</style></head><body>
+
+<p class="lede"><b>Hardware tab — mockup (Option A).</b> A new top-level tab peer to the others. Each device is a card with a tiny <b>placement schematic</b> (the geometry payoff — where it sits / what it bypasses), a clinician block, and a patient "In plain words" block reusing the pattern just shipped.</p>
+
+<div class="tabs">
+  <div class="tab">Normal physiology<span class="em">anatomy · flow</span></div>
+  <div class="tab">Presentations<span class="em">symptom → Rx</span></div>
+  <div class="tab">What can go wrong<span class="em">~30 conditions</span></div>
+  <div class="tab">Oncology<span class="em">targets → Rx</span></div>
+  <div class="tab">Andrology<span class="em">testosterone</span></div>
+  <div class="tab">Trauma<span class="em">renal · bladder</span></div>
+  <div class="tab new">Hardware<span class="em">drains · stents · stomas</span></div>
+</div>
+
+<div class="layout">
+  <div class="nav">
+    <h3>Drainage — upper tract</h3>
+    <span class="ni cur">Ureteric (JJ) stent</span>
+    <span class="ni">Nephrostomy tube</span>
+    <h3>Drainage — lower tract</h3>
+    <span class="ni">Urethral (Foley) catheter</span>
+    <span class="ni">Suprapubic catheter</span>
+    <span class="ni">3-way catheter (irrigation)</span>
+    <h3>Diversion / stoma</h3>
+    <span class="ni">Ileal conduit (urostomy)</span>
+    <span class="ni">Neobladder</span>
+  </div>
+
+  <div>
+    <!-- DEVICE 1 -->
+    <div class="card dev">
+      <div>
+        <div class="fig">
+          <svg viewBox="0 0 60 150">
+            <!-- tract: kidney top, ureter, bladder, urethra -->
+            <path d="M30 18 C26 30 22 55 24 80 C25 100 27 110 30 120" fill="none" stroke="#d6d3d1" stroke-width="3"/>
+            <ellipse cx="30" cy="14" rx="11" ry="8" fill="#e7e5e4"/>
+            <ellipse cx="30" cy="122" rx="13" ry="11" fill="#e7e5e4"/>
+            <rect x="27" y="132" width="6" height="14" rx="2" fill="#e7e5e4"/>
+            <!-- stent overlay: coil in kidney + coil in bladder, along ureter -->
+            <path d="M30 18 C26 30 22 55 24 80 C25 100 27 110 30 120" fill="none" stroke="#2563eb" stroke-width="2.4" stroke-dasharray="2 2"/>
+            <circle cx="30" cy="15" r="5" fill="none" stroke="#2563eb" stroke-width="2"/>
+            <circle cx="30" cy="121" r="5" fill="none" stroke="#2563eb" stroke-width="2"/>
+          </svg>
+          <div class="cap">kidney → bladder</div>
+        </div>
+      </div>
+      <div>
+        <div class="c-title">Ureteric (JJ) stent</div>
+        <div class="c-sub">internal · bypasses the ureter</div>
+        <div class="h">Where it sits</div>
+        <p class="b">A soft tube with a coil (<b>J</b>) curled in the kidney and one in the bladder, lying the length of the <b>ureter</b> — it keeps urine draining past a blockage from the inside, with nothing on the outside.</p>
+        <div class="h">Why it's placed</div>
+        <p class="b">An obstructing <b>stone</b>, a stricture, tumour compression, or to protect a repair/anastomosis.</p>
+        <div class="h">What goes wrong</div>
+        <ul class="cx"><li><b>Stent symptoms</b> — frequency, urgency, flank pain on voiding (reflux up the stent)</li><li><b>Encrustation / blockage</b> and infection if left too long</li><li><b>Forgotten stent</b> — must be tracked and removed/changed</li></ul>
+        <div class="patient">
+          <div class="pat-title">In plain words</div>
+          <dl>
+            <dt>What it is</dt><dd>A thin internal tube holding the drainage tube from the kidney open. It is entirely inside — there is no bag.</dd>
+            <dt>What to watch for</dt><dd>Some urgency and a little blood are common; fever, severe pain, or being unable to pass urine need review. It must be removed or swapped on time.</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEVICE 2 -->
+    <div class="card dev">
+      <div>
+        <div class="fig">
+          <svg viewBox="0 0 60 150">
+            <path d="M30 18 C26 30 22 55 24 80 C25 100 27 110 30 120" fill="none" stroke="#d6d3d1" stroke-width="3"/>
+            <ellipse cx="30" cy="14" rx="11" ry="8" fill="#e7e5e4"/>
+            <ellipse cx="30" cy="122" rx="13" ry="11" fill="#e7e5e4"/>
+            <!-- nephrostomy: tube out of kidney through the back -->
+            <line x1="30" y1="14" x2="56" y2="6" stroke="#d97706" stroke-width="2.6"/>
+            <circle cx="56" cy="6" r="3" fill="#d97706"/>
+            <circle cx="30" cy="14" r="3.5" fill="none" stroke="#d97706" stroke-width="2"/>
+          </svg>
+          <div class="cap">kidney → skin (back)</div>
+        </div>
+      </div>
+      <div>
+        <div class="c-title">Nephrostomy tube</div>
+        <div class="c-sub">external · diverts above the blockage</div>
+        <div class="h">Where it sits</div>
+        <p class="b">A tube placed through the back directly into the <b>kidney</b>'s collecting system, draining urine to an external bag — it diverts <b>above</b> an obstruction the ureter can't be passed from below.</p>
+        <div class="h">Why it's placed</div>
+        <p class="b">An <b>obstructed, infected kidney</b> (emergency decompression) or when a <b>stent</b> cannot be passed retrograde.</p>
+        <div class="h">What goes wrong</div>
+        <ul class="cx"><li>Dislodgement / falling out (urgent — the track closes)</li><li>Blockage, kinking, or leakage around the site</li><li>Site infection</li></ul>
+        <div class="patient">
+          <div class="pat-title">In plain words</div>
+          <dl>
+            <dt>What it is</dt><dd>A tube in the back that drains the kidney into a bag, used when urine cannot get out the normal way.</dd>
+            <dt>What to watch for</dt><dd>If it falls out, stops draining, or there is fever, seek help promptly — the channel can close within hours.</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body></html>
