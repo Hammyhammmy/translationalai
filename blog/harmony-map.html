@@ -1,0 +1,2506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Harmony Map — Diatonic to Chromatic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f0e8;
+    --paper-deep:#ece5d8;
+    --ink:#2b2620;
+    --ink-soft:#5c5348;
+    --terra:#9c3318;
+    --terra-soft:#c05a35;
+    --sage:#5a6b4d;
+    --gold:#b8863a;
+    --line:#d8cdb8;
+    --diatonic:#5a6b4d;
+    --chromatic:#9c3318;
+    --hybrid:#b8863a;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:19px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:0 26px;}
+
+  /* ---- header ---- */
+  header{padding:72px 0 40px;border-bottom:2px solid var(--ink);}
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--terra);margin-bottom:22px;
+  }
+  h1{
+    font-family:"Fraunces",serif;
+    font-weight:600;
+    font-size:clamp(42px,8vw,74px);
+    line-height:1.02;
+    letter-spacing:-.02em;
+    margin:0 0 20px;
+  }
+  h1 em{font-style:italic;color:var(--terra);font-weight:500;}
+  .standfirst{font-size:21px;color:var(--ink-soft);max-width:600px;font-style:italic;}
+
+  /* ---- table of contents ---- */
+  nav.toc{
+    margin:38px 0 0;padding:22px 26px;
+    background:var(--paper-deep);
+    border:1px solid var(--line);
+  }
+  nav.toc h2{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;letter-spacing:.25em;text-transform:uppercase;
+    color:var(--ink-soft);margin:0 0 14px;font-weight:500;
+  }
+  nav.toc ol{margin:0;padding:0;list-style:none;counter-reset:toc;
+    display:grid;grid-template-columns:1fr 1fr;gap:6px 30px;}
+  nav.toc li{counter-increment:toc;font-size:16px;}
+  nav.toc li::before{
+    content:counter(toc,decimal-leading-zero);
+    font-family:"IBM Plex Mono",monospace;font-size:12px;
+    color:var(--terra);margin-right:12px;
+  }
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent;}
+  nav.toc a:hover{border-bottom-color:var(--terra);}
+
+  /* ---- sections ---- */
+  section{padding:56px 0;border-bottom:1px solid var(--line);}
+  .sec-num{
+    font-family:"IBM Plex Mono",monospace;font-size:12px;
+    letter-spacing:.2em;color:var(--terra);margin-bottom:10px;
+  }
+  h2.head{
+    font-family:"Fraunces",serif;font-weight:600;
+    font-size:clamp(28px,5vw,40px);line-height:1.1;
+    letter-spacing:-.015em;margin:0 0 8px;
+  }
+  h3{
+    font-family:"Fraunces",serif;font-weight:600;font-size:23px;
+    margin:34px 0 8px;letter-spacing:-.01em;
+  }
+  p{margin:14px 0;}
+  .lede{font-size:20px;color:var(--ink-soft);margin-top:4px;}
+  strong{font-weight:600;color:var(--ink);}
+  .mono{font-family:"IBM Plex Mono",monospace;font-size:.82em;
+    background:var(--paper-deep);padding:2px 7px;border-radius:3px;
+    border:1px solid var(--line);}
+
+  /* ---- feel cards ---- */
+  .feel{
+    display:grid;grid-template-columns:auto 1fr;gap:2px 20px;
+    padding:18px 0;border-top:1px solid var(--line);align-items:baseline;
+  }
+  .feel:last-child{border-bottom:1px solid var(--line);}
+  .feel .roman{
+    font-family:"Fraunces",serif;font-size:30px;font-weight:600;
+    color:var(--terra);grid-row:span 2;min-width:62px;
+  }
+  .feel .name{font-family:"Fraunces",serif;font-weight:600;font-size:19px;}
+  .feel .vibe{color:var(--ink-soft);font-size:17px;grid-column:2;}
+  .feel .vibe b{color:var(--sage);font-weight:600;font-style:normal;}
+
+  /* ---- gravity meter (signature element) ---- */
+  .gravity{margin:30px 0;padding:26px;background:var(--paper-deep);border:1px solid var(--line);}
+  .gravity-title{font-family:"IBM Plex Mono",monospace;font-size:11px;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:18px;}
+  .track{position:relative;height:2px;background:var(--line);margin:44px 8px 20px;}
+  .track::before,.track::after{
+    content:"";position:absolute;top:-4px;width:10px;height:10px;border-radius:50%;
+  }
+  .track::before{left:-5px;background:var(--sage);}
+  .track::after{right:-5px;background:var(--terra);}
+  .pin{position:absolute;top:-7px;width:16px;height:16px;border-radius:50%;
+    background:var(--paper);border:2px solid var(--ink);transform:translateX(-50%);}
+  .pin span{position:absolute;top:-30px;left:50%;transform:translateX(-50%);
+    white-space:nowrap;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink);}
+  .track-ends{display:flex;justify-content:space-between;
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;}
+  .track-ends .l{color:var(--sage);}
+  .track-ends .r{color:var(--terra);}
+
+  /* ---- comparison table ---- */
+  .tbl{width:100%;border-collapse:collapse;margin:24px 0;font-size:16px;}
+  .tbl th,.tbl td{text-align:left;padding:13px 14px;vertical-align:top;
+    border-bottom:1px solid var(--line);}
+  .tbl thead th{
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;font-weight:500;border-bottom:2px solid var(--ink);}
+  .tbl .feat{font-family:"IBM Plex Mono",monospace;font-size:11px;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap;}
+  .dot-d{color:var(--diatonic);}.dot-c{color:var(--chromatic);}.dot-h{color:var(--hybrid);}
+  .tbl th .dot-d,.tbl th .dot-c,.tbl th .dot-h{font-size:20px;line-height:0;vertical-align:middle;margin-right:6px;}
+
+  /* ---- chord grid (diatonic wheel) ---- */
+  .chordgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:22px 0;}
+  .chordgrid .cell{
+    background:var(--paper-deep);border:1px solid var(--line);
+    padding:12px 4px;text-align:center;}
+  .chordgrid .cell.tonic{border-color:var(--sage);border-width:2px;background:#e7ecdf;}
+  .chordgrid .cell.dom{border-color:var(--terra);border-width:2px;background:#f3e2da;}
+  .chordgrid .deg{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .chordgrid .rn{font-family:"Fraunces",serif;font-weight:600;font-size:20px;margin:3px 0;}
+  .chordgrid .ch{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--terra);}
+  .grid-legend{display:flex;gap:20px;flex-wrap:wrap;font-size:13px;
+    font-family:"IBM Plex Mono",monospace;color:var(--ink-soft);margin-top:4px;}
+  .grid-legend span::before{content:"";display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:middle;}
+  .grid-legend .lg-t::before{background:var(--sage);}
+  .grid-legend .lg-d::before{background:var(--terra);}
+
+  /* ---- circle of fifths ---- */
+  .circlebox{margin:0 0 8px;padding:30px 26px 34px;background:var(--paper-deep);border:1px solid var(--line);}
+  .circlebox .cb-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--terra);margin-bottom:6px;}
+  .circlebox h2{font-family:"Fraunces",serif;font-weight:600;font-size:26px;margin:0 0 4px;letter-spacing:-.01em;}
+  .circlebox .cb-sub{color:var(--ink-soft);font-size:16px;font-style:italic;margin:0 0 18px;}
+  .cb-toggle{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-bottom:8px;}
+  .cb-toggle button{font-family:"IBM Plex Mono",monospace;font-size:13px;padding:8px 16px;cursor:pointer;
+    background:var(--paper);color:var(--ink-soft);border:none;transition:all .12s ease;}
+  .cb-toggle button.active{background:var(--terra);color:var(--paper);}
+  .cb-toggle button:focus-visible{outline:2px solid var(--sage);outline-offset:-2px;}
+  .cb-svg-wrap{display:flex;justify-content:center;margin:6px 0;}
+  .cb-svg-wrap svg{width:100%;max-width:420px;height:auto;}
+  .cb-seg{cursor:pointer;transition:fill .15s ease;}
+  .cb-node-label{font-family:"IBM Plex Mono",monospace;font-weight:500;pointer-events:none;}
+  .cb-caption{font-size:15px;color:var(--ink-soft);font-style:italic;margin-top:12px;text-align:center;}
+  .cb-caption b{color:var(--terra);font-style:normal;font-weight:600;}
+  .cb-legend{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;font-family:"IBM Plex Mono",monospace;
+    font-size:11px;color:var(--ink-soft);margin-top:14px;}
+  .cb-legend span::before{content:"";display:inline-block;width:11px;height:11px;margin-right:6px;
+    vertical-align:middle;border-radius:2px;}
+  .cb-legend .l1::before{background:var(--sage);}
+  .cb-legend .l2::before{background:var(--terra);}
+  .cb-legend .l3::before{background:#d9b96a;}
+  .cb-legend .l4::before{background:var(--paper);border:1px solid var(--line);}
+
+  /* ---- mode explorer ---- */
+  .modebox{margin:0 0 8px;padding:30px 26px 34px;background:var(--paper-deep);border:1px solid var(--line);}
+  .modebox .mx-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--terra);margin-bottom:6px;}
+  .modebox h2{font-family:"Fraunces",serif;font-weight:600;font-size:26px;margin:0 0 4px;letter-spacing:-.01em;}
+  .modebox .mx-sub{color:var(--ink-soft);font-size:16px;font-style:italic;margin:0 0 18px;}
+  .mx-now{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-soft);margin:12px 0 14px;}
+  .mx-now b{color:var(--terra);font-size:14px;}
+  .mx-mode{border-top:1px solid var(--line);padding:15px 0;}
+  .mx-mode:last-child{border-bottom:1px solid var(--line);}
+  .mx-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:9px;}
+  .mx-rank{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--paper);
+    background:var(--gold);border-radius:3px;padding:2px 7px;}
+  .mx-name{font-family:"Fraunces",serif;font-weight:600;font-size:19px;}
+  .mx-home{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--terra);}
+  .mx-char{color:var(--ink-soft);font-size:14px;font-style:italic;margin-left:auto;}
+  .mx-loop{display:flex;flex-wrap:wrap;gap:5px;}
+  .mx-ch{font-family:"IBM Plex Mono",monospace;font-size:13px;background:var(--paper);
+    border:1px solid var(--line);border-radius:3px;padding:5px 9px;color:var(--ink);}
+  .mx-ch.home{border-color:var(--sage);border-width:2px;background:#e7ecdf;color:var(--sage);font-weight:600;}
+  .mx-ch.char{border-color:var(--gold);border-width:2px;background:#f5ecd6;color:var(--gold);font-weight:600;}
+  .mx-note{font-style:italic;color:var(--ink-soft);font-size:14px;margin-top:16px;
+    border-left:3px solid var(--gold);padding-left:14px;}
+  .mx-move{font-size:14px;color:var(--ink);margin-top:9px;display:flex;gap:9px;align-items:baseline;}
+  .mx-type{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+    padding:2px 6px;border-radius:3px;white-space:nowrap;flex-shrink:0;color:var(--paper);}
+  .mx-type.t-prog{background:var(--sage);}
+  .mx-type.t-vamp{background:var(--terra);}
+  .mx-type.t-chord{background:var(--gold);}
+  .mx-type.t-rare{background:#9a8f7d;}
+  .mx-move .mx-movetxt{color:var(--ink-soft);}
+  .mx-cad{font-size:14px;color:var(--ink-soft);margin-top:6px;padding-left:2px;}
+  .mx-cad b{font-family:"IBM Plex Mono",monospace;font-size:14px;color:var(--terra);font-weight:500;}
+  .mx-borrow{font-size:13px;color:var(--terra);margin-top:5px;font-style:italic;}
+  .mx-rn{font-size:11px;color:var(--ink-soft);font-weight:400;margin-left:1px;}
+  .mx-play{font-size:12px;line-height:1;padding:6px 10px;cursor:pointer;border-radius:4px;
+    background:var(--paper);color:var(--terra);border:1px solid var(--terra);transition:all .12s ease;}
+  .mx-play:hover{background:var(--terra);color:var(--paper);}
+  .mx-play:focus-visible{outline:2px solid var(--sage);outline-offset:2px;}
+  .mx-playcad{font-size:10px;padding:4px 8px;margin-right:6px;vertical-align:middle;}
+  .mx-cadname{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--gold);margin-right:4px;}
+  .mx-borrow-inline{font-size:12px;color:var(--terra);font-style:italic;margin-left:6px;}
+
+  /* ---- jam room ---- */
+  .jam-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0;}
+  .jam-bar{background:var(--paper);border:2px solid var(--line);border-radius:6px;
+    padding:14px 4px;text-align:center;transition:all .1s ease;}
+  .jam-bar .jb-n{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--ink-soft);}
+  .jam-bar .jb-ch{font-family:"Fraunces",serif;font-weight:700;font-size:30px;line-height:1.1;}
+  .jam-bar .jb-rn{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--terra);}
+  .jam-bar.cur{border-color:var(--sage);background:#e7ecdf;}
+  .jam-bar.nxt{border-style:dashed;border-color:var(--gold);}
+  .jam-beats{display:none;justify-content:center;gap:16px;margin:14px 0 2px;}
+  .jam-beats.show{display:flex;}
+  .jam-beats span{width:22px;height:22px;border-radius:50%;
+    border:2px solid var(--line);background:var(--paper);transition:all .06s ease;}
+  .jam-beats span.on{background:var(--sage);border-color:var(--sage);transform:scale(1.25);}
+  .jam-beats span.b1.on{background:var(--terra);border-color:var(--terra);transform:scale(1.45);}
+  .jam-nowbtn{font-family:"IBM Plex Mono",monospace;font-size:11px;margin-left:8px;
+    padding:3px 10px;cursor:pointer;border-radius:4px;vertical-align:middle;
+    background:var(--terra);color:var(--paper);border:1px solid var(--terra);}
+  .jam-nowbtn:hover{background:var(--paper);color:var(--terra);}
+  #jam-styles button{margin:0;}
+  @media(max-width:640px){
+    .jam-grid{grid-template-columns:repeat(2,1fr);}
+    .jam-bar .jb-ch{font-size:34px;}
+  }
+
+  /* ---- global sound rail (vertical, right edge) ---- */
+  .sndrail{position:fixed;top:50%;right:0;transform:translateY(-50%);z-index:50;
+    background:var(--paper-deep);border:2px solid var(--ink);border-right:none;
+    border-radius:8px 0 0 8px;
+    display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 6px;}
+  .sndrail .sr-label{font-family:"IBM Plex Mono",monospace;font-size:8px;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);
+    writing-mode:vertical-rl;margin-bottom:2px;}
+  .sndrail button{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;
+    width:36px;height:36px;padding:0;cursor:pointer;border-radius:5px;
+    background:var(--paper);color:var(--ink);border:1px solid var(--line);transition:all .12s ease;}
+  .sndrail button.active{background:var(--terra);color:var(--paper);border-color:var(--terra);}
+  .sndrail button:hover{border-color:var(--terra);}
+  .sndrail .sr-go{margin-top:4px;border-color:var(--terra);color:var(--terra);font-size:13px;}
+  .sndrail .sr-go.playing{background:var(--terra);color:var(--paper);}
+  body{padding-right:52px;}
+  @media(max-width:640px){ body{padding-right:48px;} .sndrail{padding:8px 5px;} .sndrail button{width:32px;height:32px;font-size:10px;} }
+
+  /* ---- hamburger contents menu ---- */
+  .hb-btn{position:fixed;top:14px;right:14px;z-index:60;
+    width:42px;height:42px;border-radius:6px;cursor:pointer;
+    background:var(--paper-deep);border:2px solid var(--ink);
+    display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;}
+  .hb-btn span{display:block;width:20px;height:2px;background:var(--ink);}
+  .hb-btn:hover span{background:var(--terra);}
+  .hb-backdrop{position:fixed;inset:0;background:rgba(43,38,32,.35);z-index:61;
+    opacity:0;pointer-events:none;transition:opacity .2s ease;}
+  .hb-backdrop.open{opacity:1;pointer-events:auto;}
+  .hb-drawer{position:fixed;top:0;right:0;bottom:0;width:min(320px,85vw);z-index:62;
+    background:var(--paper);border-left:2px solid var(--ink);
+    transform:translateX(100%);transition:transform .22s ease;
+    overflow-y:auto;padding:22px 22px 40px;}
+  .hb-drawer.open{transform:translateX(0);}
+  .hb-drawer h3{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.25em;
+    text-transform:uppercase;color:var(--ink-soft);margin:0 0 16px;font-weight:500;}
+  .hb-close{position:absolute;top:14px;right:16px;background:none;border:none;
+    font-size:22px;color:var(--ink);cursor:pointer;line-height:1;padding:4px;}
+  .hb-close:hover{color:var(--terra);}
+  .hb-drawer ol{margin:0;padding:0;list-style:none;}
+  .hb-drawer li{margin:0 0 2px;}
+  .hb-drawer a{display:flex;gap:12px;align-items:baseline;padding:8px 6px;border-radius:4px;
+    color:var(--ink);text-decoration:none;font-size:16px;line-height:1.35;}
+  .hb-drawer a:hover{background:var(--paper-deep);color:var(--terra);}
+  .hb-drawer .hb-num{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--terra);flex-shrink:0;}
+  .mx-tbl{width:100%;border-collapse:collapse;margin:10px 0 4px;font-family:"IBM Plex Mono",monospace;}
+  .mx-tbl th,.mx-tbl td{padding:5px 4px;text-align:center;font-size:12px;border-bottom:1px solid var(--line);}
+  .mx-tbl thead th{font-size:9px;letter-spacing:.06em;color:var(--ink-soft);border-bottom:1px solid var(--ink);}
+  .mx-tbl .mx-rl{text-align:left;font-size:10px;color:var(--ink-soft);white-space:nowrap;padding-right:8px;}
+  .mx-tbl td.mx-chg{color:var(--terra);font-weight:600;background:#f3e2da;}
+  .mx-tbl .mx-chgrow td{border-bottom:none;color:var(--terra);font-size:10px;padding-top:2px;}
+  .mx-tbl tbody tr:first-child td{color:var(--ink-soft);}
+
+  /* ---- interactive key table ---- */
+  .keytable{margin:0 0 8px;padding:30px 26px 34px;background:var(--paper-deep);border:1px solid var(--line);}
+  .keytable .kt-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--terra);margin-bottom:6px;}
+  .keytable h2{font-family:"Fraunces",serif;font-weight:600;font-size:26px;margin:0 0 4px;letter-spacing:-.01em;}
+  .keytable .kt-sub{color:var(--ink-soft);font-size:16px;font-style:italic;margin:0 0 20px;}
+  .keypicker{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+  .keypicker button{
+    font-family:"IBM Plex Mono",monospace;font-size:15px;font-weight:500;
+    min-width:44px;padding:9px 10px;cursor:pointer;
+    background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:4px;
+    transition:all .12s ease;}
+  .keypicker button:hover{border-color:var(--terra);color:var(--terra);}
+  .keypicker button.active{background:var(--terra);color:var(--paper);border-color:var(--terra);}
+  .keypicker button:focus-visible{outline:2px solid var(--sage);outline-offset:2px;}
+  .kt-now{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-soft);
+    margin:14px 0 6px;letter-spacing:.05em;}
+  .kt-now b{color:var(--terra);font-size:15px;}
+  .kt-block-h{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-soft);margin:22px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--line);}
+  .kt-row{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;}
+  .kt-cell{background:var(--paper);border:1px solid var(--line);padding:10px 3px;text-align:center;border-radius:3px;}
+  .kt-cell.tonic{border-color:var(--sage);border-width:2px;background:#e7ecdf;}
+  .kt-cell.dom{border-color:var(--terra);border-width:2px;background:#f3e2da;}
+  .kt-deg{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--ink-soft);letter-spacing:.04em;}
+  .kt-name{font-family:"Fraunces",serif;font-weight:600;font-size:17px;margin-top:2px;}
+  .kt-hint{display:block;font-family:"IBM Plex Mono",monospace;font-weight:400;
+    font-size:10px;color:var(--terra);margin-top:1px;}
+  .kt-fn{font-family:"IBM Plex Mono",monospace;font-size:9px;color:var(--terra);margin-top:1px;letter-spacing:.02em;}
+  .kt-borrow{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;}
+  .kt-borrow .kt-cell{border-style:dashed;border-color:var(--gold);}
+  .kt-borrow .kt-deg{color:var(--gold);}
+  .kt-legend{display:flex;gap:18px;flex-wrap:wrap;font-family:"IBM Plex Mono",monospace;
+    font-size:11px;color:var(--ink-soft);margin-top:14px;}
+  .kt-legend span::before{content:"";display:inline-block;width:11px;height:11px;margin-right:6px;vertical-align:middle;border:1px solid;}
+  .kt-legend .lt::before{background:#e7ecdf;border-color:var(--sage);}
+  .kt-legend .ld::before{background:#f3e2da;border-color:var(--terra);}
+  .kt-legend .lb::before{background:var(--paper);border-color:var(--gold);border-style:dashed;}
+
+  /* ---- table view toggle + chromatic palette ---- */
+  .kt-viewtoggle{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:0 0 4px;}
+  .kt-viewtoggle button{font-family:"IBM Plex Mono",monospace;font-size:13px;padding:8px 15px;cursor:pointer;
+    background:var(--paper);color:var(--ink-soft);border:none;transition:all .12s ease;}
+  .kt-viewtoggle button.active{background:var(--terra);color:var(--paper);}
+  .kt-viewtoggle button:focus-visible{outline:2px solid var(--sage);outline-offset:-2px;}
+  .kt-palette{border-top:1px solid var(--line);margin-top:4px;}
+  .prow{display:grid;grid-template-columns:58px 96px 1fr;gap:8px 16px;padding:9px 2px;
+    border-bottom:1px solid var(--line);align-items:baseline;}
+  .prow .pdeg{font-family:"Fraunces",serif;font-weight:600;font-size:16px;}
+  .prow .pchord{font-family:"IBM Plex Mono",monospace;font-size:15px;color:var(--ink);
+    background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:4px 8px;text-align:center;}
+  .prow .pfunc{font-size:15px;color:var(--ink-soft);}
+  .prow.p-tonic .pdeg{color:var(--sage);}
+  .prow.p-tonic .pchord{border-color:var(--sage);border-width:2px;background:#e7ecdf;}
+  .prow.p-dom .pdeg{color:var(--terra);}
+  .prow.p-dom .pchord{border-color:var(--terra);border-width:2px;background:#f3e2da;}
+  .prow.p-diatonic .pdeg{color:var(--ink);}
+  .prow.p-chrom .pdeg{color:var(--gold);}
+  .prow.p-chrom .pchord{border-style:dashed;border-color:var(--gold);}
+  .prow .pfunc b{color:var(--ink);font-weight:600;}
+  .kt-palnote{font-style:italic;color:var(--ink-soft);font-size:14px;margin-top:14px;
+    border-left:3px solid var(--gold);padding-left:14px;}
+
+  /* ---- chord-build quick key ---- */
+  .keyref{margin:0 0 8px;padding:30px 26px 34px;background:var(--paper-deep);border:1px solid var(--line);}
+  .keyref .kr-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--terra);margin-bottom:6px;}
+  .keyref h2{font-family:"Fraunces",serif;font-weight:600;font-size:26px;margin:0 0 4px;letter-spacing:-.01em;}
+  .keyref .kr-sub{color:var(--ink-soft);font-size:16px;font-style:italic;margin:0 0 22px;}
+  .kr-h{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-soft);margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line);}
+  .chordline{display:grid;grid-template-columns:112px 1fr 130px;gap:10px 16px;
+    padding:9px 0;border-bottom:1px solid var(--line);align-items:baseline;}
+  .chordline .cq{font-family:"Fraunces",serif;font-weight:600;font-size:17px;}
+  .chordline .cq small{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-soft);font-weight:400;display:block;}
+  .chordline .cr{font-size:15px;color:var(--ink-soft);}
+  .chordline .cr b{color:var(--terra);font-weight:600;}
+  .chordline .cx{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--sage);text-align:right;}
+  .kr-note{font-style:italic;color:var(--ink-soft);font-size:15px;margin-top:16px;
+    border-left:3px solid var(--gold);padding-left:16px;}
+  .kr-note b{color:var(--gold);font-style:normal;font-weight:600;}
+
+  /* ---- formula rows (locked-number cheats) ---- */
+  .formula{padding:20px 0;border-top:1px solid var(--line);}
+  .formula:last-of-type{border-bottom:1px solid var(--line);}
+  .formula .ftitle{font-family:"Fraunces",serif;font-weight:600;font-size:21px;}
+  .formula .ftag{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--gold);margin-left:10px;}
+  .seq{font-family:"IBM Plex Mono",monospace;font-size:15px;margin:12px 0 6px;
+    display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+  .seq .c{background:var(--paper-deep);border:1px solid var(--line);padding:5px 9px;border-radius:3px;color:var(--ink);}
+  .seq .c.home{border-color:var(--sage);border-width:2px;background:#e7ecdf;color:var(--sage);font-weight:600;}
+  .seq .c.alt{border-color:var(--terra);border-width:2px;background:#f3e2da;color:var(--terra);font-weight:600;}
+  .seq .arw{color:var(--ink-soft);}
+  .formula p{margin:6px 0;font-size:16px;}
+  .altkey{display:flex;gap:22px;flex-wrap:wrap;font-family:"IBM Plex Mono",monospace;
+    font-size:12px;color:var(--ink-soft);margin:8px 0 26px;}
+  .altkey b{color:var(--terra);}.altkey s{color:var(--sage);text-decoration:none;}
+
+  /* ---- mode ladder ---- */
+  .mode{padding:18px 0;border-top:1px solid var(--line);}
+  .mode:last-of-type{border-bottom:1px solid var(--line);}
+  .mode-hd{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;}
+  .mode-hd .mname{font-family:"Fraunces",serif;font-weight:600;font-size:20px;}
+  .mode-hd .mhome{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--terra);}
+  .mode-hd .mvibe{color:var(--ink-soft);font-size:15px;font-style:italic;margin-left:auto;}
+  .brightbar{height:8px;border-radius:4px;margin:20px 0 4px;
+    background:linear-gradient(90deg,var(--gold),var(--paper-deep) 45%,var(--terra));}
+  .brightbar-ends{display:flex;justify-content:space-between;font-family:"IBM Plex Mono",monospace;
+    font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:20px;}
+  .brightbar-ends .l{color:var(--gold);}.brightbar-ends .r{color:var(--terra);}
+
+  /* ---- callout ---- */
+  .note{
+    border-left:3px solid var(--terra);padding:6px 0 6px 20px;margin:24px 0;
+    color:var(--ink-soft);font-style:italic;font-size:17px;
+  }
+  .note b{color:var(--terra);font-style:normal;font-weight:600;}
+
+  /* ---- flavor list ---- */
+  .flavor{padding:20px 0;border-top:1px solid var(--line);}
+  .flavor:last-child{border-bottom:1px solid var(--line);}
+  .flavor .fname{font-family:"Fraunces",serif;font-weight:600;font-size:21px;}
+  .flavor .ftag{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--gold);margin-left:10px;}
+  .flavor .fvibe{color:var(--sage);font-weight:600;font-size:16px;margin:6px 0 2px;}
+  .flavor p{margin:6px 0;font-size:17px;}
+  .ex{font-family:"IBM Plex Mono",monospace;font-size:14px;background:var(--paper-deep);
+    padding:8px 12px;border:1px solid var(--line);display:inline-block;margin-top:6px;}
+
+  /* ---- parallel vs relative compare ---- */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0;}
+  .compare .col{border:1px solid var(--line);background:var(--paper-deep);padding:18px 18px 20px;}
+  .compare .col.par{border-color:var(--terra);border-width:2px;}
+  .compare .col.rel{border-color:var(--sage);border-width:2px;}
+  .compare .clabel{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;margin-bottom:8px;}
+  .compare .par .clabel{color:var(--terra);}.compare .rel .clabel{color:var(--sage);}
+  .compare .ctitle{font-family:"Fraunces",serif;font-weight:600;font-size:19px;margin-bottom:8px;}
+  .compare p{font-size:15px;margin:6px 0;}
+  .compare .rule{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--ink);
+    background:var(--paper);border:1px solid var(--line);padding:7px 10px;margin-top:10px;}
+  .borrowrow{display:grid;grid-template-columns:80px 1fr;gap:6px 14px;padding:8px 0;
+    border-bottom:1px solid var(--line);align-items:baseline;font-size:16px;}
+  .borrowrow:first-of-type{border-top:1px solid var(--line);}
+  .borrowrow .bdeg{font-family:"Fraunces",serif;font-weight:600;font-size:17px;color:var(--terra);}
+  .borrowrow .bch{color:var(--ink-soft);}
+  .borrowrow .bch b{color:var(--ink);font-weight:600;}
+
+  footer{padding:50px 0 80px;text-align:center;color:var(--ink-soft);font-size:15px;font-style:italic;}
+  ::selection{background:var(--terra);color:var(--paper);}
+
+  @media(max-width:640px){
+    body{font-size:18px;}
+    nav.toc ol{grid-template-columns:1fr;}
+    .chordgrid{grid-template-columns:repeat(4,1fr);}
+    .feel{grid-template-columns:1fr;}
+    .feel .roman{grid-row:auto;font-size:24px;}
+    .feel .vibe{grid-column:1;}
+    .tbl,.tbl thead,.tbl tbody,.tbl th,.tbl td,.tbl tr{display:block;}
+    .tbl thead{display:none;}
+    .tbl td{border:none;padding:4px 0;}
+    .tbl tr{border-bottom:1px solid var(--line);padding:14px 0;}
+    .tbl .feat{color:var(--terra);margin-bottom:4px;}
+    .mode-hd .mvibe{margin-left:0;width:100%;}
+    .chordline{grid-template-columns:1fr;gap:2px;}
+    .chordline .cx{text-align:left;}
+    .compare{grid-template-columns:1fr;}
+    .kt-row{grid-template-columns:repeat(4,1fr);}
+    .kt-borrow{grid-template-columns:repeat(2,1fr);}
+    .cb-legend{gap:12px;}
+    .prow{grid-template-columns:52px 1fr;gap:4px 12px;}
+    .prow .pfunc{grid-column:1 / -1;font-size:13px;}
+    .mx-char{margin-left:0;width:100%;}
+    .mx-tbl{font-size:10px;}
+    .mx-tbl th,.mx-tbl td{padding:4px 2px;}
+    .mx-tbl .mx-rl{font-size:8px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">A Field Guide · Western Tonal Harmony</div>
+  <h1>The Harmony Map: from <em>home</em> to <em>the wilderness</em></h1>
+  <p class="standfirst">If music is a city, diatonic is the highway system and chromatic is off-roading through the wild. Here is the whole territory, ordered from what pulls you home to what cuts you loose.</p>
+
+  <nav class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#keytable">Every chord in any key</a></li>
+      <li><a href="#circle">The circle of fifths</a></li>
+      <li><a href="#modeexplorer">The mode explorer</a></li>
+      <li><a href="#bridgebox">The bridge toolbox</a></li>
+      <li><a href="#rotation">The rotation principle</a></li>
+      <li><a href="#jam">The jam room</a></li>
+      <li><a href="#buildkey">How to build any chord</a></li>
+      <li><a href="#pull">Why the dominant pulls home</a></li>
+      <li><a href="#diatonic">What "diatonic" actually means</a></li>
+      <li><a href="#seventh">The 7th chord trap: vii° vs ♭VII</a></li>
+      <li><a href="#feels">The emotional job of every chord</a></li>
+      <li><a href="#chromatic">The four neighborhoods of chromaticism</a></li>
+      <li><a href="#map">Bird's-eye view: diatonic vs chromatic</a></li>
+      <li><a href="#minor">Flipping to minor</a></li>
+      <li><a href="#harmonic">Harmonic minor: the border town</a></li>
+      <li><a href="#cheats">The minor cheats (locked numbers)</a></li>
+      <li><a href="#modes">The full mode ladder</a></li>
+    </ol>
+  </nav>
+</header>
+
+<section id="buildkey" style="border-bottom:1px solid var(--line);padding-top:44px;">
+<div class="keyref">
+  <div class="kr-eyebrow">Quick key · read this first</div>
+  <h2>How to build any chord</h2>
+  <p class="kr-sub">Two things stack independently: the triad quality (from the 3rd &amp; 5th) and the extensions (keep piling on thirds). Examples spelled from a C root.</p>
+
+  <div class="kr-h">The triad — set by the 3rd &amp; 5th</div>
+  <div class="chordline"><div class="cq">Major<small>maj / M</small></div><div class="cr">major 3rd + perfect 5th — the default.</div><div class="cx">C E G</div></div>
+  <div class="chordline"><div class="cq">Minor<small>m / min</small></div><div class="cr"><b>flatten the 3rd.</b></div><div class="cx">C E♭ G</div></div>
+  <div class="chordline"><div class="cq">Diminished<small>dim / °</small></div><div class="cr"><b>flatten the 3rd AND the 5th.</b></div><div class="cx">C E♭ G♭</div></div>
+  <div class="chordline"><div class="cq">Augmented<small>aug / +</small></div><div class="cr">major 3rd, then <b>raise the 5th.</b></div><div class="cx">C E G♯</div></div>
+
+  <div class="kr-h">The extensions — keep stacking thirds</div>
+  <div class="chordline"><div class="cq">7th<small>7 / maj7</small></div><div class="cr">add the 7th. <b>C7</b> = flat-7 (B♭); <b>Cmaj7</b> = natural 7 (B).</div><div class="cx">+ B♭ or B</div></div>
+  <div class="chordline"><div class="cq">9th<small>9</small></div><div class="cr">add the 2nd, an octave up.</div><div class="cx">+ D</div></div>
+  <div class="chordline"><div class="cq">11th<small>11</small></div><div class="cr">add the 4th, an octave up.</div><div class="cx">+ F</div></div>
+  <div class="chordline"><div class="cq">13th<small>13</small></div><div class="cr">add the 6th, an octave up.</div><div class="cx">+ A</div></div>
+
+  <div class="kr-h">Reading the symbols — four different "7"s that are not the same thing</div>
+  <div class="chordline"><div class="cq">♭7<small>flat before number</small></div><div class="cr"><b>a scale degree — one note.</b> "Major + ♭7" means the 7th <em>note</em> is lowered (F♯→F in G). It describes the scale, not any chord.</div><div class="cx">1 note</div></div>
+  <div class="chordline"><div class="cq">♭VII<small>flat + Roman</small></div><div class="cr"><b>the chord built on that flatted degree</b> — a plain triad unless marked otherwise. In G, ♭VII = <b>F major</b>. Not F7.</div><div class="cx">F A C</div></div>
+  <div class="chordline"><div class="cq">F7<small>number after letter</small></div><div class="cr"><b>a chord extension</b> — a minor 7th stacked above <em>that chord's own root</em>. Nothing to do with scale degrees.</div><div class="cx">F A C E♭</div></div>
+  <div class="chordline"><div class="cq">Fmaj7<small>maj7 after letter</small></div><div class="cr">same idea, but the <b>natural</b> 7th above the chord's root.</div><div class="cx">F A C E</div></div>
+
+  <p class="kr-note"><b>The rule:</b> accidental <em>before</em> the number (♭7, ♯4) = scale degree, one note. Number <em>after</em> a chord letter (F7, G7, Cmaj7) = extension stacked on that chord. ♭VII = the triad <em>built on</em> the flatted degree.</p>
+  <p class="kr-note"><b>A Roman numeral never contains a seventh.</b> It's a position label — <em>where</em> the chord sits, not what's stacked in it. ♭VII is a plain triad; a seventh must be appended explicitly (V7, ♭VII7, ii7). You already use this grammar: in your own <span class="mono">1 · 2m · 3m · 4 · 5 · 6m · 7dim</span> formula, "7dim" means <em>built on the 7th degree</em> — you've never read it as a dominant seventh. ♭VII is the same move in Roman.</p>
+  <p class="kr-note"><b>Where the ♭7 note actually pays off:</b> not on the ♭VII chord — on the <em>tonic</em>. In G Mixolydian, stack a 7th on home using the scale's notes: G–B–D–<b>F</b> = <b>G7</b>. The flat-7 degree turns your I chord into a dominant 7 — that unresolved G7-as-home <em>is</em> the bluesy sound. Meanwhile the ♭VII stays plain F (its own 7th would be E, giving Fmaj7, not F7).</p>
+
+  <p class="kr-note"><b>The two moves in your formulas:</b> "make it major" = raise the 3rd · "make it augmented (aug)" = raise the 5th. That's exactly what harmonic minor does — <span class="mono">3m→3</span> raises a 3rd, <span class="mono">5→5aug</span> raises a 5th.</p>
+  <p class="kr-note"><b>Naming a big extension implies the ones below it.</b> "C13" technically stacks 7–9–11–13, but in practice you play root, 3rd, 7th + the named note and drop whatever muddies it (the 11 especially clashes over a major 3rd). The number just tells you the highest note reached.</p>
+</div>
+</section>
+
+<section id="keytable" style="border-bottom:1px solid var(--line);padding-top:44px;">
+<div class="keytable">
+  <div class="kt-eyebrow">Interactive · pick your key</div>
+  <h2>Every chord, in any key</h2>
+  <p class="kt-sub">Tap a key. The seven diatonic chords and the common borrowed chords respell instantly — so you never have to transpose from C in your head.</p>
+
+  <div class="keypicker" id="keypicker" role="group" aria-label="Choose a key"></div>
+  <div class="kt-now">Now showing: the key of <b id="kt-keyname">C major</b></div>
+
+  <div class="kt-viewtoggle" role="group" aria-label="Major or minor" style="margin-right:8px;">
+    <button id="kt-mode-major" class="active" aria-pressed="true">Major</button>
+    <button id="kt-mode-minor" aria-pressed="false">Minor</button>
+  </div>
+  <div class="kt-viewtoggle" id="kt-formtoggle" role="group" aria-label="Minor form" style="display:none;">
+    <button id="kt-form-nat" class="active" aria-pressed="true">Natural</button>
+    <button id="kt-form-har" aria-pressed="false">Harmonic</button>
+    <button id="kt-form-mel" aria-pressed="false">Melodic</button>
+  </div>
+
+  <div class="kt-viewtoggle" role="group" aria-label="Table view">
+    <button id="kt-view-simple" class="active" aria-pressed="true">Diatonic + common</button>
+    <button id="kt-view-full" aria-pressed="false">Full chromatic palette</button>
+  </div>
+
+  <div id="kt-simpleview">
+    <div class="kt-block-h" id="kt-dia-h">The 7 diatonic chords</div>
+    <div class="kt-row" id="kt-diatonic"></div>
+
+    <div class="kt-block-h" id="kt-bor-h">Common borrowed &amp; altered chords</div>
+    <div class="kt-borrow" id="kt-borrowed"></div>
+
+    <div class="kt-legend">
+      <span class="lt">tonic / home</span>
+      <span class="ld">dominant (V)</span>
+      <span class="lb">borrowed / altered</span>
+    </div>
+  </div>
+
+  <div id="kt-fullview" style="display:none;">
+    <div class="kt-block-h">All 12 chromatic roots, named in this key</div>
+    <div class="kt-palette" id="kt-palette"></div>
+    <p class="kt-palnote">Each row is the chord most characteristically built on that root. <b>Sec. dom.</b> = secondary dominant (the V of another chord). Diatonic chords are dark; chromatic ones are gold. Spellings follow the selected key.</p>
+  </div>
+</div>
+</section>
+
+<section id="circle" style="border-bottom:1px solid var(--line);padding-top:44px;">
+<div class="circlebox">
+  <div class="cb-eyebrow">Interactive · the wheel</div>
+  <h2>The circle of fifths</h2>
+  <p class="cb-sub">Every step is a perfect fifth. Pick a key (here or in the table above) and its whole diatonic family lights up — the tonic, its IV and V on either side, and the three relative minors on the inner ring.</p>
+
+  <div class="cb-toggle" role="group" aria-label="Circle type">
+    <button id="cb-fifths" class="active" aria-pressed="true">Circle of 5ths</button>
+    <button id="cb-chrom" aria-pressed="false">Chromatic circle</button>
+  </div>
+
+  <div class="cb-svg-wrap" id="cb-svg-wrap"></div>
+  <p class="cb-caption" id="cb-caption"></p>
+
+  <div class="cb-legend" id="cb-legend">
+    <span class="l1">tonic (I / i)</span>
+    <span class="l2">IV &amp; V</span>
+    <span class="l3">ii · iii · vi</span>
+    <span class="l4">out of key</span>
+  </div>
+</div>
+</section>
+
+<section id="modeexplorer" style="border-bottom:1px solid var(--line);padding-top:44px;">
+<div class="modebox">
+  <div class="mx-eyebrow">Interactive · same chords, moving home</div>
+  <h2>The mode explorer</h2>
+  <p class="mx-sub">Pick a parent scale and a root. Each mode is shown rooted on that note, as the <em>major scale bent into the mode</em> — so you see exactly which chords change.</p>
+
+  <div class="kt-viewtoggle" role="group" aria-label="Parent scale" style="margin-bottom:10px;">
+    <button id="mx-parent-major" class="active" aria-pressed="true">Major</button>
+    <button id="mx-parent-harmonic" aria-pressed="false">Harmonic minor</button>
+    <button id="mx-parent-melodic" aria-pressed="false">Melodic minor</button>
+  </div>
+  <div class="mx-now" id="mx-scalename" style="margin-top:0;">the major-scale mode family — all shown on this root</div>
+
+  <div class="kt-viewtoggle" id="mx-insttoggle" role="group" aria-label="Instrument sound" style="margin-bottom:10px;"></div>
+
+  <div class="keypicker" id="mx-picker" role="group" aria-label="Choose a parent key"></div>
+  <div class="mx-now">Root <b id="mx-keyname">C</b> — reference major scale: <span id="mx-parentchords"></span></div>
+
+  <div id="mx-list"></div>
+
+  <div class="kr-h" style="margin-top:28px;">How to read any ▲ — the slot rule</div>
+  <p style="font-size:16px;margin:10px 0;">One altered note changes every chord containing it — but <em>how</em> each chord changes depends on <strong>which slot of the triad</strong> that note occupies. Worked example, G Mixolydian's one change (F♯ → F), hitting three chords three different ways:</p>
+
+  <div class="borrowrow"><div class="bdeg" style="min-width:110px;">F♯dim → F</div><div class="bch">F♯ was the <b>root</b> (F♯–A–C). Lower the bottom note and <em>both</em> intervals above it stretch by a semitone: minor 3rd → major 3rd, tritone → perfect 5th. Both diminished ingredients repaired at once — <b>dim jumps all the way to major</b>.</div></div>
+  <div class="borrowrow"><div class="bdeg" style="min-width:110px;">D → Dm</div><div class="bch">F♯ was the <b>3rd</b> (D–F♯–A). Lower the middle note and only that interval shrinks: major 3rd → minor 3rd. <b>Major becomes minor.</b></div></div>
+  <div class="borrowrow"><div class="bdeg" style="min-width:110px;">Bm → Bdim</div><div class="bch">F♯ was the <b>5th</b> (B–D–F♯). Lower the top note: perfect 5th → tritone. <b>Minor becomes diminished.</b></div></div>
+
+  <p class="mx-note" style="border-left-color:var(--sage);"><b>The slot rule:</b> alter the <b>root</b> → both intervals move (biggest quality jump). Alter the <b>3rd</b> or <b>5th</b> → one interval moves. Every scale note lives in exactly three triads (as root, as 3rd, as 5th), so one note-change always produces exactly three ▲s — each transformed according to its slot. To decode any ▲ in the tables above: find which chord tone the altered note is, and the quality change follows mechanically.</p>
+
+  <p class="mx-note" style="border-left-color:var(--sage);"><b>And why "♭7" at all?</b> Mixolydian doesn't flatten anything. It's born as a rotation — major scale, home moved to degree 5, zero notes changed. Measured against the major scale <em>of the new root</em>, the 7th merely <em>lands</em> a whole step below home. Every mode formula (♭3 ♭7, ♭2 ♭6 ♭7…) is a <em>comparison</em>, not a construction: the shadow the rotation casts against plain major. Parent frame: "nothing altered, home moved." Same-root frame: "major, bent." Same object, two frames — this explorer shows the same-root frame; <a href="#modes" style="color:var(--terra);">§10's mode ladder</a> shows the rotation frame. Same modes, two true pictures.</p>
+
+  <p class="mx-note">Each mode is shown as <b>the major scale of the chosen root, bent into the mode</b> — the top row is plain major, the middle row is the mode, and <span style="color:var(--terra);font-weight:600;">▲ marks every chord that changed</span>. This is the honest picture: e.g. Phrygian Dominant's III really is a diminished chord (it's in the scale), while its Andalusian cadence borrows a ♭III major that <em>isn't</em> — flagged separately under "borrowed." Inventory (what's in the scale) and progression (what you play) are different things, and both are shown so they never look like a contradiction.</p>
+</div>
+</section>
+
+<section id="bridgebox" style="border-bottom:1px solid var(--line);padding-top:44px;">
+<div class="modebox">
+  <div class="mx-eyebrow">Interactive · song-section craft</div>
+  <h2>The bridge toolbox</h2>
+  <p class="mx-sub">Sections don't have fixed "bridge progressions" — they contrast through a small set of real devices. Here are the six that do almost all the work, each playable in any key.</p>
+
+  <div class="keypicker" id="bt-picker" role="group" aria-label="Choose a key"></div>
+  <div class="mx-now">Key: <b id="bt-keyname">C</b></div>
+
+  <div id="bt-list"></div>
+
+  <p class="mx-note">These are devices, not recipes — a real bridge usually combines two (start on IV <em>and</em> end on the half cadence, borrow ♭VI <em>and</em> lift the key out of it). The common thread: every device works by bending the listener's sense of home — starting away from it, refusing to land on it, coloring it from the parallel minor, or physically moving it. Same principle as everything else in this guide.</p>
+</div>
+</section>
+
+<section id="rotation" style="border-bottom:1px solid var(--line);padding-top:44px;">
+<div class="modebox">
+  <div class="mx-eyebrow">Interactive · the principle</div>
+  <h2>The rotation principle</h2>
+  <p class="mx-sub">Rotation only works on loops with <em>no directed resolution</em>. A resolution pins home — rotate it and it dies. A resolution-free loop leaves home up for grabs — whichever chord comes first, the ear crowns it. Both halves are playable below; the precise rule is at the bottom.</p>
+
+  <div class="keypicker" id="rt-picker" role="group" aria-label="Choose a key"></div>
+  <div class="mx-now">Key: <b id="rt-keyname">C</b></div>
+
+  <div class="kt-block-h" style="margin-top:20px;">Half one — the axis rotates: same four chords, four homes</div>
+  <div id="rt-axis"></div>
+
+  <div class="kt-block-h" style="margin-top:26px;">Half two — a cadence doesn't: rotate it and home dissolves</div>
+  <div id="rt-break"></div>
+
+  <div class="kt-block-h" style="margin-top:26px;">What "resolution" precisely means — the delivery test</div>
+  <p style="font-size:16px;margin:10px 0;"><b>Home is pinned whenever a half-step pull is <em>delivered onto</em> an arrival chord.</b> It doesn't matter which chord carries the pull — only whether it lands. "Resolution" is not "contains a V," and avoiding V→I is not enough to escape it. The three carriers:</p>
+
+  <div class="borrowrow"><div class="bdeg" style="min-width:96px;">V → I</div><div class="bch">the leading tone (a half-step <em>below</em> home) pulls up into the tonic — the classical discharge from §01.</div></div>
+  <div class="borrowrow"><div class="bdeg" style="min-width:96px;">vii° → I</div><div class="bch">the same leading tone plus the tritone — §03's chord, an even more desperate version of the same pull.</div></div>
+  <div class="borrowrow"><div class="bdeg" style="min-width:96px;">♭II → I</div><div class="bch">a half-step drop from <em>above</em> — the Andalusian's landing. No dominant anywhere, and it pins home just as hard.</div></div>
+
+  <p style="font-size:16px;margin:14px 0 6px;">Run the test on the three cases you can play in this guide:</p>
+  <div class="borrowrow"><div class="bdeg" style="min-width:96px;">Axis</div><div class="bch">the pull <b>exists but is dodged</b> — V discharges onto vi every pass, never I; the only arrival at home is a soft plagal IV→I with no half-step pull. Nothing lands → home up for grabs → <b>rotates</b>.</div></div>
+  <div class="borrowrow"><div class="bdeg" style="min-width:96px;">Andalusian</div><div class="bch"><b>no V→I anywhere</b>, but ♭II lands square on I at the end of a directed descent. Delivered → home pinned → <b>rotation kills it</b>.</div></div>
+  <div class="borrowrow"><div class="bdeg" style="min-width:96px;">Mixo vamp</div><div class="bch">G ⇄ F: <b>no half-step root motion at all</b> — nothing to deliver. That's why it can vamp forever.</div></div>
+
+  <p class="mx-note" style="border-left-color:var(--sage);"><b>The trap this kills:</b> "no resolution = V never goes to I." Check that rule against the Andalusian — it says the Andalusian should rotate fine (no V→I present). Your ears, two blocks up, say it dies. The ears carry the correct definition: find the half-step pulls, ask whether the shape delivers them onto a landing. Delivered = pinned. Dodged or absent = loop.</p>
+
+  <p class="mx-note"><b>The two-condition test</b> for whether a rotation is a real idiom: (1) the loop <em>can</em> rotate — nothing in it strongly resolves, so any chord can be heard as home; (2) repertoire <em>has</em> rotated it — songs actually exist on that rotation. The axis passes both on three of its four faces; the V rotation is the weakest, because opening on V reawakens its pull toward I and sneaks function back in. And the Andalusian fails condition (1) outright: its identity <em>is</em> the landing, so the rotation above isn't a variant — it's rubble.</p>
+  <p class="mx-note" style="border-left-color:var(--sage);"><b>Why this is the same principle as everything else here:</b> the relative-minor flip (§07), the mode ladder (§10), the axis verse/chorus contrast, and the bridge devices are all one move — <em>keep the inventory, relocate home</em>. Rotation is that move applied to a four-chord loop. Function is the thing that resists it; modality and the axis are what harmony sounds like when function lets go.</p>
+</div>
+</section>
+
+<section id="jam" style="border-bottom:1px solid var(--line);padding-top:44px;">
+<div class="modebox">
+  <div class="mx-eyebrow">Interactive · live tool</div>
+  <h2>The jam room</h2>
+  <p class="mx-sub">Pick a style and go. Each style is a repeating form — the way real jams work — looping until you stop it. Tap a new style mid-jam and it switches at the top of the next pass, seamlessly, in the same key.</p>
+
+  <div class="kt-viewtoggle" id="jam-styles" role="group" aria-label="Style" style="flex-wrap:wrap;"></div>
+
+  <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin:12px 0;">
+    <div class="kt-viewtoggle" role="group" aria-label="Mode">
+      <button id="jam-mode-back" class="active" aria-pressed="true">Backing track</button>
+      <button id="jam-mode-chart" aria-pressed="false">Chart + click</button>
+      <button id="jam-mode-visual" aria-pressed="false">Chart + visual</button>
+    </div>
+    <div class="kt-viewtoggle" role="group" aria-label="Tempo">
+      <button id="jam-bpm-down">−5</button>
+      <button id="jam-bpm-disp" disabled style="cursor:default;min-width:86px;"></button>
+      <button id="jam-bpm-up">+5</button>
+    </div>
+    <div class="kt-viewtoggle" role="group" aria-label="Evolution">
+      <button id="jam-evolve">Evolve: off</button>
+      <button id="jam-pattern">&#10227; Pattern</button>
+    </div>
+    <button id="jam-go" class="mx-play" style="font-size:15px;padding:9px 22px;">&#9654; Start</button>
+  </div>
+
+  <div class="keypicker" id="jam-picker" role="group" aria-label="Choose a key"></div>
+  <div class="mx-now" id="jam-status">Key: <b>C</b></div>
+
+  <div class="jam-beats" id="jam-beats" aria-hidden="true">
+    <span class="b1"></span><span></span><span></span><span></span>
+  </div>
+  <div class="jam-grid" id="jam-grid"></div>
+
+  <p class="mx-note">Backing track plays a bass root and sustained chords per bar — solo over it. Silent chart gives an accented click; you play the changes. The <b>highlighted bar</b> is now; the <b>dashed bar</b> is next — read ahead like you would on a stand. Sound uses the instrument picked in the mode explorer above. Switching style resets tempo to that style's default; adjust after if you want.</p>
+</div>
+</section>
+
+<!-- 1 -->
+<section id="pull">
+  <div class="sec-num">01 — THE ENGINE</div>
+  <h2 class="head">Why the dominant wants to resolve to the tonic</h2>
+  <p class="lede">The dominant chord (V) is loaded with <strong>tendency tones</strong> that pull the ear toward the stability of home base. The V–I cadence is the essential cycle of tension and release.</p>
+
+  <h3>The leading tone effect</h3>
+  <p>The 3rd of the dominant is the 7th scale degree — <span class="mono">B</span> in the key of C. Because it sits a single half-step below the tonic root, it feels unfinished and screams to resolve <em>upward</em> into the 1.</p>
+
+  <h3>The tritone clash</h3>
+  <p>In a dominant 7th chord (V⁷), the 3rd and 7th form a tritone — <span class="mono">B</span> and <span class="mono">F</span> inside a <span class="mono">G⁷</span>. That interval is highly dissonant and craves resolution, forcing the notes outward or inward in a satisfying pincer motion onto the consonant tonic.</p>
+
+  <h3>Cultural conditioning</h3>
+  <p>Centuries of Western tradition have wired the journey from tension to release into our ears, so the resolution simply <em>feels</em> natural and complete.</p>
+
+  <div class="note"><b>The one-line memory hook:</b> the dominant contains the two most restless notes in the key — the leading tone and the tritone — and both point straight home.</div>
+</section>
+
+<!-- 2 -->
+<section id="diatonic">
+  <div class="sec-num">02 — THE VOCABULARY</div>
+  <h2 class="head">What "diatonic" actually means</h2>
+  <p class="lede">Not "true to the tonic." It means <strong>across the tones</strong> — staying strictly within the seven notes of one key's signature, with zero outside sharps or flats.</p>
+
+  <p>The word is Greek: <em>dia</em> (through / across) + <em>tonos</em> (tone). It describes travelling through the natural notes of a scale.</p>
+
+  <h3>The in-key rule</h3>
+  <p>In C major the diatonic notes are strictly <span class="mono">C D E F G A B</span>. Because there are no accidentals, even <span class="mono">B diminished</span> (B–D–F) is fully diatonic.</p>
+
+  <h3>The out-of-key rule</h3>
+  <p>Change that B to a B♭ to make a <span class="mono">B♭ major</span> chord and you have left the key. That chord is <strong>chromatic</strong> (non-diatonic), because B♭ isn't part of the C major scale.</p>
+
+  <div class="note"><b>Tonic vs diatonic:</b> the <b>tonic</b> is the single home note or chord — the destination. <b>Diatonic</b> is the whole seven-chord family that respects the key's rules. One is a place; the other is a citizenship test.</div>
+</section>
+
+<!-- 3 -->
+<section id="seventh">
+  <div class="sec-num">03 — THE CLASSIC MIX-UP</div>
+  <h2 class="head">The 7th chord trap: vii° is not the subtonic</h2>
+  <p class="lede">In the major sequence <span class="mono">1 · 2m · 3m · 4 · 5 · 6m · 7dim</span>, that final chord is the <strong>leading-tone diminished chord (vii°)</strong> — not the subtonic. Both live near the 7th degree, but they use different notes and pull in opposite directions.</p>
+
+  <h3>vii° — the leading-tone diminished</h3>
+  <p>Built on the <strong>natural 7th</strong> (<span class="mono">B</span> in C). Sits exactly a half-step below the tonic. Highly tense and dramatic — it shares three notes with the dominant 7th, so it acts like a dominant and desperately resolves up to the 1.</p>
+
+  <h3>♭VII — the subtonic</h3>
+  <p>Built on the <strong>lowered 7th</strong> (<span class="mono">B♭</span> in C). Sits a whole-step below the tonic. Epic, rock-and-roll, cinematic. It does <em>not</em> occur in the standard major scale — it's borrowed from Mixolydian or the minor scale.</p>
+
+  <div class="note"><b>The naming rule:</b> "subtonic" is reserved exclusively for the flat-7 (♭7) and its chord (♭VII). The natural 7th of a major scale is always the <b>leading tone</b>.</div>
+</section>
+
+<!-- 4 -->
+<section id="feels">
+  <div class="sec-num">04 — THE EMOTIONAL ROLES</div>
+  <h2 class="head">The job every diatonic chord plays</h2>
+  <p class="lede">Beyond the tonic and dominant, each chord carries a distinct narrative feel. Here's the cast, by scale degree in C major.</p>
+
+  <div class="feel">
+    <div class="roman">IV</div>
+    <div class="name">Subdominant · <span class="mono">F</span></div>
+    <div class="vibe"><b>Hopeful, expansive, open.</b> A gentle lift away from home without heavy tension — like beginning a journey or looking up at a wide sky.</div>
+  </div>
+  <div class="feel">
+    <div class="roman">♭VII</div>
+    <div class="name">Subtonic · <span class="mono">B♭</span> (borrowed)</div>
+    <div class="vibe"><b>Epic, cinematic, rebellious.</b> Strips out classical tension and swaps in a heroic, modal, adventurous quality. The engine of rock.</div>
+  </div>
+  <div class="feel">
+    <div class="roman">vi</div>
+    <div class="name">Submediant · relative minor of I · <span class="mono">Am</span></div>
+    <div class="vibe"><b>Bittersweet, nostalgic, vulnerable.</b> Shares two notes with the tonic, so it feels like home with a sudden shadow. The classic "emotional twist" chord.</div>
+  </div>
+  <div class="feel">
+    <div class="roman">ii</div>
+    <div class="name">Supertonic · relative minor of IV · <span class="mono">Dm</span></div>
+    <div class="vibe"><b>Melancholic, yearning, preparatory.</b> The jazz and pop-ballad workhorse — a weeping momentum that signals a larger shift is coming.</div>
+  </div>
+  <div class="feel">
+    <div class="roman">iii</div>
+    <div class="name">Mediant · relative minor of V · <span class="mono">Em</span></div>
+    <div class="vibe"><b>Dreamy, static, introspective.</b> The rarest of the primary minors. A floating sensation — a daydream, a memory, time briefly suspended.</div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section id="chromatic">
+  <div class="sec-num">05 — LEAVING THE KEY</div>
+  <h2 class="head">The four neighborhoods of chromaticism</h2>
+  <p class="lede">Step outside the seven-chord town and you're in chromatic territory — any of the 12 notes, chosen for drama, spice, and cinematic color. Songwriters get there four main ways.</p>
+
+  <div class="flavor">
+    <span class="fname">Modal Mixture</span><span class="ftag">The Borrowers</span>
+    <div class="fvibe">Nostalgic · epic</div>
+    <p>Steal a chord from the <strong>parallel</strong> key — same home note, opposite quality. If you're in C <em>major</em>, you borrow from C <em>minor</em>. Home never moves; you just recolor one chord.</p>
+
+    <div class="compare">
+      <div class="col par">
+        <div class="clabel">Parallel — this is the one</div>
+        <div class="ctitle">Same root, flip the quality</div>
+        <p>C major ↔ C minor. Both call C "home." You reach into C minor and lift out a chord.</p>
+        <div class="rule">same 1 · different notes</div>
+      </div>
+      <div class="col rel">
+        <div class="clabel">Relative — a different tool</div>
+        <div class="ctitle">Same notes, move the home</div>
+        <p>C major ↔ A minor. Identical seven notes, but home shifts to A. This is the §07 minor flip, <em>not</em> borrowing.</p>
+        <div class="rule">same notes · different 1</div>
+      </div>
+    </div>
+
+    <p>So in <strong>C major</strong>, borrowing from <strong>C minor</strong> (Cm · D° · E♭ · Fm · Gm · A♭ · B♭) gives you:</p>
+    <div class="borrowrow"><div class="bdeg">♭III</div><div class="bch"><b>E♭ major</b> — a bright, unexpected lift.</div></div>
+    <div class="borrowrow"><div class="bdeg">iv</div><div class="bch"><b>F minor</b> — the ultimate Hollywood-heartbreak chord.</div></div>
+    <div class="borrowrow"><div class="bdeg">♭VI</div><div class="bch"><b>A♭ major</b> — built on the flatted 6th (A♭). Normally the 6 chord is A minor; mixture swaps in A♭ major. Heroic, spacey.</div></div>
+    <div class="borrowrow"><div class="bdeg">♭VII</div><div class="bch"><b>B♭ major</b> — the borrowed flat-7 subtonic, that driving rock feel.</div></div>
+
+    <div class="note"><b>The trap:</b> ♭VI is A♭ <em>major</em>, not "Cm as 6m." Cm is the 6m <em>of E♭</em> — a relative relationship, which moves the home. Modal mixture keeps home on C and only borrows the chord.</div>
+  </div>
+
+  <div class="flavor">
+    <span class="fname">Secondary Dominants</span><span class="ftag">The Gravity Boosters</span>
+    <div class="fvibe">Sophisticated · theatrical · directional</div>
+    <p>Temporarily treat a non-tonic chord as "home" and slam into it with <em>its</em> dominant. Secondary leading-tone (diminished) chords do the same job with a darker, creeping tension.</p>
+    <span class="ex">C → A7 → Dm    (A7 is the V of Dm)</span>
+  </div>
+
+  <div class="flavor">
+    <span class="fname">Chromatic Mediants</span><span class="ftag">The Teleporters</span>
+    <div class="fvibe">Sudden shift in color, space, dimension</div>
+    <p>Jump to a chord a third away but keep it major or minor against the key — a portal effect used constantly in sci-fi and fantasy scores.</p>
+    <span class="ex">C major → E major    (instead of the diatonic Em)</span>
+  </div>
+
+  <div class="flavor">
+    <span class="fname">Symmetrical &amp; Special Chords</span><span class="ftag">The Gravity-Defiers</span>
+    <div class="fvibe">Chaos · suspense · total loss of gravity</div>
+    <p>Built on math, not scale steps, so they have no home. <strong>Fully diminished 7th</strong> — a stack of minor thirds; perfectly symmetrical, resolves to four keys, a musical wormhole. <strong>Whole-tone chords</strong> — the flashback / underwater float. Plus the <strong>Neapolitan (♭II)</strong>: a major chord on the flat-2 (<span class="mono">D♭</span> in C), tragic and operatic, dropping heavily to the dominant.</p>
+  </div>
+
+  <div class="note"><b>The overarching split:</b> <b>functional</b> chromaticism has a job — it points your ear at a target chord (secondary dominants). <b>Non-functional</b> "color" chromaticism is there purely for texture and doesn't resolve where you expect.</div>
+</section>
+
+<!-- 6 -->
+<section id="map">
+  <div class="sec-num">06 — THE BIRD'S-EYE VIEW</div>
+  <h2 class="head">Diatonic vs chromatic, at a glance</h2>
+
+  <div class="gravity">
+    <div class="gravity-title">The gravity scale — how strongly a sound pulls you home</div>
+    <div class="track">
+      <div class="pin" style="left:8%"><span>I / tonic</span></div>
+      <div class="pin" style="left:34%"><span>IV</span></div>
+      <div class="pin" style="left:62%"><span>V⁷ / vii°</span></div>
+      <div class="pin" style="left:90%"><span>fully dim.</span></div>
+    </div>
+    <div class="track-ends"><span class="l">Rest · stability</span><span class="r">Untethered · no home</span></div>
+  </div>
+
+  <table class="tbl">
+    <thead>
+      <tr><th>Feature</th><th><span class="dot-d">●</span>Diatonic — in the key</th><th><span class="dot-c">●</span>Chromatic — outside the key</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="feat">The rule</td><td>Strict allegiance to the 7 notes of your scale.</td><td>Total freedom — any of the 12 available notes.</td></tr>
+      <tr><td class="feat">The analogy</td><td>A close-knit family dinner. Predictable and safe.</td><td>Plot twists, unexpected guests, a sudden jump scare.</td></tr>
+      <tr><td class="feat">Musical role</td><td>Establishes foundation, logic, and stability.</td><td>Adds tension, flavor, drama, cinematic color.</td></tr>
+      <tr><td class="feat">Primary vibe</td><td>Natural, cohesive, resolving, traditional.</td><td>Spicy, jazzy, epic, unstable, dream-like.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Inside the diatonic seven-chord town</h3>
+  <p>Your brain hands each chord a job: the <strong>tonic (I)</strong> is ultimate rest, the <strong>subdominant (IV)</strong> is moving away from home, and the <strong>dominant (V &amp; vii°)</strong> is the high-tension magnet pulling you straight back.</p>
+</section>
+
+<!-- 7 -->
+<section id="minor">
+  <div class="sec-num">07 — SAME NOTES, NEW HOME</div>
+  <h2 class="head">Flipping the map to minor</h2>
+  <p class="lede">The natural minor is just the relative minor — the exact same seven chords, but you start counting from the <strong>6m</strong>. Shift the home base and the whole gravity field re-orients from bright to dark.</p>
+
+  <p>C major's chords, re-read as A natural minor (starting on <span class="mono">Am</span>):</p>
+
+  <div class="chordgrid">
+    <div class="cell tonic"><div class="deg">1st</div><div class="rn">i</div><div class="ch">Am</div></div>
+    <div class="cell"><div class="deg">2nd</div><div class="rn">ii°</div><div class="ch">Bdim</div></div>
+    <div class="cell"><div class="deg">3rd</div><div class="rn">♭III</div><div class="ch">C</div></div>
+    <div class="cell"><div class="deg">4th</div><div class="rn">iv</div><div class="ch">Dm</div></div>
+    <div class="cell"><div class="deg">5th</div><div class="rn">v</div><div class="ch">Em</div></div>
+    <div class="cell"><div class="deg">6th</div><div class="rn">♭VI</div><div class="ch">F</div></div>
+    <div class="cell"><div class="deg">7th</div><div class="rn">♭VII</div><div class="ch">G</div></div>
+  </div>
+  <div class="grid-legend"><span class="lg-t">tonic / home</span></div>
+
+  <h3>What changes when the home moves</h3>
+  <p><strong>The home (i)</strong> is now minor — <span class="mono">Am</span> — heavy, serious, sad. <strong>The subtonic (♭VII)</strong> is now fully diatonic: <span class="mono">G major</span>, sitting a whole-step below the new home, is genuinely in the family here. And <strong>the magnet breaks</strong>: the 5 chord is now <span class="mono">Em</span> (minor). Lacking a sharp leading tone — G natural instead of G♯ — it barely pulls you home.</p>
+</section>
+
+<!-- 8 -->
+<section id="harmonic">
+  <div class="sec-num">08 — THE HYBRID</div>
+  <h2 class="head">Harmonic minor: the border town</h2>
+  <p class="lede">Composers hated the weak minor v. The fix: manually sharpen the 7th (<span class="mono">G → G♯</span>), turning <span class="mono">Em</span> back into <span class="mono">E major</span>. That single note re-imports the dominant-to-tonic engine into the dark minor world — a hybrid sitting right on the diatonic/chromatic line.</p>
+
+  <h3>The one-note formula shift (in A minor)</h3>
+  <p>Natural minor: <span class="mono">Am · Bdim · C · Dm · Em · F · G</span><br>
+     Harmonic minor: <span class="mono">Am · Bdim · Caug · Dm · E · F · G♯dim</span></p>
+  <p>You gain a driving <strong>major V</strong> and a tense <strong>vii° diminished</strong> that force the music violently back home. The cost: a three-half-step gap between the 6th and 7th degrees — the signature exotic sound of classical drama, gothic themes, metal, and flamenco.</p>
+
+  <table class="tbl">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th><span class="dot-d">●</span>Natural minor</th>
+        <th><span class="dot-h">●</span>Harmonic minor</th>
+        <th><span class="dot-c">●</span>Pure chromatic</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="feat">The vibe</td><td>Sad, folky, modern pop.</td><td>Dramatic, gothic, exotic, classical.</td><td>Extreme twists, jazz, film scores.</td></tr>
+      <tr><td class="feat">The 5 chord</td><td>Minor v — soft, weak pull home.</td><td>Major V — aggressive magnetic pull.</td><td>Random chords from other keys.</td></tr>
+      <tr><td class="feat">The 7th note</td><td>Subtonic — whole-step below tonic.</td><td>Leading tone — sharp half-step below.</td><td>Notes belonging to no version of the key.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note"><b>The through-line:</b> every scale in this guide is just a different answer to one question — how hard do you want the 7th degree to pull you home? Major and harmonic minor pull hard; natural minor lets go; chromatic cuts the cord entirely.</div>
+</section>
+
+<!-- 9 -->
+<section id="cheats">
+  <div class="sec-num">09 — LOCKED TO THE MAJOR NUMBERS</div>
+  <h2 class="head">The minor cheats, in your own format</h2>
+  <p class="lede">Keep the numbers welded to the major scale and just move your starting line to the <strong>6m</strong>. Now every "cheat" is visible as a single altered chord in the family tree — you can see exactly what got bent.</p>
+
+  <div class="altkey">
+    <span><s>■</s> home base (6m)</span>
+    <span><b>■</b> altered chord</span>
+    <span>■ untouched diatonic chord</span>
+  </div>
+
+  <div class="formula">
+    <span class="ftitle">Pure Natural Minor</span><span class="ftag">The baseline</span>
+    <div class="seq">
+      <span class="c home">6m</span><span class="arw">–</span><span class="c">7dim</span><span class="arw">–</span><span class="c">1</span><span class="arw">–</span><span class="c">2m</span><span class="arw">–</span><span class="c">3m</span><span class="arw">–</span><span class="c">4</span><span class="arw">–</span><span class="c">5</span>
+    </div>
+    <p><strong>The problem:</strong> the jump from <span class="mono">5 → 6m</span> feels weak. The 5 chord is minor here, so it has no sharp leading tone to lock into home.</p>
+  </div>
+
+  <div class="formula">
+    <span class="ftitle">Harmonic Minor Cheat</span><span class="ftag">Fixing the 5</span>
+    <div class="seq">
+      <span class="c home">6m</span><span class="arw">–</span><span class="c">7dim</span><span class="arw">–</span><span class="c">1</span><span class="arw">–</span><span class="c">2m</span><span class="arw">–</span><span class="c alt">3</span><span class="arw">–</span><span class="c">4</span><span class="arw">–</span><span class="c alt">5aug</span>
+    </div>
+    <p><strong>The one raised note</strong> (a half-step below home) sits inside the 3, the 5 and the 7. It turns <span class="mono">3m → 3</span> (major) and <span class="mono">5 → 5aug</span>. Now <span class="mono">3 → 6m</span> is a true dominant-to-tonic slam inside the minor loop. The 3 major is your working V-of-home; the leading-tone diminished lands on the 7.</p>
+  </div>
+
+  <div class="formula">
+    <span class="ftitle">Melodic Minor Cheat</span><span class="ftag">Smoothing the climb</span>
+    <div class="seq">
+      <span class="c home">6m</span><span class="arw">–</span><span class="c">7dim</span><span class="arw">–</span><span class="c">1</span><span class="arw">–</span><span class="c alt">2</span><span class="arw">–</span><span class="c alt">3</span><span class="arw">–</span><span class="c">4</span><span class="arw">–</span><span class="c alt">5aug</span>
+    </div>
+    <p>Harmonic minor leaves a jagged three-half-step gap. Melodic minor raises a <strong>second</strong> note (a whole step below home) to smooth the run up to the root — that turns <span class="mono">2m → 2</span> (major) as well. You get a bright, stepwise ascent with the dominant pull intact.</p>
+  </div>
+
+  <div class="formula">
+    <span class="ftitle">Dorian Rock Variant</span><span class="ftag">The Santana / Floyd vibe</span>
+    <div class="seq">
+      <span class="c home">6m</span><span class="arw">–</span><span class="c">7dim</span><span class="arw">–</span><span class="c">1</span><span class="arw">–</span><span class="c alt">2</span><span class="arw">–</span><span class="c">3m</span><span class="arw">–</span><span class="c">4</span><span class="arw">–</span><span class="c">5</span>
+    </div>
+    <p>Want groovy and heroic instead of sad? Raise just the <span class="mono">2m → 2</span> (major). Looping <span class="mono">6m → 2</span> gives that bright, spacey minor lift heard all over rock jams.</p>
+  </div>
+
+  <div class="note"><b>Correction from the source:</b> harmonic minor's altered chords are <b>3 (major)</b> and <b>5aug</b> — never a "5♯dim." The diminished chord is the vii° on the 7, and the raised dominant is <em>augmented</em>, not diminished. Two different chords, easy to conflate.</div>
+</section>
+
+<!-- 10 -->
+<section id="modes">
+  <div class="sec-num">10 — THE SEVEN STARTING LINES</div>
+  <h2 class="head">The full mode ladder</h2>
+  <p class="lede">Seven modes, same seven major-scale chords, seven different starting lines — ordered brightest to darkest. Each one's <strong>altered chord</strong> (relative to plain major/minor) is the note that gives it its flavor.</p>
+
+  <div class="brightbar"></div>
+  <div class="brightbar-ends"><span class="l">Brightest · most major</span><span class="r">Darkest · most minor</span></div>
+
+  <div class="mode">
+    <div class="mode-hd"><span class="mname">Lydian</span><span class="mhome">home · 4</span><span class="mvibe">dreamy, wonder, film-score awe</span></div>
+    <div class="seq">
+      <span class="c home">4</span><span class="arw">–</span><span class="c">5</span><span class="arw">–</span><span class="c">6m</span><span class="arw">–</span><span class="c">7dim</span><span class="arw">–</span><span class="c">1</span><span class="arw">–</span><span class="c">2m</span><span class="arw">–</span><span class="c">3m</span>
+    </div>
+    <p>Major, but floating. The 2m sitting a whole step above home gives the signature ♯4 "raised" shimmer. Think <em>The Simpsons</em> theme, Joe Satriani.</p>
+  </div>
+
+  <div class="mode">
+    <div class="mode-hd"><span class="mname">Ionian — Major</span><span class="mhome">home · 1</span><span class="mvibe">the bright baseline</span></div>
+    <div class="seq">
+      <span class="c home">1</span><span class="arw">–</span><span class="c">2m</span><span class="arw">–</span><span class="c">3m</span><span class="arw">–</span><span class="c">4</span><span class="arw">–</span><span class="c">5</span><span class="arw">–</span><span class="c">6m</span><span class="arw">–</span><span class="c">7dim</span>
+    </div>
+    <p>Home base for the whole guide. Strong leading tone, strong V–I pull.</p>
+  </div>
+
+  <div class="mode">
+    <div class="mode-hd"><span class="mname">Mixolydian</span><span class="mhome">home · 5</span><span class="mvibe">bluesy, rock, un-resolved swagger</span></div>
+    <div class="seq">
+      <span class="c home">5</span><span class="arw">–</span><span class="c">6m</span><span class="arw">–</span><span class="c">7dim</span><span class="arw">–</span><span class="c">1</span><span class="arw">–</span><span class="c">2m</span><span class="arw">–</span><span class="c">3m</span><span class="arw">–</span><span class="c alt">4</span>
+    </div>
+    <p>Major with a ♭7. The 4 chord functions as the flat-7-of-home, so looping <span class="mono">5 → 4</span> gives that bright, un-resolved rock groove — "Sweet Home Alabama," "Sympathy for the Devil."</p>
+  </div>
+
+  <div class="mode">
+    <div class="mode-hd"><span class="mname">Dorian</span><span class="mhome">home · 2m</span><span class="mvibe">the bright, groovy minor</span></div>
+    <div class="seq">
+      <span class="c home">2m</span><span class="arw">–</span><span class="c">3m</span><span class="arw">–</span><span class="c">4</span><span class="arw">–</span><span class="c">5</span><span class="arw">–</span><span class="c">6m</span><span class="arw">–</span><span class="c">7dim</span><span class="arw">–</span><span class="c">1</span>
+    </div>
+    <p>Minor with a raised 6th — the major 5 chord one step up is its tell. Groovy, hopeful, heroic. "So What," Santana, "Wicked Game" territory.</p>
+  </div>
+
+  <div class="mode">
+    <div class="mode-hd"><span class="mname">Aeolian — Natural Minor</span><span class="mhome">home · 6m</span><span class="mvibe">the dark baseline</span></div>
+    <div class="seq">
+      <span class="c home">6m</span><span class="arw">–</span><span class="c">7dim</span><span class="arw">–</span><span class="c">1</span><span class="arw">–</span><span class="c">2m</span><span class="arw">–</span><span class="c">3m</span><span class="arw">–</span><span class="c">4</span><span class="arw">–</span><span class="c">5</span>
+    </div>
+    <p>The standard sad/folky minor. Weak minor-v pull home (the reason the cheats above exist).</p>
+  </div>
+
+  <div class="mode">
+    <div class="mode-hd"><span class="mname">Phrygian</span><span class="mhome">home · 3m</span><span class="mvibe">Spanish, metal, menacing</span></div>
+    <div class="seq">
+      <span class="c home">3m</span><span class="arw">–</span><span class="c alt">4</span><span class="arw">–</span><span class="c">5</span><span class="arw">–</span><span class="c">6m</span><span class="arw">–</span><span class="c">7dim</span><span class="arw">–</span><span class="c">1</span><span class="arw">–</span><span class="c">2m</span>
+    </div>
+    <p>Minor with a ♭2 — the flamenco / thrash-metal darkness. That <span class="mono">3m → 4</span> half-step move up from home is the whole exotic, ominous character.</p>
+  </div>
+
+  <div class="mode">
+    <div class="mode-hd"><span class="mname">Locrian</span><span class="mhome">home · 7dim</span><span class="mvibe">unstable, rarely a home key</span></div>
+    <div class="seq">
+      <span class="c home">7dim</span><span class="arw">–</span><span class="c">1</span><span class="arw">–</span><span class="c">2m</span><span class="arw">–</span><span class="c">3m</span><span class="arw">–</span><span class="c">4</span><span class="arw">–</span><span class="c">5</span><span class="arw">–</span><span class="c">6m</span>
+    </div>
+    <p>The darkest — home is a diminished chord, so it never rests. Almost no songs live here; it's mostly a passing color or a jazz-theory curiosity.</p>
+  </div>
+
+  <div class="note"><b>The pattern to lock in:</b> read the ladder as one loop of the major scale with a moving home. Everything from Lydian to Locrian is the <em>same seven chords</em> — the only variable is where you decide "1" is.</div>
+</section>
+
+<footer>
+  A field guide to Western tonal harmony · the whole territory, ordered by gravity.
+</footer>
+
+</div>
+<button class="hb-btn" id="hb-btn" aria-label="Open contents" aria-expanded="false">
+  <span></span><span></span><span></span>
+</button>
+<div class="hb-backdrop" id="hb-backdrop"></div>
+<nav class="hb-drawer" id="hb-drawer" aria-label="Contents">
+  <button class="hb-close" id="hb-close" aria-label="Close contents">&times;</button>
+  <h3>Contents</h3>
+  <ol id="hb-list"></ol>
+</nav>
+
+<div class="sndrail" id="sndrail">
+  <span class="sr-label">Sound</span>
+  <span id="sr-insts" style="display:flex;flex-direction:column;gap:5px;"></span>
+  <button class="sr-go" id="sr-go" title="Start/stop the jam">&#9654;</button>
+</div>
+
+<script>
+(function(){
+  // Diatonic chord roots per major key (standard key-signature spellings).
+  // Order: I ii iii IV V vi vii°
+  var DIA = {
+    'C':  ['C','D','E','F','G','A','B'],
+    'G':  ['G','A','B','C','D','E','F#'],
+    'D':  ['D','E','F#','G','A','B','C#'],
+    'A':  ['A','B','C#','D','E','F#','G#'],
+    'E':  ['E','F#','G#','A','B','C#','D#'],
+    'B':  ['B','C#','D#','E','F#','G#','A#'],
+    'F#': ['F#','G#','A#','B','C#','D#','E#'],
+    'F':  ['F','G','A','Bb','C','D','E'],
+    'Bb': ['Bb','C','D','Eb','F','G','A'],
+    'Eb': ['Eb','F','G','Ab','Bb','C','D'],
+    'Ab': ['Ab','Bb','C','Db','Eb','F','G'],
+    'Db': ['Db','Eb','F','Gb','Ab','Bb','C']
+  };
+  // Borrowed-chord roots from the parallel minor: bIII, iv, bVI, bVII.
+  // Theoretically-correct spellings, with Cb/Fb/Bbb smoothed to playable enharmonics.
+  var BORROW = {
+    'C':  ['Eb','F','Ab','Bb'],
+    'G':  ['Bb','C','Eb','F'],
+    'D':  ['F','G','Bb','C'],
+    'A':  ['C','D','F','G'],
+    'E':  ['G','A','C','D'],
+    'B':  ['D','E','G','A'],
+    'F#': ['A','B','D','E'],
+    'F':  ['Ab','Bb','Db','Eb'],
+    'Bb': ['Db','Eb','Gb','Ab'],
+    'Eb': ['Gb','Ab','B','Db'],   // Cb -> B
+    'Ab': ['B','Db','E','Gb'],    // Cb->B, Fb->E
+    'Db': ['E','Gb','A','B']      // Fb->E, Bbb->A, Cb->B
+  };
+  var DEG   = ['I','ii','iii','IV','V','vi','vii\u00B0'];
+  var QUAL  = ['','m','m','','','m','dim'];  // triad quality suffix
+  var FUNC  = ['tonic','','','subdom.','dom.','rel.min','lead.tone'];
+  var BDEG  = ['\u266DIII','iv','\u266DVI','\u266DVII'];
+  var BQUAL = ['','m','',''];
+  var BFUNC = ['borrowed','minor iv','borrowed','subtonic'];
+  var KEYS  = ['C','G','D','A','E','B','F#','Db','Ab','Eb','Bb','F'];
+
+  // 12-slot chromatic spelling per key: slot s = note s semitones above tonic,
+  // spelled to match its degree name. Verified; ugly enharmonics smoothed.
+  var CHROMA = {
+    'C':  ['C','Db','D','Eb','E','F','F#','G','Ab','A','Bb','B'],
+    'G':  ['G','Ab','A','Bb','B','C','C#','D','Eb','E','F','F#'],
+    'D':  ['D','Eb','E','F','F#','G','G#','A','Bb','B','C','C#'],
+    'A':  ['A','Bb','B','C','C#','D','D#','E','F','F#','G','G#'],
+    'E':  ['E','F','F#','G','G#','A','A#','B','C','C#','D','D#'],
+    'B':  ['B','C','C#','D','D#','E','E#','F#','G','G#','A','A#'],
+    'F#': ['F#','G','G#','A','A#','B','B#','C#','D','D#','E','E#'],
+    'Db': ['Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B','C'],
+    'Ab': ['Ab','A','Bb','B','C','Db','D','Eb','E','F','Gb','G'],
+    'Eb': ['Eb','E','F','Gb','G','Ab','A','Bb','B','C','Db','D'],
+    'Bb': ['Bb','B','C','Db','D','Eb','E','F','Gb','G','Ab','A'],
+    'F':  ['F','Gb','G','Ab','A','Bb','B','C','Db','D','Eb','E']
+  };
+  // Per semitone (0..11): degree label, quality suffix, function name, is-diatonic flag.
+  var PAL = [
+    ['I',     '',    'tonic',                     true ],
+    ['\u266DII',  '',    'Neapolitan',            false],
+    ['V/V',   '',    'sec. dom. \u2192 V',        false],
+    ['\u266DIII', '',    'borrowed (from minor)', false],
+    ['V/vi',  '',    'sec. dom. \u2192 vi',       false],
+    ['IV',    '',    'subdominant',               true ],
+    ['\u266Fiv',  'dim', 'leads to V',            false],
+    ['V',     '',    'dominant',                  true ],
+    ['\u266DVI',  '',    'borrowed (from minor)', false],
+    ['V/ii',  '',    'sec. dom. \u2192 ii',       false],
+    ['\u266DVII', '',    'subtonic (borrowed)',   false],
+    ['V/iii', '',    'sec. dom. \u2192 iii',      false]
+  ];
+  // Which slots are the plain diatonic chords (for dark styling): 0,2m? No —
+  // diatonic roots by semitone in major: 0(I),2(ii),4(iii),5(IV),7(V),9(vi),11(vii).
+  // But PAL labels slots 2,4,9,11 as secondary dominants (chromatic reinterpretations),
+  // so only 0,5,7 are shown as the pure diatonic majors here; the rest are their
+  // characteristic chromatic use. Diatonic minor triads noted in function text.
+
+  var picker  = document.getElementById('keypicker');
+  var diaWrap = document.getElementById('kt-diatonic');
+  var borWrap = document.getElementById('kt-borrowed');
+  var nameEl  = document.getElementById('kt-keyname');
+  var palWrap = document.getElementById('kt-palette');
+
+  // ---------- MINOR data (verified) ----------
+  // Natural-minor scale notes per tonic; leading tone (raised 7) and raised 6.
+  var NATMIN = {
+    'A':['A','B','C','D','E','F','G'],   'E':['E','F#','G','A','B','C','D'],
+    'B':['B','C#','D','E','F#','G','A'], 'F#':['F#','G#','A','B','C#','D','E'],
+    'C#':['C#','D#','E','F#','G#','A','B'], 'D':['D','E','F','G','A','Bb','C'],
+    'G':['G','A','Bb','C','D','Eb','F'], 'C':['C','D','Eb','F','G','Ab','Bb'],
+    'F':['F','G','Ab','Bb','C','Db','Eb'], 'Bb':['Bb','C','Db','Eb','F','Gb','Ab']
+  };
+  var LTONE = {'A':'G#','E':'D#','B':'A#','F#':'E#','C#':'C','D':'C#','G':'F#','C':'B','F':'E','Bb':'A'};
+  var RSIX  = {'A':'F#','E':'C#','B':'G#','F#':'D#','C#':'A#','D':'B','G':'E','C':'A','F':'D','Bb':'G'};
+  var MINKEYS = ['A','E','B','F#','C#','D','G','C','F','Bb'];
+
+  // Roman-numeral labels + function per form
+  var MDEG_N = ['i','ii\u00B0','\u266DIII','iv','v','\u266DVI','\u266DVII'];
+  var MFUN_N = ['tonic','','','subdom.','weak dom.','','subtonic'];
+  var MDEG_H = ['i','ii\u00B0','\u266DIII+','iv','V','\u266DVI','vii\u00B0'];
+  var MFUN_H = ['tonic','','aug','subdom.','dom.','','lead.tone'];
+  var MDEG_M = ['i','ii','\u266DIII+','IV','V','vi\u00B0','vii\u00B0'];
+  var MFUN_M = ['tonic','','aug','','dom.','','lead.tone'];
+
+  // Build the 7 chords (root+quality) for a minor key in a given form.
+  function minorChords(key, form){
+    var n = NATMIN[key], lt = LTONE[key], r6 = RSIX[key];
+    if(form==='natural'){
+      return [ [n[0],'m'],[n[1],'dim'],[n[2],''],[n[3],'m'],[n[4],'m'],[n[5],''],[n[6],''] ];
+    } else if(form==='harmonic'){
+      return [ [n[0],'m'],[n[1],'dim'],[n[2],'aug'],[n[3],'m'],[n[4],''],[n[5],''],[lt,'dim'] ];
+    } else { // melodic (ascending)
+      return [ [n[0],'m'],[n[1],'m'],[n[2],'aug'],[n[3],''],[n[4],''],[r6,'dim'],[lt,'dim'] ];
+    }
+  }
+  function minorDegs(form){ return form==='natural'?MDEG_N:form==='harmonic'?MDEG_H:MDEG_M; }
+  function minorFuns(form){ return form==='natural'?MFUN_N:form==='harmonic'?MFUN_H:MFUN_M; }
+
+  var curMode = 'major';   // 'major' | 'minor'
+  var curForm = 'natural'; // for minor
+  var curKey  = 'C';
+
+  function render(key){
+    curKey = key;
+    if(curMode==='major'){
+      nameEl.textContent = key + ' major';
+      var d = DIA[key];
+      var html = '';
+      for(var i=0;i<7;i++){
+        var cls = 'kt-cell' + (i===0?' tonic':'') + (i===4?' dom':'');
+        html += '<div class="'+cls+'"><div class="kt-deg">'+DEG[i]+'</div>'
+              + '<div class="kt-name">'+d[i]+QUAL[i]+'</div>'
+              + '<div class="kt-fn">'+FUNC[i]+'</div></div>';
+      }
+      diaWrap.innerHTML = html;
+
+      var b = BORROW[key], bh = '';
+      for(var j=0;j<4;j++){
+        bh += '<div class="kt-cell"><div class="kt-deg">'+BDEG[j]+'</div>'
+            + '<div class="kt-name">'+b[j]+BQUAL[j]+'</div>'
+            + '<div class="kt-fn">'+BFUNC[j]+'</div></div>';
+      }
+      borWrap.innerHTML = bh;
+      renderPalette(key);
+    } else {
+      // minor
+      nameEl.textContent = key + ' minor (' + curForm + ')';
+      var ch = minorChords(key, curForm);
+      var deg = minorDegs(curForm), fun = minorFuns(curForm);
+      var mh = '';
+      for(var m=0;m<7;m++){
+        var domSlot = (curForm!=='natural' && m===4); // major V in har/mel
+        var cls2 = 'kt-cell' + (m===0?' tonic':'') + (domSlot?' dom':'');
+        var nm = ch[m][0]+ch[m][1];
+        var fnTxt = fun[m];
+        if(domSlot){ nm += '<span class="kt-hint">\u2192'+ch[m][0]+'7</span>'; }
+        mh += '<div class="'+cls2+'"><div class="kt-deg">'+deg[m]+'</div>'
+            + '<div class="kt-name">'+nm+'</div>'
+            + '<div class="kt-fn">'+fnTxt+'</div></div>';
+      }
+      diaWrap.innerHTML = mh;
+      renderMinorBorrowed(key);
+      renderMinorPalette(key);
+    }
+
+    var btns = picker.querySelectorAll('button');
+    for(var k=0;k<btns.length;k++){
+      btns[k].classList.toggle('active', btns[k].dataset.key===key);
+      btns[k].setAttribute('aria-pressed', btns[k].dataset.key===key ? 'true':'false');
+    }
+    if(typeof updateCircle === 'function' && curMode==='major') updateCircle(key);
+  }
+
+  // Minor: the common "extra" chords players reach for (from parallel major + mixture).
+  // Picardy III-of-minor is the major I; also the borrowed major IV (Dorian) & bII (Neapolitan).
+  function renderMinorBorrowed(key){
+    var n = NATMIN[key], r6 = RSIX[key];
+    // bII Neapolitan root = flat-2 = half step above tonic. Use CHROMA-style: derive from natural 2nd (n[1]) lowered.
+    // Simpler: Neapolitan root spelled per key.
+    var NEA = {'A':'Bb','E':'F','B':'C','F#':'G','C#':'D','D':'Eb','G':'Ab','C':'Db','F':'Gb','Bb':'B'};
+    var items = [
+      [n[0], '',   'I (Picardy / major tonic)'],
+      [n[3], '',   'IV (Dorian major-4)'],
+      [NEA[key], '', '\u266DII Neapolitan'],
+      [n[4], '7',  'V7 (from harmonic)']
+    ];
+    var bh='';
+    for(var i=0;i<items.length;i++){
+      bh += '<div class="kt-cell"><div class="kt-deg">'+['maj i','maj iv','\u266DII','V7'][i]+'</div>'
+          + '<div class="kt-name">'+items[i][0]+items[i][1]+'</div>'
+          + '<div class="kt-fn">'+items[i][2]+'</div></div>';
+    }
+    borWrap.innerHTML=bh;
+  }
+
+  function renderPalette(key){
+    var ch = CHROMA[key];
+    var html='';
+    for(var i=0;i<12;i++){
+      var deg=PAL[i][0], q=PAL[i][1], fn=PAL[i][2], dia=PAL[i][3];
+      var cls='prow';
+      if(i===0) cls+=' p-tonic';
+      else if(i===7) cls+=' p-dom';
+      else if(dia) cls+=' p-diatonic';
+      else cls+=' p-chrom';
+      html+='<div class="'+cls+'"><div class="pdeg">'+deg+'</div>'
+          + '<div class="pchord">'+ch[i]+q+'</div>'
+          + '<div class="pfunc">'+fn+'</div></div>';
+    }
+    palWrap.innerHTML=html;
+  }
+
+  // Minor full-chromatic palette: 12 roots named relative to the minor tonic.
+  // Degrees in minor context. Uses a per-key 12-slot chromatic spelling.
+  function minorChroma(key){
+    // build 12 semitone spellings from the natural-minor scale + chromatic fills
+    var n = NATMIN[key];
+    // slot map (semitones above tonic in natural minor): 0,2,3,5,7,8,10 -> scale degs
+    var slots = new Array(12);
+    slots[0]=n[0]; slots[2]=n[1]; slots[3]=n[2]; slots[5]=n[3];
+    slots[7]=n[4]; slots[8]=n[5]; slots[10]=n[6];
+    // chromatic fills: 1(bII), 4(raised3/maj3), 6(#iv/dim), 9(natural6), 11(leading tone)
+    var NEA={'A':'Bb','E':'F','B':'C','F#':'G','C#':'D','D':'Eb','G':'Ab','C':'Db','F':'Gb','Bb':'B'};
+    slots[1]=NEA[key];
+    slots[11]=LTONE[key];
+    slots[9]=RSIX[key];
+    // slot4 = major 3rd above tonic (the Picardy third's 3rd / V-of-relative territory)
+    var M3={'A':'C#','E':'G#','B':'D#','F#':'A#','C#':'F','D':'F#','G':'B','C':'E','F':'A','Bb':'D'};
+    slots[4]=M3[key];
+    // slot6 = raised 4 (#iv)
+    var S4={'A':'D#','E':'A#','B':'E#','F#':'B#','C#':'G','D':'G#','G':'C#','C':'F#','F':'B','Bb':'E'};
+    slots[6]=S4[key];
+    return slots;
+  }
+  // Minor palette labels (degree, quality, function)
+  var MPAL = [
+    ['i',      'm',  'tonic'],
+    ['\u266DII','',   'Neapolitan'],
+    ['ii\u00B0','dim','supertonic'],
+    ['\u266DIII','',  'mediant / relative major'],
+    ['III',    '',   'V/\u266DVI or maj-3 (Picardy)'],
+    ['iv',     'm',  'subdominant'],
+    ['\u266Fiv','dim','leads to V'],
+    ['v / V',  '',   'dominant (V if raised)'],
+    ['\u266DVI','',   'submediant'],
+    ['\u266Fvi','dim','melodic raised-6'],
+    ['\u266DVII','',  'subtonic'],
+    ['vii\u00B0','dim','leading tone (harmonic)']
+  ];
+  var MDIA = [true,false,true,true,false,true,false,true,true,false,true,false];
+
+  function renderMinorPalette(key){
+    var s = minorChroma(key);
+    var html='';
+    for(var i=0;i<12;i++){
+      var deg=MPAL[i][0], q=MPAL[i][1], fn=MPAL[i][2];
+      var cls='prow';
+      if(i===0) cls+=' p-tonic';
+      else if(i===7) cls+=' p-dom';
+      else if(MDIA[i]) cls+=' p-diatonic';
+      else cls+=' p-chrom';
+      html+='<div class="'+cls+'"><div class="pdeg">'+deg+'</div>'
+          + '<div class="pchord">'+s[i]+q+'</div>'
+          + '<div class="pfunc">'+fn+'</div></div>';
+    }
+    palWrap.innerHTML=html;
+  }
+
+  function buildPicker(){
+    var list = (curMode==='major') ? KEYS : MINKEYS;
+    picker.innerHTML='';
+    list.forEach(function(key){
+      var btn = document.createElement('button');
+      btn.textContent = key + (curMode==='minor'?'m':'');
+      btn.dataset.key = key;
+      btn.setAttribute('aria-pressed','false');
+      btn.addEventListener('click', function(){ render(key); });
+      picker.appendChild(btn);
+    });
+  }
+
+  // ---------- circle of fifths / chromatic circle ----------
+  var FIFTHS = ['C','G','D','A','E','B','F#','Db','Ab','Eb','Bb','F'];
+  var RELMIN = ['Am','Em','Bm','F#m','C#m','G#m','D#m','Bbm','Fm','Cm','Gm','Dm'];
+  var CHROM  = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+
+  var svgWrap = document.getElementById('cb-svg-wrap');
+  var caption = document.getElementById('cb-caption');
+  var legend  = document.getElementById('cb-legend');
+  var btnF    = document.getElementById('cb-fifths');
+  var btnC    = document.getElementById('cb-chrom');
+  var mode    = 'fifths';
+
+  var CX=200, CY=200, ROUT=175, RMID=138, RIN=100, RINNER=62;
+  var C1='var(--sage)', C2='var(--terra)', C3='#d9b96a',
+      CBG='var(--paper)', CLINE='var(--line)', CINK='var(--ink)', CINKS='var(--ink-soft)';
+
+  function pt(i,n,r){
+    var a=(-90 + i*(360/n))*Math.PI/180;
+    return [CX+r*Math.cos(a), CY+r*Math.sin(a)];
+  }
+
+  function buildFifths(){
+    var s='<svg viewBox="0 0 400 400" role="img" aria-label="Circle of fifths">';
+    s+='<circle cx="200" cy="200" r="178" fill="none" stroke="'+CLINE+'" stroke-width="1"/>';
+    s+='<circle cx="200" cy="200" r="120" fill="none" stroke="'+CLINE+'" stroke-width="1"/>';
+    // outer majors
+    for(var i=0;i<12;i++){
+      var p=pt(i,12,RMID);
+      s+='<g class="cb-seg" data-idx="'+i+'" data-ring="maj">'
+        +'<circle id="fmaj-'+i+'" cx="'+p[0]+'" cy="'+p[1]+'" r="26" fill="'+CBG+'" stroke="'+CLINE+'" stroke-width="1"/>'
+        +'<text class="cb-node-label" id="fmajT-'+i+'" x="'+p[0]+'" y="'+(p[1]+5)+'" text-anchor="middle" font-size="16" fill="'+CINK+'">'+FIFTHS[i]+'</text></g>';
+    }
+    // inner relative minors
+    for(var j=0;j<12;j++){
+      var q=pt(j,12,RINNER+16);
+      s+='<g class="cb-seg" data-idx="'+j+'" data-ring="min">'
+        +'<circle id="fmin-'+j+'" cx="'+q[0]+'" cy="'+q[1]+'" r="19" fill="'+CBG+'" stroke="'+CLINE+'" stroke-width="1"/>'
+        +'<text class="cb-node-label" id="fminT-'+j+'" x="'+q[0]+'" y="'+(q[1]+4)+'" text-anchor="middle" font-size="11" fill="'+CINKS+'">'+RELMIN[j]+'</text></g>';
+    }
+    s+='</svg>';
+    svgWrap.innerHTML=s;
+    svgWrap.querySelectorAll('.cb-seg').forEach(function(g){
+      g.addEventListener('click',function(){
+        var idx=+g.dataset.idx;
+        render(FIFTHS[idx]);
+      });
+    });
+  }
+
+  function buildChrom(){
+    var s='<svg viewBox="0 0 400 400" role="img" aria-label="Chromatic circle">';
+    s+='<circle cx="200" cy="200" r="178" fill="none" stroke="'+CLINE+'" stroke-width="1"/>';
+    for(var i=0;i<12;i++){
+      var p=pt(i,12,RMID);
+      s+='<g class="cb-seg" data-idx="'+i+'" data-ring="chrom">'
+        +'<circle id="cnode-'+i+'" cx="'+p[0]+'" cy="'+p[1]+'" r="26" fill="'+CBG+'" stroke="'+CLINE+'" stroke-width="1"/>'
+        +'<text class="cb-node-label" x="'+p[0]+'" y="'+(p[1]+5)+'" text-anchor="middle" font-size="16" fill="'+CINK+'">'+CHROM[i]+'</text></g>';
+    }
+    s+='</svg>';
+    svgWrap.innerHTML=s;
+    svgWrap.querySelectorAll('.cb-seg').forEach(function(g){
+      g.addEventListener('click',function(){
+        var name=CHROM[+g.dataset.idx];
+        if(DIA[name]) render(name);  // only real keys in our set
+      });
+    });
+  }
+
+  function paint(id,fill,stroke){
+    var el=document.getElementById(id);
+    if(el){el.setAttribute('fill',fill); if(stroke)el.setAttribute('stroke',stroke);}
+  }
+
+  function updateCircle(key){
+    curKey=key;
+    if(mode==='fifths'){
+      var k=FIFTHS.indexOf(key);
+      if(k<0){k=FIFTHS.indexOf(({'C#':'Db','D#':'Eb','G#':'Ab','A#':'Bb'})[key]||key);}
+      // reset
+      for(var i=0;i<12;i++){paint('fmaj-'+i,CBG,CLINE);paint('fmin-'+i,CBG,CLINE);}
+      var L=(k+11)%12, R=(k+1)%12;
+      // majors: IV(L) I(k) V(R)
+      paint('fmaj-'+L,C2,C2); paint('fmaj-'+R,C2,C2); paint('fmaj-'+k,C1,C1);
+      // minors: vi(k) ii(L) iii(R)
+      paint('fmin-'+k,C1,C1); paint('fmin-'+L,C3,C3); paint('fmin-'+R,C3,C3);
+      caption.innerHTML='In <b>'+key+' major</b>: the tonic sits at center-top of its neighborhood, '
+        +'<b>'+FIFTHS[L]+'</b> (IV) and <b>'+FIFTHS[R]+'</b> (V) flank it, and the relative minors '
+        +RELMIN[L]+' · '+RELMIN[k]+' · '+RELMIN[R]+' fill the inner ring.';
+    }else{
+      var idx=CHROM.indexOf(key);
+      var map={'Db':1,'Eb':3,'F#':6,'Ab':8,'Bb':10};
+      if(idx<0 && map[key]!=null) idx=map[key];
+      for(var m=0;m<12;m++){paint('cnode-'+m,CBG,CLINE);}
+      if(idx>=0){paint('cnode-'+idx,C1,C1);
+        // whole-step neighbors up/down for reference
+        paint('cnode-'+((idx+2)%12),C3,C3); paint('cnode-'+((idx+10)%12),C3,C3);
+      }
+      caption.innerHTML='The <b>chromatic circle</b> arranges the 12 notes by half-step, not by fifth. '
+        +'It shows which notes are <b>next-door in pitch</b> (voice-leading), where the circle of fifths shows which are next-door in <b>harmony</b>. Same 12 points, reordered.';
+    }
+  }
+
+  function setMode(m){
+    mode=m;
+    var f=(m==='fifths');
+    btnF.classList.toggle('active',f); btnF.setAttribute('aria-pressed',f);
+    btnC.classList.toggle('active',!f); btnC.setAttribute('aria-pressed',!f);
+    legend.style.display = f ? 'flex' : 'none';
+    if(f) buildFifths(); else buildChrom();
+    updateCircle(curKey);
+  }
+  btnF.addEventListener('click',function(){setMode('fifths');});
+  btnC.addEventListener('click',function(){setMode('chrom');});
+
+  buildFifths();
+
+  // table view toggle: diatonic+common vs full chromatic palette
+  var vSimple=document.getElementById('kt-view-simple');
+  var vFull=document.getElementById('kt-view-full');
+  var simpleView=document.getElementById('kt-simpleview');
+  var fullView=document.getElementById('kt-fullview');
+  function setTableView(full){
+    vFull.classList.toggle('active',full); vFull.setAttribute('aria-pressed',full);
+    vSimple.classList.toggle('active',!full); vSimple.setAttribute('aria-pressed',!full);
+    simpleView.style.display = full?'none':'block';
+    fullView.style.display = full?'block':'none';
+  }
+  vSimple.addEventListener('click',function(){setTableView(false);});
+  vFull.addEventListener('click',function(){setTableView(true);});
+
+  // major/minor + minor-form toggles
+  var mMajor=document.getElementById('kt-mode-major');
+  var mMinor=document.getElementById('kt-mode-minor');
+  var formTog=document.getElementById('kt-formtoggle');
+  var fNat=document.getElementById('kt-form-nat');
+  var fHar=document.getElementById('kt-form-har');
+  var fMel=document.getElementById('kt-form-mel');
+  var diaH=document.getElementById('kt-dia-h');
+  var borH=document.getElementById('kt-bor-h');
+
+  function setForm(f){
+    curForm=f;
+    fNat.classList.toggle('active',f==='natural'); fNat.setAttribute('aria-pressed',f==='natural');
+    fHar.classList.toggle('active',f==='harmonic'); fHar.setAttribute('aria-pressed',f==='harmonic');
+    fMel.classList.toggle('active',f==='melodic'); fMel.setAttribute('aria-pressed',f==='melodic');
+    render(curKey);
+  }
+  fNat.addEventListener('click',function(){setForm('natural');});
+  fHar.addEventListener('click',function(){setForm('harmonic');});
+  fMel.addEventListener('click',function(){setForm('melodic');});
+
+  function setMusMode(minor){
+    curMode = minor?'minor':'major';
+    mMinor.classList.toggle('active',minor); mMinor.setAttribute('aria-pressed',minor);
+    mMajor.classList.toggle('active',!minor); mMajor.setAttribute('aria-pressed',!minor);
+    formTog.style.display = minor?'inline-flex':'none';
+    diaH.textContent = minor ? 'The 7 diatonic chords (minor)' : 'The 7 diatonic chords';
+    borH.textContent = minor ? 'Common extra chords in minor' : 'Common borrowed & altered chords';
+    buildPicker();
+    // pick a sensible default key when switching
+    var defKey = minor ? 'A' : 'C';
+    if(curMode==='major' && KEYS.indexOf(curKey)<0) curKey=defKey;
+    if(curMode==='minor' && MINKEYS.indexOf(curKey)<0) curKey=defKey;
+    render(curKey);
+  }
+  mMajor.addEventListener('click',function(){ if(curMode!=='major') setMusMode(false); });
+  mMinor.addEventListener('click',function(){ if(curMode!=='minor') setMusMode(true); });
+
+  buildPicker();
+  render('C');
+
+  // ---------- mode explorer (3 parent scales) ----------
+  // How each mode actually progresses. [type, text]. type: prog|vamp|chord|rare
+  var MX_MOVE = {
+    'major': [
+      ['prog','Full functional harmony \u2014 ii\u2013V\u2013I, I\u2013IV\u2013V, I\u2013vi\u2013IV\u2013V.'],
+      ['vamp','Lives on the i \u21C4 IV vamp; the major-IV is the signature (\u201CSo What\u201D).'],
+      ['vamp','i \u21C4 \u266DII vamp \u2014 that half-step-above-home chord is the whole Spanish/metal color.'],
+      ['vamp','I \u21C4 II vamp \u2014 the major-II gives the floating, dreamy lift.'],
+      ['vamp','I \u21C4 \u266DVII vamp \u2014 the flat-7 major is the bluesy rock engine. Bonus: the \u266D7 note turns the tonic into a dominant-7 chord (I7 as home = the blues sound).'],
+      ['prog','i\u2013\u266DVI\u2013\u266DVII\u2013i and i\u2013iv\u2013i \u2014 the standard sad- and pop-minor loops.'],
+      ['rare','Rarely a home \u2014 its i chord is diminished, so it won\u2019t rest. Passing color only.']
+    ],
+    'harmonic': [
+      ['prog','Minor with a strong major V \u2014 the engine is V\u2013i; also i\u2013iv\u2013V\u2013i.'],
+      ['rare','Rare; unstable diminished home. Passing color, not a key center.'],
+      ['rare','Rare \u2014 the \u266F5 makes it an augmented curiosity, seldom a tonic.'],
+      ['vamp','i \u21C4 IV vamp with an exotic \u266F4 \u2014 the Ukrainian / Gypsy-minor sound.'],
+      ['prog','I \u21C4 \u266DII vamp + Andalusian cadence iv\u2013\u266DIII\u2013\u266DII\u2013I. Flamenco / Middle-Eastern.'],
+      ['rare','Rare \u2014 the \u266F2 is a color device over a I chord, not a progression home.'],
+      ['rare','Very rare, extremely dark. Theoretical completeness, not real repertoire.']
+    ],
+    'melodic': [
+      ['prog','Jazz minor \u2014 functions like minor with a strong V. i\u2013V or a tonic-minor vamp.'],
+      ['chord','Played over a suspended / \u266D9 chord \u2014 color, not its own progression.'],
+      ['chord','Played over an augmented-major (maj7\u266F5) chord \u2014 a single-chord color scale.'],
+      ['vamp','Sits on one dominant (\u266F4 + \u266D7) or a I \u21C4 II vamp \u2014 the jazz/fusion dominant.'],
+      ['chord','Played over a dominant with a \u266D6 / \u266D13 \u2014 a single-chord device.'],
+      ['chord','The half-diminished sound \u2014 played over a m7\u266D5 (the ii of a minor ii\u2013V).'],
+      ['chord','The altered scale \u2014 over an altered dominant resolving down a fifth. Max tension.']
+    ]
+  };
+  // ---------- chord-alteration engine (major-of-this-root, bent into the mode) ----------
+  var MX_LETTERS=['C','D','E','F','G','A','B'];
+  function letPc(L){return {'C':0,'D':2,'E':4,'F':5,'G':7,'A':9,'B':11}[L];}
+  function nameToPc(n){var x=letPc(n[0]);for(var i=1;i<n.length;i++){x+= n[i]==='#'?1:(n[i]==='b'||n[i]==='\u266D')?-1:0;}return((x%12)+12)%12;}
+  function spellDeg(tp, L){var base=letPc(L);var diff=((tp-base)%12+12)%12;if(diff>6)diff-=12;
+    return L + (diff>0 ? Array(diff+1).join('#') : Array(-diff+1).join('\u266D'));}
+  var MX_SMOOTH={'C\u266D':'B','F\u266D':'E','B#':'C','E#':'F','C\u266D\u266D':'B\u266D','F\u266D\u266D':'E\u266D',
+    'A\u266D\u266D':'G','B\u266D\u266D':'A','D\u266D\u266D':'C','E\u266D\u266D':'D','G\u266D\u266D':'F',
+    'G##':'A','C##':'D','F##':'G','D##':'E','A##':'B'};
+  function smoothRoot(root){return MX_SMOOTH[root]||root;}
+  function triQual(r,t,f){var a=((t-r)%12+12)%12,b=((f-r)%12+12)%12;
+    return (a===4&&b===7)?'':(a===3&&b===7)?'m':(a===3&&b===6)?'dim':(a===4&&b===8)?'aug':'?';}
+  // Build 7 diatonic triads for an interval-set rooted at rootName (letter idx rli).
+  function modeTriads(ints, rli, rootName){
+    var rp=nameToPc(rootName), names=[];
+    for(var d=0;d<7;d++){ var L=MX_LETTERS[(rli+d)%7]; names.push(spellDeg((rp+ints[d])%12, L)); }
+    var pcs=names.map(nameToPc), out=[];
+    for(var e=0;e<7;e++){
+      var q=triQual(pcs[e], pcs[(e+2)%7], pcs[(e+4)%7]);
+      out.push([smoothRoot(names[e]), q]);
+    }
+    return out;
+  }
+  var MX_MAJ_INTS=[0,2,4,5,7,9,11];
+  // Interval-sets for the 7 modes of each parent (rotations).
+  function rots(scale){var o=[];for(var i=0;i<7;i++){var r=[];for(var j=0;j<7;j++)r.push(((scale[(i+j)%7]-scale[i])%12+12)%12);o.push(r);}return o;}
+  var MX_INTS={ 'major':rots([0,2,4,5,7,9,11]), 'harmonic':rots([0,2,3,5,7,8,11]), 'melodic':rots([0,2,3,5,7,9,11]) };
+  // letter index of a key's root
+  function rootLetterIdx(name){return MX_LETTERS.indexOf(name[0]);}
+
+  var MX_TYPELABEL = {prog:'progression',vamp:'vamp',chord:'over 1 chord',rare:'rarely a home'};
+
+  // Concrete spelled progressions per mode. Keyed 'scale:degree' -> array of
+  // {n:label, s:[[semitonesAboveHome, quality, roman],...], loop:bool}
+  // loop=true plays twice (vamp/loop feel); false plays once (directional cadence).
+  var MX_CAD = {
+    'major:0': [
+      {n:'functional', s:[[0,'','I'],[5,'','IV'],[7,'','V'],[0,'','I']], loop:false},
+      {n:'pop axis',   s:[[0,'','I'],[7,'','V'],[9,'m','vi'],[5,'','IV']], loop:true},
+      {n:'axis, vi rotation', s:[[9,'m','vi'],[5,'','IV'],[0,'','I'],[7,'','V']], loop:true},
+      {n:'axis, IV rotation', s:[[5,'','IV'],[0,'','I'],[7,'','V'],[9,'m','vi']], loop:true},
+      {n:"'50s doo-wop", s:[[0,'','I'],[9,'m','vi'],[5,'','IV'],[7,'','V']], loop:true}
+    ],
+    'major:1': [
+      {n:'the vamp ("So What")', s:[[0,'m','i'],[5,'','IV'],[0,'m','i']], loop:true},
+      {n:'"Mad World" loop', s:[[0,'m','i'],[3,'','\u266DIII'],[10,'','\u266DVII'],[5,'','IV']], loop:true}
+    ],
+    'major:2': [
+      {n:'the vamp', s:[[0,'m','i'],[1,'','\u266DII'],[0,'m','i']], loop:true},
+      {n:'metal descent', s:[[0,'m','i'],[3,'','\u266DIII'],[1,'','\u266DII'],[0,'m','i']], loop:false}
+    ],
+    'major:3': [
+      {n:'the vamp', s:[[0,'','I'],[2,'','II'],[0,'','I']], loop:true},
+      {n:'dreamy loop', s:[[0,'','I'],[2,'','II'],[4,'m','iii'],[2,'','II']], loop:true}
+    ],
+    'major:4': [
+      {n:'the vamp', s:[[0,'','I'],[10,'','\u266DVII'],[0,'','I']], loop:true},
+      {n:'"Sweet Home" shape', s:[[0,'','I'],[10,'','\u266DVII'],[5,'','IV'],[0,'','I']], loop:true}
+    ],
+    'major:5': [
+      {n:'the classic', s:[[0,'m','i'],[8,'','\u266DVI'],[10,'','\u266DVII'],[0,'m','i']], loop:false},
+      {n:'descending loop', s:[[0,'m','i'],[10,'','\u266DVII'],[8,'','\u266DVI'],[10,'','\u266DVII']], loop:true},
+      {n:'plagal', s:[[0,'m','i'],[5,'m','iv'],[0,'m','i']], loop:false}
+    ],
+    'harmonic:0': [
+      {n:'the engine', s:[[0,'m','i'],[5,'m','iv'],[7,'','V'],[0,'m','i']], loop:false},
+      {n:'\u266DVI\u2013V drama', s:[[0,'m','i'],[8,'','\u266DVI'],[7,'','V'],[0,'m','i']], loop:false}
+    ],
+    'harmonic:3': [
+      {n:'the vamp', s:[[0,'m','i'],[5,'','IV'],[0,'m','i']], loop:true}
+    ],
+    'harmonic:4': [
+      {n:'the vamp', s:[[0,'','I'],[1,'','\u266DII'],[0,'','I']], loop:true},
+      {n:'Andalusian cadence', s:[[5,'m','iv'],[3,'','\u266DIII'],[1,'','\u266DII'],[0,'','I']], loop:false}
+    ],
+    'melodic:0': [
+      {n:'tonic\u2013dominant', s:[[0,'m','i'],[7,'','V'],[0,'m','i']], loop:false},
+      {n:'with the major IV', s:[[0,'m','i'],[5,'','IV'],[7,'','V'],[0,'m','i']], loop:false}
+    ],
+    'melodic:3': [
+      {n:'the vamp', s:[[0,'','I'],[2,'','II'],[0,'','I']], loop:true}
+    ]
+  };
+  var NOTES_S=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+  var NOTES_F=['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+  var SHARP_HOMES={'G':1,'D':1,'A':1,'E':1,'B':1,'F#':1,'C#':1};
+  function noteToPc(name){
+    var b={'C':0,'D':2,'E':4,'F':5,'G':7,'A':9,'B':11}, n=b[name[0]];
+    for(var i=1;i<name.length;i++){ n += name[i]==='#'?1 : name[i]==='b'||name[i]==='\u266D'?-1 : 0; }
+    return ((n%12)+12)%12;
+  }
+  function spellRoot(pcv, home, roman){
+    if(roman.indexOf('\u266D')>=0) return NOTES_F[pcv%12];
+    return (SHARP_HOMES[home] ? NOTES_S : NOTES_F)[pcv%12];
+  }
+  // homeChord like "G" or "Cm" or "F#m" -> root letter (strip trailing m/dim/aug)
+  function chordRoot(ch){ return ch.replace(/(m|dim|aug)$/,''); }
+  function spelledCadence(scale, deg, homeChord, ci){
+    var list = MX_CAD[scale+':'+deg];
+    if(!list || !list[ci]) return null;
+    var homeRoot = chordRoot(homeChord);
+    var hp = noteToPc(homeRoot);
+    return list[ci].s.map(function(step){
+      var ch = spellRoot((hp+step[0])%12, homeRoot, step[2]) + step[1];
+      return ch + '<span class="mx-rn">('+step[2]+')</span>';
+    }).join(' \u2192 ');
+  }
+  // plain version (no numerals) for the borrowed-chord comparison + audio
+  function spelledCadencePlain(scale, deg, homeChord, ci){
+    var list = MX_CAD[scale+':'+deg];
+    if(!list || !list[ci]) return null;
+    var homeRoot = chordRoot(homeChord);
+    var hp = noteToPc(homeRoot);
+    return list[ci].s.map(function(step){
+      return spellRoot((hp+step[0])%12, homeRoot, step[2]) + step[1];
+    });
+  }
+
+  // Mode names per parent, in scale-degree order (mode on degree 1..7).
+  var MX_MODES = {
+    'major': [
+      'Ionian (major)','Dorian','Phrygian','Lydian','Mixolydian','Aeolian (nat. minor)','Locrian'],
+    'harmonic': [
+      'Harmonic minor','Locrian \u266E6','Ionian \u266F5','Dorian \u266F4 (Ukrainian)','Phrygian Dominant','Lydian \u266F2','Ultra-Locrian'],
+    'melodic': [
+      'Melodic minor','Dorian \u266D2','Lydian Augmented','Lydian Dominant','Mixolydian \u266D6','Aeolian \u266D5 (half-dim)','Altered (Super-Locrian)']
+  };
+  var MX_BLURB = {
+    'major': ['the bright baseline','minor + raised 6 (groovy)','minor + \u266D2 (Spanish/metal)','major + \u266F4 (dreamy)','major + \u266D7 (bluesy rock)','the dark baseline','diminished home (unstable)'],
+    'harmonic': ['dramatic minor with a major V','rare, dark','major with a \u266F5','minor + \u266F4, exotic','the Spanish / Middle-Eastern sound','bright + tense \u266F2','very dark, rare'],
+    'melodic': ['jazz minor; bright ascending minor','\u266D2 over a bright minor','augmented, shimmering','\u266F4 + \u266D7 \u2014 the jazz dominant','major with a \u266D6','half-diminished sound','the altered dominant \u2014 max tension']
+  };
+  // The signature (characteristic) chord degree for each mode, per parent (index into the mode's own loop).
+  var MX_CHAR = {
+    'major':    [4,5,1,3,6,5,0],   // e.g. Ionian V, Dorian IV, Phrygian bII, Lydian #iv, Mixo bVII...
+    'harmonic': [4,0,0,3,1,0,0],   // harmonic: the major V / phryg-dom bII etc.
+    'melodic':  [4,1,2,3,5,0,0]
+  };
+  var MX_PARENTKEYS = {
+    'major':   ['C','G','D','A','E','B','F#','Db','Ab','Eb','Bb','F'],
+    'harmonic':['A','E','B','F#','C#','D','G','C','F','Bb'],
+    'melodic': ['A','E','B','F#','C#','D','G','C','F','Bb']
+  };
+  var mxParentScale = 'major';
+  var mxKey = 'C';
+
+  var mxPicker = document.getElementById('mx-picker');
+  var mxName   = document.getElementById('mx-keyname');
+  var mxParent = document.getElementById('mx-parentchords');
+  var mxList   = document.getElementById('mx-list');
+  var mxScaleName = document.getElementById('mx-scalename');
+  var mxpMaj = document.getElementById('mx-parent-major');
+  var mxpHar = document.getElementById('mx-parent-harmonic');
+  var mxpMel = document.getElementById('mx-parent-melodic');
+
+  // Build the 7 parent triads [root,qual] for the current scale+key.
+  function mxParentTriads(scale, key){
+    if(scale==='major'){
+      var d=DIA[key], out=[];
+      for(var i=0;i<7;i++) out.push([d[i], QUAL[i]]);
+      return out;
+    }
+    // harmonic / melodic minor reuse the verified minorChords()
+    return minorChords(key, scale);
+  }
+
+  function mxScaleLabel(scale, key){
+    if(scale==='major') return key+' major';
+    if(scale==='harmonic') return key+' harmonic minor';
+    return key+' melodic minor';
+  }
+
+  // ---------- web audio: hear the mode ----------
+  var mxAudio=null, mxNodes=[], mxInst='synth';
+  function mxCtx(){ if(!mxAudio) mxAudio=new (window.AudioContext||window.webkitAudioContext)(); return mxAudio; }
+  function mxStop(){ mxNodes.forEach(function(n){try{n.stop();}catch(e){}}); mxNodes=[]; }
+  function midiFreq(m){ return 440*Math.pow(2,(m-69)/12); }
+
+  // Karplus-Strong plucked string, pre-rendered into a buffer
+  function ksBuffer(freq, dur){
+    var c=mxCtx(), sr=c.sampleRate, len=Math.floor(sr*dur);
+    var buf=c.createBuffer(1,len,sr), data=buf.getChannelData(0);
+    var N=Math.max(2,Math.round(sr/freq));
+    var ring=new Float32Array(N);
+    for(var i=0;i<N;i++) ring[i]=Math.random()*2-1;
+    var idx=0;
+    for(var s=0;s<len;s++){
+      var cur=ring[idx], nxt=ring[(idx+1)%N];
+      data[s]=cur;
+      ring[idx]=0.996*0.5*(cur+nxt);
+      idx=(idx+1)%N;
+    }
+    return buf;
+  }
+
+  function mxTone(midi, t, dur, vol){
+    var c=mxCtx(), f=midiFreq(midi);
+    function env(g, a, sus, rel){
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.linearRampToValueAtTime(vol,t+a);
+      if(sus<1) g.gain.exponentialRampToValueAtTime(Math.max(vol*sus,0.0001), t+dur*0.7);
+      g.gain.exponentialRampToValueAtTime(0.0001, t+dur+rel);
+    }
+    function osc(type, freq, g){
+      var o=c.createOscillator(); o.type=type; o.frequency.value=freq;
+      o.connect(g); o.start(t); o.stop(t+dur+0.4); mxNodes.push(o); return o;
+    }
+    if(mxInst==='pluck'){
+      var src=c.createBufferSource(); src.buffer=ksBuffer(f, dur+0.3);
+      var g0=c.createGain(); g0.gain.setValueAtTime(vol*1.5,t);
+      src.connect(g0); g0.connect(c.destination);
+      src.start(t); mxNodes.push(src);
+      return;
+    }
+    if(mxInst==='epiano'){
+      var g1=c.createGain(), g2=c.createGain();
+      env(g1,0.005,0.25,0.15); osc('sine',f,g1);
+      g2.gain.setValueAtTime(0.0001,t);
+      g2.gain.linearRampToValueAtTime(vol*0.25,t+0.004);
+      g2.gain.exponentialRampToValueAtTime(0.0001,t+dur*0.4);
+      osc('sine',f*4,g2);
+      g1.connect(c.destination); g2.connect(c.destination);
+      return;
+    }
+    if(mxInst==='organ'){
+      [[1,1],[2,0.5],[3,0.3],[4,0.15]].forEach(function(h){
+        var g=c.createGain();
+        g.gain.setValueAtTime(0.0001,t);
+        g.gain.linearRampToValueAtTime(vol*h[1]*0.6,t+0.03);
+        g.gain.setValueAtTime(vol*h[1]*0.6,t+dur*0.9);
+        g.gain.linearRampToValueAtTime(0.0001,t+dur);
+        osc('sine',f*h[0],g); g.connect(c.destination);
+      });
+      return;
+    }
+    if(mxInst==='strings'){
+      var gs=c.createGain(), filt=c.createBiquadFilter();
+      filt.type='lowpass'; filt.frequency.value=Math.min(f*6,4000); filt.Q.value=0.5;
+      gs.gain.setValueAtTime(0.0001,t);
+      gs.gain.linearRampToValueAtTime(vol*0.8,t+0.18);
+      gs.gain.setValueAtTime(vol*0.8,t+dur*0.8);
+      gs.gain.linearRampToValueAtTime(0.0001,t+dur+0.25);
+      osc('sawtooth',f,gs); osc('sawtooth',f*1.003,gs);  // slight detune = ensemble
+      gs.connect(filt); filt.connect(c.destination);
+      return;
+    }
+    // default synth (triangle)
+    var g=c.createGain();
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.linearRampToValueAtTime(vol,t+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    osc('triangle',f,g); g.connect(c.destination);
+  }
+  var MX_QINT={'':[0,4,7],'m':[0,3,7],'dim':[0,3,6],'aug':[0,4,8]};
+  function mxParseChord(name){
+    var m=name.match(/^([A-G](?:#|\u266D|b)*)(m|dim|aug)?$/);
+    if(!m) return null;
+    return {root:nameToPc(m[1]), ints:MX_QINT[m[2]||'']};
+  }
+  function mxPlayChord(name, t, dur){
+    var ch=mxParseChord(name); if(!ch) return;
+    var base=48+ch.root;                      // root around C3..B3
+    ch.ints.forEach(function(iv){ mxTone(base+iv, t, dur, 0.16); });
+  }
+  function mxPlayMode(m){
+    mxStop();
+    var c=mxCtx(); if(c.state==='suspended') c.resume();
+    var t=c.currentTime+0.06;
+    var rli=rootLetterIdx(mxKey), rp=nameToPc(mxKey);
+    var ints=MX_INTS[mxParentScale][m];
+    // scale ascending + octave
+    var step=0.30;
+    for(var i=0;i<7;i++){ mxTone(60+rp+ints[i], t+i*step, step*0.95, 0.2); }
+    mxTone(60+rp+12, t+7*step, step*1.6, 0.2);
+    var t2=t+7*step+step*1.6+0.25;
+    // first progression if this mode has one
+    var modeTri=modeTriads(ints, rli, mxKey);
+    var homeChord=mxKey+(modeTri[0][1]==='m'?'m':'');
+    var cadArr=spelledCadencePlain(mxParentScale, m, homeChord, 0);
+    if(cadArr){
+      cadArr.forEach(function(chName,idx){ mxPlayChord(chName, t2+idx*0.9, 0.85); });
+    } else {
+      // no progression: sound the home triad once
+      mxPlayChord(modeTri[0][0]+modeTri[0][1], t2, 1.2);
+    }
+  }
+  // progression only — loop flag decides one pass vs two
+  function mxPlayCadence(m, ci){
+    mxStop();
+    var c=mxCtx(); if(c.state==='suspended') c.resume();
+    var t=c.currentTime+0.06;
+    var rli=rootLetterIdx(mxKey);
+    var ints=MX_INTS[mxParentScale][m];
+    var modeTri=modeTriads(ints, rli, mxKey);
+    var homeChord=mxKey+(modeTri[0][1]==='m'?'m':'');
+    var cadArr=spelledCadencePlain(mxParentScale, m, homeChord, ci);
+    if(!cadArr) return;
+    var list=MX_CAD[mxParentScale+':'+m];
+    var doLoop = list && list[ci] && list[ci].loop;
+    var seq = cadArr.slice();
+    if(doLoop){
+      var second = cadArr[0]===cadArr[cadArr.length-1] ? cadArr.slice(1) : cadArr;
+      seq = seq.concat(second);
+    }
+    seq.forEach(function(chName,idx){ mxPlayChord(chName, t+idx*0.9, 0.85); });
+  }
+  // delegated: survives innerHTML rebuilds
+  mxList.addEventListener('click', function(e){
+    var b=e.target.closest ? e.target.closest('.mx-play') : null;
+    if(!b) return;
+    if(b.classList.contains('mx-playcad')) mxPlayCadence(parseInt(b.dataset.m,10), parseInt(b.dataset.c,10));
+    else mxPlayMode(parseInt(b.dataset.m,10));
+  });
+
+  // instrument picker (mode explorer toggle + global rail, kept in sync)
+  var MX_INSTS=[['synth','Synth','SY'],['epiano','E-Piano','EP'],['organ','Organ','OR'],['strings','Strings','ST'],['pluck','Pluck','PK']];
+  var instTog=document.getElementById('mx-insttoggle');
+  var srInsts=document.getElementById('sr-insts');
+  function setInst(inst){
+    mxInst=inst;
+    [instTog, srInsts].forEach(function(host){
+      if(!host) return;
+      host.querySelectorAll('button').forEach(function(x){
+        x.classList.toggle('active', x.dataset.inst===mxInst);
+        x.setAttribute('aria-pressed', x.dataset.inst===mxInst?'true':'false');
+      });
+    });
+  }
+  MX_INSTS.forEach(function(pair){
+    [[instTog,pair[1]],[srInsts,pair[2]]].forEach(function(hostSpec){
+      var host=hostSpec[0]; if(!host) return;
+      var btn=document.createElement('button');
+      btn.textContent=hostSpec[1]; btn.dataset.inst=pair[0];
+      btn.title=pair[1];
+      btn.className = pair[0]===mxInst?'active':'';
+      btn.setAttribute('aria-pressed', pair[0]===mxInst?'true':'false');
+      btn.addEventListener('click',function(){ setInst(pair[0]); });
+      host.appendChild(btn);
+    });
+  });
+
+  function renderModes(){
+    var rootName = mxKey;                       // every mode shown rooted on this tonic
+    var rli = rootLetterIdx(rootName);
+    mxName.textContent = rootName + ' — ' + (mxParentScale==='major'?'modes of major':mxParentScale==='harmonic'?'modes of harmonic minor':'modes of melodic minor');
+    // reference row: the plain major scale of this root
+    var majTri = modeTriads(MX_MAJ_INTS, rli, rootName);
+    var majStr = majTri.map(function(c){return c[0]+c[1];});
+    mxParent.textContent = majStr.join('  ');
+
+    var names=MX_MODES[mxParentScale], blurbs=MX_BLURB[mxParentScale];
+    var intsGroup=MX_INTS[mxParentScale];
+    var DEGH=['I','II','III','IV','V','VI','VII'];
+    var html='';
+    for(var m=0;m<7;m++){
+      var ints=intsGroup[m];
+      var modeTri = modeTriads(ints, rli, rootName);
+      var modeStr = modeTri.map(function(c){return c[0]+c[1];});
+
+      // table rows
+      var hdr='', rowMaj='', rowMode='', rowChg='';
+      for(var d=0;d<7;d++){
+        hdr += '<th>'+DEGH[d]+'</th>';
+        rowMaj += '<td>'+majStr[d]+'</td>';
+        var changed = majStr[d]!==modeStr[d];
+        rowMode += '<td'+(changed?' class="mx-chg"':'')+'>'+modeStr[d]+'</td>';
+        rowChg += '<td>'+(changed?'\u25B2':'\u00B7')+'</td>';
+      }
+      var table='<table class="mx-tbl"><thead><tr><th></th>'+hdr+'</tr></thead><tbody>'
+        + '<tr><td class="mx-rl">'+rootName+' major</td>'+rowMaj+'</tr>'
+        + '<tr><td class="mx-rl">'+names[m].split(' ')[0]+'</td>'+rowMode+'</tr>'
+        + '<tr class="mx-chgrow"><td class="mx-rl"></td>'+rowChg+'</tr>'
+        + '</tbody></table>';
+
+      var mv = MX_MOVE[mxParentScale][m];
+      var homeChordName = rootName + (modeTri[0][1]==='m'?'m':'');
+      var cadList = MX_CAD[mxParentScale+':'+m];
+      var cadHtml='';
+      if(cadList){
+        var modeSet={}; modeStr.forEach(function(c){modeSet[c]=1;});
+        for(var ci=0; ci<cadList.length; ci++){
+          var cad = spelledCadence(mxParentScale, m, homeChordName, ci);
+          var cadChords = spelledCadencePlain(mxParentScale, m, homeChordName, ci);
+          var borrowed=cadChords.filter(function(c){return !modeSet[c];});
+          cadHtml += '<div class="mx-cad"><button class="mx-play mx-playcad" data-m="'+m+'" data-c="'+ci+'" aria-label="Play progression">\u25B6</button>'
+                   + '<span class="mx-cadname">'+cadList[ci].n+':</span> <b>'+cad+'</b>'
+                   + (borrowed.length ? '<span class="mx-borrow-inline"> \u26A0 borrowed: '+borrowed.join(', ')+'</span>' : '')
+                   + '</div>';
+        }
+      }
+
+      html+='<div class="mx-mode">'
+          + '<div class="mx-head"><span class="mx-rank">'+(m+1)+'</span>'
+          + '<button class="mx-play" data-m="'+m+'" aria-label="Play '+names[m]+'">\u25B6</button>'
+          + '<span class="mx-name">'+names[m]+'</span>'
+          + '<span class="mx-home">root: '+modeStr[0]+'</span>'
+          + '<span class="mx-char">'+blurbs[m]+'</span></div>'
+          + table
+          + '<div class="mx-move"><span class="mx-type t-'+mv[0]+'">'+MX_TYPELABEL[mv[0]]+'</span>'
+          + '<span class="mx-movetxt">'+mv[1]+'</span></div>'
+          + cadHtml + '</div>';
+    }
+    mxList.innerHTML=html;
+
+    var btns=mxPicker.querySelectorAll('button');
+    for(var b=0;b<btns.length;b++){
+      btns[b].classList.toggle('active', btns[b].dataset.key===mxKey);
+      btns[b].setAttribute('aria-pressed', btns[b].dataset.key===mxKey?'true':'false');
+    }
+  }
+
+  function buildMxPicker(){
+    var list=['C','G','D','A','E','B','F#','Db','Ab','Eb','Bb','F'];
+    mxPicker.innerHTML='';
+    list.forEach(function(key){
+      var btn=document.createElement('button');
+      btn.textContent = key;
+      btn.dataset.key=key;
+      btn.setAttribute('aria-pressed','false');
+      btn.addEventListener('click',function(){ mxKey=key; renderModes(); });
+      mxPicker.appendChild(btn);
+    });
+  }
+
+  function setParentScale(scale){
+    mxParentScale=scale;
+    mxpMaj.classList.toggle('active',scale==='major'); mxpMaj.setAttribute('aria-pressed',scale==='major');
+    mxpHar.classList.toggle('active',scale==='harmonic'); mxpHar.setAttribute('aria-pressed',scale==='harmonic');
+    mxpMel.classList.toggle('active',scale==='melodic'); mxpMel.setAttribute('aria-pressed',scale==='melodic');
+    if(mxScaleName) mxScaleName.textContent =
+      scale==='major'?'the major-scale mode family \u2014 all shown on this root':
+      scale==='harmonic'?'the harmonic-minor mode family \u2014 all shown on this root':'the melodic-minor mode family \u2014 all shown on this root';
+    buildMxPicker();
+    renderModes();
+  }
+  mxpMaj.addEventListener('click',function(){setParentScale('major');});
+  mxpHar.addEventListener('click',function(){setParentScale('harmonic');});
+  mxpMel.addEventListener('click',function(){setParentScale('melodic');});
+
+  buildMxPicker();
+  renderModes();
+
+  // ---------- bridge toolbox ----------
+  var BT_DEV=[
+    {n:'Start away from home', b:'Open the section on IV instead of I \u2014 the classic middle-eight launch. The ear knows it left home; the section exists to get back.',
+     s:[[5,'','IV'],[4,'m','iii'],[2,'m','ii'],[7,'','V']], loop:false},
+    {n:'Half cadence', b:'End the section hanging on V \u2014 refuse to land. The unresolved V makes the returning chorus feel inevitable.',
+     s:[[0,'','I'],[9,'m','vi'],[2,'m','ii'],[7,'','V']], loop:false},
+    {n:'Borrow \u266DVI\u2013\u266DVII (the "Mario cadence")', b:'Modal mixture lift \u2014 two majors borrowed from the parallel minor, marching home. Epic, cinematic.',
+     s:[[0,'','I'],[8,'','\u266DVI'],[10,'','\u266DVII'],[0,'','I']], loop:false},
+    {n:'Borrow minor iv (the "Hollywood melt")', b:'The IV turns minor on the way home \u2014 instant bittersweet. The single most-used mixture move in ballads.',
+     s:[[0,'','I'],[5,'','IV'],[5,'m','iv'],[0,'','I']], loop:false},
+    {n:'Deceptive cadence', b:'V resolves to vi instead of I \u2014 the ear expects home and gets its shadow. Extends a section past where it "should" end.',
+     s:[[0,'','I'],[5,'','IV'],[7,'','V'],[9,'m','vi']], loop:false},
+    {n:'Key lift (the "truck-driver")', b:'Final chorus jumps the whole song up a step. Cheap, shameless, and it works every time \u2014 listen for the gear-change.',
+     s:[[0,'','I'],[5,'','IV'],[7,'','V'],[0,'','I'],[2,'','I\u2191'],[7,'','IV\u2191'],[9,'','V\u2191'],[2,'','I\u2191']], loop:false}
+  ];
+  var btKey='C';
+  var btPicker=document.getElementById('bt-picker');
+  var btName=document.getElementById('bt-keyname');
+  var btList=document.getElementById('bt-list');
+
+  function btSpell(d){
+    var hp=noteToPc(btKey);
+    return BT_DEV[d].s.map(function(st){
+      return spellRoot((hp+st[0])%12, btKey, st[2]) + st[1];
+    });
+  }
+  function renderBridge(){
+    btName.textContent=btKey;
+    var html='';
+    for(var d=0;d<BT_DEV.length;d++){
+      var chords=btSpell(d);
+      var line=BT_DEV[d].s.map(function(st,i){
+        return chords[i]+'<span class="mx-rn">('+st[2]+')</span>';
+      }).join(' \u2192 ');
+      html+='<div class="mx-mode">'
+          + '<div class="mx-head"><span class="mx-rank">'+(d+1)+'</span>'
+          + '<button class="mx-play bt-play" data-d="'+d+'" aria-label="Play device">\u25B6</button>'
+          + '<span class="mx-name">'+BT_DEV[d].n+'</span></div>'
+          + '<div class="mx-move"><span class="mx-movetxt">'+BT_DEV[d].b+'</span></div>'
+          + '<div class="mx-cad"><b>'+line+'</b></div></div>';
+    }
+    btList.innerHTML=html;
+    var btns=btPicker.querySelectorAll('button');
+    for(var b=0;b<btns.length;b++){
+      btns[b].classList.toggle('active', btns[b].dataset.key===btKey);
+      btns[b].setAttribute('aria-pressed', btns[b].dataset.key===btKey?'true':'false');
+    }
+  }
+  function btPlay(d){
+    mxStop();
+    var c=mxCtx(); if(c.state==='suspended') c.resume();
+    var t=c.currentTime+0.06;
+    btSpell(d).forEach(function(ch,idx){ mxPlayChord(ch, t+idx*0.9, 0.85); });
+  }
+  btList.addEventListener('click', function(e){
+    var b=e.target.closest ? e.target.closest('.bt-play') : null;
+    if(!b) return;
+    btPlay(parseInt(b.dataset.d,10));
+  });
+  ['C','G','D','A','E','B','F#','Db','Ab','Eb','Bb','F'].forEach(function(key){
+    var btn=document.createElement('button');
+    btn.textContent=key; btn.dataset.key=key;
+    btn.setAttribute('aria-pressed','false');
+    btn.addEventListener('click',function(){ btKey=key; renderBridge(); });
+    btPicker.appendChild(btn);
+  });
+  renderBridge();
+
+  // ---------- rotation principle ----------
+  var RT_AXIS=[
+    {n:'I rotation \u2014 anthemic', s:[[0,'','I'],[7,'','V'],[9,'m','vi'],[5,'','IV']]},
+    {n:'vi rotation \u2014 melancholy pop', s:[[9,'m','vi'],[5,'','IV'],[0,'','I'],[7,'','V']]},
+    {n:'IV rotation \u2014 floaty lift', s:[[5,'','IV'],[0,'','I'],[7,'','V'],[9,'m','vi']]},
+    {n:'V rotation \u2014 rarest (V\u2019s pull sneaks function back in)', s:[[7,'','V'],[9,'m','vi'],[5,'','IV'],[0,'','I']]}
+  ];
+  var RT_BREAK=[
+    {n:'Andalusian, straight \u2014 lands', s:[[5,'m','iv'],[3,'','\u266DIII'],[1,'','\u266DII'],[0,'','I']], loop:false},
+    {n:'Andalusian, rotated \u2014 home dissolves', s:[[1,'','\u266DII'],[0,'','I'],[5,'m','iv'],[3,'','\u266DIII']], loop:false}
+  ];
+  var rtKey='C';
+  var rtPicker=document.getElementById('rt-picker');
+  var rtName=document.getElementById('rt-keyname');
+  var rtAxisEl=document.getElementById('rt-axis');
+  var rtBreakEl=document.getElementById('rt-break');
+
+  function rtSpell(item){
+    var hp=noteToPc(rtKey);
+    return item.s.map(function(st){
+      return spellRoot((hp+st[0])%12, rtKey, st[2]) + st[1];
+    });
+  }
+  function rtRow(item, group, idx){
+    var chords=rtSpell(item);
+    var line=item.s.map(function(st,i){
+      return chords[i]+'<span class="mx-rn">('+st[2]+')</span>';
+    }).join(' \u2192 ');
+    return '<div class="mx-mode">'
+      + '<div class="mx-head"><button class="mx-play rt-play" data-g="'+group+'" data-i="'+idx+'" aria-label="Play">\u25B6</button>'
+      + '<span class="mx-name" style="font-size:16px;">'+item.n+'</span></div>'
+      + '<div class="mx-cad"><b>'+line+'</b></div></div>';
+  }
+  function renderRotation(){
+    rtName.textContent=rtKey;
+    var a=''; for(var i=0;i<RT_AXIS.length;i++) a+=rtRow(RT_AXIS[i],'a',i);
+    var b=''; for(var j=0;j<RT_BREAK.length;j++) b+=rtRow(RT_BREAK[j],'b',j);
+    rtAxisEl.innerHTML=a; rtBreakEl.innerHTML=b;
+    var btns=rtPicker.querySelectorAll('button');
+    for(var k=0;k<btns.length;k++){
+      btns[k].classList.toggle('active', btns[k].dataset.key===rtKey);
+      btns[k].setAttribute('aria-pressed', btns[k].dataset.key===rtKey?'true':'false');
+    }
+  }
+  function rtPlay(group, idx){
+    mxStop();
+    var c=mxCtx(); if(c.state==='suspended') c.resume();
+    var t=c.currentTime+0.06;
+    var item=(group==='a'?RT_AXIS:RT_BREAK)[idx];
+    var seq=rtSpell(item);
+    if(group==='a') seq=seq.concat(seq);      // axis rotations loop twice
+    seq.forEach(function(ch,i){ mxPlayChord(ch, t+i*0.9, 0.85); });
+  }
+  function rtHandler(e){
+    var b=e.target.closest ? e.target.closest('.rt-play') : null;
+    if(!b) return;
+    rtPlay(b.dataset.g, parseInt(b.dataset.i,10));
+  }
+  rtAxisEl.addEventListener('click', rtHandler);
+  rtBreakEl.addEventListener('click', rtHandler);
+  ['C','G','D','A','E','B','F#','Db','Ab','Eb','Bb','F'].forEach(function(key){
+    var btn=document.createElement('button');
+    btn.textContent=key; btn.dataset.key=key;
+    btn.setAttribute('aria-pressed','false');
+    btn.addEventListener('click',function(){ rtKey=key; renderRotation(); });
+    rtPicker.appendChild(btn);
+  });
+  renderRotation();
+
+  // ---------- hamburger contents ----------
+  var hbBtn=document.getElementById('hb-btn');
+  var hbDrawer=document.getElementById('hb-drawer');
+  var hbBackdrop=document.getElementById('hb-backdrop');
+  var hbClose=document.getElementById('hb-close');
+  var hbList=document.getElementById('hb-list');
+  // single source of truth: mirror the header TOC
+  (function(){
+    var links=document.querySelectorAll('nav.toc ol li a');
+    var html='';
+    for(var i=0;i<links.length;i++){
+      var num=(i+1<10?'0':'')+(i+1);
+      html+='<li><a href="'+links[i].getAttribute('href')+'">'
+          + '<span class="hb-num">'+num+'</span><span>'+links[i].textContent+'</span></a></li>';
+    }
+    hbList.innerHTML=html;
+  })();
+  function hbSet(open){
+    hbDrawer.classList.toggle('open',open);
+    hbBackdrop.classList.toggle('open',open);
+    hbBtn.setAttribute('aria-expanded', open?'true':'false');
+  }
+  hbBtn.addEventListener('click', function(){ hbSet(!hbDrawer.classList.contains('open')); });
+  hbClose.addEventListener('click', function(){ hbSet(false); });
+  hbBackdrop.addEventListener('click', function(){ hbSet(false); });
+  hbList.addEventListener('click', function(e){ if(e.target.closest('a')) hbSet(false); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') hbSet(false); });
+
+  // ---------- jam room ----------
+  var JAM_QINT={'':[0,4,7],'m':[0,3,7],'7':[0,4,7,10],'maj7':[0,4,7,11],'m7':[0,3,7,10],'m7b5':[0,3,6,10]};
+  var JAM_QDISP={'m7b5':'m7\u266D5'};
+  var JAM_STYLES=[
+    {id:'blues', n:'Blues', bpm:96, forms:[
+      {n:'standard 12-bar', bars:[[0,'7','I7'],[0,'7','I7'],[0,'7','I7'],[0,'7','I7'],[5,'7','IV7'],[5,'7','IV7'],[0,'7','I7'],[0,'7','I7'],[7,'7','V7'],[5,'7','IV7'],[0,'7','I7'],[7,'7','V7']]},
+      {n:'minor blues', bars:[[0,'m7','im7'],[0,'m7','im7'],[0,'m7','im7'],[0,'m7','im7'],[5,'m7','ivm7'],[5,'m7','ivm7'],[0,'m7','im7'],[0,'m7','im7'],[8,'7','\u266DVI7'],[7,'7','V7'],[0,'m7','im7'],[7,'7','V7']]}
+    ]},
+    {id:'jazz', n:'Jazz', bpm:120, forms:[
+      {n:'ii\u2013V\u2013I', bars:[[2,'m7','iim7'],[7,'7','V7'],[0,'maj7','Imaj7'],[9,'m7','vim7'],[2,'m7','iim7'],[7,'7','V7'],[0,'maj7','Imaj7'],[7,'7','V7']]},
+      {n:'rhythm loop', bars:[[0,'maj7','Imaj7'],[9,'m7','vim7'],[2,'m7','iim7'],[7,'7','V7'],[0,'maj7','Imaj7'],[9,'m7','vim7'],[2,'m7','iim7'],[7,'7','V7']]},
+      {n:'minor ii\u2013V', bars:[[2,'m7b5','ii\u00F87'],[7,'7','V7'],[0,'m7','im7'],[0,'m7','im7'],[2,'m7b5','ii\u00F87'],[7,'7','V7'],[0,'m7','im7'],[0,'m7','im7']]}
+    ]},
+    {id:'reflect', n:'Reflective', bpm:66, forms:[
+      {n:'Aeolian loop', r:1, bars:[[0,'m','i'],[8,'','\u266DVI'],[3,'','\u266DIII'],[10,'','\u266DVII'],[0,'m','i'],[8,'','\u266DVI'],[3,'','\u266DIII'],[10,'','\u266DVII']]},
+      {n:'descending', r:1, bars:[[0,'m','i'],[10,'','\u266DVII'],[8,'','\u266DVI'],[10,'','\u266DVII'],[0,'m','i'],[10,'','\u266DVII'],[8,'','\u266DVI'],[10,'','\u266DVII']]},
+      {n:'Mad World (dorian)', r:1, bars:[[0,'m','i'],[3,'','\u266DIII'],[10,'','\u266DVII'],[5,'','IV'],[0,'m','i'],[3,'','\u266DIII'],[10,'','\u266DVII'],[5,'','IV']]}
+    ]},
+    {id:'rock', n:'Rock', bpm:108, forms:[
+      {n:'Mixolydian', r:1, bars:[[0,'','I'],[10,'','\u266DVII'],[5,'','IV'],[0,'','I'],[0,'','I'],[10,'','\u266DVII'],[5,'','IV'],[5,'','IV']]},
+      {n:'\u266DIII riff', r:1, bars:[[0,'','I'],[3,'','\u266DIII'],[5,'','IV'],[0,'','I'],[0,'','I'],[3,'','\u266DIII'],[5,'','IV'],[5,'','IV']]}
+    ]},
+    {id:'spanish', n:'Spanish', bpm:100, forms:[
+      {n:'vamp + cadence', bars:[[0,'','I'],[1,'','\u266DII'],[0,'','I'],[1,'','\u266DII'],[5,'m','iv'],[3,'','\u266DIII'],[1,'','\u266DII'],[0,'','I']]},
+      {n:'double Andalusian', bars:[[5,'m','iv'],[3,'','\u266DIII'],[1,'','\u266DII'],[0,'','I'],[5,'m','iv'],[3,'','\u266DIII'],[1,'','\u266DII'],[0,'','I']]},
+      {n:'Phrygian (minor)', bars:[[0,'m','i'],[1,'','\u266DII'],[0,'m','i'],[1,'','\u266DII'],[0,'m','i'],[1,'','\u266DII'],[3,'','\u266DIII'],[1,'','\u266DII']]}
+    ]},
+    {id:'pop', n:'Pop', bpm:100, forms:[
+      {n:'axis', r:1, bars:[[0,'','I'],[7,'','V'],[9,'m','vi'],[5,'','IV'],[0,'','I'],[7,'','V'],[9,'m','vi'],[5,'','IV']]},
+      {n:'vi rotation', r:1, bars:[[9,'m','vi'],[5,'','IV'],[0,'','I'],[7,'','V'],[9,'m','vi'],[5,'','IV'],[0,'','I'],[7,'','V']]},
+      {n:'doo-wop', bars:[[0,'','I'],[9,'m','vi'],[5,'','IV'],[7,'','V'],[0,'','I'],[9,'m','vi'],[5,'','IV'],[7,'','V']]}
+    ]}
+  ];
+  var jamKey='C', jamStyle=0, jamPending=-1, jamBPM=96, jamMode='back';
+  var jamPlaying=false, jamBarIdx=0, jamNextT=0, jamTimer=null, jamTOs=[];
+  var jamEvolve=false, jamPass=0, jamCur=null, jamBassPat=0, jamChordPat=0;
+  var jamForm=0, jamPendingForm=-1;
+
+  function jamBase(){ return JAM_STYLES[jamStyle].forms[jamForm]; }
+  function jamClone(bars){ return bars.map(function(b){return b.slice();}); }
+  function jamMutate(){
+    var st=JAM_STYLES[jamStyle], base=jamBase(), bars=jamClone(base.bars), labels=[];
+    jamBassPat=Math.floor(Math.random()*2); jamChordPat=Math.floor(Math.random()*2);
+    if(jamPass%4===0){ return {bars:bars, labels:['home pass']}; }
+    // 7th color — upgrade plain triads
+    if(Math.random()<0.6){
+      var did=false;
+      bars.forEach(function(b){
+        if(b[1]==='' && Math.random()<0.4){ b[1]=(b[0]===7)?'7':'maj7'; did=true; }
+        else if(b[1]==='m' && Math.random()<0.4){ b[1]='m7'; did=true; }
+      });
+      if(did) labels.push('7th color');
+    }
+    if(st.id==='jazz' && Math.random()<0.5){
+      for(var i=bars.length-1;i>=0;i--){ if(bars[i][2]==='V7'){ bars[i]=[1,'7','\u266DII7']; labels.push('tritone sub'); break; } }
+    }
+    if(st.id==='blues' && Math.random()<0.5 && bars[1][2]!==bars[4][2]){
+      bars[1]=bars[4].slice(); labels.push('quick change');
+    }
+    if((st.id==='pop'||st.id==='rock') && Math.random()<0.4){
+      for(var j=bars.length-1;j>=0;j--){ if(bars[j][2]==='IV'){ bars[j]=[5,'m','iv']; labels.push('minor iv melt'); break; } }
+    }
+    if(st.id==='rock' && Math.random()<0.3){
+      bars[bars.length-2]=[8,'','\u266DVI']; bars[bars.length-1]=[10,'','\u266DVII'];
+      labels.push('\u266DVI\u2013\u266DVII lift');
+    }
+    if(st.id==='spanish' && jamForm===0 && Math.random()<0.4){
+      bars=jamClone(JAM_STYLES[jamStyle].forms[1].bars);
+      labels.push('full Andalusian pass');
+    }
+    if(base.r && Math.random()<0.3){                 // per-form delivery-test flag
+      var k=1+Math.floor(Math.random()*3);
+      bars=bars.slice(k).concat(bars.slice(0,k));
+      labels.push('rotation');
+    }
+    if(!labels.length) labels.push('base form');
+    return {bars:bars, labels:labels};
+  }
+  function jamCurrentBars(){ return jamCur || jamBase().bars; }
+
+  var jamGrid=document.getElementById('jam-grid');
+  var jamStatus=document.getElementById('jam-status');
+  var jamGo=document.getElementById('jam-go');
+  var jamBpmDisp=document.getElementById('jam-bpm-disp');
+  var jamStylesEl=document.getElementById('jam-styles');
+  var jamPickerEl=document.getElementById('jam-picker');
+
+  function jamSpellBar(bar){
+    var hp=noteToPc(jamKey);
+    var suf=JAM_QDISP[bar[1]]!==undefined ? JAM_QDISP[bar[1]] : bar[1];
+    return spellRoot((hp+bar[0])%12, jamKey, bar[2]) + suf;
+  }
+  function jamRenderGrid(){
+    var bars=jamCurrentBars(), html='';
+    for(var i=0;i<bars.length;i++){
+      html+='<div class="jam-bar" id="jb-'+i+'"><div class="jb-n">'+(i+1)+'</div>'
+          + '<div class="jb-ch">'+jamSpellBar(bars[i])+'</div>'
+          + '<div class="jb-rn">'+bars[i][2]+'</div></div>';
+    }
+    jamGrid.innerHTML=html;
+  }
+  function jamHighlight(cur){
+    var bars=jamCurrentBars();
+    for(var i=0;i<bars.length;i++){
+      var el=document.getElementById('jb-'+i); if(!el) continue;
+      el.classList.toggle('cur', i===cur);
+      el.classList.toggle('nxt', i===(cur+1)%bars.length);
+    }
+  }
+  function jamStatusText(extra){
+    var s='Key: <b>'+jamKey+'</b> \u00B7 '+JAM_STYLES[jamStyle].n+' \u00B7 "'+jamBase().n+'"';
+    if(jamEvolve && jamPlaying) s+=' \u00B7 pass '+(jamPass+1);
+    if(extra) s+=' \u00B7 <span style="color:var(--gold)">'+extra+'</span>';
+    var pending = (jamPendingForm>=0 && jamPendingForm!==jamForm) || (jamPending>=0 && jamPending!==jamStyle);
+    if(jamPendingForm>=0 && jamPendingForm!==jamForm) s+=' \u2192 new pattern at top of form';
+    if(jamPending>=0 && jamPending!==jamStyle) s+=' \u2192 switching to <b>'+JAM_STYLES[jamPending].n+'</b> at top of form';
+    if(pending && jamPlaying) s+=' <button class="jam-nowbtn" id="jam-now-btn">switch now \u23ED</button>';
+    jamStatus.innerHTML=s;
+    jamBpmDisp.textContent=jamBPM+' bpm';
+  }
+  function jamApplyPendingNow(){
+    if(!jamPlaying) return;
+    jamTOs.forEach(clearTimeout); jamTOs=[];
+    mxStop();
+    if(jamPending>=0 && jamPending!==jamStyle){
+      jamStyle=jamPending; jamPending=-1;
+      jamBPM=JAM_STYLES[jamStyle].bpm;
+      jamForm=0; jamPendingForm=-1;
+    } else if(jamPendingForm>=0 && jamPendingForm!==jamForm){
+      jamForm=jamPendingForm; jamPendingForm=-1;
+    }
+    jamPass=0; jamCur=null; jamBassPat=0; jamChordPat=0;
+    jamBarIdx=0; jamNextT=mxCtx().currentTime+0.06;
+    jamRenderGrid(); jamSyncStyleBtns(); jamStatusText();
+  }
+  jamStatus.addEventListener('click', function(e){
+    if(e.target && e.target.id==='jam-now-btn') jamApplyPendingNow();
+  });
+  function jamClick(t, accent){
+    var c=mxCtx(), o=c.createOscillator(), g=c.createGain();
+    o.type='square'; o.frequency.value=accent?1800:1200;
+    g.gain.setValueAtTime(accent?0.12:0.05,t);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+0.04);
+    o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+0.06); mxNodes.push(o);
+  }
+  function jamBeatUI(b){
+    var dots=document.querySelectorAll('#jam-beats span');
+    for(var i=0;i<dots.length;i++) dots[i].classList.toggle('on', i===b);
+  }
+  function jamScheduleBar(idx, t, barDur){
+    var bars=jamCurrentBars(), bar=bars[idx];
+    var beat=barDur/4;
+    if(jamMode==='back'){
+      var hp=noteToPc(jamKey), rootPc=(hp+bar[0])%12;
+      var ints=JAM_QINT[bar[1]]||JAM_QINT[''];
+      if(jamChordPat===0){
+        ints.forEach(function(iv){ mxTone(48+rootPc+iv, t, barDur*0.95, 0.13); });
+      } else {
+        ints.forEach(function(iv){ mxTone(48+rootPc+iv, t+beat, beat*0.9, 0.13); });
+        ints.forEach(function(iv){ mxTone(48+rootPc+iv, t+3*beat, beat*0.9, 0.13); });
+      }
+      mxTone(36+rootPc, t, beat*1.8, 0.22);
+      mxTone(jamBassPat===0 ? 36+rootPc : 36+rootPc+7, t+2*beat, beat*1.8, 0.18);
+    } else if(jamMode==='click'){
+      jamClick(t, true);
+      for(var b=1;b<4;b++) jamClick(t+b*beat, false);
+    }
+    // visual pulse in every mode
+    var now=mxCtx().currentTime;
+    for(var vb=0; vb<4; vb++){
+      (function(vbb){
+        jamTOs.push(setTimeout(function(){ jamBeatUI(vbb); }, Math.max(0,(t+vbb*beat-now)*1000)));
+      })(vb);
+    }
+    jamTOs.push(setTimeout(function(){ jamHighlight(idx); }, Math.max(0,(t-now)*1000)));
+  }
+  function jamTick(){
+    var c=mxCtx();
+    var barDur=240/jamBPM;                            // 4 beats
+    while(jamNextT < c.currentTime + 0.4){
+      jamScheduleBar(jamBarIdx, jamNextT, barDur);
+      jamNextT += barDur;
+      jamBarIdx++;
+      if(jamBarIdx >= jamCurrentBars().length){
+        jamBarIdx=0;
+        jamPass++;
+        var sw=jamNextT;
+        if(jamPending>=0 && jamPending!==jamStyle){   // form-boundary style switch
+          jamStyle=jamPending; jamPending=-1;
+          jamBPM=JAM_STYLES[jamStyle].bpm;
+          jamPass=0; jamCur=null; jamForm=0; jamPendingForm=-1; jamBassPat=0; jamChordPat=0;
+          jamTOs.push(setTimeout(function(){ jamRenderGrid(); jamSyncStyleBtns(); jamStatusText(); },
+            Math.max(0,(sw-c.currentTime)*1000)));
+        } else if(jamPendingForm>=0 && jamPendingForm!==jamForm){  // pattern switch
+          jamForm=jamPendingForm; jamPendingForm=-1;
+          jamPass=0; jamCur=null;
+          jamTOs.push(setTimeout(function(){ jamRenderGrid(); jamStatusText('new pattern'); },
+            Math.max(0,(sw-c.currentTime)*1000)));
+        } else if(jamEvolve){                          // form-boundary evolution
+          var mut=jamMutate();
+          jamCur=mut.bars;
+          var lbl=mut.labels.join(' + ');
+          jamTOs.push(setTimeout(function(){ jamRenderGrid(); jamStatusText(lbl); },
+            Math.max(0,(sw-c.currentTime)*1000)));
+        }
+      }
+    }
+  }
+  function jamStart(){
+    var c=mxCtx(); if(c.state==='suspended') c.resume();
+    mxStop();
+    jamPlaying=true; jamBarIdx=0; jamNextT=c.currentTime+0.1;
+    jamPass=0; jamCur=null; jamBassPat=0; jamChordPat=0;
+    jamTimer=setInterval(jamTick,100);
+    document.getElementById('jam-beats').classList.add('show');
+    jamGo.textContent='\u25A0 Stop';
+    srGo.textContent='\u25A0'; srGo.classList.add('playing');
+    jamStatusText();
+  }
+  function jamStop(){
+    jamPlaying=false;
+    clearInterval(jamTimer); jamTimer=null;
+    jamTOs.forEach(clearTimeout); jamTOs=[];
+    mxStop();
+    jamCur=null; jamPass=0; jamPendingForm=-1; jamRenderGrid();
+    document.getElementById('jam-beats').classList.remove('show');
+    jamBeatUI(-1);
+    jamHighlight(-1);
+    jamPending=-1; jamStatusText();
+    jamGo.textContent='\u25B6 Start';
+    srGo.textContent='\u25B6'; srGo.classList.remove('playing');
+  }
+  jamGo.addEventListener('click', function(){ jamPlaying ? jamStop() : jamStart(); });
+
+  // global rail transport: starts/stops the jam; stop also kills any other audio
+  var srGo=document.getElementById('sr-go');
+  srGo.addEventListener('click', function(){
+    if(jamPlaying){ jamStop(); }
+    else { mxStop(); jamStart(); document.getElementById('jam').scrollIntoView({behavior:'smooth', block:'nearest'}); }
+  });
+
+  // pattern cycler
+  var jamPatBtn=document.getElementById('jam-pattern');
+  jamPatBtn.addEventListener('click', function(){
+    var n=JAM_STYLES[jamStyle].forms.length;
+    if(n<2) return;
+    if(jamPlaying){ jamPendingForm=(jamForm+1)%n; jamStatusText(); }
+    else { jamForm=(jamForm+1)%n; jamCur=null; jamRenderGrid(); jamStatusText(); }
+  });
+
+  // evolve toggle
+  var jamEvBtn=document.getElementById('jam-evolve');
+  jamEvBtn.addEventListener('click', function(){
+    jamEvolve=!jamEvolve;
+    jamEvBtn.textContent='Evolve: '+(jamEvolve?'on':'off');
+    jamEvBtn.classList.toggle('active', jamEvolve);
+    if(!jamEvolve){ jamCur=null; if(!jamPlaying) jamRenderGrid(); }
+    jamStatusText();
+  });
+
+  function jamSyncStyleBtns(){
+    jamStylesEl.querySelectorAll('button').forEach(function(b){
+      b.classList.toggle('active', +b.dataset.s===jamStyle);
+      b.setAttribute('aria-pressed', +b.dataset.s===jamStyle?'true':'false');
+    });
+  }
+  JAM_STYLES.forEach(function(st,i){
+    var btn=document.createElement('button');
+    btn.textContent=st.n; btn.dataset.s=i;
+    btn.className = i===jamStyle?'active':'';
+    btn.addEventListener('click',function(){
+      if(jamPlaying){ jamPending=i; jamStatusText(); }
+      else { jamStyle=i; jamBPM=st.bpm; jamForm=0; jamPendingForm=-1; jamCur=null; jamRenderGrid(); jamSyncStyleBtns(); jamStatusText(); }
+    });
+    jamStylesEl.appendChild(btn);
+  });
+  var JAM_MODES=[['back','jam-mode-back'],['click','jam-mode-chart'],['visual','jam-mode-visual']];
+  JAM_MODES.forEach(function(md){
+    var el=document.getElementById(md[1]);
+    el.addEventListener('click',function(){
+      jamMode=md[0];
+      JAM_MODES.forEach(function(m2){
+        var e2=document.getElementById(m2[1]);
+        e2.classList.toggle('active', m2[0]===jamMode);
+        e2.setAttribute('aria-pressed', m2[0]===jamMode?'true':'false');
+      });
+    });
+  });
+  document.getElementById('jam-bpm-down').addEventListener('click',function(){ jamBPM=Math.max(40,jamBPM-5); jamStatusText(); });
+  document.getElementById('jam-bpm-up').addEventListener('click',function(){ jamBPM=Math.min(220,jamBPM+5); jamStatusText(); });
+  ['C','G','D','A','E','B','F#','Db','Ab','Eb','Bb','F'].forEach(function(key){
+    var btn=document.createElement('button');
+    btn.textContent=key; btn.dataset.key=key;
+    btn.className = key===jamKey?'active':'';
+    btn.addEventListener('click',function(){
+      jamKey=key; jamRenderGrid(); jamStatusText();
+      jamPickerEl.querySelectorAll('button').forEach(function(x){
+        x.classList.toggle('active', x.dataset.key===jamKey);
+      });
+    });
+    jamPickerEl.appendChild(btn);
+  });
+  jamBPM=JAM_STYLES[0].bpm;
+  jamRenderGrid(); jamStatusText();
+})();
+</script>
+</body>
+</html>

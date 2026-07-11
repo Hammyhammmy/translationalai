@@ -99,6 +99,16 @@
           "href": "molecular-targets/drug-targets-reference.html"
         }
       ]
+    },
+    {
+      "title": "Music Theory",
+      "posts": [
+        {
+          "title": "The Harmony Map \u2014 Diatonic to Chromatic",
+          "date": "Interactive",
+          "href": "harmony-map.html"
+        }
+      ]
     }
   ]
 }
