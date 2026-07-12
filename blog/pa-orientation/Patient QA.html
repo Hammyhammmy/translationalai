@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>When patients ask… — Patient Q&A</title>
+<style>
+  :root{
+    --bg:#fafaf9;--card:#ffffff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;
+    --accent:#2563eb;--accent-light:#eff6ff;--green:#16a34a;--orange:#d97706;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);padding:40px 20px 90px;
+    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .container{max-width:820px;margin:0 auto}
+  h1{font-size:27px;font-weight:800;letter-spacing:-.02em;margin:0 0 6px}
+  .subtitle{font-size:15px;color:var(--muted);margin:0 0 22px;max-width:660px}
+  .draft-note{font-size:12.5px;color:#9a3412;background:#fff7ed;border:1px solid #fed7aa;
+    border-radius:9px;padding:9px 13px;margin-bottom:20px}
+  .controls{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .toggle{font:700 13.5px/1 inherit;cursor:pointer;border:2px solid var(--border);background:#fff;color:var(--text);
+    border-radius:999px;padding:9px 15px;display:inline-flex;gap:8px;align-items:center}
+  .toggle .dot{width:10px;height:10px;border-radius:50%;background:#d6d3d1}
+  .toggle .state{font-size:11px;font-weight:600;color:var(--muted)}
+  .toggle.on{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+  .toggle.on .dot{background:var(--accent)}.toggle.on .state{color:var(--accent)}
+  .menubar{position:sticky;top:58px;z-index:20;margin-bottom:24px}
+  .ham{font:700 13.5px/1 inherit;cursor:pointer;border:2px solid var(--border);background:#fff;color:var(--text);
+    border-radius:10px;padding:10px 15px;display:inline-flex;gap:10px;align-items:center;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  .ham:hover{border-color:#d6d3d1}
+  .ham .bars{display:inline-flex;flex-direction:column;gap:3px}
+  .ham .bars i{display:block;width:15px;height:2px;background:var(--accent);border-radius:2px}
+  .ham .chev{color:var(--muted);font-size:11px;transition:transform .15s ease}
+  .menubar.open .ham{border-color:var(--accent);color:var(--accent)}
+  .menubar.open .ham .chev{transform:rotate(180deg)}
+  .menu{display:none;position:absolute;top:calc(100% + 6px);left:0;z-index:21;
+    width:min(360px,calc(100vw - 40px));max-height:62vh;overflow:auto;
+    background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.16);padding:6px}
+  .menubar.open .menu{display:block}
+  .menu a{display:flex;justify-content:space-between;align-items:center;gap:12px;text-decoration:none;
+    color:var(--text);font-size:14px;font-weight:600;padding:9px 12px;border-radius:8px}
+  .menu a:hover{background:#f5f5f4;color:var(--accent)}
+  .menu a .n{font-size:11.5px;color:var(--muted);font-weight:500;flex-shrink:0}
+  .cond{margin-bottom:26px}
+  .cond-title{font-size:20px;font-weight:800;letter-spacing:-.01em;margin:0 0 2px}
+  .cond-sub{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+  .qa{border-left:4px solid var(--accent);background:var(--accent-light);border-radius:10px;padding:12px 18px}
+  .qa-gt{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);
+    margin:16px 0 2px;padding-top:11px;border-top:1px solid rgba(37,99,235,.14)}
+  .qa > .qa-gt:first-child{border-top:0;padding-top:0;margin-top:2px}
+  .tag-canned{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);
+    background:#f5f5f4;border:1px solid var(--border);border-radius:4px;padding:1px 5px;margin-left:7px;vertical-align:middle}
+  .qa-item{padding:10px 0;border-bottom:1px solid rgba(37,99,235,.10)}
+  .qa-item:last-child{border-bottom:0}
+  .qa-q{font-weight:700;font-size:14.5px;margin:0 0 4px;color:#1e3a8a}.qa-q p{margin:0}
+  .qa-a{font-size:14px;line-height:1.6;margin:0;font-weight:400}.qa-a p{margin:0 0 6px}.qa-a p:last-child{margin:0}.qa-a b{font-weight:700}
+  .qa-why{display:none;margin-top:8px;padding:8px 11px;border-left:2px solid var(--accent);background:#fff;
+    border-radius:0 6px 6px 0;font-size:12.5px;line-height:1.5;color:var(--muted)}
+  body.show-why .qa-why{display:block}.qa-why b{color:var(--text);font-weight:700}.qa-why p{margin:0;display:inline}
+  body.quiz .qa-item{cursor:pointer;border-radius:6px}
+  body.quiz .qa-item:hover{background:rgba(37,99,235,.04)}
+  body.quiz .qa-a{display:none}
+  body.quiz .qa-item.revealed .qa-a{display:block}
+  body.quiz.show-why .qa-why{display:none}
+  body.quiz.show-why .qa-item.revealed .qa-why{display:block}
+  .reveal-hint{display:none;font-size:11.5px;font-weight:600;color:var(--accent);margin-top:3px}
+  body.quiz .qa-item:not(.revealed) .reveal-hint{display:block}
+  .foot{margin-top:30px;font-size:12px;color:var(--muted);font-style:italic}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>When patients ask…</h1>
+  <p class="subtitle">Real questions patients ask, with model spoken answers a PA can adapt at the bedside — teaching the framing, not just the facts. These also appear inline on each condition under <b>Interactive → Presentations</b>.</p>
+  <div class="draft-note"><b>Draft — pending clinician review.</b> Not medical advice; the clinician tailors every answer to the individual.</div>
+
+  <div class="controls">
+    <button class="toggle" id="whyBtn"><span class="dot"></span>Show “why” notes <span class="state">OFF</span></button>
+    <button class="toggle" id="quizBtn"><span class="dot"></span>Quiz me <span class="state">OFF</span></button>
+  </div>
+
+  <div class="menubar" id="menubar">
+    <button class="ham" id="hamBtn" aria-haspopup="true" aria-expanded="false">
+      <span class="bars"><i></i><i></i><i></i></span> Jump to a topic <span class="chev">▾</span>
+    </button>
+    <nav class="menu" id="menu" aria-label="Topics"></nav>
+  </div>
+  <div id="list"></div>
+
+  <p class="foot">Currently covers the Presentations topics. More conditions to follow.</p>
+</div>
+
+<script type="module">
+  import { ASK } from './urinary-qa.js';
+  import { qaGroupsHTML } from './qa.js';
+  import { PRESENTATIONS } from './urinary-presentations.js';
+
+  const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  const labelFor = (id) => (PRESENTATIONS[id] && PRESENTATIONS[id].label) || id;
+  const ids = Object.keys(ASK);
+
+  const counts = {};
+  document.getElementById('list').innerHTML = ids.map((id) => {
+    const inner = qaGroupsHTML(id);
+    const nQ = (inner.match(/qa-item/g) || []).length;
+    counts[id] = nQ;
+    return `<section class="cond" id="${id}">` +
+      `<div class="cond-title">${esc(labelFor(id))}</div>` +
+      `<div class="cond-sub">${nQ} questions</div>` +
+      `<div class="qa">${inner}</div></section>`;
+  }).join('');
+
+  // Hamburger topic menu
+  const menubar = document.getElementById('menubar');
+  const hamBtn = document.getElementById('hamBtn');
+  const menu = document.getElementById('menu');
+  menu.innerHTML = ids
+    .map((id) => `<a href="#${id}">${esc(labelFor(id))}<span class="n">${counts[id]}</span></a>`)
+    .join('');
+  const closeMenu = () => { menubar.classList.remove('open'); hamBtn.setAttribute('aria-expanded', 'false'); };
+  hamBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = menubar.classList.toggle('open');
+    hamBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  menu.addEventListener('click', (e) => { if (e.target.closest('a')) closeMenu(); });
+  document.addEventListener('click', (e) => { if (!menubar.contains(e.target)) closeMenu(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+
+  const b = document.body;
+  document.querySelectorAll('.qa-item').forEach((item) => {
+    const q = item.querySelector('.qa-q');
+    const h = document.createElement('div');
+    h.className = 'reveal-hint';
+    h.textContent = '⤵ tap to reveal the answer';
+    q.after(h);
+    item.addEventListener('click', () => { if (b.classList.contains('quiz')) item.classList.toggle('revealed'); });
+  });
+  function wire(id, cls) {
+    const el = document.getElementById(id);
+    el.addEventListener('click', () => {
+      const on = b.classList.toggle(cls);
+      el.classList.toggle('on', on);
+      el.querySelector('.state').textContent = on ? 'ON' : 'OFF';
+      if (cls === 'quiz' && !on) document.querySelectorAll('.qa-item.revealed').forEach((i) => i.classList.remove('revealed'));
+    });
+  }
+  wire('whyBtn', 'show-why');
+  wire('quizBtn', 'quiz');
+</script>
+<script src="nav.js" defer></script>
+</body>
+</html>

@@ -12,6 +12,7 @@
     { href: 'Urology Medications.html', label: 'Meds' },
     { href: 'Urology Operations.html', label: 'Operations' },
     { href: 'Urology Follow-Up.html', label: 'Follow-Up' },
+    { href: 'Patient QA.html', label: 'Patient Q&A' },
     { href: 'Atlas Viewer.html', label: 'Atlas', accent: true },
   ];
 

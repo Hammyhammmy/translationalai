@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup · When patients ask…</title>
+<style>
+  :root{
+    --bg:#fafaf9; --card:#ffffff; --border:#e7e5e4;
+    --text:#1c1917; --muted:#78716c;
+    --accent:#2563eb; --accent-light:#eff6ff;
+    --green:#16a34a; --green-light:#f0fdf4;
+    --orange:#d97706;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:32px 20px 80px}
+  .mock-note{
+    font-size:12.5px; color:var(--muted); background:#fff; border:1px dashed var(--border);
+    border-radius:10px; padding:10px 14px; margin-bottom:24px;
+  }
+  .mock-note b{color:var(--text)}
+  .controls-label{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin-bottom:8px}
+  .controls-label span{color:var(--accent)}
+  .controls{display:flex; gap:12px; margin-bottom:22px; flex-wrap:wrap}
+  .toggle{
+    font:700 14px/1 inherit; cursor:pointer; user-select:none;
+    border:2px solid var(--border); background:#fff; color:var(--text);
+    border-radius:999px; padding:11px 18px; display:inline-flex; align-items:center; gap:9px;
+    transition:all .12s ease;
+  }
+  .toggle .dot{width:11px;height:11px;border-radius:50%;background:#d6d3d1}
+  .toggle .state{font-weight:600; font-size:12px; color:var(--muted)}
+  .toggle.on{border-color:var(--accent); color:var(--accent); background:var(--accent-light)}
+  .toggle.on .dot{background:var(--accent); box-shadow:0 0 0 3px rgba(37,99,235,.2)}
+  .toggle.on .state{color:var(--accent)}
+
+  /* ---- card + existing conventions ---- */
+  .card{
+    background:var(--card); border:1px solid var(--border); border-radius:12px;
+    padding:20px 24px; margin-bottom:18px;
+  }
+  .c-title{font-size:19px; font-weight:700; letter-spacing:-.01em}
+  .c-sub{font-size:12px; color:var(--muted); margin:2px 0 14px; text-transform:uppercase; letter-spacing:.05em}
+  .c-body{font-size:14.5px; line-height:1.6; margin:0 0 6px}
+  .h{
+    font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--muted); margin:16px 0 8px;
+  }
+
+  /* ---- NEW: "When patients ask" block ---- */
+  .qa{
+    border-left:4px solid var(--accent); background:var(--accent-light);
+    border-radius:10px; padding:16px 18px; margin:14px 0;
+  }
+  .qa-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:4px}
+  .qa-title{font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--accent)}
+  .qa-item{padding:11px 0; border-bottom:1px solid rgba(37,99,235,.12)}
+  .qa-item:last-of-type{border-bottom:0}
+  .qa-q{font-weight:700; font-size:14.5px; margin:0 0 4px; color:#1e3a8a}
+  .qa-a{font-size:14px; line-height:1.6; margin:0}
+  .qa-why{
+    display:none; margin-top:8px; padding:8px 11px; border-left:2px solid var(--accent);
+    background:#fff; border-radius:0 6px 6px 0; font-size:12.5px; line-height:1.5; color:var(--muted);
+  }
+  body.show-why .qa-why{display:block}
+  .qa-why b{color:var(--text); font-weight:700}
+
+  /* canned "general" group */
+  .qa-general{margin-top:12px}
+  .qa-general summary{
+    cursor:pointer; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em;
+    color:var(--muted); list-style:none;
+  }
+  .qa-general summary::-webkit-details-marker{display:none}
+  .qa-general summary::before{content:"▸ "; color:var(--accent)}
+  .qa-general[open] summary::before{content:"▾ "}
+  .qa-canned{margin-top:10px}
+  .qa-canned .qa-q{color:#334155; font-weight:600}
+
+  /* thematic groups within the block */
+  .qa-group-title{
+    font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--accent); margin:20px 0 2px; padding-top:12px; border-top:1px solid rgba(37,99,235,.14);
+  }
+  .qa-group-title:first-of-type{border-top:0; padding-top:0; margin-top:6px}
+  .tag-canned{
+    font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--muted);
+    background:#f5f5f4; border:1px solid var(--border); border-radius:4px; padding:1px 5px;
+    margin-left:7px; vertical-align:middle;
+  }
+  .qa-count{font-size:11.5px; font-weight:600; color:var(--muted)}
+
+  /* quiz / self-test: hide answers until tapped (the answer ALWAYS exists) */
+  body.quiz .qa-item{cursor:pointer; border-radius:6px}
+  body.quiz .qa-item:hover{background:rgba(37,99,235,.04)}
+  body.quiz .qa-a{display:none}
+  body.quiz .qa-item.revealed .qa-a{display:block}
+  body.quiz.show-why .qa-why{display:none}
+  body.quiz.show-why .qa-item.revealed .qa-why{display:block}
+  .reveal-hint{display:none; font-size:11.5px; font-weight:600; color:var(--accent); margin-top:3px}
+  body.quiz .qa-item:not(.revealed) .reveal-hint{display:block}
+
+  /* ---- existing "In plain words" block, for context ---- */
+  .patient{border-left:4px solid var(--green); background:#f6fdf9}
+  .pat-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:9px}
+  .pat-title{font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--green)}
+  .pat-copy{font-size:11.5px; border:1px solid var(--border); background:#fff; border-radius:6px; padding:4px 9px; cursor:pointer}
+  .pat-dl{margin:0}
+  .pat-dl dt{font-weight:700; font-size:12.5px; color:#292524; margin-top:9px}
+  .pat-dl dd{font-size:14px; line-height:1.57; margin:1px 0 0}
+  .pat-foot{font-size:11px; font-style:italic; color:var(--muted); margin-top:11px}
+  b{font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mock-note">
+    <b>Mockup — not wired into the site.</b> One real entry (<i>Renal colic</i>) showing the proposed
+    <b>“When patients ask…”</b> block sitting above the existing <b>“In plain words.”</b>
+    Every question a patient might ask has a model answer ready — that’s the point. Toggles:
+    <b>Show “why”</b> reveals the teaching note under each answer; <b>Quiz me</b> hides the answers so the
+    student can self-test, then tap any question to reveal it.
+  </div>
+
+  <div class="controls-label">↓ Click these to compare the options <span>(they change the card below)</span></div>
+  <div class="controls">
+    <button class="toggle" id="whyBtn"><span class="dot"></span>Show “why” notes <span class="state">OFF</span></button>
+    <button class="toggle" id="quizBtn"><span class="dot"></span>Quiz me <span class="state">OFF</span></button>
+  </div>
+
+  <div class="card">
+    <div class="c-title">Renal colic</div>
+    <div class="c-sub">Presentation · ureter · teaching depth</div>
+    <p class="c-body">Sudden, severe, colicky loin-to-groin pain in a patient who cannot lie still,
+      usually with nausea and vomiting; haematuria is common but its absence does not rule a stone out.</p>
+
+    <!-- ===== NEW BLOCK ===== -->
+    <div class="qa">
+      <div class="qa-head">
+        <span class="qa-title">When patients ask…</span>
+        <span class="qa-count">23 questions · 6 topics</span>
+      </div>
+
+      <!-- ── UNDERSTANDING IT ── -->
+      <div class="qa-group-title">Understanding what’s wrong</div>
+
+      <div class="qa-item">
+        <p class="qa-q">“What’s actually causing this pain?”</p>
+        <p class="qa-a">“A small stone that’s formed in your kidney is trying to pass down the narrow tube to
+          your bladder. Where it sticks, it blocks the flow and stretches the tube — and that stretching is
+          what causes the waves of pain.”</p>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">“How big is it — is that big?”</p>
+        <p class="qa-a">“The scan measures it in millimetres. Small ones — under about 5mm — usually pass on
+          their own; bigger ones are more likely to need a hand. I’ll tell you which side of that line yours
+          is on.”</p>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">“Could this be something serious, like cancer?”</p>
+        <p class="qa-a">“It’s a natural thing to worry about and I won’t brush it off. What you’ve got looks
+          like a stone, which isn’t a cancer — but because blood in the urine can occasionally come from
+          something more serious, the scan we’re doing checks for that too. We’re not ignoring the worry;
+          we’re actively looking.”</p>
+        <div class="qa-why"><b>Why:</b> never answer the cancer question with a flat “no.” Validate it, say a
+          stone isn’t cancer, but show the workup already covers the worry — honest <i>and</i> reassuring.</div>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">“Is this something I did — my diet?”</p>
+        <p class="qa-a">“Sometimes diet plays a part, but plenty of people who do everything ‘right’ still form
+          stones — so this isn’t about blame. Once we know the stone type we can say whether any specific
+          changes will actually help you.”</p>
+        <div class="qa-why"><b>Why:</b> defuse guilt — a blamed patient disengages from the prevention advice
+          you’re about to give.</div>
+      </div>
+
+      <!-- ── THE PAIN ── -->
+      <div class="qa-group-title">The pain</div>
+
+      <div class="qa-item">
+        <p class="qa-q">“Why is it this bad — can’t I just take painkillers at home?”</p>
+        <p class="qa-a">“Kidney-stone pain is honestly one of the most severe there is — this isn’t you
+          over-reacting. Right now you need faster relief than home tablets, usually an anti-inflammatory
+          injection. Once the scan’s clear, a lot of people do go home to pass a small stone with tablets.”</p>
+        <div class="qa-why"><b>Why:</b> validate the severity <i>first</i> — patients feel judged for “making a
+          fuss” — then justify hospital-now without over-promising a quick fix.</div>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">“Can I have something stronger?”</p>
+        <p class="qa-a">“Yes — and the most effective thing here is actually a strong anti-inflammatory rather
+          than a heavy opioid, which we can give by injection so it works fast. Tell us straight away if it
+          isn’t touching it.”</p>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">“Why does it come and go in waves?”</p>
+        <p class="qa-a">“The tube squeezes in waves to try to push the stone along; each squeeze against the
+          blockage is what brings the pain in surges rather than one constant ache.”</p>
+      </div>
+
+      <!-- ── TREATMENT / WHAT NOW ── -->
+      <div class="qa-group-title">What happens now</div>
+
+      <div class="qa-item">
+        <p class="qa-q">“Will it pass on its own?”</p>
+        <p class="qa-a">“Most small stones do, often within a few weeks, and we can give a tablet that relaxes
+          the tube to help it along. We’ll agree a plan and a clear safety net for if it doesn’t.”</p>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">“What happens if I just do nothing?”</p>
+        <p class="qa-a">“For a small stone, sometimes very little needs to happen — it passes and that’s fine.
+          The reason we don’t just wait blindly is that a stone can quietly block the kidney or let infection
+          build behind it, and a blocked, infected kidney turns dangerous fast. So ‘nothing’ is a fair option
+          — but only once the scan shows the kidney isn’t obstructed.”</p>
+        <div class="qa-why"><b>Why:</b> honour the question (some stones need no intervention) but draw the red
+          line — obstruction + infection — so “nothing” is an <b>informed</b> choice, not neglect.</div>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">“Will I need surgery?”</p>
+        <p class="qa-a">“Only if it’s too big to pass, gets stuck, or is blocking the kidney. Even then it’s
+          usually keyhole — a camera passed up the natural tube with no cut, or a sound-wave treatment that
+          breaks the stone up. I’ll explain whichever one fits you.”</p>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">“What are the risks of that procedure?”</p>
+        <p class="qa-a">“Mostly minor and short-lived — some blood in the urine and stinging for a day or two.
+          Less commonly an infection, which is why we sometimes give antibiotics, or a bruised tube. Serious
+          problems are rare, and the whole point is to protect a kidney that’s at more risk if we leave it.
+          The surgeon goes through all this and takes your consent beforehand.”</p>
+        <div class="qa-why"><b>Why:</b> structure it — common-and-minor → less-common → rare-but-serious → why
+          we still do it. Note the hand-off: <b>formal consent is the operating surgeon’s job</b>, not the PA’s.</div>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">“What’s a stent — how long is it in for?”</p>
+        <p class="qa-a">“It’s a soft internal tube that holds the drainage open while things settle; it goes in
+          and comes out through the same natural passage, no cut. Usually only a week or two — and we book the
+          removal date straight away, because a stent left too long can crust up.”</p>
+        <div class="qa-why"><b>Why:</b> plant “the removal date isn’t optional” now — a forgotten stent is a
+          real harm. Warn it can feel uncomfortable so they don’t think it’s failed.</div>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">“Will I be asleep for it?”</p>
+        <p class="qa-a">“Yes — these are usually done under a general anaesthetic, so you won’t feel or remember
+          anything.”</p>
+      </div>
+
+      <!-- ── DAY TO DAY ── -->
+      <div class="qa-group-title">Day to day <span class="tag-canned">mostly shared</span></div>
+
+      <div class="qa-item">
+        <p class="qa-q">“Should I drink more water?”</p>
+        <p class="qa-a">“Yes — plenty of fluid helps flush a small stone through and lowers the chance of the
+          next one. A good aim is to keep your urine pale.”</p>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">“Can I go to work, drive, fly?”</p>
+        <p class="qa-a">“Once the pain’s controlled, work and driving are fine. Flying’s okay too, though it’s
+          sensible not to travel far while you’re still in the thick of passing it, in case the pain flares
+          somewhere without easy help.”</p>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">“Should I try to catch the stone?”</p>
+        <p class="qa-a">“If you can, strain your urine and keep it — sending the stone off tells us exactly what
+          it’s made of, which shapes how we stop the next one.”</p>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">“What can I take for the pain at home?”</p>
+        <p class="qa-a">“Regular anti-inflammatories like ibuprofen if they suit you, taken with food — they
+          work better than paracetamol for this. We’ll make sure you leave with a clear plan.”</p>
+      </div>
+
+      <!-- ── WARNING SIGNS ── -->
+      <div class="qa-group-title">When to come straight back <span class="tag-canned">mostly shared</span></div>
+
+      <div class="qa-item">
+        <p class="qa-q">“When should I worry — when do I come back?”</p>
+        <p class="qa-a">“Come straight back if you get a fever or the shivers, if the pain becomes uncontrollable
+          despite the tablets, if you’re vomiting and can’t keep fluids down, or if you can’t pass urine at
+          all. A fever with this kind of pain especially needs to be seen urgently.”</p>
+        <div class="qa-why"><b>Why:</b> the safety-net is the single most important thing they leave with — a
+          fever on top of a blocked kidney is the emergency you’re screening for. Say it plainly, every time.</div>
+      </div>
+
+      <!-- ── PREVENTING ANOTHER ── -->
+      <div class="qa-group-title">Stopping another one</div>
+
+      <div class="qa-item">
+        <p class="qa-q">“Will it come back?”</p>
+        <p class="qa-a">“Honestly, once you’ve made one stone there’s a real chance of another over the years —
+          but that’s exactly why it’s worth checking what this one’s made of and making a few simple changes,
+          mostly just drinking more, that genuinely lower the odds.”</p>
+        <div class="qa-why"><b>Why:</b> don’t falsely reassure — recurrence is common. Pivot to prevention so
+          the honest answer hands them <b>agency</b> rather than dread.</div>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">“How do I stop it happening again?”</p>
+        <p class="qa-a">“Mostly drinking more so your urine stays pale, plus any specific tweak once we know the
+          stone type. For repeat stones we sometimes run a set of tests to look for a cause we can treat
+          directly.”</p>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">“Do my children need checking?”</p>
+        <p class="qa-a">“There can be a family tendency to some stones, but there’s no routine test for the kids
+          unless several close relatives are affected. I wouldn’t lose sleep over it.”</p>
+      </div>
+
+    </div>
+    <!-- ===== /NEW BLOCK ===== -->
+
+    <!-- existing patient block, unchanged, for context -->
+    <div class="card patient">
+      <div class="pat-head">
+        <span class="pat-title">In plain words</span>
+        <button class="pat-copy" type="button">Copy</button>
+      </div>
+      <dl class="pat-dl">
+        <dt>What it is</dt>
+        <dd>A sudden, severe, gripping pain that sweeps from the loin round to the groin — usually a kidney
+          stone passing down the tube (the ureter) toward the bladder, often with nausea and blood in the urine.</dd>
+        <dt>Why it matters</dt>
+        <dd>The pain comes from a stone blocking the drainage of a kidney; if that blocked kidney also becomes
+          infected, or it is a single or already-failing kidney, the situation becomes dangerous quickly.</dd>
+        <dt>What is done</dt>
+        <dd>A <b>CT KUB</b> scan confirms the stone; pain is treated with an <b>NSAID</b> and small stones often
+          pass on their own, helped by an <b>alpha-blocker</b>. A blocked, infected kidney is drained urgently.</dd>
+        <dt>What to watch for</dt>
+        <dd>Fever or feeling very unwell alongside the pain means a blocked kidney may be infected — a urological
+          emergency needing immediate drainage.</dd>
+      </dl>
+      <div class="pat-foot">General information — the clinician will tailor this to the individual.</div>
+    </div>
+
+  </div>
+
+  <div class="mock-note">
+    <b>How the two buckets join:</b> bespoke Q&amp;A (top, authored per-entry) render first; the canned
+    “General questions” group (shared, authored once) folds in below. If an entry ever needs its own take on a
+    canned question, it defines the same key and its answer wins — <i>“canned unless overridden.”</i>
+  </div>
+
+</div>
+
+<script>
+  const b = document.body;
+  const whyBtn = document.getElementById('whyBtn');
+  const quizBtn = document.getElementById('quizBtn');
+
+  // Every Q&A item gets a "tap to reveal" hint (only shown in quiz mode via CSS).
+  document.querySelectorAll('.qa-item').forEach(item => {
+    const q = item.querySelector('.qa-q');
+    const hint = document.createElement('div');
+    hint.className = 'reveal-hint';
+    hint.textContent = '⤵ tap to reveal the answer';
+    q.after(hint);
+    item.addEventListener('click', () => {
+      if (b.classList.contains('quiz')) item.classList.toggle('revealed');
+    });
+  });
+
+  whyBtn.addEventListener('click', () => {
+    const on = b.classList.toggle('show-why');
+    whyBtn.classList.toggle('on', on);
+    whyBtn.querySelector('.state').textContent = on ? 'ON' : 'OFF';
+  });
+  quizBtn.addEventListener('click', () => {
+    const on = b.classList.toggle('quiz');
+    quizBtn.classList.toggle('on', on);
+    quizBtn.querySelector('.state').textContent = on ? 'ON' : 'OFF';
+    if (!on) document.querySelectorAll('.qa-item.revealed').forEach(i => i.classList.remove('revealed'));
+  });
+</script>
+</body>
+</html>

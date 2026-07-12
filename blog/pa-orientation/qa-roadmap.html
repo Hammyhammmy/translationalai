@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"When patients ask…" — status & roadmap</title>
+<style>
+  :root{--bg:#fafaf9;--card:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#78716c;
+    --accent:#2563eb;--accent-light:#eff6ff;--green:#16a34a;--green-light:#f0fdf4;--orange:#d97706;--orange-light:#fffbeb}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:800px;margin:0 auto;padding:40px 22px 90px}
+  h1{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:0 0 4px}
+  .lede{color:var(--muted);font-size:15px;margin:0 0 28px}
+  h2{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);
+    margin:34px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+  .card.done{border-left:4px solid var(--green);background:var(--green-light)}
+  .card.next{border-left:4px solid var(--accent);background:var(--accent-light)}
+  .card.later{border-left:4px solid var(--orange);background:var(--orange-light)}
+  .card h3{margin:0 0 4px;font-size:16px;font-weight:700}
+  .card p{margin:0 0 6px;font-size:14px}
+  .card .meta{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  ul{margin:6px 0 0;padding-left:20px;font-size:14px}li{margin:3px 0}
+  code{background:#f5f5f4;border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-size:12.5px}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin-top:6px}
+  th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--border)}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+  td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+  .pill{display:inline-block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+    border-radius:999px;padding:2px 9px;vertical-align:middle}
+  .pill.done{background:var(--green);color:#fff}.pill.next{background:var(--accent);color:#fff}.pill.later{background:var(--orange);color:#fff}
+  .foot{margin-top:34px;font-size:12px;color:var(--muted);font-style:italic}
+</style></head>
+<body><div class="wrap">
+
+<h1>“When patients ask…” — status &amp; roadmap</h1>
+<p class="lede">A per-topic block of real patient questions with model <em>spoken</em> answers a PA can adapt at the bedside — teaching the framing, not just the facts. This page records what shipped and what we might do next.</p>
+
+<h2>Shipped <span class="pill done">live</span></h2>
+<div class="card done">
+  <h3>Presentations tab — 11 entries</h3>
+  <p class="meta">≈200 bespoke questions · grouped by theme · wired into the interactive page</p>
+  <p>Every Presentations entry now renders a “When patients ask…” block: <code>retention · hematuria · renal_colic · acute_scrotum · luts · chronic_pelvic_pain · microscopic_hematuria · recurrent_uti · stone_prevention · elevated_psa · asymptomatic_bacteriuria</code>.</p>
+  <ul>
+    <li><b>Two buckets:</b> bespoke per-entry answers + a shared canned bucket (Tests &amp; scans, Procedure &amp; anaesthetic, Medication) authored once and merged in, “canned unless overridden by key”.</li>
+    <li><b>Always answered &amp; grouped:</b> ~15–23 questions per condition in themed groups so a real consultation stays navigable.</li>
+    <li><b>Teaching “why” notes</b> on the high-stakes framing (validate fear first, never a flat “no” to cancer, don’t over-promise, consent is the surgeon’s job).</li>
+    <li><b>Files:</b> data in <code>urinary-qa.js</code> (+ <code>qa-drafts/</code>), renderer in <code>qa.js</code> (sibling of <code>patient.js</code>), styles + call site in <code>Urinary Interactive.html</code>. Review page: <code>qa-review.html</code>.</li>
+  </ul>
+</div>
+
+<h2>Needs a clinician <span class="pill next">before wide use</span></h2>
+<div class="card next">
+  <h3>Medical sign-off on the first pass</h3>
+  <p>These were drafted grounded in the existing entry content but are a <b>first pass, not verified</b>.</p>
+  <ul>
+    <li><b>9 items carry a <code>review:</code> flag</b> (hover the amber “review” tags in <code>qa-review.html</code>) — spots where the source didn’t cover a question and the answer was kept safely generic.</li>
+    <li>A general clinical read of the tone: is anything over-reassuring, out of scope for a PA, or not aligned with local/UK practice?</li>
+    <li>Decide keep/drop on the couple of generic safety-nets the drafters added beyond an entry’s stated red flags.</li>
+  </ul>
+</div>
+
+<h2>The rest of the content <span class="pill later">backlog</span></h2>
+<div class="card later">
+  <h3>≈57 more encounter entries</h3>
+  <p class="meta">the bulk of the remaining authoring</p>
+  <table>
+    <tr><th>Tab / module</th><th class="n">Entries</th></tr>
+    <tr><td>Conditions (<code>urinary-clinical.js</code>)</td><td class="n">32</td></tr>
+    <tr><td>Operations / hardware (stent, catheters, conduit, sling…)</td><td class="n">10</td></tr>
+    <tr><td>Andrology (ED, infertility, varicocele, Peyronie’s…)</td><td class="n">~6</td></tr>
+    <tr><td>Oncology — the 4 cancers (concepts aren’t patient-facing)</td><td class="n">4</td></tr>
+    <tr><td>Trauma (renal, bladder, urethral, testicular)</td><td class="n">4</td></tr>
+  </table>
+  <p style="margin-top:10px"><b>Do it the cheap way.</b> One-agent-per-entry burned ~30–40k tokens each, mostly fixed overhead. Instead: <b>batch</b> 4–5 entries per drafter with a <em>compact</em> inline style spec (don’t re-read the big exemplar every time), or draft small runs in-thread. Author the shared bucket additions (e.g. a “Living with a catheter/stoma” canned group) once and reuse.</p>
+</div>
+
+<h2>Product polish <span class="pill later">nice to have</span></h2>
+<div class="card later">
+  <h3>Make the block do more for the student</h3>
+  <ul>
+    <li><b>In-page toggles:</b> the mockup’s <em>Show “why”</em> and <em>Quiz me</em> (hide answers, tap to reveal) — currently the site shows “why” notes inline always. Port the toggles into the SPA.</li>
+    <li><b>Coverage test</b> like <code>patient-coverage.test.mjs</code>: fail the build if an encounter entry lacks an <code>ASK</code> set, or misses its stage’s must-answer questions — so gaps can’t ship silently.</li>
+    <li><b>Copy button</b> per block (as the patient block has) to paste a clean Q&amp;A.</li>
+    <li><b>Search index:</b> fold the questions into <code>search-index.json</code> so a student can search “will I lose the testicle”.</li>
+    <li><b>Consultation-drill mode:</b> a standalone self-test page across conditions.</li>
+  </ul>
+</div>
+
+<p class="foot">Draft content — pending clinician review. Not medical advice. Generated as a working artifact; edit freely.</p>
+
+</div></body></html>
