@@ -14,9 +14,9 @@
                 <span></span><span></span><span></span>
             </button>
             <div class="nav-links">
-                <a href="chartprep.html" class="nav-link${isActive('chartprep.html')}">ChartPrep</a>
+                <a href="chartprep.html" class="nav-link${isActive('chartprep.html')}">ChartPrepper</a>
                 <a href="team.html" class="nav-link${isActive('team.html')}">About</a>
-                <a href="https://chart.translational.ca/login" class="nav-cta" target="_blank" rel="noopener">Launch ChartPrep →</a>
+                <a href="https://chart.translational.ca/login" class="nav-cta" target="_blank" rel="noopener">Launch ChartPrepper →</a>
             </div>
         </div>
     </nav>`;
@@ -26,11 +26,11 @@
         <div class="foot-grid">
             <div>
                 <div class="foot-brand"><span class="nav-logo-mark"></span> TranslationalAI</div>
-                <div class="foot-tag">Clinical AI with source-level transparency. Built and hosted in Canada.</div>
+                <div class="foot-tag">Clinical AI with source-level transparency — every sentence traced to its source.</div>
             </div>
             <div class="foot-col">
                 <h4>Product</h4>
-                <a href="chartprep.html">ChartPrep</a>
+                <a href="chartprep.html">ChartPrepper</a>
             </div>
             <div class="foot-col">
                 <h4>Company</h4>
@@ -40,7 +40,7 @@
             </div>
             <div class="foot-col">
                 <h4>Tools</h4>
-                <a href="https://chart.translational.ca/login" target="_blank" rel="noopener">ChartPrep</a>
+                <a href="https://chart.translational.ca/login" target="_blank" rel="noopener">ChartPrepper</a>
                 <a href="https://fax.translational.ca" target="_blank" rel="noopener">Fax Triage</a>
                 <a href="https://emr.translational.ca" target="_blank" rel="noopener">LightEMR</a>
                 <a href="https://schedule-generator-465306031489.northamerica-northeast1.run.app" target="_blank" rel="noopener">Call Schedule</a>
