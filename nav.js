@@ -15,7 +15,6 @@
             </button>
             <div class="nav-links">
                 <a href="chartprep.html" class="nav-link${isActive('chartprep.html')}">ChartPrep</a>
-                <a href="lab.html" class="nav-link${isActive('lab.html')}">Lab</a>
                 <a href="team.html" class="nav-link${isActive('team.html')}">About</a>
                 <a href="https://chart.translational.ca/login" class="nav-cta" target="_blank" rel="noopener">Launch ChartPrep →</a>
             </div>
@@ -32,12 +31,11 @@
             <div class="foot-col">
                 <h4>Product</h4>
                 <a href="chartprep.html">ChartPrep</a>
-                <a href="lab.html">The Lab</a>
             </div>
             <div class="foot-col">
                 <h4>Company</h4>
                 <a href="team.html">About</a>
-                <a href="investors.html">Investors</a>
+                <a href="in-use.html">In use</a>
                 <a href="mailto:yan+websitesignup@translational.ca">Pilot access</a>
             </div>
             <div class="foot-col">
@@ -50,7 +48,7 @@
             </div>
             <div class="foot-col">
                 <h4>Contact</h4>
-                <a href="mailto:yan+investors@translational.ca">yan+investors@translational.ca</a>
+                <a href="mailto:yan@translational.ca">yan@translational.ca</a>
                 <a href="mailto:yan+enterpriseAPI@translational.ca">Enterprise & API</a>
                 <a href="https://www.linkedin.com/in/hanmu-yan-42441a306" target="_blank" rel="noopener">LinkedIn</a>
             </div>

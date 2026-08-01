@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scroll helpers — working demo</title>
+<style>
+  :root{--paper:#faf7f1;--ink:#2a2520;--muted:#6b6256;--faint:#9a9082;--terra:#9c3318;--line:#e6ddcc;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;}
+  .wrap{max-width:760px;margin:0 auto;padding:30px 20px 120px;}
+  h1{font-size:24px;font-weight:800;margin:10px 0 6px}
+  h2{font-size:19px;margin:0 0 10px;scroll-margin-top:64px}
+  p{margin:0 0 12px;color:#3a352f}
+  section{padding:26px 0;border-bottom:1px dashed var(--line)}
+  .tag{display:inline-block;font:600 10px/1 "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.05em;color:var(--terra);border:1px solid var(--line);border-radius:5px;padding:3px 6px;margin-bottom:18px}
+
+  /* ── (B) scroll-progress bar ── */
+  #prog{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#dc2626,#7c3aed);z-index:60;transition:width .08s linear}
+
+  /* ── (C) sticky section nav (series ribbon made sticky + section jumps + scroll-spy) ── */
+  .ribbon{position:sticky;top:0;z-index:50;background:rgba(250,247,241,.92);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line)}
+  .ribbon-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding:8px 20px}
+  .ribbon a{font-size:12.5px;font-weight:500;color:var(--muted);text-decoration:none;padding:5px 9px;border-radius:6px;white-space:nowrap}
+  .ribbon a.back{font-weight:700;color:var(--terra);margin-right:6px}
+  .ribbon .sep{flex:1}
+  .ribbon a.sec.active{color:var(--ink);background:#f0e9dd;font-weight:700}
+  .ribbon a:hover{background:#f0e9dd;color:var(--ink)}
+
+  /* ── (A) back-to-top FAB ── */
+  #top{position:fixed;right:22px;bottom:22px;z-index:55;width:42px;height:42px;border-radius:50%;
+    background:var(--ink);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 6px 20px rgba(0,0,0,.22);opacity:0;transform:translateY(8px) scale(.9);pointer-events:none;transition:opacity .18s,transform .18s}
+  #top.show{opacity:1;transform:none;pointer-events:auto}
+  #top:hover{background:var(--terra)}
+  @media print{#prog,.ribbon,#top{display:none!important}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="ribbon"><div class="ribbon-in">
+  <a class="back" href="#">← Blog</a>
+  <a class="sec" href="#s1">The whole engine</a>
+  <a class="sec" href="#s2">Two worlds</a>
+  <a class="sec" href="#s3">No lumen</a>
+  <a class="sec" href="#s4">Cells</a>
+  <a class="sec" href="#s5">Cascades</a>
+</div></nav>
+
+<div class="wrap">
+  <span class="tag">working demo · scroll me</span>
+  <h1>Scroll helpers — feel each one</h1>
+  <p>This page stacks all three helpers so you can judge them by scrolling, not by description. The legend: the thin colored bar at the very top is the <b>(B) progress bar</b>; the sticky strip is the <b>(C) section nav</b> with live active-section highlighting; the round button bottom-right is the <b>(A) back-to-top</b> (it fades in once you scroll down).</p>
+
+  <section id="s1"><h2>The whole engine, in four lines</h2>
+    <p>Filler. One ATP pump builds a sodium gradient; everything else spends it. Scroll on — watch the sticky nav highlight the section you're in, and the top bar fill as you go.</p>
+    <p>More filler so the section has height. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+    <p>Even more. Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p></section>
+
+  <section id="s2"><h2>When the cell is a wall between two worlds</h2>
+    <p>Filler. The epithelium has an apical and a basolateral face. Notice the back-to-top button is now visible bottom-right.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p></section>
+
+  <section id="s3"><h2>When there is no lumen at all</h2>
+    <p>Filler. One membrane all around — not an epithelium.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p></section>
+
+  <section id="s4"><h2>Cells</h2>
+    <p>Filler. Pretend this is the long grid of interactive cells.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor.</p>
+    <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p></section>
+
+  <section id="s5"><h2>Cascades</h2>
+    <p>Filler. The signaling cascades. You're near the bottom now — the progress bar is almost full.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p></section>
+</div>
+
+<button id="top" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14V4M4 9l5-5 5 5"/></svg>
+</button>
+
+<script>
+  const prog=document.getElementById('prog'), topBtn=document.getElementById('top');
+  const secs=[...document.querySelectorAll('section')];
+  const links=new Map([...document.querySelectorAll('.ribbon a.sec')].map(a=>[a.getAttribute('href').slice(1),a]));
+  function onScroll(){
+    const h=document.documentElement;
+    const max=h.scrollHeight-h.clientHeight;
+    prog.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+    topBtn.classList.toggle('show', h.scrollTop>320);
+    // scroll-spy: the section whose top is nearest above the 90px line
+    let cur=secs[0];
+    for(const s of secs){ if(s.getBoundingClientRect().top<=90) cur=s; }
+    links.forEach(a=>a.classList.remove('active'));
+    const a=links.get(cur.id); if(a)a.classList.add('active');
+  }
+  topBtn.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+  document.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+</script>
+</body>
+</html>

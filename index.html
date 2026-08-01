@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TranslationalAI — Verifiable clinical AI</title>
-    <meta name="description" content="Provenance-architected clinical AI. Every fact traces to its source, or it is suppressed. Built by clinicians, deployed in real practice.">
+    <title>Turn referrals into notes you can trust — ChartPrep</title>
+    <meta name="description" content="ChartPrep turns the referral pile into prepped charts and notes you can trust — every line traced to its source. Built by a specialist, in daily clinical use.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="canonical" href="https://translational.ca/">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://translational.ca/">
-    <meta property="og:title" content="TranslationalAI — Verifiable clinical AI">
-    <meta property="og:description" content="Provenance-architected clinical AI. Every fact traces to its source, or it is suppressed. Built by clinicians, deployed in real practice.">
+    <meta property="og:title" content="Turn referrals into notes you can trust — ChartPrep">
+    <meta property="og:description" content="ChartPrep turns the referral pile into prepped charts and notes you can trust — every line traced to its source. Built by a specialist, in daily clinical use.">
     <meta property="og:image" content="https://translational.ca/assets/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -24,27 +24,28 @@
     <!-- =================== HERO =================== -->
     <section class="hero">
         <div class="wrap">
-            <div class="eyebrow">Verifiable Clinical AI · Canada</div>
+            <div class="eyebrow">Verifiable clinical AI · built for specialists</div>
             <div class="hero-grid">
                 <div>
                     <h1 class="h-display">
-                        Clinical AI you can <em>check</em> in seconds — instead of reading every line twice.
+                        Turn your referral pile into prepped charts — and notes you can <em>trust</em>, line by line.
                     </h1>
                     <div class="hero-actions">
-                        <a href="investors.html" class="btn btn-primary">For investors →</a>
-                        <a href="chartprep.html" class="btn btn-ghost">See the product</a>
+                        <a href="chartprep.html" class="btn btn-primary">See the product →</a>
+                        <a href="in-use.html" class="btn btn-ghost">See it in use</a>
                     </div>
                 </div>
                 <aside class="hero-side">
                     <div class="hero-meta">The short version</div>
                     <p class="body" style="color: var(--ink); font-size: 17px; max-width: 32ch;">
-                        Most clinical AI writes fluent notes that the doctor still has to re-read
-                        to trust. We built the architecture differently: every fact in the output
-                        is anchored to a span in the source, and anything the system can't anchor
-                        never gets written. Audit becomes a glance.
+                        Specialist clinics run on referrals — faxed, scanned, often messy. ChartPrep
+                        turns each one, plus the records and the patient's own intake, into a prepped
+                        chart and a ready note. The catch with handing that to AI is trust, so every
+                        sentence is anchored to its source: if it can't be traced to the record, it
+                        doesn't get written. You check the note at a glance.
                     </p>
                     <div class="hero-meta" style="margin-top: 28px;">
-                        Stage <span class="hero-meta-val">In production · Talking to early investors</span>
+                        Stage <span class="hero-meta-val">In production · in daily clinical use</span>
                     </div>
                 </aside>
             </div>
@@ -84,7 +85,7 @@
                 <cite><span class="who">Dr. Garbens</span><span class="role">Urologist · Maple Urology</span></cite>
             </div>
             <div>
-                <div class="proof-head"><span style="color: var(--accent-deep);">— In daily use at</span><span>Specialty urology clinics · Canada</span></div>
+                <div class="proof-head"><span style="color: var(--accent-deep);">— In daily use at</span><span>Specialist urology clinics</span></div>
                 <div class="marquee">
                     <div class="marquee-track">
                         <div class="clinic txt">Toronto West Urology<span class="lab">Toronto, ON</span></div>
@@ -153,7 +154,7 @@
                         A prospective accuracy audit of 50 referrals (785 individual statements)
                         showed a ~0.64% error rate, with zero fabrications observed in the audited
                         subset. For context, published benchmarks for prompt-engineered approaches
-                        sit between 1–3% hallucination and around 3.45% omission (Asgari et al.,
+                        sit around ~1.5% hallucination and 3.45% omission (Asgari et al.,
                         <em>npj Digital Medicine</em>, 2025) — though tasks and denominators differ,
                         so this is not a direct comparison.
                     </p>
@@ -224,65 +225,6 @@
         </div>
     </section>
 
-    <!-- =================== LAB =================== -->
-    <section style="background: var(--paper-warm); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
-        <div class="wrap">
-            <div class="sec-head">
-                <div>
-                    <div class="eyebrow neutral">Beyond ChartPrep</div>
-                    <h2 class="h-1">A platform <em>underneath the product.</em></h2>
-                </div>
-                <div>
-                    <p class="lede">
-                        ChartPrep is the front door. Behind it sits a clinic operating layer
-                        and a set of adjacent clinical tools — all in real use, all built on the
-                        same provenance discipline.
-                    </p>
-                </div>
-            </div>
-
-            <div class="card-grid cols-3">
-                <div class="card">
-                    <div class="card-num">Platform · 2 pilot clinics</div>
-                    <h3 class="h-3">LightEMR</h3>
-                    <p>The operating layer that sits in the gaps the EMR leaves: AI-triaged
-                       fax/email intake, drafted referring-doctor replies, patient self-booking
-                       by SMS, follow-up tracking with 90% precision, and a day-sheet that lands
-                       before the patient walks in. Multi-tenant; 2,680 automated tests passing.</p>
-                </div>
-                <div class="card">
-                    <div class="card-num">Decision support · Live</div>
-                    <h3 class="h-3">Partner in Practice</h3>
-                    <p>AI helps draft a clinical pathway; the pathway itself runs as fully
-                       deterministic rules. Flagship live use case: ARPI selection in advanced
-                       prostate cancer.</p>
-                </div>
-                <div class="card">
-                    <div class="card-num">Check-in · In production</div>
-                    <h3 class="h-3">Kiosk</h3>
-                    <p>Waiting-room check-in tablet that works alongside any EMR. Five-minute
-                       setup, free at the entry tier — vs. the $57/device/month incumbent.</p>
-                </div>
-                <div class="card">
-                    <div class="card-num">Scheduling · Live group use</div>
-                    <h3 class="h-3">Call Schedule</h3>
-                    <p>A constraint solver for clinical on-call rotations that respects the
-                       fairness rules a real group actually cares about.</p>
-                </div>
-                <div class="card">
-                    <div class="card-num">Research · Collaboration</div>
-                    <h3 class="h-3">Data Science</h3>
-                    <p>Custom analytics work with clinical research collaborators — outcomes
-                       analysis, registry work, source-anchored data discipline.</p>
-                </div>
-            </div>
-
-            <div style="margin-top: 36px;">
-                <a href="lab.html" class="btn-link">See the full lab →</a>
-            </div>
-        </div>
-    </section>
-
     <!-- =================== PULL QUOTE =================== -->
     <section class="tight" style="background: var(--paper-warm);">
         <div class="wrap">
@@ -328,16 +270,15 @@
     <!-- =================== INVESTOR CTA =================== -->
     <div class="investor">
         <div class="investor-inner">
-            <div class="eyebrow">For investors</div>
-            <h2>We're starting to talk to investors.</h2>
+            <div class="eyebrow">See it for yourself</div>
+            <h2>Built by a doctor who uses it every clinic day.</h2>
             <p>
-                If the re-read problem rings true to you — and you've been looking for clinical
-                AI built by someone who actually uses it in their own clinic — we'd like to hear
-                from you.
+                If the re-read problem rings true — and you want clinical AI built by someone who
+                actually uses it in his own clinic — take a look at how it holds up in real use.
             </p>
             <div class="investor-actions">
-                <a href="investors.html" class="btn btn-primary">Read the investor page →</a>
-                <a href="mailto:yan+investors@translational.ca" class="btn btn-ghost">yan+investors@translational.ca</a>
+                <a href="in-use.html" class="btn btn-primary">See it in real use →</a>
+                <a href="mailto:yan@translational.ca" class="btn btn-ghost">yan@translational.ca</a>
             </div>
         </div>
     </div>
