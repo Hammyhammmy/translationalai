@@ -1,286 +1,492 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turn referrals into notes you can trust — ChartPrepper</title>
-    <meta name="description" content="ChartPrepper turns the referral pile into prepped charts and notes you can trust — every line traced to its source. Built by a specialist, in daily clinical use.">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="canonical" href="https://translational.ca/">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://translational.ca/">
-    <meta property="og:title" content="Turn referrals into notes you can trust — ChartPrepper">
-    <meta property="og:description" content="ChartPrepper turns the referral pile into prepped charts and notes you can trust — every line traced to its source. Built by a specialist, in daily clinical use.">
-    <meta property="og:image" content="https://translational.ca/assets/og-image.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://translational.ca/assets/og-image.png">
-    <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turn referrals into notes you can trust — ChartPrepper</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="ChartPrepper turns the referral pile into prepped charts and notes you can trust — every line traced to its source. Built by a specialist, in daily clinical use.">
+<link rel="canonical" href="https://translational.ca/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://translational.ca/">
+<meta property="og:title" content="Turn referrals into notes you can trust — ChartPrepper">
+<meta property="og:description" content="ChartPrepper turns the referral pile into prepped charts and notes you can trust — every line traced to its source. Built by a specialist, in daily clinical use.">
+<meta property="og:image" content="https://translational.ca/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://translational.ca/assets/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<style>
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: 'IBM Plex Sans', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #1a2230;
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── provenance-demo keyframes (restored from mock) ── */
+  @keyframes cpIn { 0% { opacity: 0; transform: translateY(7px); } 5% { opacity: 1; transform: none; } 93% { opacity: 1; transform: none; } 100% { opacity: 0; transform: none; } }
+  @keyframes cpBand { 0% { opacity: 0; transform: scaleX(0.15); } 4% { opacity: 1; transform: scaleX(1); } 24% { opacity: 1; } 34% { opacity: 0.4; } 93% { opacity: 0.4; } 100% { opacity: 0; } }
+  @keyframes cpWire { 0% { opacity: 0; transform: scaleX(0); } 4% { opacity: 1; transform: scaleX(1); } 26% { opacity: 1; } 36% { opacity: 0.18; } 93% { opacity: 0.18; } 100% { opacity: 0; } }
+  @keyframes cpSweep { 0% { transform: translateY(-14%); opacity: 0; } 6% { opacity: 0.9; } 60% { opacity: 0.9; } 74% { transform: translateY(560%); opacity: 0; } 100% { transform: translateY(560%); opacity: 0; } }
+  @keyframes cpCursor { 0%, 45% { opacity: 1; } 46%, 100% { opacity: 0.15; } }
+  @keyframes cpPulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+
+  /* Graceful degradation: if the user prefers reduced motion, stop the
+     looping demo but leave every animated line in its VISIBLE resting state
+     (they carry inline opacity:0, so force them back on). */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; }
+    [style*="cpIn"], [style*="cpWire"], [style*="cpBand"],
+    [style*="cpSweep"], [style*="cpCursor"], [style*="cpPulse"] { opacity: 1 !important; }
+  }
+  /* keep the shared stylesheet's chrome, but shield the mock body from its
+     global element rules (link underlines, section rules) */
+  .cp-page a { border-bottom: none; }
+  .cp-page section { border-top: none; padding-left: 0; padding-right: 0; }
+
+  /* ── Mobile / responsive ──
+     The body is inline-styled, so these overrides use !important (which
+     outranks inline styles) to reflow the fixed grids and display type. */
+  @media (max-width: 820px) {
+    /* collapse every multi-column grid to a single column */
+    .cp-page [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+    /* hide the TRACE connector-arrow column in the animated hero demo */
+    .cp-page [style*="340px 76px 1fr"] > div:nth-child(2) { display: none !important; }
+    /* stack each draft claim above its source-citation box */
+    .cp-page [style*="gap: 14px; align-items: flex-start"] { flex-direction: column !important; gap: 8px !important; }
+    .cp-page [style*="width: 170px"] { width: 100% !important; }
+    /* scale display type down for small screens */
+    .cp-page h1 { font-size: clamp(30px, 8.5vw, 40px) !important; line-height: 1.08 !important; }
+    .cp-page h2 { font-size: clamp(23px, 6.2vw, 30px) !important; }
+    .cp-page blockquote { font-size: clamp(19px, 5.2vw, 24px) !important; }
+    /* tighter, consistent gutters + vertical rhythm on phones */
+    .cp-page [style*="padding: 100px 32px"]      { padding: 60px 22px !important; }
+    .cp-page [style*="padding: 104px 32px 48px"] { padding: 48px 22px 28px !important; }
+    .cp-page [style*="padding: 0 32px 100px"]    { padding: 0 22px 60px !important; }
+    .cp-page [style*="padding: 40px 32px 100px"] { padding: 28px 22px 60px !important; }
+    .cp-page [style*="padding: 40px 32px 104px"] { padding: 28px 22px 60px !important; }
+  }
+</style>
 </head>
 <body>
-    <script src="nav.js"></script>
+<script src="nav.js"></script>
+<div class="cp-page" style="max-width: 100%; overflow-x: hidden;">
 
-    <!-- =================== HERO =================== -->
-    <section class="hero">
-        <div class="wrap">
-            <div class="eyebrow">Verifiable clinical AI · built for specialists</div>
-            <div class="hero-grid">
-                <div>
-                    <h1 class="h-display">
-                        Turn your referral pile into prepped charts — and notes you can <em>trust</em>, line by line.
-                    </h1>
-                    <div class="hero-actions">
-                        <a href="chartprep.html" class="btn btn-primary">See the product →</a>
-                        <a href="in-use.html" class="btn btn-ghost">See it in use</a>
-                    </div>
-                </div>
-                <aside class="hero-side">
-                    <div class="hero-meta">The short version</div>
-                    <p class="body" style="color: var(--ink); font-size: 17px; max-width: 32ch;">
-                        Specialist clinics run on referrals — faxed, scanned, often messy. ChartPrepper
-                        turns each one, plus the records and the patient's own intake, into a prepped
-                        chart and a ready note. The catch with handing that to AI is trust, so every
-                        sentence is anchored to its source: if it can't be traced to the record, it
-                        doesn't get written. You check the note at a glance.
-                    </p>
-                    <div class="hero-meta" style="margin-top: 28px;">
-                        Stage <span class="hero-meta-val">In production · in daily clinical use</span>
-                    </div>
-                </aside>
-            </div>
-        </div>
-    </section>
 
-    <!-- =================== METRICS =================== -->
-    <div class="metrics">
-        <div class="wrap">
-            <div class="metrics-grid">
-                <div class="metric">
-                    <div class="metric-num">3,000<span class="unit">+</span></div>
-                    <div class="metric-label">Real referrals<br>processed to date</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-num">0.64<span class="unit">%</span></div>
-                    <div class="metric-label">Error rate<br>50-referral audit</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-num">0</div>
-                    <div class="metric-label">Fabricated facts<br>in audited subset</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-num">3</div>
-                    <div class="metric-label">Production modes<br>one architecture</div>
-                </div>
+  <section style="max-width: 1200px; margin: 0 auto; padding: 104px 32px 48px;">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 26px;">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.09em; text-transform: uppercase; color: #005f4f; border: 1px solid #bfe3da; background: #e6f4f0; padding: 5px 10px; border-radius: 999px;">Verifiable clinical AI · built for specialists</span>
+    </div>
+    <h1 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 62px; line-height: 1.03; letter-spacing: -0.035em; font-weight: 600; margin: 0; max-width: 900px; text-wrap: balance;">Every sentence in the note<br>points back at the record.</h1>
+    <p style="font-size: 19px; line-height: 1.55; color: #4a5a6a; max-width: 620px; margin: 24px 0 0; text-wrap: pretty;">Specialist clinics run on referrals — faxed, scanned, often messy. ChartPrepper turns each one, plus the records and the patient's own intake, into a prepped chart and a ready note. Every sentence is anchored to its source: if it can't be traced to the record, it doesn't get written. You check the note at a glance.</p>
+    <div style="display: flex; gap: 12px; margin-top: 34px; flex-wrap: wrap; align-items: center;">
+      <a href="https://chart.translational.ca/login" target="_blank" rel="noopener" style="background: #00876f; color: #ffffff; font-size: 15.5px; font-weight: 500; padding: 14px 26px; border-radius: 9px;" style-hover="background: #005f4f; color: #ffffff;">Launch ChartPrepper →</a>
+      <a href="in-use.html" style="border: 1px solid #d7dee6; color: #0a1f33; font-size: 15.5px; font-weight: 500; padding: 14px 26px; border-radius: 9px;" style-hover="border-color: #0a1f33; color: #0a1f33;">See it in real use</a>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8494a4; margin-left: 4px;">In production · in daily clinical use</span>
+    </div>
+  </section>
+
+  <section id="how" style="max-width: 1200px; margin: 0 auto; padding: 0 32px 100px;">
+    <div style="border: 1px solid #e3e7ec; border-radius: 16px; background: #f8fafc; padding: 26px; box-shadow: 0 1px 2px rgba(13,21,32,0.04), 0 20px 50px -30px rgba(13,21,32,0.35);">
+      <div style="display: grid; grid-template-columns: 340px 76px 1fr; gap: 0; align-items: start;">
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em; color: #8494a4; text-transform: uppercase; padding-left: 2px;">Sources</div>
+
+          <div style="position: relative; background: #ffffff; border: 1px solid #e3e7ec; border-radius: 10px; padding: 13px 14px; overflow: hidden;">
+            <div style="position: absolute; left: 0; right: 0; height: 26px; top: 46px; background: linear-gradient(180deg, rgba(253,230,138,0) 0%, rgba(253,230,138,0.85) 40%, rgba(253,230,138,0.85) 60%, rgba(253,230,138,0) 100%); transform-origin: left center; animation: cpBand 14s 1.1s infinite;"></div>
+            <div style="position: relative; display: flex; align-items: center; gap: 7px; margin-bottom: 11px;">
+              <div style="width: 5px; height: 5px; border-radius: 50%; background: #00876f;"></div>
+              <span style="font-size: 12.5px; font-weight: 600; color: #0a1f33;">Referral letter</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #8494a4; margin-left: auto;">fax · 3 pp</span>
             </div>
+            <div style="position: relative; display: flex; flex-direction: column; gap: 6px; transform: rotate(-0.6deg);">
+              <div style="height: 6px; border-radius: 2px; background: #dfe5ec; width: 92%;"></div>
+              <div style="height: 6px; border-radius: 2px; background: #cfd8e2; width: 78%;"></div>
+              <div style="height: 6px; border-radius: 2px; background: #dfe5ec; width: 88%;"></div>
+              <div style="height: 6px; border-radius: 2px; background: #cfd8e2; width: 61%;"></div>
+              <div style="height: 6px; border-radius: 2px; background: #e6eaef; width: 84%;"></div>
+            </div>
+          </div>
+
+          <div style="position: relative; background: #ffffff; border: 1px solid #e3e7ec; border-radius: 10px; padding: 13px 14px; overflow: hidden;">
+            <div style="position: absolute; left: 0; right: 0; height: 22px; top: 62px; background: linear-gradient(180deg, rgba(253,230,138,0) 0%, rgba(253,230,138,0.85) 40%, rgba(253,230,138,0.85) 60%, rgba(253,230,138,0) 100%); transform-origin: left center; animation: cpBand 14s 4.3s infinite;"></div>
+            <div style="position: relative; display: flex; align-items: center; gap: 7px; margin-bottom: 11px;">
+              <div style="width: 5px; height: 5px; border-radius: 50%; background: #005f4f;"></div>
+              <span style="font-size: 12.5px; font-weight: 600; color: #0a1f33;">Prior records</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #8494a4; margin-left: auto;">41 pp · scanned</span>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; gap: 6px;">
+              <div style="height: 6px; border-radius: 2px; background: #dfe5ec; width: 86%;"></div>
+              <div style="height: 6px; border-radius: 2px; background: #cfd8e2; width: 94%;"></div>
+              <div style="height: 6px; border-radius: 2px; background: #dfe5ec; width: 70%;"></div>
+              <div style="height: 6px; border-radius: 2px; background: #e6eaef; width: 81%;"></div>
+            </div>
+          </div>
+
+          <div style="position: relative; background: #ffffff; border: 1px solid #e3e7ec; border-radius: 10px; padding: 13px 14px; overflow: hidden;">
+            <div style="position: absolute; left: 0; right: 0; height: 22px; top: 60px; background: linear-gradient(180deg, rgba(253,230,138,0) 0%, rgba(253,230,138,0.85) 40%, rgba(253,230,138,0.85) 60%, rgba(253,230,138,0) 100%); transform-origin: left center; animation: cpBand 14s 5.9s infinite;"></div>
+            <div style="position: relative; display: flex; align-items: center; gap: 7px; margin-bottom: 11px;">
+              <div style="width: 5px; height: 5px; border-radius: 50%; background: #9a3412;"></div>
+              <span style="font-size: 12.5px; font-weight: 600; color: #0a1f33;">Patient intake</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #8494a4; margin-left: auto;">8 answers</span>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; gap: 7px;">
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <div style="height: 6px; border-radius: 2px; background: #dfe5ec; width: 58%;"></div>
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: #005f4f; border: 1px solid #cfe6ec; border-radius: 4px; padding: 1px 5px;">Yes</div>
+              </div>
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <div style="height: 6px; border-radius: 2px; background: #cfd8e2; width: 66%;"></div>
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: #8494a4; border: 1px solid #e3e7ec; border-radius: 4px; padding: 1px 5px;">No</div>
+              </div>
+              <div style="height: 6px; border-radius: 2px; background: #e6eaef; width: 74%;"></div>
+            </div>
+          </div>
         </div>
+
+        <div style="position: relative; height: 330px; display: grid; place-items: center; overflow: hidden;">
+          <div style="position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: linear-gradient(180deg, rgba(0,135,111,0) 0%, rgba(0,135,111,0.22) 20%, rgba(0,135,111,0.22) 80%, rgba(0,135,111,0) 100%);"></div>
+          <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 46px; height: 46px; margin-left: 0; background: radial-gradient(circle, rgba(0,135,111,0.28) 0%, rgba(0,135,111,0) 70%); animation: cpSweep 14s 0.3s infinite;"></div>
+          <div style="position: relative; background: #ffffff; border: 1px solid #d7e3f4; border-radius: 999px; padding: 7px 11px; font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; color: #00876f; white-space: nowrap; animation: cpPulse 3.5s infinite;">TRACE</div>
+        </div>
+
+        <div style="background: #ffffff; border: 1px solid #e3e7ec; border-radius: 12px; overflow: hidden;">
+          <div style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid #edf1f5;">
+            <span style="font-size: 13px; font-weight: 600; color: #0a1f33;">09_WHITFIELD_Carol_urge_incontinence</span>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #8494a4;">draft note</span>
+            <span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #92400e; background: #fffbeb; border: 1px solid #fde68a; border-radius: 5px; padding: 3px 8px;">VERIFY (1)</span>
+          </div>
+
+          <div style="padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 14px;">
+
+            <div style="display: flex; gap: 14px; align-items: flex-start; animation: cpIn 14s 1.0s infinite; opacity: 0;">
+              <div style="flex: 1; font-size: 14px; line-height: 1.5; color: #0a1f33;">67-year-old female with urge urinary incontinence, up to 6 leaks per day, refractory to solifenacin and mirabegron.</div>
+              <div style="width: 170px; flex: none; border-left: 2px solid #fde68a; padding-left: 9px;">
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: #92400e; letter-spacing: 0.05em;">REFERRAL · p.1</div>
+                <div style="font-size: 11px; line-height: 1.4; color: #6b7684; font-style: italic; margin-top: 3px;">"…up to 6 leaks per day, refractory to solifenacin and subsequently mirabegron…"</div>
+              </div>
+            </div>
+            <div style="height: 1px; background: #f1f4f7; transform-origin: left; animation: cpWire 14s 1.0s infinite; opacity: 0;"></div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start; animation: cpIn 14s 2.7s infinite; opacity: 0;">
+              <div style="flex: 1; font-size: 14px; line-height: 1.5; color: #0a1f33;">Each agent trialled longer than 8 weeks. No hematuria, no recurrent infection, culture negative.</div>
+              <div style="width: 170px; flex: none; border-left: 2px solid #fde68a; padding-left: 9px;">
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: #92400e; letter-spacing: 0.05em;">REFERRAL · p.1</div>
+                <div style="font-size: 11px; line-height: 1.4; color: #6b7684; font-style: italic; margin-top: 3px;">"(each trialed &gt;8 weeks). No hematuria, no recurrent infection, negative culture."</div>
+              </div>
+            </div>
+            <div style="height: 1px; background: #f1f4f7; transform-origin: left; animation: cpWire 14s 2.7s infinite; opacity: 0;"></div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start; animation: cpIn 14s 4.2s infinite; opacity: 0;">
+              <div style="flex: 1; font-size: 14px; line-height: 1.5; color: #0a1f33;">PMHx: overactive bladder, hypertension, anxiety, osteoarthritis. Vaginal hysterectomy 2010.</div>
+              <div style="width: 170px; flex: none; border-left: 2px solid #cfe6ec; padding-left: 9px;">
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: #005f4f; letter-spacing: 0.05em;">RECORDS · p.14</div>
+                <div style="font-size: 11px; line-height: 1.4; color: #6b7684; font-style: italic; margin-top: 3px;">"Op note — vaginal hysterectomy, 2010-04-11."</div>
+              </div>
+            </div>
+            <div style="height: 1px; background: #f1f4f7; transform-origin: left; animation: cpWire 14s 4.2s infinite; opacity: 0;"></div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start; animation: cpIn 14s 5.8s infinite; opacity: 0;">
+              <div style="flex: 1; font-size: 14px; line-height: 1.5; color: #0a1f33;">Patient reports no bladder or pelvic pain and no dyspareunia; denies new neurological symptoms.</div>
+              <div style="width: 170px; flex: none; border-left: 2px solid #f3d6c6; padding-left: 9px;">
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: #9a3412; letter-spacing: 0.05em;">INTAKE · Q3, Q6</div>
+                <div style="font-size: 11px; line-height: 1.4; color: #6b7684; font-style: italic; margin-top: 3px;">"Pain during or after sex? — No" · answered 2 days before visit</div>
+              </div>
+            </div>
+            <div style="height: 1px; background: #f1f4f7; transform-origin: left; animation: cpWire 14s 5.8s infinite; opacity: 0;"></div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start; animation: cpIn 14s 7.5s infinite; opacity: 0;">
+              <div style="flex: 1; font-size: 14px; line-height: 1.5; color: #a4adb8; text-decoration: line-through; text-decoration-color: #d6b3a6;">Symptoms began approximately 8 months ago.</div>
+              <div style="width: 170px; flex: none; border-left: 2px solid #e8ecf1; padding-left: 9px;">
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: #a4adb8; letter-spacing: 0.05em;">NO SOURCE</div>
+                <div style="font-size: 11px; line-height: 1.4; color: #8494a4; margin-top: 3px;">Not written. Flagged for you to confirm.</div>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 7px; margin-top: 2px; animation: cpIn 14s 8.6s infinite; opacity: 0;">
+              <div style="width: 2px; height: 15px; background: #00876f; animation: cpCursor 1s infinite;"></div>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #8494a4;">4 of 5 claims anchored · 1 held back</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #8494a4; text-align: center; margin: 18px 0 0;">Every line carries its page and its quote. Anything that can't, doesn't get written.</p>
+  </section>
+
+  <section style="max-width: 1200px; margin: 0 auto; padding: 100px 32px 100px;">
+    <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center;">
+      <div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em; color: #8494a4; text-transform: uppercase; margin-bottom: 14px;">From a colleague</div>
+        <blockquote style="font-family: 'IBM Plex Sans', sans-serif; font-size: 25px; line-height: 1.32; letter-spacing: -0.02em; font-weight: 500; margin: 0; color: #0a1f33; text-wrap: pretty;">"I lean on it every clinic week. It helps me deliver more thorough care, more efficiently."</blockquote>
+        <div style="margin-top: 18px; font-size: 14.5px; color: #4a5a6a;"><span style="font-weight: 600; color: #0a1f33;">Dr. Garbens</span> · Urologist, Maple Urology</div>
+      </div>
+      <div>
+        <p style="font-size: 13px; color: #8494a4; margin: 0 0 16px;">In daily use at specialist urology clinics</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <span style="border: 1px solid #e3e7ec; border-radius: 8px; padding: 9px 16px; font-size: 14px; color: #4a5a6a;">Toronto West Urology</span>
+          <span style="border: 1px solid #e3e7ec; border-radius: 8px; padding: 9px 16px; font-size: 14px; color: #4a5a6a;">Maple Urology</span>
+          <span style="border: 1px solid #e3e7ec; border-radius: 8px; padding: 9px 16px; font-size: 14px; color: #4a5a6a;">Élevé Regenerative</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width: 1200px; margin: 0 auto; padding: 100px 32px;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em; color: #8494a4; text-transform: uppercase; margin-bottom: 14px;">From real clinical use</div>
+    <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 40px; letter-spacing: -0.03em; font-weight: 600; margin: 0 0 40px; max-width: 640px; line-height: 1.1;">3,000+ cases processed. 0.64% error rate in audit.</h2>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+      <div style="border: 1px solid #e3e7ec; border-radius: 14px; padding: 26px;">
+        <div style="font-family: 'IBM Plex Sans', sans-serif; font-size: 44px; font-weight: 600; letter-spacing: -0.03em; color: #00876f; line-height: 1;">3,000<span style="font-size: 0.55em; opacity: 0.6;">+</span></div>
+        <div style="font-size: 15px; font-weight: 600; margin: 14px 0 6px;">Real referrals processed</div>
+        <p style="font-size: 14px; line-height: 1.5; color: #6b7684; margin: 0;">In daily clinical practice, to date.</p>
+      </div>
+      <div style="border: 1px solid #e3e7ec; border-radius: 14px; padding: 26px;">
+        <div style="font-family: 'IBM Plex Sans', sans-serif; font-size: 44px; font-weight: 600; letter-spacing: -0.03em; color: #00876f; line-height: 1;">0.64<span style="font-size: 0.55em; opacity: 0.6;">%</span></div>
+        <div style="font-size: 15px; font-weight: 600; margin: 14px 0 6px;">Error rate</div>
+        <p style="font-size: 14px; line-height: 1.5; color: #6b7684; margin: 0;">Prospective audit of 50 referrals · 785 statements.</p>
+      </div>
+      <div style="border: 1px solid #e3e7ec; border-radius: 14px; padding: 26px;">
+        <div style="font-family: 'IBM Plex Sans', sans-serif; font-size: 44px; font-weight: 600; letter-spacing: -0.03em; color: #00876f; line-height: 1;">0</div>
+        <div style="font-size: 15px; font-weight: 600; margin: 14px 0 6px;">Fabricated facts</div>
+        <p style="font-size: 14px; line-height: 1.5; color: #6b7684; margin: 0;">Zero fabrications in the audited subset.</p>
+      </div>
+      <div style="border: 1px solid #e3e7ec; border-radius: 14px; padding: 26px;">
+        <div style="font-family: 'IBM Plex Sans', sans-serif; font-size: 44px; font-weight: 600; letter-spacing: -0.03em; color: #00876f; line-height: 1;">3</div>
+        <div style="font-size: 15px; font-weight: 600; margin: 14px 0 6px;">Production modes</div>
+        <p style="font-size: 14px; line-height: 1.5; color: #6b7684; margin: 0;">One architecture, one anchoring guarantee.</p>
+      </div>
+    </div>
+    <p style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #8494a4; margin: 22px 0 0;">Internal QA · single specialty · not a clinical trial. Published benchmarks for prompt-engineered approaches sit around ~1.5% hallucination and 3.45% omission (Asgari et al., <span style="font-style: italic;">npj Digital Medicine</span>, 2025) — tasks and denominators differ, so this is not a direct comparison.</p>
+  </section>
+
+  <!-- ── The re-read problem (thesis + compare) ── -->
+  <section style="max-width: 1200px; margin: 0 auto; padding: 100px 32px 100px;">
+    <div style="display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 48px; margin-bottom: 40px;">
+      <div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em; color: #8494a4; text-transform: uppercase; margin-bottom: 14px;">Why this matters</div>
+        <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 40px; letter-spacing: -0.03em; font-weight: 600; margin: 0; line-height: 1.1;">The re-read problem.</h2>
+      </div>
+      <div>
+        <p style="font-size: 17px; line-height: 1.6; color: #4a5a6a; margin: 0 0 20px;">Most clinical AI today ships fluent prose, and the doctor has to re-read it to trust it. A 2026 VA evaluation of eleven ambient scribes found AI-generated notes scored lower than human notes on every one of the ten PDQI-9 quality measures.</p>
+        <p style="font-size: 17px; line-height: 1.6; color: #4a5a6a; margin: 0;">We don't try to make the model write better. We change what the model is allowed to write. If a sentence can't be anchored to something in the source, the system doesn't produce it.</p>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div style="border: 1px solid #e3e7ec; border-radius: 14px; padding: 28px; background: #fbfcfd;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: #a06a3a;">Most clinical AI today</span>
+        <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; letter-spacing: -0.02em; margin: 12px 0 10px;">Write first, audit later</h3>
+        <p style="font-size: 14.5px; line-height: 1.55; color: #6b7684; margin: 0;">The model generates a polished note. The doctor has to compare it line-by-line to whatever the source was — the encounter, the referral, the chart — to know what's missing or invented.</p>
+      </div>
+      <div style="border: 1px solid #cfe2dc; border-radius: 14px; padding: 28px; background: #f2f9f6;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: #0f7a4d;">ChartPrepper</span>
+        <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; letter-spacing: -0.02em; margin: 12px 0 10px;">Anchor first, then write</h3>
+        <p style="font-size: 14.5px; line-height: 1.55; color: #4a5a6a; margin: 0;">Every sentence carries a marker pointing back to the span in the source it came from. Anything the system can't anchor never gets written. Checking the output means glancing at anchors, not re-reading prose.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── One product, three modes ── -->
+  <section style="max-width: 1200px; margin: 0 auto; padding: 0 32px 100px;">
+    <div style="max-width: 640px; margin-bottom: 36px;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em; color: #8494a4; text-transform: uppercase; margin-bottom: 14px;">The product</div>
+      <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 40px; letter-spacing: -0.03em; font-weight: 600; margin: 0 0 16px; line-height: 1.1;">One product, three jobs.</h2>
+      <p style="font-size: 17px; line-height: 1.6; color: #4a5a6a; margin: 0;">Turning paper referrals into structured summaries, helping doctors write notes with citations to the source, and expanding short dictated seed notes into a full clinical note. All three share the same anchoring guarantee.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+      <div style="border: 1px solid #e3e7ec; border-radius: 14px; padding: 26px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #00876f; margin-bottom: 12px;">MODE 01</div>
+        <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 19px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 10px;">Referral summarization</h3>
+        <p style="font-size: 14.5px; line-height: 1.55; color: #6b7684; margin: 0;">Faxed or scanned PDF referrals turned into structured clinical summaries. Every extracted fact points back to where in the document it came from. Anything we can't anchor isn't included.</p>
+      </div>
+      <div style="border: 1px solid #e3e7ec; border-radius: 14px; padding: 26px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #00876f; margin-bottom: 12px;">MODE 02</div>
+        <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 19px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 10px;">Note generation</h3>
+        <p style="font-size: 14.5px; line-height: 1.55; color: #6b7684; margin: 0;">The doctor adds their own notes and gets a finished clinical note. Each sentence shows a small <code style="font-family: 'IBM Plex Mono', monospace; font-size: 0.9em; background: #f1f4f7; padding: 1px 4px; border-radius: 4px;">[1]</code> pointing at its source. The markers strip off automatically when you paste into the EMR.</p>
+      </div>
+      <div style="border: 1px solid #e3e7ec; border-radius: 14px; padding: 26px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #00876f; margin-bottom: 12px;">MODE 03</div>
+        <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 19px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 10px;">Seed-note expansion</h3>
+        <p style="font-size: 14.5px; line-height: 1.55; color: #6b7684; margin: 0;">The doctor types a brief seed note; the system expands it into the standard note structure. Anything not in the seed doesn't make it into the expansion.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="trust" style="background: #f8fafc; border-top: 1px solid #eef1f5; border-bottom: 1px solid #eef1f5;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 100px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;">
+      <div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #005f4f; margin-bottom: 16px;">Provenance</div>
+        <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 40px; letter-spacing: -0.03em; font-weight: 600; margin: 0 0 18px; line-height: 1.1;">Check the note at a glance</h2>
+        <p style="font-size: 17px; line-height: 1.6; color: #4a5a6a; margin: 0 0 22px; text-wrap: pretty;">Open the provenance panel and the chart reads back to you in two columns: what was written, and where it came from. Click any line to jump to the highlighted passage in the original fax.</p>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; gap: 12px;"><div style="width: 6px; height: 6px; border-radius: 50%; background: #00876f; margin-top: 8px; flex: none;"></div><div><div style="font-size: 15px; font-weight: 600;">Quote-level anchoring</div><div style="font-size: 14px; color: #6b7684; line-height: 1.5;">Each field stores the verbatim span, page, and match strength.</div></div></div>
+          <div style="display: flex; gap: 12px;"><div style="width: 6px; height: 6px; border-radius: 50%; background: #00876f; margin-top: 8px; flex: none;"></div><div><div style="font-size: 15px; font-weight: 600;">Refuse-to-guess by default</div><div style="font-size: 14px; color: #6b7684; line-height: 1.5;">Unsupported inferences are withheld and listed under VERIFY.</div></div></div>
+          <div style="display: flex; gap: 12px;"><div style="width: 6px; height: 6px; border-radius: 50%; background: #00876f; margin-top: 8px; flex: none;"></div><div><div style="font-size: 15px; font-weight: 600;">Your edits stay yours</div><div style="font-size: 14px; color: #6b7684; line-height: 1.5;">Anything you type in My Notes is never rewritten, only appended to.</div></div></div>
+        </div>
+      </div>
+
+      <div style="background: #ffffff; border: 1px solid #e3e7ec; border-radius: 14px; overflow: hidden; box-shadow: 0 24px 60px -34px rgba(13,21,32,0.4);">
+        <div style="display: flex; align-items: center; gap: 10px; padding: 11px 15px; border-bottom: 1px solid #edf1f5; background: #fcfdfe;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; color: #6b7684;">SOURCE PROVENANCE</span>
+          <span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #92400e; background: #fffbeb; border: 1px solid #fde68a; border-radius: 5px; padding: 3px 8px;">VERIFY (2)</span>
+        </div>
+        <div style="padding: 16px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #00876f; margin-bottom: 8px;">REFERRAL REASON</div>
+          <div style="font-size: 13.5px; line-height: 1.55; color: #0a1f33; font-weight: 600;">67F with urge urinary incontinence refractory to two agents — please assess for intravesical Botox.</div>
+          <div style="margin-top: 12px; border-left: 3px solid #00876f; background: #fbfcfe; padding: 10px 12px;">
+            <div style="font-size: 12.5px; line-height: 1.55; color: #4a5a6a; font-style: italic;">"Reason for referral: <mark style="background: #fef3c7; color: #0a1f33;">67F with urge urinary incontinence refractory to two agents… Bladder diary and post-void residual are attached.</mark>"</div>
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #8494a4; margin-top: 7px;">~ p.1 · 100% match</div>
+          </div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #00876f; margin: 18px 0 8px;">PATIENT DEMOGRAPHICS</div>
+          <div style="font-size: 13.5px; line-height: 1.55; color: #0a1f33; font-weight: 600;">67-year-old female</div>
+          <div style="margin-top: 10px; border-left: 3px solid #cfd8e2; background: #fbfcfe; padding: 10px 12px;">
+            <div style="font-size: 12.5px; color: #4a5a6a; font-style: italic;">"1958-10-25 (67 F)"</div>
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #8494a4; margin-top: 7px;">~ p.1 · header block</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="platform" style="max-width: 1200px; margin: 0 auto; padding: 100px 32px;">
+    <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 40px; letter-spacing: -0.03em; font-weight: 600; margin: 0 0 12px; line-height: 1.1;">The whole pre-visit workflow, in one tab</h2>
+    <p style="font-size: 17px; color: #4a5a6a; margin: 0 0 40px; max-width: 620px;">Upload to note, without leaving the chart.</p>
+
+    <div style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 20px;">
+
+      <div style="border: 1px solid #e3e7ec; border-radius: 14px; padding: 26px; display: flex; flex-direction: column; gap: 20px;">
+        <div style="background: #f8fafc; border: 1px solid #edf1f5; border-radius: 10px; padding: 14px;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+            <span style="font-size: 12.5px; font-weight: 600;">Pre-visit intake</span>
+            <span style="font-size: 11.5px; color: #8494a4;">assistant checklist · saved to the chart</span>
+          </div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.08em; color: #005f4f; margin-bottom: 6px;">PAIN</div>
+          <div style="font-size: 12.5px; color: #0a1f33; margin-bottom: 8px;">Do you experience any pain in your bladder area or pelvis?</div>
+          <div style="display: flex; gap: 7px;">
+            <span style="border: 1px solid #d7dee6; border-radius: 6px; padding: 4px 12px; font-size: 12px;">Yes</span>
+            <span style="border: 1px solid #00876f; background: #f2f7fe; color: #00876f; border-radius: 6px; padding: 4px 12px; font-size: 12px;">No</span>
+            <span style="border: 1px solid #d7dee6; border-radius: 6px; padding: 4px 12px; font-size: 12px;">Unsure</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-size: 19px; font-weight: 600; margin-bottom: 8px;">The patient fills the gaps before they arrive</div>
+          <p style="font-size: 14.5px; line-height: 1.55; color: #6b7684; margin: 0;">ChartPrepper reads the referral, works out what's missing for your specialty, and builds a short questionnaire. The patient confirms their year of birth and answers in a few minutes; answers land in the chart as citable sources.</p>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #e3e7ec; border-radius: 14px; padding: 26px; display: flex; flex-direction: column; gap: 20px;">
+        <div style="background: #f8fafc; border: 1px solid #edf1f5; border-radius: 10px; padding: 14px;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <span style="font-size: 12.5px; font-weight: 600;">AI colleague</span>
+            <span style="font-size: 11.5px; color: #8494a4;">curbside second opinion</span>
+          </div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.08em; color: #7c3aed; margin-bottom: 6px;">TESTS TO CONSIDER</div>
+          <div style="font-size: 12.5px; line-height: 1.5; color: #0a1f33; margin-bottom: 10px;"><strong>Urodynamic study</strong> — confirm detrusor overactivity, rule out occult outlet obstruction.</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.08em; color: #b91c1c; margin-bottom: 6px;">RED FLAGS · DON'T MISS</div>
+          <div style="font-size: 12.5px; line-height: 1.5; color: #b91c1c;">⚠ New or progressive neurological deficits.</div>
+        </div>
+        <div>
+          <div style="font-size: 19px; font-weight: 600; margin-bottom: 8px;">A second read, kept out of the note</div>
+          <p style="font-size: 14.5px; line-height: 1.55; color: #6b7684; margin: 0;">Differentials, questions to ask, tests to consider and red flags — saved to the record as advisory, never as note content. Decision support stays labelled as decision support.</p>
+        </div>
+      </div>
     </div>
 
-    <!-- =================== PROOF (clinics + colleague quote) =================== -->
-    <div class="proof">
-        <div class="proof-grid">
-            <div class="proof-quote">
-                <div class="eyebrow">From a colleague</div>
-                <blockquote>I lean on it every clinic week. It helps me deliver more thorough care, more efficiently.</blockquote>
-                <cite><span class="who">Dr. Garbens</span><span class="role">Urologist · Maple Urology</span></cite>
-            </div>
-            <div>
-                <div class="proof-head"><span style="color: var(--accent-deep);">— In daily use at</span><span>Specialist urology clinics</span></div>
-                <div class="marquee">
-                    <div class="marquee-track">
-                        <div class="clinic txt">Toronto West Urology<span class="lab">Toronto, ON</span></div>
-                        <div class="clinic"><img src="assets/clinic-maple.png" alt="Maple Urology"></div>
-                        <div class="clinic"><img src="assets/clinic-eleve.png" alt="Élevé Regenerative"></div>
-                        <div class="clinic txt">Toronto West Urology<span class="lab">Toronto, ON</span></div>
-                        <div class="clinic"><img src="assets/clinic-maple.png" alt="Maple Urology"></div>
-                        <div class="clinic"><img src="assets/clinic-eleve.png" alt="Élevé Regenerative"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px;">
+      <div style="border: 1px solid #e3e7ec; border-radius: 14px; padding: 24px;">
+        <div style="font-size: 17px; font-weight: 600; margin-bottom: 7px;">Messy input welcome</div>
+        <p style="font-size: 14px; line-height: 1.55; color: #6b7684; margin: 0;">Faxes, photographs of paper, 40-page PDFs with three patients in them. Split, deduplicated, and filed by visit date.</p>
+      </div>
+      <div style="border: 1px solid #e3e7ec; border-radius: 14px; padding: 24px;">
+        <div style="font-size: 17px; font-weight: 600; margin-bottom: 7px;">Note templates that match your day</div>
+        <p style="font-size: 14px; line-height: 1.55; color: #6b7684; margin: 0;">Consult / referral, or consult plus same-day procedure. Copy the whole thing, or specialty-only.</p>
+      </div>
+      <div style="border: 1px solid #e3e7ec; border-radius: 14px; padding: 24px;">
+        <div style="font-size: 17px; font-weight: 600; margin-bottom: 7px;">Lands in your EMR</div>
+        <p style="font-size: 14px; line-height: 1.55; color: #6b7684; margin: 0;">Calendar sync, folder or list views, and a clipboard-clean note that pastes without fighting the formatting.</p>
+      </div>
     </div>
+  </section>
 
-    <!-- =================== THESIS / WHY NOW =================== -->
-    <section>
-        <div class="wrap">
-            <div class="sec-head">
-                <div>
-                    <div class="eyebrow">Why this matters</div>
-                    <h2 class="h-1">The re-read problem.</h2>
-                </div>
-                <div>
-                    <p class="lede" style="margin-bottom: 24px;">
-                        Most clinical AI today ships fluent prose, and the doctor has to re-read
-                        it to trust it. A 2026 VA evaluation of eleven ambient scribes found
-                        AI-generated notes scored lower than human notes on every one of the ten
-                        PDQI-9 quality measures.
-                    </p>
-                    <p class="lede">
-                        We don't try to make the model write better. We change what the model is
-                        allowed to write. If a sentence can't be anchored to something in the
-                        source, the system doesn't produce it.
-                    </p>
-                </div>
-            </div>
-
-            <div class="compare">
-                <div class="compare-col bad">
-                    <span class="compare-tag">Most clinical AI today</span>
-                    <h3 class="h-3">Write first, audit later</h3>
-                    <p>The model generates a polished note. The doctor has to compare it line-by-line
-                       to whatever the source was — the encounter, the referral, the chart — to know
-                       what's missing or invented.</p>
-                </div>
-                <div class="compare-col good">
-                    <span class="compare-tag">ChartPrepper</span>
-                    <h3 class="h-3">Anchor first, then write</h3>
-                    <p>Every sentence carries a marker pointing back to the span in the source it
-                       came from. Anything the system can't anchor never gets written. Checking the
-                       output means glancing at anchors, not re-reading prose.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- =================== EVIDENCE =================== -->
-    <section class="tight">
-        <div class="wrap">
-            <div class="evidence">
-                <div>
-                    <div class="eyebrow">From real clinical use</div>
-                    <h2>3,000+ cases processed. <em>0.64%</em> error rate in audit.</h2>
-                    <p>
-                        ChartPrepper has processed over 3,000 referrals in daily clinical practice.
-                        A prospective accuracy audit of 50 referrals (785 individual statements)
-                        showed a ~0.64% error rate, with zero fabrications observed in the audited
-                        subset. For context, published benchmarks for prompt-engineered approaches
-                        sit around ~1.5% hallucination and 3.45% omission (Asgari et al.,
-                        <em>npj Digital Medicine</em>, 2025) — though tasks and denominators differ,
-                        so this is not a direct comparison.
-                    </p>
-                    <div class="evidence-cite">Internal QA · Single specialty · Not a clinical trial</div>
-                </div>
-                <div class="evidence-stat">
-                    <div class="evidence-stat-num">3,000<span style="font-size: 0.5em; opacity: 0.6;">+</span></div>
-                    <div class="evidence-stat-label">Real referrals<br>processed in daily use</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- =================== CLINICS =================== -->
-
-    <!-- =================== TESTIMONIAL =================== -->
-
-    <!-- =================== PRODUCT (ChartPrepper, the one product) =================== -->
-    <section>
-        <div class="wrap">
-            <div class="sec-head">
-                <div>
-                    <div class="eyebrow">The product</div>
-                    <h2 class="h-1">ChartPrepper.</h2>
-                </div>
-                <div>
-                    <p class="lede">
-                        One product, three jobs it does — turning paper referrals into structured
-                        summaries, helping doctors write notes with citations to the source, and
-                        expanding short dictated seed notes into a full clinical note. All three
-                        share the same anchoring guarantee.
-                    </p>
-                </div>
-            </div>
-
-            <div class="card-grid cols-3">
-                <div class="card">
-                    <div class="card-num">Mode 01</div>
-                    <h3 class="h-3">Referral summarization</h3>
-                    <p>Faxed or scanned PDF referrals turned into structured clinical summaries.
-                       Every extracted fact points back to where in the document it came from.
-                       Anything we can't anchor isn't included.</p>
-                </div>
-                <div class="card">
-                    <div class="card-num">Mode 02</div>
-                    <h3 class="h-3">Note generation</h3>
-                    <p>The doctor adds their own notes and gets a finished clinical note. Each
-                       sentence shows a small <code>[1]</code> pointing at its source. The markers
-                       strip off automatically when you paste into the EMR.</p>
-                </div>
-                <div class="card">
-                    <div class="card-num">Mode 03</div>
-                    <h3 class="h-3">Seed-note expansion</h3>
-                    <p>The doctor types a brief seed note; the system expands it into the standard
-                       note structure. Anything not in the seed doesn't make it into the expansion.</p>
-                </div>
-            </div>
-
-            <div style="margin-top: 40px; display: flex; gap: 12px; flex-wrap: wrap;">
-                <a href="chartprep.html" class="btn btn-primary">Read the full product page →</a>
-                <a href="https://chart.translational.ca/login" target="_blank" rel="noopener" class="btn btn-ghost">Launch ChartPrepper</a>
-            </div>
-
-            <div class="shot" style="margin-top: 56px;">
-                <img src="assets/chartprep-provenance.png" alt="ChartPrepper summary view with inline citations and source provenance panel" loading="lazy">
-            </div>
-            <div class="shot-caption">— Inline citations + source provenance panel · ChartPrepper</div>
-        </div>
-    </section>
-
-    <!-- =================== PULL QUOTE =================== -->
-    <section class="tight" style="background: var(--paper-warm);">
-        <div class="wrap">
-            <div class="sec-head" style="margin-bottom: 0; align-items: center;">
-                <div>
-                    <div class="eyebrow">Practitioner experience</div>
-                    <p class="small">VHA evaluation, 11 AI scribe tools<br>
-                       Reddy et al., <em>Annals of Internal Medicine</em>, 2026</p>
-                </div>
-                <div>
-                    <div class="pullquote">
-                        "It certainly requires going back and making sure the notes are accurate."
-                        <div class="pullquote-cite">— Physician using a commercial AI scribe</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- =================== TEAM TEASER =================== -->
-    <section>
-        <div class="wrap">
-            <div class="sec-head">
-                <div>
-                    <div class="eyebrow">Who's building this</div>
-                    <h2 class="h-1">A urologist who also writes the code.</h2>
-                </div>
-                <div>
-                    <p class="lede" style="margin-bottom: 24px;">
-                        <strong>Hanmu Yan, MD FRCSC.</strong> Practicing Canadian urologist.
-                        Every tool started as something he wanted in his own clinic, and he is
-                        the first person to use it on real patient work.
-                    </p>
-                    <p class="lede">
-                        That means anything broken gets caught the same week it ships.
-                    </p>
-                    <a href="team.html" class="btn-link" style="margin-top: 24px; display: inline-block;">More about the founder →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- =================== INVESTOR CTA =================== -->
-    <div class="investor">
-        <div class="investor-inner">
-            <div class="eyebrow">See it for yourself</div>
-            <h2>Built by a doctor who uses it every clinic day.</h2>
-            <p>
-                If the re-read problem rings true — and you want clinical AI built by someone who
-                actually uses it in his own clinic — take a look at how it holds up in real use.
-            </p>
-            <div class="investor-actions">
-                <a href="in-use.html" class="btn btn-primary">See it in real use →</a>
-                <a href="mailto:yan@translational.ca" class="btn btn-ghost">yan@translational.ca</a>
-            </div>
-        </div>
+  <section style="background: #0a1f33; color: #ffffff;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 100px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;">
+      <div>
+        <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 36px; letter-spacing: -0.03em; font-weight: 600; margin: 0 0 16px; line-height: 1.15;">The most private thing a clinic hands to software</h2>
+        <p style="font-size: 16.5px; line-height: 1.6; color: #a9bacb; margin: 0;">Records stay scoped to the practice. Nothing trains a shared model, every read and write is logged against a user, and provenance means an audit is a matter of reading, not reconstructing.</p>
+        <p style="font-size: 13.5px; line-height: 1.6; color: #6f8399; margin: 16px 0 0;">Hosted on SOC 2 Type II&nbsp;/&nbsp;ISO 27001-certified Google Cloud infrastructure in Canada.</p>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <span style="border: 1px solid #2f4459; border-radius: 8px; padding: 11px 18px; font-size: 14px; color: #cddae6;">PHIPA-aligned</span>
+        <span style="border: 1px solid #2f4459; border-radius: 8px; padding: 11px 18px; font-size: 14px; color: #cddae6;">PIPEDA-aligned</span>
+        <span style="border: 1px solid #2f4459; border-radius: 8px; padding: 11px 18px; font-size: 14px; color: #cddae6;">Hosted in Canada</span>
+        <span style="border: 1px solid #2f4459; border-radius: 8px; padding: 11px 18px; font-size: 14px; color: #cddae6;">256-bit encrypted</span>
+        <span style="border: 1px solid #2f4459; border-radius: 8px; padding: 11px 18px; font-size: 14px; color: #cddae6;">Audit logging</span>
+      </div>
     </div>
+  </section>
+
+  <section id="specialties" style="max-width: 1200px; margin: 0 auto; padding: 100px 32px;">
+    <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 40px; letter-spacing: -0.03em; font-weight: 600; margin: 0 0 12px; line-height: 1.1;">It knows what your specialty asks first</h2>
+    <p style="font-size: 17px; color: #4a5a6a; margin: 0 0 36px; max-width: 640px;">The same referral gets prepped differently depending on who's reading it. Field sets, intake questions and note structure follow the specialty.</p>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+      <div style="border: 1px solid #e3e7ec; border-radius: 12px; padding: 20px;"><div style="font-size: 15.5px; font-weight: 600; margin-bottom: 5px;">Urology</div><div style="font-size: 13.5px; color: #6b7684; line-height: 1.5;">PSA trends, bladder diaries, post-void residuals, prior agents and trial length.</div></div>
+      <div style="border: 1px solid #e3e7ec; border-radius: 12px; padding: 20px;"><div style="font-size: 15.5px; font-weight: 600; margin-bottom: 5px;">Gastroenterology</div><div style="font-size: 13.5px; color: #6b7684; line-height: 1.5;">Scope history, alarm features, biopsy results and dates pulled forward.</div></div>
+      <div style="border: 1px solid #e3e7ec; border-radius: 12px; padding: 20px;"><div style="font-size: 15.5px; font-weight: 600; margin-bottom: 5px;">Nephrology</div><div style="font-size: 13.5px; color: #6b7684; line-height: 1.5;">Creatinine and eGFR trajectory over every lab in the bundle, charted.</div></div>
+      <div style="border: 1px solid #e3e7ec; border-radius: 12px; padding: 20px;"><div style="font-size: 15.5px; font-weight: 600; margin-bottom: 5px;">Orthopedics</div><div style="font-size: 13.5px; color: #6b7684; line-height: 1.5;">Imaging reports, conservative-management history, function and pain scales.</div></div>
+      <div style="border: 1px solid #e3e7ec; border-radius: 12px; padding: 20px;"><div style="font-size: 15.5px; font-weight: 600; margin-bottom: 5px;">ENT</div><div style="font-size: 13.5px; color: #6b7684; line-height: 1.5;">Audiograms, duration and laterality, prior surgical notes surfaced first.</div></div>
+      <div style="border: 1px solid #e3e7ec; border-radius: 12px; padding: 20px;"><div style="font-size: 15.5px; font-weight: 600; margin-bottom: 5px;">Neurology</div><div style="font-size: 13.5px; color: #6b7684; line-height: 1.5;">Onset and progression timeline assembled across letters and imaging.</div></div>
+    </div>
+  </section>
+
+  <!-- ── Practitioner pull quote ── -->
+  <section style="max-width: 1200px; margin: 0 auto; padding: 100px 32px 40px;">
+    <div style="border-top: 1px solid #eef1f5; padding-top: 56px; display: grid; grid-template-columns: 0.7fr 1.3fr; gap: 48px; align-items: start;">
+      <div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em; color: #8494a4; text-transform: uppercase; margin-bottom: 12px;">Practitioner experience</div>
+        <p style="font-size: 13px; color: #8494a4; line-height: 1.5; margin: 0;">VHA evaluation, 11 AI scribe tools<br>Reddy et al., <span style="font-style: italic;">Annals of Internal Medicine</span>, 2026</p>
+      </div>
+      <blockquote style="font-family: 'IBM Plex Sans', sans-serif; font-size: 26px; line-height: 1.35; letter-spacing: -0.02em; font-weight: 500; margin: 0; color: #0a1f33; text-wrap: pretty;">"It certainly requires going back and making sure the notes are accurate."
+        <span style="display: block; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 400; color: #8494a4; margin-top: 16px; letter-spacing: 0.02em;">— Physician using a commercial AI scribe</span>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ── Who's building this ── -->
+  <section style="max-width: 1200px; margin: 0 auto; padding: 40px 32px 100px;">
+    <div style="display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 48px;">
+      <div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em; color: #8494a4; text-transform: uppercase; margin-bottom: 14px;">Who's building this</div>
+        <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 36px; letter-spacing: -0.03em; font-weight: 600; margin: 0; line-height: 1.12;">A urologist who also writes the code.</h2>
+      </div>
+      <div>
+        <p style="font-size: 17px; line-height: 1.6; color: #4a5a6a; margin: 0 0 18px;"><strong style="color: #0a1f33;">Hanmu Yan, MD FRCSC.</strong> Practicing Canadian urologist. Every tool started as something he wanted in his own clinic, and he is the first person to use it on real patient work.</p>
+        <p style="font-size: 17px; line-height: 1.6; color: #4a5a6a; margin: 0 0 20px;">That means anything broken gets caught the same week it ships.</p>
+        <a href="team.html" style="font-size: 15px; font-weight: 500; color: #00876f;">More about the founder →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="book" style="max-width: 1200px; margin: 0 auto; padding: 40px 32px 104px;">
+    <div style="border: 1px solid #e3e7ec; border-radius: 18px; background: #f8fafc; padding: 64px 48px; text-align: center;">
+      <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 42px; letter-spacing: -0.035em; font-weight: 600; margin: 0 0 14px; line-height: 1.08;">Bring one messy referral. We'll prep it.</h2>
+      <p style="font-size: 17px; color: #4a5a6a; margin: 0 auto 30px; max-width: 520px;">Your own bundle, your own note template. You'll see the citations before you decide anything.</p>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <a href="mailto:yan+websitesignup@translational.ca" style="display: inline-block; background: #00876f; color: #ffffff; font-size: 16px; font-weight: 500; padding: 15px 32px; border-radius: 9px;" style-hover="background: #005f4f; color: #ffffff;">Request pilot access →</a>
+        <a href="in-use.html" style="display: inline-block; border: 1px solid #d7dee6; color: #0a1f33; font-size: 16px; font-weight: 500; padding: 15px 32px; border-radius: 9px;" style-hover="border-color: #0a1f33; color: #0a1f33;">See it in real use</a>
+      </div>
+    </div>
+  </section>
+
+
+</div>
 </body>
 </html>

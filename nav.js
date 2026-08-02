@@ -14,7 +14,7 @@
                 <span></span><span></span><span></span>
             </button>
             <div class="nav-links">
-                <a href="chartprep.html" class="nav-link${isActive('chartprep.html')}">ChartPrepper</a>
+                <a href="/" class="nav-link${isActive('index.html')}">ChartPrepper</a>
                 <a href="team.html" class="nav-link${isActive('team.html')}">About</a>
                 <a href="https://chart.translational.ca/login" class="nav-cta" target="_blank" rel="noopener">Launch ChartPrepper →</a>
             </div>
@@ -30,7 +30,7 @@
             </div>
             <div class="foot-col">
                 <h4>Product</h4>
-                <a href="chartprep.html">ChartPrepper</a>
+                <a href="/">ChartPrepper</a>
             </div>
             <div class="foot-col">
                 <h4>Company</h4>
