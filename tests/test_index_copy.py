@@ -49,6 +49,15 @@ def test_contributor_byline_present_and_labeled_as_shipping_later():
     assert "app update" in LOW
 
 
+def test_contributor_graphic_shows_multiple_people():
+    # the "many hands, one chart" band: four distinct contributors + the rust [ • ] mark
+    for role in ("Referring GP", "Patient", "MOA / PA", "You (specialist)"):
+        assert role in HTML, role
+    assert "[ • ]" in HTML
+    # honest gating line stays with the graphic
+    assert "contributor byline ships with the app update" in LOW
+
+
 def test_no_teams_rebrand_and_ocean_not_named():
     assert "chartprepper teams" not in LOW
     assert "ocean" not in LOW  # imply the generic-form competitor, never name it

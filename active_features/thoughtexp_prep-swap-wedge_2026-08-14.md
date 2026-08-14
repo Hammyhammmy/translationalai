@@ -46,3 +46,24 @@ name kept. Rejected: "Teams" rebrand (fragments brand, premature pricing) and sc
 Rewrite `index.html` hero to the swap line + reframed chip, and add the "history generated from the referral"
 moat section (form-vs-generated contrast, Ocean implied). Byline rendered but labeled as shipping with the
 app update. Match existing palette/mono/`[ • ]` mark.
+
+---
+
+## Addendum — MOA/PA depiction in the "many hands" graphic (2026-08-14)
+
+**Decision:** how staff appear in the contributor band. The MOA/PA can complete most of the
+AI-generated adaptive intake form, not just "confirm meds" — but the Patient lane is already "intake,"
+so elevating the MOA risks a duplicate lane. Real question: how patient + staff split one shared form.
+
+- **A (chosen)** — split the one form by who-knows-what: Patient owns the *subjective* answers only they
+  can give; MOA/PA *completes the rest of the AI intake form* (prior episodes, meds, vitals) at rooming.
+  Both lines tagged `INTAKE` — one form, two hands, which is the band's whole thesis.
+- B — MOA primary, patient minimal. Rejected: overclaims (patient often self-serves async), makes the
+  patient a bystander in their own intake.
+- C — minimal reword, keep 4 distinct lanes. Rejected: doesn't fix the "light data entry" read.
+
+**Wording guard:** depict the MOA as *"completed the AI intake form / questionnaire"* (data-entry
+framing), never *"took the history"* (scope-of-practice sensitivity).
+
+**Applied:** index.html MOA line → "Completed the rest of the AI intake form at rooming — prior stone
+episodes, meds, vitals." `[ • ] INTAKE · MOA`. Patient subjective line unchanged.
