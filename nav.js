@@ -15,6 +15,7 @@
             </button>
             <div class="nav-links">
                 <a href="/" class="nav-link${isActive('index.html')}">ChartPrepper</a>
+                <a href="how-it-works.html" class="nav-link${isActive('how-it-works.html')}">How it works</a>
                 <a href="case-studies.html" class="nav-link${isActive('case-studies.html')}">Case studies</a>
                 <a href="https://chart.translational.ca/login" class="nav-cta" target="_blank" rel="noopener">Launch ChartPrepper →</a>
             </div>
@@ -31,6 +32,7 @@
             <div class="foot-col">
                 <h4>Product</h4>
                 <a href="/">ChartPrepper</a>
+                <a href="how-it-works.html">How it works</a>
             </div>
             <div class="foot-col">
                 <h4>Company</h4>
