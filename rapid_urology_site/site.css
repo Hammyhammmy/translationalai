@@ -89,3 +89,30 @@ footer b { color: var(--ink); font-weight: 600; display: block; }
   .big { font-size: 23px; }
 }
 @media print { .navband, .util, .skip { display: none; } }
+
+/* ---- Proposal 2026-10-23: time band, service standards, about, events. Same tokens, one colour. ---- */
+.timeband { border-bottom: 1px solid var(--line); }
+.timeband .wrap { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px 30px; align-items: center; padding-block: 26px; }
+.timefig { border-left: 4px solid var(--navy-ink); padding: 2px 0 2px 18px; }
+.timefig b { display: block; font: 600 clamp(44px, 7vw, 64px)/1 var(--serif); color: var(--navy-ink); white-space: nowrap; }
+.timefig span { font-size: 14px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+.timeband p { margin: 0; max-width: 40rem; }
+.timeband .lead { font: 400 20px/1.45 var(--serif); }
+.timeband .fine { margin-top: 8px; font-size: 14.5px; color: var(--muted); }
+.main .svc, .main .events { padding-left: 0; }
+.svc { list-style: none; padding: 0; margin: 0; display: grid; gap: 0 !important; max-width: none; }
+.svc li { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 16px; padding: 11px 0; border-top: 1px solid var(--line); }
+.svc li:last-child { border-bottom: 1px solid var(--line); }
+.svc b { font: 600 16.5px var(--serif); }
+.events { list-style: none; padding: 0; margin: 0; max-width: none; display: grid; gap: 0 !important; }
+.events li { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 16px; padding: 14px 0; border-top: 1px solid var(--line); }
+.events li:last-child { border-bottom: 1px solid var(--line); }
+.events .when { font: 600 16px var(--serif); }
+.events .when span { display: block; font: 400 14px var(--sans); color: var(--muted); }
+.events h3 { font: 600 18px/1.3 var(--serif); margin: 0 0 4px; }
+@media (max-width: 860px) {
+  .timeband .wrap { grid-template-columns: minmax(0, 1fr); }
+  .svc li, .events li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .navband .wrap { gap: 0 20px; }
+  .navband a { font-size: 15px; }
+}
