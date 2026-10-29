@@ -295,7 +295,7 @@
       </div>
       <div class="state-drug hide">
         <h4>Door jammed · <span class="drugname">hydrochlorothiazide, chlortalidone</span></h4>
-        <p>Block NCC → modest natriuresis. Intracellular Na⁺ drops, which makes the basolateral exchanger pull in <em>more</em> Ca²⁺ from blood — so thiazides <b>retain calcium</b> (the opposite of loops).</p>
+        <p>Block NCC → modest natriuresis. Intracellular Na⁺ drops, so the basolateral exchanger pushes <em>more</em> Ca²⁺ out to the blood, and more Ca²⁺ is drawn in from the urine. With ongoing use, mild volume contraction also boosts passive Ca²⁺ reabsorption upstream in the proximal tubule. Either way, thiazides <b>retain calcium</b> (the opposite of loops).</p>
         <ul>
           <li><b>Calcium retained</b> → used for calcium kidney stones & osteoporosis</li>
           <li>More Na⁺ delivered downstream → <b>hypokalemia</b></li>
@@ -453,7 +453,7 @@
       </div>
       <div class="state-drug hide">
         <h4>Door jammed · <span class="drugname">digoxin</span></h4>
-        <p>Digoxin blocks the <b>Na⁺/K⁺-ATPase</b>. Intracellular Na⁺ climbs → the Na⁺ battery weakens → NCX can no longer extrude Ca²⁺ (and may reverse) → <ion class="cm">Ca²⁺</ion> <b>builds up inside</b> → stronger contraction.</p>
+        <p>Digoxin blocks the <b>Na⁺/K⁺-ATPase</b>. Intracellular Na⁺ climbs → the Na⁺ battery weakens → NCX extrudes less Ca²⁺ → <ion class="cm">Ca²⁺</ion> <b>builds up inside</b> → stronger contraction.</p>
         <ul>
           <li><b>Positive inotropy</b> — the old heart-failure mechanism</li>
           <li>Also boosts vagal tone → slows AV conduction (rate control in AF)</li>
@@ -664,15 +664,17 @@ builders[4]=function(svg,mode){
   if(mode==='native'){
     arrow(svg,108,90,108,250,C.na); label(svg,96,160,'Na⁺',C.na,12,600,'end');
     arrow(svg,132,90,132,250,C.cl); label(svg,148,160,'Cl⁻',C.cl,12,600,'start');
-    arrow(svg,268,250,268,300,C.na); label(svg,255,240,'Na⁺',C.na,11,600,'end');
-    arrow(svg,292,300,292,250,C.ca); label(svg,308,240,'Ca²⁺ out',C.ca,11,600,'start');
+    arrow(svg,268,300,268,250,C.na); label(svg,255,240,'Na⁺',C.na,11,600,'end');
+    arrow(svg,292,250,292,300,C.ca); label(svg,308,240,'Ca²⁺ out',C.ca,11,600,'start');
+    arrow(svg,215,90,215,250,C.ca); label(svg,226,160,'Ca²⁺',C.ca,11,600,'start');
   } else {
     blockX(svg,120,54);
     label(svg,120,13,'Na⁺/Cl⁻ → urine',C.block,10.5,600);
-    // more Ca pulled in
-    arrow(svg,292,250,292,300,C.ca); label(svg,300,330,'',C.ca);
+    // less Na⁺ inside → NCX pushes more Ca²⁺ out to blood → more Ca²⁺ drawn in from the urine
+    arrow(svg,268,300,268,250,C.na);
+    arrow(svg,292,250,292,300,C.ca); arrow(svg,306,250,306,300,C.ca);
     label(svg,300,240,'Ca²⁺ retained',C.ca,11,600,'start');
-    arrow(svg,308,300,308,250,C.ca);
+    arrow(svg,215,90,215,250,C.ca); label(svg,226,160,'more Ca²⁺ in',C.ca,11,600,'start');
     arrow(svg,200,250,200,300,C.na);
   }
 };
@@ -763,8 +765,8 @@ builders[8]=function(svg,mode){
     svg.appendChild(svgEl('circle',{cx:135,cy:155,r:5,fill:C.na}));
     svg.appendChild(svgEl('circle',{cx:152,cy:165,r:5,fill:C.na}));
     svg.appendChild(svgEl('circle',{cx:142,cy:178,r:5,fill:C.na}));
-    // NCX can't extrude / reverses -> Ca in
-    arrow(svg,135,95,135,160,C.ca); label(svg,118,200,'Ca²⁺ ↑',C.ca,12,600,'end');
+    // weaker Na⁺ gradient → NCX pushes less Ca²⁺ out
+    arrow(svg,135,160,135,95,C.ca); label(svg,118,200,'less Ca²⁺ out',C.ca,11,600,'end');
     label(svg,200,225,'Ca²⁺ builds up inside',C.ca,11.5,600);
     label(svg,200,248,'↑ CONTRACTILITY (inotropy)',C.terra,11.5,700);
   }
