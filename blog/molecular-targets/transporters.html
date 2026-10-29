@@ -474,7 +474,7 @@
 
 <script>
 /* ---------- ion glyph helper ---------- */
-const C = {na:'#9c3318',k:'#2f6b6b',glu:'#b07d12',ca:'#6b4a8a',cl:'#4a7a4a',h:'#5a5248',ink:'#2a2520',block:'#b3261e'};
+const C = {na:'#9c3318',k:'#2f6b6b',glu:'#b07d12',ca:'#6b4a8a',cl:'#4a7a4a',h:'#5a5248',ink:'#2a2520',block:'#b3261e',terra:'#9c3318',muted:'#6b6256'};
 
 function svgEl(tag,attrs){
   const e=document.createElementNS('http://www.w3.org/2000/svg',tag);
@@ -486,7 +486,9 @@ function arrow(svg,x1,y1,x2,y2,color,cls){
   const l=svgEl('line',{x1,y1,x2,y2,stroke:color,'stroke-width':2.4,'stroke-linecap':'round',
     'marker-end':`url(#arrow-${color.replace('#','')})`});
   if(cls) l.setAttribute('class',cls);
+  l.setAttribute('opacity',.4);              // the moving ions carry the meaning; the arrow is the track
   svg.appendChild(l);
+  (svg._tracks||(svg._tracks=[])).push({x1,y1,x2,y2,color});
 }
 function ensureMarker(svg,color){
   let defs=svg.querySelector('defs');
@@ -518,6 +520,7 @@ function blockX(svg,cx,cy,cls){
   g.appendChild(svgEl('circle',{cx,cy,r:17,fill:'none',stroke:C.block,'stroke-width':2.5}));
   g.appendChild(svgEl('line',{x1:cx-11,y1:cy-11,x2:cx+11,y2:cy+11,stroke:C.block,'stroke-width':3.5,'stroke-linecap':'round'}));
   svg.appendChild(g);
+  (svg._blocks||(svg._blocks=[])).push({cx,cy});
   return g;
 }
 
@@ -539,8 +542,10 @@ function scaffold(svg,lumenTxt,bloodTxt,epithelial){
   svg.appendChild(svgEl('line',{x1:370,y1:54,x2:370,y2:276,stroke:C.ink,'stroke-width':2.5}));
   // labels
   if(epithelial){
-    label(svg,200,20,'LUMEN — '+lumenTxt,C.muted||'#6b6256',11,600);
-    label(svg,200,40,'apical membrane ↑',C.terra||'#9c3318',10.5,400);
+    // notes about the apical doors sit top-left, so the header goes to the right edge
+    const hx=[392,'end'];
+    label(svg,hx[0],20,'LUMEN — '+lumenTxt,C.muted||'#6b6256',11,600,hx[1]);
+    label(svg,hx[0],40,'apical membrane ↑',C.terra||'#9c3318',10.5,400,hx[1]);
     label(svg,200,308,'basolateral membrane ↓',C.terra||'#9c3318',10.5,400);
     label(svg,200,326,'BLOOD — '+bloodTxt,'#6b6256',11,600);
     // tight junction dots
@@ -556,8 +561,9 @@ function scaffoldCell(svg,outsideTxt){
   svg.appendChild(svgEl('rect',{x:0,y:0,width:400,height:330,fill:'#f7e7e3'}));
   // rounded cell
   svg.appendChild(svgEl('rect',{x:46,y:60,width:308,height:210,rx:30,fill:'#fffdf7',stroke:C.ink,'stroke-width':2.5}));
-  label(svg,200,28,outsideTxt,'#6b6256',11,600);
-  label(svg,200,46,'(interstitial fluid ≈ blood — no lumen)','#9a9082',10.5,400);
+  const hx=curMode==='drug'?[12,'start']:[200,'middle'];   // drug view: header moves left, the pile-up sits right
+  label(svg,hx[0],22,outsideTxt,'#6b6256',11,600,hx[1]);
+  label(svg,hx[0],38,'(interstitial fluid ≈ blood — no lumen)','#9a9082',10.5,400,hx[1]);
   label(svg,200,300,'one membrane, all the way around','#9c3318',10.5,400);
 }
 
@@ -565,6 +571,7 @@ function scaffoldCell(svg,outsideTxt){
    PANEL BUILDERS
    ============================================================ */
 const builders={};
+let curPanel=null,curMode='native';   // read by scaffold() while a panel is being built
 
 /* --- 1 SGLT2 --- */
 builders[1]=function(svg,mode){
@@ -586,7 +593,7 @@ builders[1]=function(svg,mode){
   } else {
     blockX(svg,130,54);
     // glucose stays in lumen
-    label(svg,130,30,'glucose stays →',C.block,11,600);
+    label(svg,130,13,'glucose stays →',C.block,11,600);
     svg.appendChild(svgEl('circle',{cx:175,cy:30,r:6,fill:C.glu}));
     svg.appendChild(svgEl('circle',{cx:195,cy:38,r:6,fill:C.glu}));
     svg.appendChild(svgEl('circle',{cx:215,cy:26,r:6,fill:C.glu}));
@@ -615,7 +622,7 @@ builders[2]=function(svg,mode){
     arrow(svg,118,90,118,250,C.na); label(svg,104,170,'Na⁺',C.na,12.5,600,'end');
     arrow(svg,142,90,142,250,C.glu); label(svg,158,170,'glu',C.glu,12.5,600,'start');
     arrow(svg,250,150,250,250,'#2f6b6b'); label(svg,255,120,'H₂O reabsorbed',C.k,11,600);
-    label(svg,200,46,'glucose + salt in the drink → door stays open',C.block,10,600);
+    label(svg,12,12,'glucose + salt in the drink → door stays open',C.block,10,600,'start');
     arrow(svg,278,250,278,300,C.na); arrow(svg,302,300,302,250,C.k);
   }
 };
@@ -637,11 +644,11 @@ builders[3]=function(svg,mode){
     // paracellular Ca/Mg
     arrow(svg,30,150,15,200,C.ca);
     label(svg,55,140,'Ca²⁺/Mg²⁺',C.ca,11,600);
-    label(svg,55,300,'(pushed between cells → blood)','#9a9082',9.5,400);
+    label(svg,8,300,'(pushed between cells → blood)','#9a9082',9.5,400,'start');
     arrow(svg,288,250,288,300,C.na); arrow(svg,312,300,312,250,C.k);
   } else {
     blockX(svg,120,54);
-    label(svg,120,30,'Na/K/Cl lost in urine',C.block,10.5,600);
+    label(svg,120,13,'Na/K/Cl lost in urine',C.block,10.5,600);
     label(svg,235,110,'voltage gone',C.block,11,600);
     label(svg,55,140,'Ca²⁺/Mg²⁺ NOT saved',C.block,10,600);
     arrow(svg,288,250,288,300,C.na); arrow(svg,312,300,312,250,C.k);
@@ -661,7 +668,7 @@ builders[4]=function(svg,mode){
     arrow(svg,292,300,292,250,C.ca); label(svg,308,240,'Ca²⁺ out',C.ca,11,600,'start');
   } else {
     blockX(svg,120,54);
-    label(svg,120,30,'Na⁺/Cl⁻ → urine',C.block,10.5,600);
+    label(svg,120,13,'Na⁺/Cl⁻ → urine',C.block,10.5,600);
     // more Ca pulled in
     arrow(svg,292,250,292,300,C.ca); label(svg,300,330,'',C.ca);
     label(svg,300,240,'Ca²⁺ retained',C.ca,11,600,'start');
@@ -686,7 +693,7 @@ builders[5]=function(svg,mode){
     label(svg,200,250,'aldosterone ↑ both',C.terra,10.5,600);
   } else {
     blockX(svg,120,54);
-    label(svg,120,30,'Na⁺ not reabsorbed',C.block,10.5,600);
+    label(svg,120,13,'Na⁺ not reabsorbed',C.block,10.5,600);
     // K stays
     label(svg,235,40,'K⁺ kept',C.block,11,600);
     svg.appendChild(svgEl('circle',{cx:235,cy:70,r:6,fill:C.k}));
@@ -764,12 +771,62 @@ builders[8]=function(svg,mode){
 };
 
 /* ============================================================
+   MOTION: ions ride each arrow; with the drug on, the substrate
+   piles up against the blocked transporter instead of crossing.
+   ============================================================ */
+// what piles up at a blocked transporter, and from which side it arrives
+const PILE={
+  1:{ions:[C.glu,C.na,C.glu],from:'above'},          // SGLT2: glucose + Na⁺ stay in the urine
+  3:{ions:[C.na,C.k,C.cl,C.cl],from:'above'},        // NKCC2: Na⁺/K⁺/2Cl⁻ stay in the urine
+  4:{ions:[C.na,C.cl],from:'above'},                 // NCC: Na⁺/Cl⁻ stay in the urine
+  5:{ions:[C.na],from:'above'},                      // ENaC: Na⁺ not reabsorbed
+  6:{ions:[C.h],from:'below'},                       // proton pump: H⁺ never leaves the cell
+  7:{ions:[C.ca],from:'above',ox:85},                // L-type channel: Ca²⁺ stays outside (beside the door, clear of the header)
+  8:{ions:[C.na],from:'below'}                       // digoxin: Na⁺ builds up inside
+};
+const REDUCE=(()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){return false;}})();
+function addMotion(svg,panel,mode){
+  const g=svgEl('g',{'pointer-events':'none'});svg.appendChild(g);
+  // labels stay on top of the moving ions, with a soft halo so they read over them
+  svg.querySelectorAll('text').forEach(t=>{if(!t.closest('g')||t.parentNode===svg){t.setAttribute('paint-order','stroke');t.setAttribute('stroke','rgba(255,253,247,.85)');t.setAttribute('stroke-width',3);svg.appendChild(t);}});
+  const parts=[];
+  svg._tracks.forEach((tr,i)=>{if(Math.hypot(tr.x2-tr.x1,tr.y2-tr.y1)<20)return;
+    for(let k=0;k<3;k++){const c=svgEl('circle',{r:4.6,fill:tr.color,stroke:'#fffdf7','stroke-width':1.2});g.appendChild(c);
+      parts.push({kind:'flow',c,tr,ph:(k/3+i*.137)%1});}});
+  if(mode==='drug'&&PILE[panel])svg._blocks.forEach(b=>{const P=PILE[panel];
+    for(let k=0;k<7;k++){const c=svgEl('circle',{r:4.6,fill:P.ions[k%P.ions.length],stroke:'#fffdf7','stroke-width':1.2});g.appendChild(c);
+      const dx=(k-3)*9,row=k%2;
+      const y0=P.from==='above'?b.cy-44:b.cy+62,y1=P.from==='above'?b.cy-22-row*9:b.cy+24+row*9;
+      parts.push({kind:'pile',c,x:b.cx+(P.ox||0)+dx,y0,y1,ph:k*.11});}});
+  svg._parts=parts;svg._t=1.6;   // start with any pile-up already formed
+  drawMotion(svg,REDUCE?2.2:0);
+}
+function drawMotion(svg,dt){svg._t=(svg._t||0)+dt;const T=svg._t;
+  for(const p of svg._parts||[]){
+    if(p.kind==='flow'){const t=REDUCE?(p.ph*.8+.1):(T*.42+p.ph)%1,tr=p.tr;
+      p.c.setAttribute('cx',tr.x1+(tr.x2-tr.x1)*t);p.c.setAttribute('cy',tr.y1+(tr.y2-tr.y1)*t);
+      p.c.setAttribute('opacity',REDUCE?1:Math.min(1,t*6,(1-t)*6));}
+    else{const cyc=REDUCE?2:((T-p.ph)%5+5)%5,u=Math.max(0,Math.min(1,cyc/1.2)),e=u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;
+      const jig=REDUCE?0:(u>=1?Math.sin(T*9+p.ph*20)*1.2:0);
+      p.c.setAttribute('cx',p.x+jig);p.c.setAttribute('cy',p.y0+(p.y1-p.y0)*e);
+      p.c.setAttribute('opacity',REDUCE?1:Math.min(1,cyc*4,(5-cyc)*3));}}
+}
+// animate only the diagrams on screen
+const onScreen=new Set();
+if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{const s=e.target.querySelector('svg');if(e.isIntersecting)onScreen.add(s);else onScreen.delete(s);}));
+  document.querySelectorAll('.stage').forEach(st=>io.observe(st));}
+else document.querySelectorAll('.stage svg').forEach(s=>onScreen.add(s));
+if(!REDUCE){let last=0;const loop=ts=>{const dt=Math.min((ts-last)/1000,.05)||.016;last=ts;onScreen.forEach(s=>drawMotion(s,dt));requestAnimationFrame(loop);};requestAnimationFrame(loop);}
+
+/* ============================================================
    WIRE UP
    ============================================================ */
 function render(panel,mode){
   const svg=document.querySelector(`#p${panel} .stage svg`);
   while(svg.firstChild) svg.removeChild(svg.firstChild);
+  svg._tracks=[];svg._blocks=[];curPanel=panel;curMode=mode;
   builders[panel](svg,mode);
+  addMotion(svg,panel,mode);
   // readout
   const ro=document.querySelector(`.readout[data-panel="${panel}"]`);
   ro.querySelector('.state-native').classList.toggle('hide',mode!=='native');
@@ -787,6 +844,8 @@ document.querySelectorAll('.toggle button').forEach(btn=>{
 });
 // initial render
 for(let i=1;i<=8;i++) render(i,'native');
+// test hook: #all-drug shows every diagram with its drug on
+if(location.hash==='#all-drug')for(let i=1;i<=8;i++) render(i,'drug');
 </script>
 <script src="nav.js" defer></script>
 </body>
