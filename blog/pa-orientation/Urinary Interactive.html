@@ -40,9 +40,14 @@
 
   .main{min-width:0}
   .figure{background:#f7f6f3;border:1px solid var(--border);border-radius:14px;padding:8px;margin-bottom:16px;position:relative}
-  .figure svg{display:block;width:100%;max-width:300px;height:auto;margin:0 auto}
-  #stage image{filter:saturate(.38) opacity(.55)}
-  .figure.focus #stage image{filter:saturate(.2) opacity(.3)}  /* dim the anatomy so the defect spotlights */
+  .figure svg{display:block;width:100%;max-width:340px;height:auto;margin:0 auto}
+  .figtools{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+  .figbar{flex-wrap:wrap;gap:6px}
+  .sexsw{display:inline-flex;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+  .sexsw button{font-family:var(--font);font-size:11px;font-weight:600;color:var(--muted);background:none;border:0;padding:3px 8px;cursor:pointer}
+  .sexsw button[aria-pressed="true"]{background:var(--text);color:#fff}
+  .sexsw button:disabled{cursor:not-allowed;opacity:.45}
+  .fignote{font-size:11.5px;color:var(--muted);text-align:center;padding:4px 0 0}
   .figbar{display:flex;justify-content:space-between;align-items:center;padding:0 4px 6px}
   .figcap{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
   .fightoggle{font-family:var(--font);font-size:11px;font-weight:600;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:3px 8px;cursor:pointer}
@@ -135,7 +140,6 @@
   .hot{fill:rgba(37,99,235,.05);stroke:rgba(37,99,235,.3);stroke-width:1.5;cursor:pointer}
   .hot:hover{fill:rgba(37,99,235,.18);stroke:rgba(37,99,235,.7)}
   .hot.sel{stroke:var(--accent);stroke-width:2.5;fill:rgba(37,99,235,.18)}
-  @keyframes lpulse{0%,100%{r:13px;opacity:.9}50%{r:19px;opacity:.35}}
   /* mobile polish — placed last so these win over the base rules */
   @media(max-width:820px){
     body{padding:22px 20px 60px}        /* match the injected ribbon's -20px side margin (avoids h-overflow) */
@@ -179,25 +183,62 @@
   <div class="nav" id="nav"></div>
   <div class="main">
     <div class="figure" id="figure">
-      <div class="figbar"><span class="figcap" id="cap">normal flow</span><button class="fightoggle" id="figtoggle">Hide</button></div>
+      <div class="figbar"><span class="figcap" id="cap">normal flow</span><span class="figtools"><span class="sexsw" role="group" aria-label="Anatomy"><button id="sexF" aria-pressed="false">Female</button><button id="sexM" aria-pressed="true">Male</button></span><button class="fightoggle" id="figplay">Pause</button><button class="fightoggle" id="figplate" hidden>Textbook plate</button><button class="fightoggle" id="figtoggle">Hide</button></span></div>
       <img id="figimg" alt="Reference plate for the selected concept" style="display:none">
-      <svg id="stage" viewBox="0 0 510 905" role="img" aria-label="Interactive urinary tract model">
-        <defs><radialGradient id="spot" cx="50%" cy="40%" r="62%"><stop offset="56%" stop-color="#f7f6f3" stop-opacity="0"/><stop offset="100%" stop-color="#f7f6f3" stop-opacity=".72"/></radialGradient></defs>
-        <image href="urinary-base.svg" x="0" y="0" width="510" height="670"/>
-        <rect id="vignette" x="0" y="0" width="510" height="905" fill="url(#spot)" style="display:none" pointer-events="none"/>
-        <g id="outlet">
-          <rect x="247" y="640" width="16" height="150" rx="8" fill="#b48ed6" stroke="#8b5cf6" stroke-width="1.5"/>
-          <ellipse id="prostate" cx="255" cy="678" rx="33" ry="25" fill="#c9a24a" stroke="#9a7b2e" stroke-width="1.5"/>
-        </g>
+      <svg id="stage" viewBox="0 0 400 690" role="img" aria-label="Animated diagram of the urinary tract">
+        <!-- Clinical Geometry schematic. Facing the reader: the viewer's right is the patient's LEFT. -->
+        <path id="kidA" d="M100,76 C68,76 54,110 54,142 C54,178 70,208 102,208 C128,208 144,192 142,176 C140,164 128,156 128,142 C128,128 140,120 142,108 C144,90 128,76 100,76 Z" fill="#e9c3b8" stroke="#b9786a" stroke-width="2"/>
+        <path id="kidB" d="M300,76 C332,76 346,110 346,142 C346,178 330,208 298,208 C272,208 256,192 258,176 C260,164 272,156 272,142 C272,128 260,120 258,108 C256,90 272,76 300,76 Z" fill="#e9c3b8" stroke="#b9786a" stroke-width="2"/>
+        <g id="kmass" style="display:none"><circle cx="334" cy="112" r="13" fill="#7c3aed" opacity=".85"/><circle cx="324" cy="104" r="6" fill="#7c3aed" opacity=".85"/></g>
+        <ellipse id="pelA" cx="126" cy="146" rx="9" ry="12" fill="#f2d675" stroke="#c9a640" stroke-width="1.2"/>
+        <ellipse id="pelB" cx="274" cy="146" rx="9" ry="12" fill="#f2d675" stroke="#c9a640" stroke-width="1.2"/>
+        <path id="staghorn" style="display:none" d="M270,146 l10,-14 l8,-6 l-4,9 l10,-2 l-9,7 l12,4 l-12,3 l9,8 l-11,-3 l-2,10 l-5,-9 Z" fill="#57534e" stroke="#292524" stroke-width="1"/>
+        <path id="uterus" d="M168,392 C168,370 232,370 232,392 C232,420 214,440 206,452 L194,452 C186,440 168,420 168,392 Z" fill="#f3d9de" stroke="#d7a3ad" stroke-width="1.5" style="display:none"/>
+        <path id="urA" d="M128,156 C146,232 136,300 148,360 C154,400 166,436 184,466" fill="none" stroke="#dccb9c" stroke-width="5" stroke-linecap="round"/>
+        <path id="urB" d="M272,156 C254,232 264,300 252,360 C246,400 234,436 216,466" fill="none" stroke="#dccb9c" stroke-width="5" stroke-linecap="round"/>
+        <path id="dilA" d="M128,156 C146,232 136,300 148,360 C154,400 166,436 184,466" fill="none" stroke="#f2d675" stroke-linecap="round" opacity="0"/>
+        <path id="dilB" d="M272,156 C254,232 264,300 252,360 C246,400 234,436 216,466" fill="none" stroke="#f2d675" stroke-linecap="round" opacity="0"/>
+        <g id="ublock"></g>
+        <g id="pA"></g><g id="pB"></g>
+        <circle id="divert" cx="150" cy="480" r="8" fill="#f2d675" stroke="#c97a6a" stroke-width="3" style="display:none"/>
+        <ellipse id="bladder" cx="200" cy="480" rx="40" ry="28" fill="#f2d675" stroke="#c97a6a" stroke-width="5"/>
+        <ellipse id="trab" cx="200" cy="480" rx="30" ry="20" fill="none" stroke="#c97a6a" stroke-width="2" stroke-dasharray="3 5" opacity="0"/>
+        <g id="tumor" style="display:none"><circle r="8" fill="#9f1239"/><circle cx="-5" cy="-5" r="4" fill="#9f1239"/><circle cx="5" cy="-6" r="3.5" fill="#9f1239"/></g>
+        <circle id="bstone" r="6" fill="#57534e" stroke="#292524" stroke-width="1" style="display:none"/>
         <g id="scrotum">
-          <path d="M248,788 C238,812 232,824 226,840 M262,788 C272,812 278,824 284,840" fill="none" stroke="#caa15a" stroke-width="3" stroke-linecap="round"/>
-          <ellipse cx="222" cy="864" rx="22" ry="28" fill="#d9a38a" stroke="#a86b54" stroke-width="1.5"/>
-          <ellipse cx="288" cy="864" rx="22" ry="28" fill="#d9a38a" stroke="#a86b54" stroke-width="1.5"/>
-          <text x="318" y="868" font-size="12" fill="#78716c">testes</text>
+          <path id="cordA" d="M188,572 C180,600 170,616 166,633" fill="none" stroke="#caa15a" stroke-width="3" stroke-linecap="round"/>
+          <path id="cordB" d="M212,572 C220,600 230,616 234,633" fill="none" stroke="#caa15a" stroke-width="3" stroke-linecap="round"/>
+          <path id="twist" d="M212,572 C226,584 206,590 222,600 C236,608 214,614 228,622 L234,633" fill="none" stroke="#7f1d1d" stroke-width="3.5" stroke-linecap="round" style="display:none"/>
+          <ellipse cx="166" cy="652" rx="15" ry="19" fill="#d9a38a" stroke="#a86b54" stroke-width="1.5"/>
+          <ellipse id="testB" cx="234" cy="652" rx="15" ry="19" fill="#d9a38a" stroke="#a86b54" stroke-width="1.5"/>
         </g>
-        <g id="innervation" style="display:none"></g>
-        <g id="bp"></g><g id="flow"></g><g id="lesion"></g><g id="hot"></g>
+        <ellipse id="prostate" cx="200" cy="530" rx="20" ry="15" fill="#d8b46a" stroke="#a8843a" stroke-width="1.5"/>
+        <g id="pnod" style="display:none"><circle cx="212" cy="536" r="5" fill="#7c3aed" opacity=".85"/><circle cx="188" cy="526" r="3.5" fill="#7c3aed" opacity=".85"/></g>
+        <rect id="urethra" x="196.5" y="508" width="7" height="108" rx="3.5" fill="#efe3c2" stroke="#b8a77c" stroke-width="1"/>
+        <g id="oblock"></g>
+        <path id="intL" d="M188,508 q6,6 12,0" fill="none" stroke="#8b5cf6" stroke-width="3" stroke-linecap="round"/>
+        <rect id="extL" x="183" y="553" width="17" height="9" rx="3" fill="#7c3aed"/>
+        <rect id="extR" x="200" y="553" width="17" height="9" rx="3" fill="#7c3aed"/>
+        <g id="pU"></g>
+        <circle id="halo" r="24" fill="rgba(225,29,72,.2)" stroke="rgba(225,29,72,.55)" stroke-width="2" style="display:none"/>
+        <g id="cough" style="display:none" stroke="#b45309" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M150,330 v34 M142,356 l8,9 l8,-9"/><path d="M200,318 v34 M192,344 l8,9 l8,-9"/><path d="M250,330 v34 M242,356 l8,9 l8,-9"/>
+          <text x="200" y="308" text-anchor="middle" font-size="12" font-weight="700" fill="#b45309" stroke="none">cough</text>
+        </g>
+        <g id="labels" font-size="11" fill="#78716c">
+          <text x="100" y="64" text-anchor="middle">right kidney</text>
+          <text x="300" y="64" text-anchor="middle">left kidney</text>
+          <text x="118" y="300" text-anchor="end">ureter</text>
+          <text x="66" y="486">bladder</text>
+          <text id="lbProst" x="244" y="534">prostate</text>
+          <text id="lbSph" x="228" y="561">sphincter</text>
+          <text id="lbUre" x="212" y="612">urethra</text>
+          <text id="lbTes" x="256" y="664">testes</text>
+          <text id="lbUt" x="240" y="392" style="display:none">uterus</text>
+        </g>
+        <g id="bp"></g><g id="lesion"></g><g id="hot"></g><g id="callouts"></g>
       </svg>
+      <div class="fignote" id="fignote"></div>
     </div>
     <div class="content" id="content"></div>
   </div>
@@ -219,6 +260,7 @@ import { IMAGES } from './urinary-images.js';
 import { ANDROLOGY, ANDRO_TOPICS } from './urinary-andrology.js';
 import { TRAUMA, TRAUMA_TOPICS, TRAUMA_FIGURE } from './urinary-trauma.js';
 import { showsFigure } from './urinary-figure.js';
+import { sceneFor, NORMAL_SCENE } from './urinary-motion.js';
 import { parseDeepLink } from './search-deeplink.js';
 import { prose } from './prose.js';
 import { patientHTML, patientCopyText } from './patient.js';
@@ -229,30 +271,159 @@ import { MODALITIES, FINDINGS, MOD_GROUPS, modalityFor, findingFor } from './uri
 const NS='http://www.w3.org/2000/svg', el=id=>document.getElementById(id);
 const mk=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
 
-const XY={kidney:[360,178],nephron:[360,178],ureter:[300,405],bladder:[256,600],sphincters:[256,652],
-  prostate:[255,678],urethra:[256,742],exit:[256,812],testis:[255,864],neural:[64,470],overview:[256,420]};
+// ---- geometry (viewBox 400×690). One-sided disease is drawn on the patient's LEFT (viewer's right). ----
+// Female: short urethra, no prostate/testes. Male-only conditions switch the figure to male.
+const GEO={male:{neck:508,ext:553,meatus:616,streamEnd:648},female:{neck:508,ext:530,meatus:562,streamEnd:596}};
+let sex='male';try{if(localStorage.getItem('cg-sex')==='female')sex='female';}catch(e){}
+let XY={};
 const SLABEL={kidney:'Kidney',ureter:'Ureter',bladder:'Bladder',prostate:'Prostate',urethra:'Urethra',testis:'Testis'};
 const DILTERM={kidney:'hydronephrosis',ureter:'hydroureter',bladder:'bladder distended'};
-const PATH=[[360,180],[348,250],[322,340],[300,410],[280,500],[262,560],[256,600],[256,648],[256,690],[256,725],[256,752],[256,812]];
-const NODE={kidney:0,ureter:3,bladder:6,prostate:8,urethra:10};
-const seg=[],cum=[0];for(let i=0;i<PATH.length-1;i++){const L=Math.hypot(PATH[i+1][0]-PATH[i][0],PATH[i+1][1]-PATH[i][1]);seg.push(L);cum.push(cum[i]+L);}const TOT=cum[cum.length-1];
+const LA=el('urA').getTotalLength(),LB=el('urB').getTotalLength();
+const ptB=t=>{const p=el('urB').getPointAtLength(t*LB);return[p.x,p.y];};
+// one conduit for overlays that follow the tract (trauma blood, hardware): left kidney → left ureter → bladder → urethra
+let PATH=[],seg=[],cum=[0],TOT=1;
+const NODE={kidney:0,ureter:5,bladder:10,prostate:12,urethra:14};
+function setGeometry(){const g=GEO[sex],m=g.meatus;
+  XY={kidney:[300,142],nephron:[300,142],ureter:[256,320],bladder:[200,470],sphincters:[200,g.ext+4],
+    prostate:[200,530],urethra:[200,(g.ext+m)/2+6],exit:[200,m],testis:[234,652],neural:[200,470],overview:[200,330]};
+  PATH=[...Array.from({length:10},(_,i)=>ptB(i/9)),[200,482],[200,g.neck],[200,g.neck+(g.ext-g.neck)/2],[200,g.ext+6],[200,(g.ext+m)/2+6],[200,m]];
+  seg=[];cum=[0];for(let i=0;i<PATH.length-1;i++){const L=Math.hypot(PATH[i+1][0]-PATH[i][0],PATH[i+1][1]-PATH[i][1]);seg.push(L);cum.push(cum[i]+L);}TOT=cum[cum.length-1];
+  const male=sex==='male';
+  ['prostate','scrotum','lbProst','lbTes'].forEach(id=>el(id).style.display=male?'':'none');
+  el('uterus').style.display=el('lbUt').style.display=male?'none':'';
+  el('urethra').setAttribute('height',m-g.neck);
+  ['extL','extR'].forEach(id=>el(id).setAttribute('y',g.ext));
+  el('lbSph').setAttribute('y',g.ext+8);el('lbUre').setAttribute('y',m-4);
+  el('sexM').setAttribute('aria-pressed',String(male));el('sexF').setAttribute('aria-pressed',String(!male));}
+setGeometry();
 const nf=s=>cum[NODE[s]]/TOT;
 const samp=t=>{let d=t*TOT;for(let i=0;i<seg.length;i++){if(d<=seg[i]||i===seg.length-1){const f=seg[i]?d/seg[i]:0;return[PATH[i][0]+(PATH[i+1][0]-PATH[i][0])*f,PATH[i][1]+(PATH[i+1][1]-PATH[i][1])*f];}d-=seg[i];}return PATH[PATH.length-1];};
-const MCOL={obstruction:'#57534e',bleeding:'#c0241c',infection:'#e11d48',inflammation:'#db2777',malignancy:'#7c3aed',reflux:'#d97706',overactivity:'#7c3aed',structural:'#0d9488',incontinence:'#2563eb',neurogenic:'#d97706',vascular:'#6d28d9',none:'#16a34a'};
 const GROUPS=[['kidney','Kidney'],['ureter','Ureter'],['bladder','Bladder'],['control','Control · sphincters & neural'],['urethra','Urethra · outlet'],['scrotum','Scrotum · testis']];
 const cap=s=>s[0].toUpperCase()+s.slice(1);
 
-let tab='normal', phase='STORAGE';
+let tab='normal', phase='STORAGE', lock=null;
 let selN='kidney', selP='retention', selC=null, selO='prostate_ca', selA='hpg_axis', selT='renal_trauma', selH='ureteric_stent', state=null;
 let imgView='modality', selMod='ultrasound', selFind='hydronephrosis';
+let showPlate=false, plateKey='';
 
-(function(){const g=el('innervation');
-  g.append(mk('path',{id:'symp',d:'M70,150 C84,300 120,520 232,632',fill:'none',stroke:'#0d9488','stroke-width':4.5,'stroke-linecap':'round','stroke-dasharray':'9 5',opacity:.9}),
-    mk('path',{id:'para',d:'M430,815 C360,760 300,690 280,632',fill:'none',stroke:'#7c3aed','stroke-width':4.5,'stroke-linecap':'round','stroke-dasharray':'9 5',opacity:.9}));
-  const sl=mk('text',{x:54,y:140,'font-size':12,fill:'#0d9488','font-weight':700});sl.textContent='Sympathetic T10–L2';
-  const pl=mk('text',{x:330,y:812,'font-size':12,fill:'#7c3aed','font-weight':700});pl.textContent='Parasymp. S2–S4';g.append(sl,pl);})();
-const NP=15,dots=[];(function(){const g=el('flow');for(let i=0;i<NP;i++){const c=mk('circle',{r:4,fill:'#e0b94e'});g.appendChild(c);dots.push({el:c,t:i/NP,v:.12+.04*(i%3)});}})();
-
+// ---- motion engine: the bladder cycle + urine moving along the real paths ----
+const URINE='#d99a1e',BLOODC='#b91c1c',REFLUXC='#ea7a12';
+const mkParts=(g,n)=>Array.from({length:n},(_,i)=>{const c=mk('circle',{r:3,fill:URINE,stroke:'#fff','stroke-width':1});el(g).appendChild(c);return{el:c,t:i/n,i};});
+const pA=mkParts('pA',9),pB=mkParts('pB',9),pU=mkParts('pU',14);
+const REDUCE=(()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){return false;}})();
+let scene=NORMAL_SCENE,sceneKey='',moving=true,paused=REDUCE,mFx={cough:false,drip:false};
+const M={};
+const setA=(id,a)=>{const e=el(id);for(const k in a)e.setAttribute(k,a[k]);};
+function mReset(){Object.assign(M,{f:scene.outlet&&scene.outlet.kind==='bph'?.4:.15,phase:'fill',hold:0,c:0,ext:0,dA:0,dB:0,T:0,coughT:0,urgeT:0,dripT:0,div:0});
+  [pA,pB,pU].forEach(a=>a.forEach((p,i)=>p.t=i/a.length));}
+// static marks that depend only on the scene (ureter block, outlet block)
+function mBuild(){const s=scene,ub=el('ublock'),ob=el('oblock');ub.innerHTML='';ob.innerHTML='';const g=GEO[sex];
+  if(s.ureter){const[x,y]=ptB(s.ureter.at);
+    if(s.ureter.kind==='stone')ub.appendChild(mk('path',{d:`M${x-6},${y-3} l5,-4 l7,3 l1,7 l-6,4 l-7,-3 Z`,fill:'#57534e',stroke:'#292524','stroke-width':1}));
+    else if(s.ureter.kind==='stricture')ub.appendChild(mk('path',{d:`M${x-8},${y-4} h16 M${x-8},${y+4} h16`,stroke:'#57534e','stroke-width':3,'stroke-linecap':'round'}));
+    else ub.appendChild(mk('ellipse',{cx:x+17,cy:y,rx:12,ry:16,fill:'#a8a29e',opacity:.85}));}
+  if(s.outlet){const k=s.outlet.kind;
+    const pinch=y=>{ob.appendChild(mk('path',{d:`M191,${y-5} l7,5 l-7,5 Z M209,${y-5} l-7,5 l7,5 Z`,fill:'#57534e'}));};
+    if(k==='stricture')pinch((g.ext+g.meatus)/2+6);
+    else if(k==='meatus')pinch(g.meatus-6);
+    else if(k==='stone')ob.appendChild(mk('path',{d:`M195,${g.ext+20} l5,-4 l6,3 l0,6 l-5,4 l-6,-3 Z`,fill:'#57534e',stroke:'#292524','stroke-width':1}));
+    else if(k==='valve')ob.appendChild(mk('path',{d:`M194,${g.neck+10} q6,8 12,0`,fill:'none',stroke:'#292524','stroke-width':2.5}));}}
+function mStep(dt){const s=scene,m=M;m.T+=dt;const fill=.15;let cough=false,drip=false;
+  if(!moving){m.f+=(.55-m.f)*Math.min(1,dt*4);m.phase='fill';}
+  else if(lock==='STORAGE'){m.phase='fill';m.f=Math.min(.75,m.f+fill*dt);}
+  else if(lock==='VOIDING'){if(m.phase!=='void'){m.phase='void';m.f=Math.max(m.f,.85);}m.f-=.3*dt;if(m.f<.1)m.f=.85;}
+  else if(s.cycle==='stress'){if(m.f<.6)m.f+=fill*dt;m.phase='fill';m.coughT=(m.coughT+dt)%3.2;cough=m.coughT<.6;}
+  else if(s.cycle==='oab'){const at=s.urgeAt||.38;
+    if(m.phase==='fill'){m.f+=fill*dt;if(m.f>=at){m.phase='urge';m.urgeT=0;}}
+    else if(m.phase==='urge'){m.urgeT+=dt;if(m.urgeT>1.4)m.phase='void';}
+    else{m.f-=.35*dt;if(m.f<=.08){m.f=.08;m.phase='fill';}}}
+  else if(s.cycle==='retention'){m.phase='fill';m.f=Math.min(1.12,m.f+fill*dt);if(m.f>=1.1){m.dripT=(m.dripT+dt)%1.6;drip=m.dripT<.5;}}
+  else{const dsd=s.cycle==='dsd',ob=!!s.outlet;
+    const floor=dsd?.5:ob?(s.outlet.kind==='valve'?.55:.42):.06,rate=dsd?.09:ob?.13:.38;
+    if(m.phase==='fill'){m.f+=fill*dt;if(m.f>=1){m.f=1;m.hold+=dt;if(m.hold>.7){m.hold=0;m.phase='void';}}}
+    else{m.f-=rate*dt;if(m.f<=floor){m.f=floor;m.phase='fill';}}}
+  const tc=m.phase==='void'?1:m.phase==='urge'?.85:0;m.c+=(tc-m.c)*Math.min(1,dt*5);
+  let te=0;if(m.phase==='void')te=(s.cycle==='dsd'&&!lock)?(Math.sin(m.T*5)>.75?.6:0):1;else if(cough)te=.45;else if(drip)te=.3;
+  m.ext+=(te-m.ext)*Math.min(1,dt*8);
+  const ob=s.outlet,obD=ob?(ob.kind==='valve'?1:ob.kind==='bph'?.55:.4):0;
+  const dsdD=s.cycle==='dsd'?(m.phase==='void'?.9:.45):0,retD=s.cycle==='retention'?Math.max(0,(m.f-.9)*4):0;
+  const both=moving?Math.max(obD,dsdD,retD):0;
+  const tB=moving?Math.max(both,(s.ureter||s.staghorn)?1:0,s.reflux?(m.phase==='void'?1:.2):0):0;
+  m.dB+=(tB-m.dB)*Math.min(1,dt*(s.reflux?1.6:.8));m.dA+=(both-m.dA)*Math.min(1,dt*.8);
+  if(s.diverticulum)m.div+=((m.phase==='void'?.75:m.f)-m.div)*Math.min(1,dt*(m.phase==='void'?.3:1));
+  if(!moving)return{cough:false,drip:false};
+  const refl=s.reflux&&m.phase==='void',blk=s.ureter?s.ureter.at:null;
+  pA.forEach(p=>{p.t=(p.t+.16*dt)%1;});
+  pB.forEach(p=>{if(refl){p.t-=.32*dt;if(p.t<0)p.t+=1;}else{p.t+=.16*dt;
+    if(blk!=null){const cap=blk-.03-.028*(p.i%6);p.t=Math.max(0,Math.min(p.t,cap));}else if(p.t>=1)p.t-=1;}});
+  const thin=!!ob||s.cycle==='dsd';
+  const gate=ob?Math.sin(m.T*3.1)>-.25:s.bladderStone?Math.sin(m.T*1.7)>0:true;
+  const stream=m.phase==='void'&&m.ext>.4&&gate;
+  pU.forEach(p=>{p.t=(p.t+((cough||drip)?.9:thin?.55:1.15)*dt)%1;
+    p.vis=(stream&&(!thin||p.i%2===0))||((cough||drip)&&p.i%4===0&&p.t>.35);});
+  return{cough,drip};}
+// callouts: one pill per key, reused across frames
+const COS={};
+function co(key,text,color,x,y){let g=COS[key];
+  if(!g||g._t!==text){if(g)g.remove();g=mk('g',{});g._t=text;g._w=text.length*6.1+14;
+    g.append(mk('rect',{x:0,y:-11,width:g._w,height:20,rx:6,fill:color}));
+    const t=mk('text',{x:7,y:3,'font-size':11,'font-weight':700,fill:'#fff'});t.textContent=text;g.append(t);el('callouts').append(g);COS[key]=g;}
+  g._on=true;g.setAttribute('transform',`translate(${Math.max(4,Math.min(x,396-g._w))},${y})`);}
+function mDraw(){const s=scene,m=M,fx=mFx,g=GEO[sex],blood=moving?s.blood:null;
+  for(const k in COS)COS[k]._on=false;
+  let F=Math.min(m.f,1.12),ry=26+38*F,rx=38+40*F;rx*=1-.07*m.c;ry*=1-.05*m.c;
+  if(m.phase==='urge'){const w=Math.sin(m.T*22)*2.2;rx+=w;ry-=w*.6;}
+  if(fx.cough){ry-=5;rx+=3;}
+  const cy=g.neck-ry,thick=moving&&s.thickWall;
+  setA('bladder',{rx,ry,cy,'stroke-width':4+4*m.c+(thick?5:0),fill:blood?'#d9665c':'#f2d675'});
+  setA('trab',{rx:Math.max(rx-10,4),ry:Math.max(ry-10,4),cy,opacity:thick?.8:0});
+  const sh=(id,on)=>{el(id).style.display=on?'':'none';};
+  sh('divert',moving&&s.diverticulum);if(s.diverticulum)setA('divert',{cx:200-rx-6,cy:cy+ry*.15,r:6+10*m.div});
+  const tx=200+rx*.72,ty=cy+ry*.45;sh('tumor',moving&&s.mass==='bladder');el('tumor').setAttribute('transform',`translate(${tx},${ty})`);
+  sh('bstone',moving&&s.bladderStone);setA('bstone',{cx:200,cy:m.phase==='void'&&Math.sin(m.T*1.7)<=0?g.neck-4:cy+ry-9});
+  sh('kmass',moving&&s.mass==='kidney');sh('staghorn',moving&&s.staghorn);sh('pnod',moving&&s.mass==='prostate');
+  sh('ublock',moving);sh('oblock',moving);
+  setA('pelB',{rx:9+13*m.dB,ry:12+16*m.dB});setA('pelA',{rx:9+13*m.dA,ry:12+16*m.dA});
+  setA('dilB',{opacity:m.dB>.05?1:0,'stroke-width':5+6*m.dB,'stroke-dasharray':s.ureter?`${s.ureter.at*LB} ${LB*2}`:`${LB} 0`,stroke:s.reflux?'#f6c27a':'#f2d675'});
+  setA('dilA',{opacity:m.dA>.05?1:0,'stroke-width':5+6*m.dA});
+  const p=moving&&s.outlet?(s.outlet.kind==='bph'?1:s.outlet.kind==='cancer'?.45:0):0;
+  setA('prostate',{rx:20+13*p,ry:15+10*p});const uw=7-3*(p===1?1:0);setA('urethra',{x:200-uw/2,width:uw});
+  const gap=5*m.ext;setA('extL',{x:183-gap});setA('extR',{x:200+gap});
+  setA('intL',{d:`M${188-4*m.ext},${g.neck} q${6+4*m.ext},${6-6*m.ext} ${12+8*m.ext},0`});
+  // scrotum: torsion
+  const tor=moving&&s.testis==='torsion';sh('twist',tor);sh('cordB',!tor);el('testB').setAttribute('fill',tor?'#6b2140':'#d9a38a');
+  // infection halo (pulses in JS so it works in every browser)
+  const inf=moving&&s.inflamed;sh('halo',inf);
+  if(inf){const[hx,hy]=s.inflamed.at==='bladder'?[200,cy]:XY[s.inflamed.at];setA('halo',{cx:hx,cy:hy,r:(s.inflamed.at==='bladder'?Math.max(rx,ry)+6:24)+3*Math.sin(m.T*3)});}
+  // particles
+  ['pA','pB','pU'].forEach(id=>sh(id,moving));
+  const refl=s.reflux&&m.phase==='void';
+  pA.forEach(q=>{const pt=el('urA').getPointAtLength(q.t*LA);setA2(q.el,pt.x,pt.y,blood==='kidneys'?BLOODC:URINE);});
+  pB.forEach(q=>{const pt=el('urB').getPointAtLength(q.t*LB);setA2(q.el,pt.x,pt.y,refl?REFLUXC:(blood==='kidney'||blood==='kidneys')?BLOODC:URINE);q.el.style.display=s.staghorn?'none':'';});
+  pU.forEach(q=>{setA2(q.el,200,g.neck+q.t*(g.streamEnd-g.neck),blood?BLOODC:URINE);q.el.setAttribute('opacity',q.vis?1:0);q.el.setAttribute('r',p||s.outlet?2.2:3);});
+  sh('cough',fx.cough);
+  // callouts (conditions only)
+  if(moving&&tab==='conditions'&&selC&&s.tip){const tip=s.tip;
+    const kid=s.staghorn||s.mass==='kidney'||(s.inflamed&&s.inflamed.at==='kidney')||s.blood==='kidney';
+    if(s.ureter){const[x,y]=ptB(s.ureter.at),w=tip.length*6.1+14;co('tip',tip,'#44403c',x+14+w>396?x-14-w:x+14,y);}
+    else if(kid)co('tip',tip,'#9f1239',290,222);
+    else if(s.blood==='kidneys')co('tip',tip,'#9f1239',120,222);
+    else if(s.reflux){if(refl)co('tip',tip,'#c2410c',262,300);}
+    else if(s.cycle==='stress'){if(fx.cough)co('tip',tip,'#2563eb',214,g.meatus+10);}
+    else if(s.cycle==='oab'){if(m.phase==='urge')co('tip',tip,'#7c3aed',200+rx+6,cy-6);}
+    else if(s.cycle==='retention')co('tip',tip,'#b45309',224,cy-ry+4);
+    else if(s.cycle==='dsd')co('tip',tip,'#7c3aed',224,g.ext-14);
+    else if(s.testis||(s.inflamed&&s.inflamed.at==='testis'))co('tip',tip,'#9f1239',256,630);
+    else if(s.mass==='prostate'||(s.inflamed&&s.inflamed.at==='prostate'))co('tip',tip,'#9f1239',240,506);
+    else if(s.outlet)co('tip',tip,'#b45309',214,g.ext+30);
+    else co('tip',tip,s.blood||s.mass?'#9f1239':'#b45309',8,cy-ry-16);
+    if(m.dB>.5&&!kid)co('hydro','hydronephrosis','#b45309',290,246);
+    if((s.outlet||s.cycle==='dsd')&&m.phase==='fill'&&m.f<.65)co('resid','urine left behind','#b45309',8,cy-ry-16);}
+  for(const k in COS)COS[k].style.display=COS[k]._on?'':'none';}
+function setA2(e,x,y,fill){e.setAttribute('cx',x);e.setAttribute('cy',y);e.setAttribute('fill',fill);}
+// still frame for reduced motion: run the scene forward to its teaching moment
+function mPoster(){const n={oab:2.2,stress:.3,retention:8,dsd:9.4}[scene.cycle]||(scene.reflux?8.6:scene.outlet?9.4:4);
+  for(let i=0;i<n*30;i++)mFx=mStep(1/30);mDraw();}
 const tagh=(t,c)=>`<span class="tag ${c||''}">${t}</span>`;
 const pearlsHTML=p=>(p&&p.length)?`<div class="h">Teaching pearls</div><ul class="pearls">${p.map(x=>`<li>${x}</li>`).join('')}</ul>`:'';
 
@@ -283,10 +454,6 @@ function buildNav(){const n=el('nav');n.innerHTML='';
 
 function buildHot(list){const g=el('hot');g.innerHTML='';list.forEach(s=>{if(!XY[s])return;const[x,y]=XY[s];const c=mk('circle',{cx:x,cy:y,r:16,class:'hot'+((tab==='normal'&&s===selN)?' sel':'')});c.addEventListener('click',()=>{if(tab==='normal'&&NORMAL_TEACH[s]){selN=s;render();}});const t=mk('title');t.textContent=SLABEL[s]||s;c.appendChild(t);g.appendChild(c);});}
 
-// plain-word callout for the lesion, keyed by mechanism → [what, consequence]
-const CALLOUT={obstruction:['blocked here','flow stops'],bleeding:['bleeding here','blood ↓'],
-  infection:['infected here',''],inflammation:['inflamed here','sterile · painful'],
-  malignancy:['mass here',''],reflux:['valve leaks','refluxes up ↑']};
 // draw a small label box (+ optional lines). solid = filled box w/ white text (the lesion); else white box w/ coloured border (the tag)
 function drawLabel(group,x,y,lines,o={}){
   const ls=lines.filter(Boolean),w=o.w||132,h=11+ls.length*13,col=o.color||'#dc2626';
@@ -298,7 +465,7 @@ function drawLabel(group,x,y,lines,o={}){
 // reusing the conduit path + blush + drawLabel primitives. No animation (the tract is frozen).
 function drawTrauma(lz,bp){
   const fig=TRAUMA_FIGURE[selT];if(!fig)return;
-  const mp=fig.mark==='testis'?[288,864]:XY[fig.mark];const[mx,my]=mp;const RED='#dc2626',DRK='#b91c1c';
+  const mp=XY[fig.mark];const[mx,my]=mp;const RED='#dc2626',DRK='#b91c1c';
   lz.appendChild(mk('ellipse',{cx:mx,cy:my,rx:35,ry:31,fill:'rgba(220,38,38,.18)'}));   // injury blush
   if(fig.blood&&fig.mark in NODE){const s=nf(fig.mark);                                 // haematuria: red stream down the conduit
     for(let k=0;k<6;k++){const[x,y]=samp(s+(0.96-s)*(k/5));lz.appendChild(mk('circle',{cx:x,cy:y,r:4.5,fill:DRK,opacity:k>4?.55:1}));}}
@@ -313,53 +480,34 @@ function drawTrauma(lz,bp){
     lz.appendChild(mk('path',{d:`M${mx-14},${my-14} q14,8 28,-2`,stroke:'#fca5a5','stroke-width':2,fill:'none'}));}
   if(!fig.meatusBlood&&!fig.haematocele)lz.appendChild(mk('circle',{cx:mx,cy:my,r:12,fill:RED,stroke:'#fff','stroke-width':2.5}));  // focal marker
   const[cx,cy]=fig.meatusBlood?XY.exit:mp;                                              // anchor the callout at the headline sign
-  lz.appendChild(mk('line',{x1:162,y1:cy,x2:cx,y2:cy,stroke:RED,'stroke-width':1.5,'stroke-dasharray':'3 3'}));
-  drawLabel(lz,12,cy-17,fig.callout,{solid:true,color:RED,w:148});
+  const ly=cy<220?232:cy;                                                                // keep the label clear of the right kidney
+  lz.appendChild(mk('line',{x1:160,y1:ly,x2:cx,y2:cy,stroke:RED,'stroke-width':1.5,'stroke-dasharray':'3 3'}));
+  drawLabel(lz,12,ly-17,fig.callout,{solid:true,color:RED,w:148});
 }
 function drawModel(){
   const bp=el('bp');bp.innerHTML='';const lz=el('lesion');lz.innerHTML='';
-  const focus=(tab==='conditions'&&!!selC)||tab==='trauma';el('figure').classList.toggle('focus',focus);
-  el('vignette').style.display=(tab==='conditions'&&!!selC)?'block':'none';  // edge-fade only for mid-tract condition lesions; trauma organs sit at the edges
-  el('flow').style.display=(tab==='normal'||tab==='conditions')?'':'none';  // freeze 'urine flow' where it isn't the teaching (trauma/onc/andro/pres) — Option B
+  // male-only entries (prostate, testis, urethral trauma) switch the anatomy and lock the toggle
+  const needMale=(tab==='conditions'&&selC&&sceneFor(selC).male)||(tab==='presentations'&&PRESENTATIONS[selP].region==='testis')
+    ||(tab==='oncology'&&['testis','prostate'].includes(ONCOLOGY[selO].organ))||(tab==='oncology'&&selO==='prostate_ca')
+    ||(tab==='andrology'&&ANDROLOGY[selA].region==='testis')||(tab==='trauma'&&(TRAUMA[selT].region==='testis'||selT==='urethral_trauma'));
+  const want=needMale?'male':userSex;if(want!==sex){sex=want;setGeometry();sceneKey='';}
+  el('sexF').disabled=!!needMale;el('fignote').textContent=needMale?'Male anatomy: this condition needs it.':'';
+  moving=tab==='normal'||(tab==='conditions'&&!!selC);
+  const nextScene=tab==='conditions'&&selC?sceneFor(selC):NORMAL_SCENE,key=tab+'|'+(tab==='conditions'?selC:'')+'|'+sex;
+  if(key!==sceneKey){sceneKey=key;scene=nextScene;mReset();mBuild();if(paused)mPoster();}
   const scrotActive=(tab==='conditions'&&selC&&CASES[selC].group==='scrotum')||(tab==='presentations'&&selP==='acute_scrotum')||(tab==='oncology'&&ONCOLOGY[selO].organ==='testis')||(tab==='trauma'&&TRAUMA[selT].region==='testis');
-  el('scrotum').style.opacity=scrotActive?1:.45;
-  const nerves=tab==='normal'||(tab==='conditions'&&selC&&CASES[selC].faultPhase)||(tab==='presentations'&&['retention','luts'].includes(selP));
-  el('innervation').style.display=nerves?'inline':'none';
-  if(nerves){const storage=(tab==='normal'?phase:'VOIDING')==='STORAGE';el('symp').setAttribute('opacity',storage?.95:.2);el('para').setAttribute('opacity',storage?.2:.95);}
+  el('scrotum').style.opacity=scrotActive?1:.5;
   let hl=null;
   if(tab==='normal'){buildHot(['kidney','ureter','bladder','sphincters','urethra']);hl=XY[selN];}
   else if(tab==='presentations'){buildHot([]);hl=XY[PRESENTATIONS[selP].region];}
   else if(tab==='oncology'){buildHot([]);hl=XY[ONCOLOGY[selO].organ];}
   else if(tab==='andrology'){buildHot([]);hl=XY[ANDROLOGY[selA].region];}
-  else if(tab==='trauma'){buildHot([]);drawTrauma(lz,bp);}  // consequence overlay (haematuria / leak / blood at meatus / haematocele)
-  else if(tab==='hardware'){buildHot([]);drawHardware(lz,bp);hl=null;}  // device placement overlay
-  else if(tab==='imaging'){buildHot([]);hl=(imgView==='finding')?XY[FINDINGS[selFind].station]:null;}  // mark the finding's station
-  else if(tab==='conditions'&&selC){buildHot([]);
-    const def=CASES[selC];
-    (state.dilatedStations||[]).forEach(s=>{if(!XY[s])return;const[x,y]=XY[s];bp.appendChild(mk('circle',{cx:x,cy:y,r:26,fill:'rgba(217,119,6,.3)',stroke:'rgba(217,119,6,.8)','stroke-width':2}));});
-    if(state.bladderDistension){const[x,y]=XY.bladder;bp.appendChild(mk('circle',{cx:x,cy:y,r:31,fill:'rgba(217,119,6,.28)'}));}
-    const ls=state.lesionStation;
-    if(ls&&XY[ls]&&def.mechanism!=='none'){const[x,y]=XY[ls],col=MCOL[def.mechanism]||'#dc2626';
-      lz.appendChild(mk('circle',{cx:x,cy:y,r:16,fill:'#fff',opacity:.7}));lz.appendChild(mk('circle',{cx:x,cy:y,r:21,fill:'none',stroke:col,'stroke-width':2.5,opacity:.55}));
-      const h=mk('circle',{cx:x,cy:y,r:12,fill:col,stroke:'#fff','stroke-width':2});h.style.animation='lpulse 1.8s ease-in-out infinite';lz.appendChild(h);}
-    if(state.inflamed&&XY[state.inflamed]){const[x,y]=XY[state.inflamed];lz.appendChild(mk('circle',{cx:x,cy:y,r:23,fill:'rgba(225,29,72,.22)'}));}
-    if(state.mass&&XY[state.mass]){const[x,y]=XY[state.mass];lz.appendChild(mk('circle',{cx:x+8,cy:y-6,r:9,fill:'#7c3aed',opacity:.8}));}
-    // --- Option A: loud, plain-word callouts ---
-    const lesS=(state.lesionStation&&XY[state.lesionStation])?state.lesionStation:(state.inflamed||state.mass);
-    const co=CALLOUT[def.mechanism];
-    if(co&&lesS&&XY[lesS]){const[lx,ly]=XY[lesS],col=MCOL[def.mechanism]||'#dc2626';const lines=[...co];
-      if(def.mechanism==='infection')lines[1]=state.systemic?'systemic':'local';
-      if(def.mechanism==='malignancy'&&state.particleColor==='blood')lines[1]='painless bleed';
-      lz.appendChild(mk('line',{x1:146,y1:ly,x2:lx,y2:ly,stroke:col,'stroke-width':1.5,'stroke-dasharray':'3 3'}));
-      drawLabel(lz,14,ly-17,lines,{solid:true,color:col});}
-    const topD=['kidney','ureter','bladder'].find(s=>(state.dilatedStations||[]).includes(s));
-    if(topD&&XY[topD]){const[tx,ty]=XY[topD];
-      bp.appendChild(mk('path',{d:`M${tx},${ty-30} v-15 M${tx-7},${ty-38} l7,-9 l7,9`,stroke:'#d97706','stroke-width':3,fill:'none','stroke-linecap':'round','stroke-linejoin':'round'}));
-      drawLabel(bp,Math.min(tx+34,374),ty-18,[state.hydronephrosis?'hydronephrosis':'back-pressure',state.hydronephrosis?'back-pressure ↑':'↑'],{color:'#d97706',w:118});}
-    if(state.flowBlocked&&(state.silentStations||[]).length&&lesS&&XY[lesS]){const[,ly]=XY[lesS];
-      const q=mk('text',{x:256,y:Math.min(ly+66,802),'font-size':11,fill:'#a8a29e','text-anchor':'middle','font-style':'italic'});q.textContent='↓ quiet below the block';lz.appendChild(q);}
-  }
-  if(hl){const[x,y]=hl;bp.appendChild(mk('circle',{cx:x,cy:y,r:27,fill:'rgba(37,99,235,.12)',stroke:'rgba(37,99,235,.6)','stroke-width':2,'stroke-dasharray':tab==='normal'?'':'5 4'}));}
+  else if(tab==='trauma'){buildHot([]);drawTrauma(lz,bp);}
+  else if(tab==='hardware'){buildHot([]);drawHardware(lz,bp);}
+  else if(tab==='imaging'){buildHot([]);hl=(imgView==='finding')?XY[FINDINGS[selFind].station]:null;}
+  else buildHot([]);
+  if(hl){const[x,y]=hl;bp.appendChild(mk('circle',{cx:x,cy:y,r:27,fill:'rgba(37,99,235,.10)',stroke:'rgba(37,99,235,.6)','stroke-width':2,'stroke-dasharray':tab==='normal'?'':'5 4'}));}
+  mDraw();
 }
 
 function render(){
@@ -370,12 +518,18 @@ function render(){
   // figure: real image when a concept has one; else the interactive model
   const curId=tab==='normal'?selN:tab==='conditions'?selC:tab==='oncology'?selO:null;
   const curEntry=tab==='normal'?NORMAL_TEACH[selN]:tab==='conditions'?(selC?CASES[selC]:null):tab==='oncology'?ONCOLOGY[selO]:tab==='andrology'?ANDROLOGY[selA]:tab==='presentations'?PRESENTATIONS[selP]:tab==='trauma'?TRAUMA[selT]:tab==='hardware'?HARDWARE[selH]:tab==='imaging'?(imgView==='modality'?MODALITIES[selMod]:FINDINGS[selFind]):null;
-  const imgPath=tab==='imaging'?(imgView==='modality'?(MODALITIES[selMod].img||null):((FINDINGS[selFind].images[0]||{}).img||null)):((tab==='presentations'||tab==='andrology'||tab==='trauma'||tab==='hardware')?null:(curId?IMAGES[curId]:null));
-  const hideFig=!showsFigure({tab,entry:curEntry,hasImage:!!imgPath||!!(curId&&IMAGES[curId])});
+  // imaging scans and oncology concept schematics lead with the image; anatomy pages lead with the moving diagram
+  const scan=tab==='imaging'?(imgView==='modality'?(MODALITIES[selMod].img||null):((FINDINGS[selFind].images[0]||{}).img||null)):null;
+  const plate=(tab==='normal'||tab==='conditions'||tab==='oncology')&&curId?IMAGES[curId]||null:null;
+  const imageFirst=!!scan||(tab==='oncology'&&ONCOLOGY[selO].kind==='concept'&&!!plate);
+  const pk=tab+'|'+curId;if(pk!==plateKey){plateKey=pk;showPlate=false;}
+  const imgPath=scan||(imageFirst||showPlate?plate:null);
+  const pb=el('figplate');pb.hidden=!plate||imageFirst;pb.textContent=showPlate?'Diagram':'Textbook plate';
+  const hideFig=!showsFigure({tab,entry:curEntry,hasImage:!!scan||!!plate});
   const fig=el('figure'),fimg=el('figimg'),svg=el('stage');
   if(hideFig){fig.style.display='none';}               // content-only (onc concept / non-anatomical andrology)
   else{fig.style.display='';
-    if(imgPath){fimg.src=imgPath;fimg.style.display='block';svg.style.display='none';fig.classList.remove('focus');}
+    if(imgPath){fimg.src=imgPath;fimg.style.display='block';svg.style.display='none';}
     else{fimg.style.display='none';svg.style.display='block';drawModel();}}
   if(tab==='normal')renderNormal();else if(tab==='presentations')renderPres();else if(tab==='oncology')renderOnc();else if(tab==='andrology')renderAndro();else if(tab==='trauma')renderTrauma();else if(tab==='hardware')renderHardware();else if(tab==='imaging')renderImaging();else renderCond();
 }
@@ -389,9 +543,9 @@ function renderNormal(){const t=NORMAL_TEACH[selN],c=el('content');
   html+=`</div>`;  // close the lead card
   // storage/voiding is a lower-tract (bladder + outlet) function — only show the state machine where it's the actual physiology, not on the kidney/nephron/ureter
   if(['bladder','sphincters'].includes(selN))
-    html+=`<div class="card"><div class="h">Storage / voiding state machine</div><div class="row"><button class="btn storage" data-phase="STORAGE" aria-pressed="${phase==='STORAGE'}">Storage</button><button class="btn voiding" data-phase="VOIDING" aria-pressed="${phase==='VOIDING'}">Voiding</button></div><div class="c-body" style="margin-top:9px">${phase==='STORAGE'?'<b>Storage</b> (sympathetic, T10–L2): detrusor relaxed (β3), internal sphincter closed (α1) — the bladder fills at low pressure.':'<b>Voiding</b> (parasympathetic, S2–S4): detrusor contracts (M3), sphincters open — the bladder empties.'}</div></div>`;
+    html+=`<div class="card"><div class="h">Filling and emptying</div><div class="row"><button class="btn" data-phase="AUTO" aria-pressed="${!lock}">Run the cycle</button><button class="btn storage" data-phase="STORAGE" aria-pressed="${lock==='STORAGE'}">Hold in storage</button><button class="btn voiding" data-phase="VOIDING" aria-pressed="${lock==='VOIDING'}">Hold in voiding</button></div><div class="c-body" style="margin-top:9px"><b>Storage</b> (sympathetic, T10–L2): detrusor relaxed (β3), internal sphincter closed (α1), so the bladder fills at low pressure.<br><b>Voiding</b> (parasympathetic, S2–S4): detrusor contracts (M3) and the sphincters open, so the bladder empties.</div></div>`;
   html+=patientHTML(t.patient);
-  c.innerHTML=html;c.querySelectorAll('button[data-phase]').forEach(b=>b.onclick=()=>{phase=b.dataset.phase;render();});wireCopy(c,t.patient);}
+  c.innerHTML=html;c.querySelectorAll('button[data-phase]').forEach(b=>b.onclick=()=>{const v=b.dataset.phase;lock=v==='AUTO'?null:v;phase=lock||'STORAGE';if(lock&&paused){paused=false;el('figplay').textContent='Pause';}render();});wireCopy(c,t.patient);}
 
 function renderPres(){const p=PRESENTATIONS[selP],c=el('content');
   c.innerHTML=`<div class="card lead"><div class="c-title">${p.label}</div><div class="c-sub">symptom → workup → treatment</div><div class="c-body">${prose(p.complaint)}</div>`+
@@ -503,18 +657,19 @@ function wireCopy(c,patient){const b=c.querySelector('.pat-copy');if(!b||!patien
 
 let last=0;
 function tick(ts){const dt=Math.min((ts-last)/1000,.05)||.016;last=ts;
-  const active=tab==='normal'?(phase==='VOIDING'):(tab==='conditions'?!!selC:true);
-  const bF=state&&state.flowBlocked&&state.lesionStation in NODE?nf(state.lesionStation):1;
-  const cF=state&&state.particleColorFrom&&state.particleColorFrom in NODE?nf(state.particleColorFrom):2;
-  const rev=state&&state.flowReversed;
-  for(let i=0;i<dots.length;i++){const p=dots[i];p.t+=p.v*(active?1:.35)*dt*(rev?-1:1);if(p.t>=1)p.t-=1;if(p.t<0)p.t+=1;
-    let t=p.t;if(!rev&&t>bF)t=Math.max(0,bF-0.02*((i%4)+1));const[x,y]=samp(t);p.el.setAttribute('cx',x);p.el.setAttribute('cy',y);
-    p.el.setAttribute('fill',(state&&state.particleColor==='blood'&&t>=cF)?'#b91c1c':'#e0b94e');p.el.setAttribute('opacity',(state&&state.exitFlow==='blocked'&&t>.95)?0:.92);}
-  el('cap').textContent=tab==='normal'?`normal · ${phase.toLowerCase()}`:tab==='presentations'?PRESENTATIONS[selP].label.toLowerCase():tab==='oncology'?ONCOLOGY[selO].label.toLowerCase():tab==='andrology'?ANDROLOGY[selA].label.toLowerCase():tab==='trauma'?TRAUMA[selT].label.toLowerCase():tab==='hardware'?HARDWARE[selH].label.toLowerCase():(selC?CASES[selC].label.toLowerCase():'pick a condition');
+  if(el('stage').style.display!=='none'&&el('figure').style.display!=='none'&&!paused){mFx=mStep(dt);mDraw();}
+  const ml=Math.round(Math.min(M.f,1.12)*450);
+  const live=moving&&el('stage').style.display!=='none';
+  el('cap').textContent=live?(M.phase==='void'?`voiding · ${ml} mL · parasympathetic: squeeze, sphincters open`:M.phase==='urge'?`urge · ${ml} mL · bladder squeezing early`:`filling · ${ml} mL · sympathetic: relaxed, sphincters shut`)
+    :tab==='presentations'?PRESENTATIONS[selP].label.toLowerCase():tab==='oncology'?ONCOLOGY[selO].label.toLowerCase():tab==='andrology'?ANDROLOGY[selA].label.toLowerCase():tab==='trauma'?TRAUMA[selT].label.toLowerCase():tab==='hardware'?HARDWARE[selH].label.toLowerCase():tab==='imaging'?'imaging':(selC?CASES[selC].label.toLowerCase():'pick a condition');
   requestAnimationFrame(tick);}
-
 el('t-normal').onclick=()=>{tab='normal';render();};el('t-pres').onclick=()=>{tab='presentations';render();};
 el('t-cond').onclick=()=>{tab='conditions';render();};el('t-onc').onclick=()=>{tab='oncology';render();};el('t-andro').onclick=()=>{tab='andrology';render();};el('t-trauma').onclick=()=>{tab='trauma';render();};el('t-hw').onclick=()=>{tab='hardware';render();};el('t-img').onclick=()=>{tab='imaging';render();};
+let userSex=sex;
+el('sexF').onclick=()=>{userSex='female';try{localStorage.setItem('cg-sex','female');}catch(e){}render();};
+el('sexM').onclick=()=>{userSex='male';try{localStorage.setItem('cg-sex','male');}catch(e){}render();};
+el('figplay').onclick=()=>{paused=!paused;el('figplay').textContent=paused?'Play':'Pause';};
+el('figplate').onclick=()=>{showPlate=!showPlate;render();};
 el('figtoggle').onclick=()=>{const f=el('figure');const c=f.classList.toggle('collapsed');el('figtoggle').textContent=c?'Show diagram':'Hide diagram';};
 
 // --- global search: index every entry across all six tabs, jump on select ---
@@ -562,6 +717,7 @@ document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement!=
 const DL_DATA={normal:NORMAL_TEACH,presentations:PRESENTATIONS,conditions:CASES,oncology:ONCOLOGY,andrology:ANDROLOGY,trauma:TRAUMA,hardware:HARDWARE,imaging:{...MODALITIES,...FINDINGS}};
 const dl=parseDeepLink(location.search,(t,i)=>DL_DATA[t]&&DL_DATA[t][i]);
 if(dl){tab=dl.tab;if(dl.id)sGo({tab:dl.tab,id:dl.id});}
+if(paused)el('figplay').textContent='Play';
 render();requestAnimationFrame(tick);
 </script>
 <script src="nav.js" defer></script>
