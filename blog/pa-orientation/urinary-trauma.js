@@ -1,6 +1,6 @@
 // GU trauma (Trauma tab): renal, bladder, urethral and testicular injury — written at
-// teaching depth, section-based. The high-yield "golden rules" (don't catheterise a
-// suspected urethral injury; CT delayed phase for renal; CT cystogram with active
+// teaching depth, section-based. The high-yield "golden rules" (urethrogram before any
+// catheter in a suspected urethral injury; CT delayed phase for renal; CT cystogram with active
 // filling) are emphasised. DRAFT — pending clinician review. Not medical advice.
 
 export const TRAUMA = {
@@ -22,7 +22,7 @@ export const TRAUMA = {
   bladder_trauma: {
     label: 'Bladder trauma', kind: 'condition', region: 'bladder',
     sections: [
-      { h: 'Mechanism & types', body: 'Strongly associated with PELVIC FRACTURES (and with a full bladder at impact, or iatrogenic surgical injury). Two patterns are managed differently: EXTRAPERITONEAL rupture (commonest — pelvic-fracture fragments tear the bladder, urine leaks into the pelvis) and INTRAPERITONEAL rupture (a burst at the dome from a blow to a full bladder — urine spills into the peritoneal cavity; classic in children and after alcohol).' },
+      { h: 'Mechanism & types', body: 'Strongly associated with PELVIC FRACTURES (and with a full bladder at impact, or iatrogenic surgical injury). Two patterns are managed differently: EXTRAPERITONEAL rupture (usually reported as the commonest, though series vary — pelvic-fracture fragments tear the bladder, urine leaks into the pelvis) and INTRAPERITONEAL rupture (a burst at the dome from a blow to a full bladder — urine spills into the peritoneal cavity; classic in children and after alcohol).' },
       { h: 'Assessment & imaging', body: 'The hallmark is gross haematuria with a pelvic fracture (or inability to void). Diagnose with CT CYSTOGRAPHY (or retrograde cystogram) — the bladder must be ACTIVELY filled/distended with contrast to reveal the leak; a passively-filled scan can miss it. The pattern of contrast extravasation distinguishes extraperitoneal from intraperitoneal.' },
       { h: 'Management', body: 'EXTRAPERITONEAL rupture is usually managed NON-operatively with catheter drainage alone, letting it heal (repaired only if complex, or if the bladder neck or another injury needs open surgery). INTRAPERITONEAL rupture requires SURGICAL repair — peritoneal urine causes chemical peritonitis and will not heal on a catheter. Always exclude an associated urethral injury before relying on a urethral catheter.' },
     ],
@@ -37,16 +37,16 @@ export const TRAUMA = {
   urethral_trauma: {
     label: 'Urethral trauma', kind: 'condition', region: 'urethra',
     sections: [
-      { h: 'Mechanism & types', body: 'Two patterns. POSTERIOR urethral injury (membranous urethra) accompanies PELVIC FRACTURES — shearing at the prostatomembranous junction. ANTERIOR urethral injury (bulbar urethra) is typically a STRADDLE injury (falling astride a bar) or from instrumentation. Both threaten later stricture, incontinence and erectile dysfunction.' },
-      { h: 'The triad — and the golden rule', body: 'Suspect it with BLOOD AT THE MEATUS, inability to void with a distended bladder, and a HIGH-RIDING or boggy prostate on DRE (posterior injury); perineal/scrotal "butterfly" bruising suggests an anterior injury. THE GOLDEN RULE: if urethral injury is suspected, do NOT attempt urethral catheterisation — blind catheterisation can convert a partial tear into a complete one. Get a RETROGRADE URETHROGRAM first.' },
+      { h: 'Mechanism & types', body: 'Two patterns. POSTERIOR urethral injury (membranous urethra) accompanies PELVIC FRACTURES — usually disrupted at the bulbomembranous junction (prostatic and bladder-neck injuries are rare, mostly in children). ANTERIOR urethral injury (bulbar urethra) is typically a STRADDLE injury (falling astride a bar) or from instrumentation. Both threaten later stricture, incontinence and erectile dysfunction.' },
+      { h: 'The triad — and the golden rule', body: 'Suspect it with BLOOD AT THE MEATUS, inability to void with a distended bladder, and, classically, a HIGH-RIDING or boggy prostate on DRE (posterior injury) — though that sign is unreliable, and DRE is done mainly to exclude a rectal injury; perineal/scrotal "butterfly" bruising suggests an anterior injury. THE GOLDEN RULE: if urethral injury is suspected, get a RETROGRADE URETHROGRAM before any catheter — no blind or repeated attempts. At most one gentle attempt by an experienced urologist (e.g. when a suprapubic tube is unsafe); if it meets any resistance, stop and drain suprapubically.' },
       { h: 'Management', body: 'Confirm with retrograde urethrogram. Establish bladder drainage safely — usually a SUPRAPUBIC catheter — rather than forcing a urethral tube. Definitive repair (delayed urethroplasty for posterior injuries; selected primary realignment) is planned later, because reconstruction in the acute, swollen, fractured pelvis fares worse. Counsel about the high rates of later stricture and erectile/continence problems.' },
     ],
-    pearls: ['Blood at the meatus + can’t void + high-riding prostate = urethral injury', 'DO NOT catheterise — retrograde urethrogram FIRST (a blind catheter can complete a partial tear)', 'Posterior = pelvic fracture; anterior = straddle injury', 'Drain via suprapubic catheter; delayed urethroplasty; high stricture/ED risk'],
+    pearls: ['Blood at the meatus + can’t void (± high-riding prostate — classic but unreliable) = urethral injury', 'No blind catheter — retrograde urethrogram FIRST; any resistance → stop and drain suprapubically', 'Posterior = pelvic fracture; anterior = straddle injury', 'Drain via suprapubic catheter; delayed urethroplasty; high stricture/ED risk'],
     patient: {
       whatItIs: 'An injury to the urethra, the tube that drains the bladder — **urethral trauma** — from a **pelvic fracture** (deep injury) or from falling astride a bar, a **straddle injury** (lower injury).',
       whyItMatters: 'It is suspected when there is blood at the tip of the penis, an inability to pass urine despite a full bladder, and it carries a high later risk of narrowing of the tube (**urethral stricture**), incontinence and erectile dysfunction.',
       whatIsDone: 'A **retrograde urethrogram** confirms it; drainage is set up safely with a **suprapubic catheter** rather than forcing a tube up the urethra, and definitive repair (**urethroplasty**) is planned later.',
-      whatToWatch: 'The golden rule is that a urethral catheter must NOT be pushed up when this injury is suspected, because a blind attempt can turn a partial tear into a complete one.',
+      whatToWatch: 'The golden rule is that a urethral catheter must NOT be pushed blindly when this injury is suspected — a **retrograde urethrogram** comes first, and if a tube meets any resistance the bladder is drained with a **suprapubic catheter** instead.',
     },
   },
   testicular_trauma: {
@@ -75,12 +75,12 @@ export function traumaFor(id) { return TRAUMA[id] || null; }
 //   blood       — render the red haematuria stream from `mark` down the conduit (upper-tract only)
 //   leak        — urine droplets escaping the bladder (extravasation after rupture)
 //   meatusBlood — a blood-at-the-meatus marker at the urethral exit
-//   highRiding  — a "high-riding prostate" cue above the prostate
+//   highRiding  — a "high-riding prostate" cue above the prostate (classic but unreliable sign)
 //   haematocele — a swollen, dark testis glyph in the scrotum
 //   callout     — two plain-word lines (sign + the teaching trap / golden rule)
 export const TRAUMA_FIGURE = {
   renal_trauma:      { mark: 'kidney',  blood: true,        callout: ['haematuria', 'but may be scant — grade ≠ blood'] },
   bladder_trauma:    { mark: 'bladder', leak: true,         callout: ['urine leaks out', '+ pelvic # · can’t void'] },
-  urethral_trauma:   { mark: 'urethra', meatusBlood: true, highRiding: true, callout: ['blood at meatus', '⛔ do NOT catheterise'] },
+  urethral_trauma:   { mark: 'urethra', meatusBlood: true, highRiding: true, callout: ['blood at meatus', '⛔ RUG before any catheter'] },
   testicular_trauma: { mark: 'testis',  haematocele: true,  callout: ['haematocele', 'USS · explore early'] },
 };

@@ -61,6 +61,10 @@
   th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; vertical-align: top; }
   th { background: var(--code-bg); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
   hr { border: none; border-top: 2px solid var(--border); margin: 52px 0; }
+  dl.gloss { display: grid; grid-template-columns: max-content minmax(0,1fr); gap: 8px 16px; font-size: 15px; margin-bottom: 16px; }
+  dl.gloss dt { font-weight: 700; }
+  dl.gloss dd { margin: 0; color: var(--muted); }
+  @media (max-width: 520px) { dl.gloss { grid-template-columns: minmax(0,1fr); } dl.gloss dd { margin-bottom: 6px; } }
 
   /* Station diagram — horizontal pipeline */
   .pipeline {
@@ -199,33 +203,33 @@
 
 <div class="crumb"><a href="index.html">← Clinical Geometry</a> · <a href="Three Geometries of Failure.html">Geometries</a> · May 24, 2026</div>
 <h1>The Urinary Tract — A Conduit</h1>
-<p class="subtitle">Five functional stations from production to expulsion. Urine flows one way. Symptoms appear at the exit. The lesion is upstream — and your job is to localize which station first failed.</p>
+<p class="subtitle">Urine is made in the kidney and leaves through the urethra, passing five stations on the way. It flows one way only. The patient feels the problem at the exit, but the cause is often further up. Your job is to find which part failed first.</p>
 
 <!-- ============================================================ -->
-<h2>The Frame</h2>
+<h2>How to think about the urinary tract</h2>
 
-<p>The urinary tract is a <strong>conduit</strong> — the second of the <a href="Three Geometries of Failure.html">three geometries</a>. That changes the diagnostic question. You are not asking "how deep is the lesion?" the way you do with the abdominal wall. You are asking <strong>"which station did the flow first fail at?"</strong></p>
+<p>The urinary tract is a <strong>conduit</strong>: a one-way tube, like a garden hose, and the second of the <a href="Three Geometries of Failure.html">three geometries</a>. So the question is different from the abdominal wall. You don't ask "how deep is the problem?" You ask <strong>"where along the tube did the flow first stop?"</strong></p>
 
-<p>Conduits fail in characteristic ways. Block one and pressure builds upstream while the exit goes silent. Contaminate one with bacteria and the infection rides the flow downstream and rises upstream. Lose the wall integrity and the cargo leaks out where it shouldn't. The shape of the failure tells you which station.</p>
+<p>Tubes go wrong in a few typical ways. Block one and pressure builds above the block while nothing comes out the end. Let bacteria in and the infection travels down with the flow and climbs back up against it. Damage the wall and urine leaks out where it shouldn't. The pattern tells you where the problem is.</p>
 
 <div class="card card-accent">
-  <div class="label">The diagnostic principle, once</div>
-  <p style="margin:0;">Find where the flow visibly fails — that's the symptom layer. Then <strong>trace upstream</strong>. Every station above the failure shows back-pressure damage (dilation, distention, parenchymal injury). Every station below shows under-perfusion (atrophy, silence, no output). The lesion sits at the boundary where back-pressure ends and silence begins.</p>
+  <div class="label">The one rule to remember</div>
+  <p style="margin:0;">Start where the flow visibly stops: that's where the patient notices it. Then <strong>work back up the tube</strong>. Everything above the block shows damage from back-pressure (a widened ureter, a swollen bladder, an injured kidney). Everything below is empty or quiet (nothing coming out, shrunken from disuse). The problem sits where the swelling ends and the quiet begins.</p>
 </div>
 
 <figure class="fig">
   <img src="images/atlas1-p02.jpg" alt="Anatomical overview of the male urinary tract showing kidneys, ureters, bladder, prostate, and urethra in situ">
-  <figcaption><strong>The conduit, in situ.</strong> Kidneys → ureters → bladder → prostate-encircled urethra → exit. Every clinical complaint downstream points to a station along this path. Keep the picture in mind while reading the stations below.<br>From Burroughs Wellcome Co., <em>Atlas of the Urinary Tract</em>.</figcaption>
+  <figcaption><strong>The urinary tract, in the body.</strong> Kidneys → ureters → bladder → urethra (ringed by the prostate) → exit. Every complaint at the exit points back to somewhere along this path. Keep the picture in mind while reading about each part below.<br>From Burroughs Wellcome Co., <em>Atlas of the Urinary Tract</em>.</figcaption>
 </figure>
 
 <!-- ============================================================ -->
-<h2>The Five Stations</h2>
+<h2>The five stations, kidney to outlet</h2>
 
-<p>Numbered in the direction of flow. Production at the top, expulsion at the bottom. Every station has a job and a characteristic failure mode.</p>
+<p>They are numbered in the direction urine flows: the kidney makes it, the outlet lets it out. Each part has one job and a typical way of going wrong.</p>
 
 <!-- Horizontal pipeline diagram -->
 <div class="pipeline">
-  <svg viewBox="0 0 740 220" xmlns="http://www.w3.org/2000/svg" aria-label="The five stations of the urinary tract">
+  <svg viewBox="0 0 740 220" xmlns="http://www.w3.org/2000/svg" aria-label="The five stations of the urinary tract: kidney, ureter, bladder, control, outlet">
     <g font-family="-apple-system, BlinkMacSystemFont, sans-serif">
       <!-- conduit line -->
       <line x1="80" y1="110" x2="680" y2="110" stroke="#e7e5e4" stroke-width="6" stroke-linecap="round"/>
@@ -259,24 +263,24 @@
       <circle cx="530" cy="110" r="32" fill="#3b82f6"/>
       <text x="530" y="116" text-anchor="middle" font-size="20" font-weight="800" fill="white">4</text>
       <text x="530" y="170" text-anchor="middle" font-size="13" font-weight="700">control</text>
-      <text x="530" y="188" text-anchor="middle" font-size="11" fill="#78716c">sphincters · neural</text>
+      <text x="530" y="188" text-anchor="middle" font-size="11" fill="#78716c">sphincters · nerves</text>
 
       <polygon points="570,104 582,110 570,116" fill="#3b82f6"/>
 
       <!-- Station 5 -->
       <circle cx="680" cy="110" r="32" fill="#8b5cf6"/>
       <text x="680" y="116" text-anchor="middle" font-size="20" font-weight="800" fill="white">5</text>
-      <text x="680" y="170" text-anchor="middle" font-size="13" font-weight="700">expulsion</text>
-      <text x="680" y="188" text-anchor="middle" font-size="11" fill="#78716c">urethra · outlet</text>
+      <text x="680" y="170" text-anchor="middle" font-size="13" font-weight="700">outlet</text>
+      <text x="680" y="188" text-anchor="middle" font-size="11" fill="#78716c">prostate · urethra</text>
 
       <!-- flow direction at top -->
       <line x1="80" y1="40" x2="660" y2="40" stroke="#78716c" stroke-width="1.5"/>
       <polygon points="650,36 666,40 650,44" fill="#78716c"/>
-      <text x="370" y="28" text-anchor="middle" font-size="12" fill="#78716c" font-weight="600">direction of flow · production → expulsion</text>
+      <text x="370" y="28" text-anchor="middle" font-size="12" fill="#78716c" font-weight="600">direction of flow · kidney → outlet</text>
 
     </g>
   </svg>
-  <div class="pipeline-cap">5 stations · flow is one-way · trace upstream from the failure</div>
+  <div class="pipeline-cap">5 stations · urine flows one way · work back up from where it stops</div>
 </div>
 
 <!-- Station detail table -->
@@ -285,63 +289,63 @@
     <div class="stn-num">1</div>
     <div class="stn-what">
       <span class="stn-title">Production · kidney</span>
-      <span class="stn-sub">Glomerulus filters plasma. Tubules concentrate. Collecting ducts deliver urine to the calyces and renal pelvis — the kidney's internal drainage.</span>
+      <span class="stn-sub">The glomerulus filters the blood. The tubules concentrate what's filtered. The collecting ducts deliver urine to the calyces and the renal pelvis, the kidney's own drainage system.</span>
     </div>
     <div class="stn-fail">
-      <span class="stn-title">Failure looks like:</span>
-      <span class="stn-sub">Hematuria from glomerular or parenchymal source. Pyelonephritis. Renal masses. AKI from prerenal, intrarenal, or postrenal causes. Hydronephrosis when station 2 is blocked.</span>
+      <span class="stn-title">When it goes wrong:</span>
+      <span class="stn-sub">Blood in the urine (hematuria) from the filter or kidney tissue. Kidney infection (pyelonephritis). Kidney masses. Acute kidney injury (AKI) from prerenal, intrarenal or postrenal causes. A swollen kidney (hydronephrosis) when the ureter is blocked.</span>
     </div>
   </div>
   <div class="stn">
     <div class="stn-num">2</div>
     <div class="stn-what">
       <span class="stn-title">Transport · ureter</span>
-      <span class="stn-sub">25 cm muscular tube. Peristalsis moves urine against gravity. Three natural narrowings: UPJ, pelvic brim, UVJ — all common stone-arrest points.</span>
+      <span class="stn-sub">A 25 cm muscular tube. Waves of muscle contraction (peristalsis) push urine along, even against gravity. It narrows naturally in three places where stones often stick: where it leaves the kidney (ureteropelvic junction, UPJ), where it crosses the pelvic brim, and where it enters the bladder (ureterovesical junction, UVJ).</span>
     </div>
     <div class="stn-fail">
-      <span class="stn-title">Failure looks like:</span>
-      <span class="stn-sub">Stone obstruction (colic + hydronephrosis upstream). Stricture from prior surgery or stone. Extrinsic compression (mass, retroperitoneal fibrosis). Reflux if the UVJ valve is incompetent.</span>
+      <span class="stn-title">When it goes wrong:</span>
+      <span class="stn-sub">A stone blocks it (colicky pain, with a swollen kidney above). Narrowing (stricture) after surgery or an old stone. Pressure from outside (a mass, retroperitoneal fibrosis). Urine flowing back up (reflux) if the one-way valve at the UVJ doesn't close.</span>
     </div>
   </div>
   <div class="stn">
     <div class="stn-num">3</div>
     <div class="stn-what">
       <span class="stn-title">Storage · bladder</span>
-      <span class="stn-sub">Compliant reservoir. Stores at low pressure (the critical mechanical property). Trigone is sensory-rich. Detrusor contracts on command to empty.</span>
+      <span class="stn-sub">A stretchy reservoir. Its most important property is that it holds urine at low pressure. The trigone (the base of the bladder) is rich in sensory nerves. The bladder muscle (detrusor) contracts on command to empty it.</span>
     </div>
     <div class="stn-fail">
-      <span class="stn-title">Failure looks like:</span>
-      <span class="stn-sub">Two patterns: storage failure (urgency, frequency, overactivity) and emptying failure (retention, high PVR). High storage pressures damage upstream stations 1–2 by reflux.</span>
+      <span class="stn-title">When it goes wrong:</span>
+      <span class="stn-sub">Two patterns: it can't store (urgency, frequency, an overactive bladder) or it can't empty (retention, a high post-void residual or PVR, the urine left after voiding). High pressure while storing pushes urine back up and damages the ureters and kidneys.</span>
     </div>
   </div>
   <div class="stn">
     <div class="stn-num">4</div>
     <div class="stn-what">
-      <span class="stn-title">Control · sphincters &amp; neural</span>
-      <span class="stn-sub">Two gates. Internal sphincter (smooth muscle, sympathetic α1, involuntary) at the bladder neck. External sphincter (striated muscle, pudendal nerve, voluntary) at the membranous urethra. Pons coordinates.</span>
+      <span class="stn-title">Control · sphincters &amp; nerves</span>
+      <span class="stn-sub">Two gates. The internal sphincter (smooth muscle, sympathetic α1, not under conscious control) sits at the bladder neck. The external sphincter (striated muscle, pudendal nerve, under conscious control) sits at the membranous urethra. The pons in the brainstem coordinates them.</span>
     </div>
     <div class="stn-fail">
-      <span class="stn-title">Failure looks like:</span>
-      <span class="stn-sub">Incontinence (gates won't hold). Detrusor-sphincter dyssynergia (gates won't open when they should). Stress incontinence from pelvic floor support failure. Neurogenic patterns from cord, MS, stroke, diabetes.</span>
+      <span class="stn-title">When it goes wrong:</span>
+      <span class="stn-sub">Leaking (the gates won't hold). Detrusor-sphincter dyssynergia (the gates won't open when the bladder squeezes). Stress incontinence when the pelvic floor doesn't support the urethra. Nerve-related (neurogenic) patterns from spinal cord injury, multiple sclerosis (MS), stroke or diabetes.</span>
     </div>
   </div>
   <div class="stn">
     <div class="stn-num">5</div>
     <div class="stn-what">
-      <span class="stn-title">Expulsion · urethra &amp; outlet</span>
-      <span class="stn-sub">The exit conduit. In men, traverses the prostate — a Layer-pattern structure wrapped around a Conduit-pattern lumen. Stricture, compression, and obstruction all live here.</span>
+      <span class="stn-title">Outlet · prostate &amp; urethra</span>
+      <span class="stn-sub">The exit tube. In men it runs through the prostate, a solid gland wrapped around the tube. Narrowing, squeezing and blockage all happen here.</span>
     </div>
     <div class="stn-fail">
-      <span class="stn-title">Failure looks like:</span>
-      <span class="stn-sub">BPH — prostate compresses the lumen from outside. Stricture from prior infection, instrumentation, trauma. Meatal stenosis. Tumor. Failure here drives back-pressure all the way to station 1.</span>
+      <span class="stn-title">When it goes wrong:</span>
+      <span class="stn-sub">Benign prostatic hyperplasia (BPH): the enlarged prostate squeezes the urethra from outside. Stricture after infection, instruments (catheters, scopes) or trauma. A narrowed opening (meatal stenosis). Tumour. A block here pushes back-pressure all the way up to the kidneys.</span>
     </div>
   </div>
 </div>
 
 <!-- ============================================================ -->
-<h2>Station 1 Has Its Own Geometry Inside</h2>
+<h2>Inside the kidney: where the problem sits decides the disease</h2>
 
-<p>The kidney sits at the head of the conduit, but internally it is a small layered network of its own — filtration physiology arranged as a flow path. Worth zooming in once, because urology bugs at this level have a different feel from anything else in the tract.</p>
+<p>For the patient, this means two people with "a kidney problem" can need completely different doctors. The kidney is the first stop of the tract, but inside it urine also flows along its own short path, from filter to drain. It's worth one close look, because problems inside the kidney behave differently from problems anywhere else in the tract.</p>
 
 <div class="subdiagram">
   <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" aria-label="Internal flow path of the kidney">
@@ -383,32 +387,32 @@
 
       <line x1="60" y1="38" x2="530" y2="38" stroke="#78716c" stroke-width="1"/>
       <polygon points="522,35 535,38 522,41" fill="#78716c"/>
-      <text x="295" y="28" text-anchor="middle" font-size="11" fill="#78716c">internal flow within station 1</text>
+      <text x="295" y="28" text-anchor="middle" font-size="11" fill="#78716c">flow inside the kidney</text>
     </g>
   </svg>
-  <div class="subdiagram-cap">the kidney is itself a small pipeline · failures here are sub-station problems</div>
+  <div class="subdiagram-cap">urine flows one way inside the kidney too · where it fails decides the disease</div>
 </div>
 
-<p>Where the failure sits within the kidney changes the disease completely. A glomerular lesion is one disease (proteinuria, nephritic syndromes). A tubular lesion is another (concentrating defects, AKI). A collecting-duct / calyx / pelvis lesion is a urological problem (stones in the calyx, UPJ obstruction at the pelvis-ureter junction). <strong>Same organ, three sub-stations, three different specialties.</strong></p>
+<p>Where the problem sits inside the kidney changes the disease completely. A problem in the glomerulus is one kind of disease (protein in the urine, nephritic syndromes). A problem in the tubules is another (the kidney can't concentrate urine, acute kidney injury). A problem in the collecting ducts, calyx or pelvis is a urology problem (stones in a calyx, a blockage where the pelvis meets the ureter at the UPJ). <strong>Same organ, three places, three different specialties.</strong></p>
 
 <div class="card card-teal">
-  <div class="label">Where the geometries overlap</div>
-  <p style="margin:0;">The kidney is a conduit station from the urinary tract's point of view, but internally it is filtration physiology (layers — nephrons stacked) supplied by a vascular tree (a network). That is why a kidney can fail in three different ways: <strong>parenchymal disease</strong> (layer problem), <strong>vascular event</strong> (network problem — e.g. renal infarct), and <strong>collecting-system obstruction</strong> (conduit problem — e.g. stone). Each has a different specialist, a different test, a different fix.</p>
+  <div class="label">How the three geometries meet in the kidney</div>
+  <p style="margin:0;">Seen from the urinary tract, the kidney is the first stop of a tube. Inside, it is a filter made of nephrons stacked side by side (layers), fed by a branching tree of blood vessels (a network). That is why a kidney can fail in three different ways: <strong>disease of the kidney tissue</strong> (a layer problem), <strong>a blood-supply event</strong> (a network problem, e.g. a renal infarct), and <strong>a blocked drainage system</strong> (a conduit problem, e.g. a stone). Each has a different specialist, a different test and a different fix.</p>
 </div>
 
 <figure class="fig">
   <img src="images/atlas2-p06.jpg" alt="Cross-section of a normal human kidney labeled with cortex, medulla, calyx, pelvis, ureter, and capsule">
-  <figcaption><strong>Station 1, in cross-section.</strong> Cortex and medulla make urine; calyces gather it; the pelvis hands it off to the ureter. Obstruction anywhere downstream backs up into this architecture — flattening calyces (hydronephrosis), thinning cortex (chronic damage), and ultimately silencing the nephron.<br>From Burroughs Wellcome Co., <em>Atlas of the Urinary Tract</em>.</figcaption>
+  <figcaption><strong>The kidney (station 1), cut in half.</strong> The cortex and medulla make urine; the calyces gather it; the pelvis hands it to the ureter. A blockage anywhere below backs urine up into this space, flattening the calyces (hydronephrosis), thinning the cortex (chronic damage), and in the end stopping the nephrons from working.<br>From Burroughs Wellcome Co., <em>Atlas of the Urinary Tract</em>.</figcaption>
 </figure>
 
 <!-- ============================================================ -->
-<h2>Physiology — A Two-Phase State Machine</h2>
+<h2>Filling and emptying: the two phases of the bladder</h2>
 
-<p>Stations 3 and 4 work together as a state machine. The conduit is always in one of two states. The transitions are coordinated by the pontine micturition center.</p>
+<p>For the patient, this is why "I leak" and "I can't go" are different problems. The bladder (station 3) and its control gates, the sphincters and nerves (station 4), work as a team. At any moment they are either filling or emptying, never both. A centre in the brainstem, the pontine micturition centre, switches between the two.</p>
 
 <table>
   <thead>
-    <tr><th>Phase</th><th>Detrusor (st. 3)</th><th>Internal sphincter (st. 4)</th><th>External sphincter (st. 4)</th></tr>
+    <tr><th>Phase</th><th>Bladder muscle (detrusor)</th><th>Internal sphincter</th><th>External sphincter</th></tr>
   </thead>
   <tbody>
     <tr>
@@ -426,144 +430,144 @@
   </tbody>
 </table>
 
-<p>Three things have to be true for voiding to work: the detrusor has to generate pressure, both sphincters have to open, and the upstream stations have to have something to deliver. Loss of coordination — detrusor contracting against a closed sphincter (dyssynergia) — generates high pressure with no flow. <strong>That hemodynamic insult is identical to bladder outlet obstruction</strong> and damages stations 1–2 the same way.</p>
+<p>Three things have to be true for voiding to work: the bladder muscle has to squeeze hard enough, both sphincters have to open, and the kidneys and ureters have to have delivered urine to empty. If the timing is lost, and the bladder squeezes against a closed sphincter (dyssynergia), you get high pressure and no flow. <strong>To the kidneys, that pressure is the same as a blocked bladder outlet</strong>, and it damages the ureters and kidneys in the same way.</p>
 
-<h3>What maintains equilibrium</h3>
+<h3>What keeps the bladder working normally</h3>
 <ul>
-  <li><strong>Low storage pressure.</strong> The detrusor accommodates &gt;400 mL with almost no rise in pressure. High pressure during storage is pathologic — it back-pressures station 2 and damages station 1.</li>
-  <li><strong>Sphincter–detrusor coordination.</strong> When the detrusor contracts, the sphincters open. Lose this and you have no-flow voiding at high pressure.</li>
-  <li><strong>Sensation matches volume.</strong> First urge ~150 mL, strong urge ~300 mL, capacity ~400–500 mL. Mismatch points to a sensory or afferent issue at station 3.</li>
+  <li><strong>Low pressure while filling.</strong> The bladder muscle stretches to hold &gt;400 mL with almost no rise in pressure. High pressure while filling is abnormal: it pushes back up the ureters and damages the kidneys.</li>
+  <li><strong>Sphincters and bladder in step.</strong> When the bladder muscle squeezes, the sphincters open. Lose this and the patient pushes at high pressure with no flow.</li>
+  <li><strong>Feeling matches volume.</strong> First urge at ~150 mL, strong urge at ~300 mL, capacity ~400–500 mL. If the feeling doesn't match the volume, suspect a problem with the bladder's sensory nerves.</li>
 </ul>
 
 <div class="card card-teal">
-  <div class="label">The useful reframe</div>
-  <p style="margin:0;">Most lower-tract symptoms are a failure of one of three things: <strong>storage</strong> (urgency, frequency, incontinence — station 3), <strong>emptying</strong> (hesitancy, weak stream, retention — station 4 or 5), or <strong>coordination</strong> (post-void dribble, high-pressure low-flow — station 4). Pick the bucket first. The differential collapses immediately.</p>
+  <div class="label">A simpler way to sort symptoms</div>
+  <p style="margin:0;">Most bladder and outlet symptoms come from one of three problems: <strong>storing</strong> (urgency, frequency, leaking: the bladder), <strong>emptying</strong> (hesitancy, weak stream, retention: the control gates or the outlet), or <strong>timing</strong> (dribbling after voiding, high-pressure low-flow: the control gates and nerves). Pick the group first. The list of possible causes shrinks straight away.</p>
 </div>
 
 <!-- ============================================================ -->
-<h2>Pathophysiology as Station Failure</h2>
+<h2>Four ways the urinary tract goes wrong</h2>
 
-<p>Four mechanisms account for almost everything. For each: which station holds the lesion, which station shows the symptom, and what's the back-pressure pattern that gives it away.</p>
+<p>Four kinds of problem explain almost everything. For each one: where the problem actually is, where the patient notices it, and what the back-pressure above it looks like.</p>
 
 <table>
   <thead>
     <tr>
-      <th>Mechanism</th>
-      <th>Lesion station</th>
-      <th>Symptom shows at</th>
-      <th>Upstream signature</th>
+      <th>Kind of problem</th>
+      <th>Where the problem is</th>
+      <th>Where the patient notices it</th>
+      <th>What you see above it</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>Obstruction</strong><br><span style="font-size: 12px; color: var(--muted);">stone, BPH, stricture, tumor, clot</span></td>
-      <td>Wherever the lumen narrows (2 and 5 most common)</td>
-      <td>The exit goes silent (no output, weak stream) or the patient feels pain at the dilated upstream station</td>
-      <td>Dilation above the lesion — hydronephrosis if upper tract, distended bladder if outlet</td>
+      <td><strong>Blockage</strong><br><span style="font-size: 12px; color: var(--muted);">stone, BPH, stricture, tumor, clot</span></td>
+      <td>Wherever the tube narrows (most often the ureter or the outlet)</td>
+      <td>Nothing or little comes out (weak stream, no urine), or pain where the tube is swollen above the block</td>
+      <td>Swelling above the block: a swollen kidney (hydronephrosis) if the ureter is blocked, a swollen bladder if the outlet is</td>
     </tr>
     <tr>
       <td><strong>Infection</strong><br><span style="font-size: 12px; color: var(--muted);">cystitis, pyelonephritis, prostatitis</span></td>
-      <td>Wherever bacteria colonize (1, 3, 5)</td>
-      <td>Dysuria at the exit (st. 5); systemic signs if station 1 is involved</td>
-      <td>Vital signs change with station depth. Cystitis: afebrile. Pyelonephritis: febrile, ill. Same family of bacteria, two stations, two diseases.</td>
+      <td>Wherever bacteria settle (kidney, bladder, or outlet)</td>
+      <td>Painful urination (dysuria) at the outlet; whole-body signs if the kidney is involved</td>
+      <td>Vital signs change with how far up the infection is. Bladder infection (cystitis): no fever. Kidney infection (pyelonephritis): fever, unwell. Same family of bacteria, two places, two diseases.</td>
     </tr>
     <tr>
-      <td><strong>Neurogenic dysfunction</strong><br><span style="font-size: 12px; color: var(--muted);">SCI, MS, diabetes, stroke</span></td>
-      <td>Above the conduit — brain, cord, peripheral nerve</td>
-      <td>Stations 3 and 4 behave wrong without intrinsic disease</td>
-      <td>Imaging the bladder or sphincter is unrevealing. The lesion is in the wiring, not the conduit.</td>
+      <td><strong>Nerve problems (neurogenic)</strong><br><span style="font-size: 12px; color: var(--muted);">spinal cord injury (SCI), MS, diabetes, stroke</span></td>
+      <td>Outside the tract: brain, spinal cord, or peripheral nerve</td>
+      <td>The bladder and its control gates misbehave, though they are healthy themselves</td>
+      <td>Imaging the bladder or sphincter shows nothing. The problem is in the wiring, not the tube.</td>
     </tr>
     <tr>
-      <td><strong>Malignancy</strong><br><span style="font-size: 12px; color: var(--muted);">RCC, urothelial Ca, prostate Ca</span></td>
-      <td>Any station; tissue-specific</td>
-      <td>Hematuria at the exit, or asymptomatic incidental finding</td>
-      <td>Often no upstream signature until the tumor obstructs. Painless gross hematuria is malignancy until proven otherwise — precisely because there is no back-pressure to alert you.</td>
+      <td><strong>Cancer</strong><br><span style="font-size: 12px; color: var(--muted);">renal cell carcinoma (RCC), urothelial cancer, prostate cancer</span></td>
+      <td>Any part; depends on the tissue</td>
+      <td>Blood in the urine, or found by chance with no symptoms</td>
+      <td>Often nothing above it until the tumor blocks the tube. Painless visible blood in the urine is cancer until proven otherwise, precisely because there is no back-pressure to warn you.</td>
     </tr>
   </tbody>
 </table>
 
 <div class="card card-red">
   <div class="label">The trap</div>
-  <p style="margin:0;">"Burning when I pee" is a station 5 symptom. The reflex is to treat for cystitis at station 3. But the same symptom comes from urethritis (station 5), prostatitis (station 5-adjacent), a distal stone wedged at the UVJ (boundary of stations 2 and 3), or atrophic vaginitis next door. The urinalysis isn't a confirmation test — it's a localization test. A clean UA in a "UTI" pushes you off station 3 immediately and forces you to look elsewhere.</p>
+  <p style="margin:0;">"Burning when I pee" is felt at the outlet (station 5). The reflex is to treat it as a bladder infection (cystitis). But the same symptom comes from urethritis (the urethra), prostatitis (the prostate, next to the urethra), a low stone stuck at the UVJ (where the ureter meets the bladder), or atrophic vaginitis next door. The urinalysis (UA) isn't there to confirm a UTI; it tells you where to look. A clean UA in a "UTI" means the bladder is probably not the problem, and you need to look elsewhere.</p>
 </div>
 
-<h3>Two pictures that earn their place</h3>
+<h3>Two drawings of everything that can block the tract</h3>
 
-<p>What follows are the two single most useful illustrations in this whole document. Each shows the conduit with every conceivable lesion at every station, in one drawing. Look at them long enough that you can localize a presentation to a station by pattern recognition — that's what the cards on call will demand of you.</p>
+<p>These are the two most useful pictures on this page. Each shows the urinary tract with every possible problem drawn in at once. Study them until you can look at a presentation and say which part is at fault. That's what you'll be asked to do on call.</p>
 
 <figure class="fig">
   <img src="images/atlas2-p03.jpg" alt="Diagram of the upper urinary tract showing multiple obstructing lesions: hydronephrosis, calculus in kidney and ureter, tumor, ureteral kink, aberrant vessel, scar tissue, chronic infection">
-  <figcaption><strong>Stations 1–2: what can go wrong upstream.</strong> Stones in the calyx and along the ureter. Ureteral tumor. Kink. Aberrant vessel compressing from outside. Scar tissue. Chronic infection. <strong>Every one of them produces hydronephrosis above and a silent system below</strong> — the conduit's signature failure pattern. Boxed labels indicate change due to obstruction.<br>From Burroughs Wellcome Co., <em>Atlas of the Urinary Tract</em>.</figcaption>
+  <figcaption><strong>Kidney and ureter (stations 1–2): what can go wrong up high.</strong> Stones in the calyx and along the ureter. A tumour in the ureter. A kink. An extra blood vessel pressing from outside. Scar tissue. Chronic infection. <strong>Every one of them causes a swollen kidney above and an empty tube below</strong>, the typical pattern of a blocked tube. Boxed labels show changes caused by the blockage.<br>From Burroughs Wellcome Co., <em>Atlas of the Urinary Tract</em>.</figcaption>
 </figure>
 
 <figure class="fig">
   <img src="images/atlas2-p05.jpg" alt="Diagram of the lower urinary tract showing every form of obstruction: thickened bladder wall, muscular hypertrophy, calculus, tumor, BPH, prostatic abscess, congenital valve, prostate carcinoma, infection, diverticulum, polyp, urethral stenosis, phimosis">
-  <figcaption><strong>Stations 3–5: what can go wrong downstream.</strong> The bladder has hypertrophied to push against an obstruction. The prostate is enlarged (BPH) <em>and</em> carcinomatous. There's a diverticulum, a calculus, a congenital valve, a polyp, a stricture, and phimosis at the meatus. Any one of these explains "can't pee" or "weak stream." <strong>The trainee's job is to identify which.</strong><br>From Burroughs Wellcome Co., <em>Atlas of the Urinary Tract</em>.</figcaption>
+  <figcaption><strong>Bladder, control and outlet (stations 3–5): what can go wrong down low.</strong> The bladder wall has thickened from pushing against a blockage. The prostate is enlarged (BPH) <em>and</em> has cancer. There's a pouch in the bladder wall (diverticulum), a stone, a congenital valve, a polyp, a stricture, and a tight foreskin (phimosis) at the opening. Any one of these explains "can't pee" or "weak stream." <strong>Your job is to work out which.</strong><br>From Burroughs Wellcome Co., <em>Atlas of the Urinary Tract</em>.</figcaption>
 </figure>
 
 <!-- ============================================================ -->
-<h2>Diagnostic Algorithm — Matched to Station</h2>
+<h2>Choosing a test: which part can it see?</h2>
 
-<p>Every test you have access to images a different segment of the conduit. You don't pick the test based on the symptom; you pick it based on which station you still need to see. Know what each test reveals — and just as importantly, where you remain blind.</p>
+<p>For the patient, this means fewer and better-chosen tests. Each test shows a different part of the tract. Don't choose a test from the symptom; choose it from the part you still can't see. Know what each test shows, and just as important, what it misses.</p>
 
 <table>
   <thead>
-    <tr><th>Test</th><th>Station(s) it images</th><th>What it answers</th><th>Where you're blind</th></tr>
+    <tr><th>Test</th><th>What part it shows</th><th>What it answers</th><th>What it misses</th></tr>
   </thead>
   <tbody>
-    <tr><td><strong>Urinalysis</strong></td><td>The cargo — not the conduit</td><td>Is there blood, infection, protein, glucose, crystals?</td><td>Cannot localize. Blood in UA could be from any station.</td></tr>
-    <tr><td><strong>Urine culture</strong></td><td>The cargo, with organism ID</td><td>What organism, what sensitivity?</td><td>Doesn't tell you which station is colonized.</td></tr>
-    <tr><td><strong>Post-void residual</strong></td><td>Station 3 function</td><td>Does the bladder empty?</td><td>Doesn't tell you why it didn't empty — obstruction vs. weak detrusor.</td></tr>
-    <tr><td><strong>Uroflow + urodynamics</strong></td><td>Stations 3, 4, 5 — functional</td><td>Storage pressure, voiding pressure, flow rate, sphincter coordination</td><td>No anatomy. A flat-line flow says <em>something</em> is obstructed — not where.</td></tr>
-    <tr><td><strong>Cystoscopy</strong></td><td>Stations 3, 4, 5 — direct visualization of the lumen</td><td>What does the inside of the conduit actually look like? Stones, tumors, strictures, prostatic encroachment.</td><td>Only what's inside the lumen. A 4 cm renal mass at station 1 is invisible.</td></tr>
-    <tr><td><strong>Ultrasound (renal + bladder)</strong></td><td>Stations 1, 3 — structural</td><td>Hydronephrosis, bladder volume, stones, masses</td><td>Bowel gas obscures station 2 (ureter). Operator-dependent.</td></tr>
-    <tr><td><strong>CT urogram</strong></td><td>Stations 1, 2, 3 — full upper-tract structural</td><td>Stones, masses, hydronephrosis, anatomy</td><td>Function. A dilated system could be obstructed now or scarred from years ago.</td></tr>
-    <tr><td><strong>MRI pelvis</strong></td><td>Stations 3, 4, 5 — soft tissue detail</td><td>Prostate cancer staging, pelvic floor anatomy</td><td>Stones (not bright on MRI). Acute infection.</td></tr>
-    <tr><td><strong>Biopsy</strong></td><td>Tissue diagnosis at the lesion station</td><td>What is this growth, histologically?</td><td>Sampling error. A negative biopsy rules out cancer in the cores you took — nothing more.</td></tr>
+    <tr><td><strong>Urinalysis</strong></td><td>The urine itself, not the tract</td><td>Is there blood, infection, protein, glucose, crystals?</td><td>Can't tell you where. Blood on a UA could come from any part.</td></tr>
+    <tr><td><strong>Urine culture</strong></td><td>The urine, with the organism named</td><td>What organism, and what antibiotics work on it?</td><td>Doesn't tell you which part is infected.</td></tr>
+    <tr><td><strong>Post-void residual</strong></td><td>How well the bladder empties</td><td>Does the bladder empty?</td><td>Doesn't tell you why it didn't empty: blockage or a weak bladder muscle.</td></tr>
+    <tr><td><strong>Uroflow + urodynamics</strong></td><td>Bladder, control gates and outlet: how they work</td><td>Storage pressure, voiding pressure, flow rate, sphincter coordination</td><td>No anatomy. A flat flow curve says <em>something</em> is blocked, not where.</td></tr>
+    <tr><td><strong>Cystoscopy</strong></td><td>Bladder, control gates and outlet: a camera looks inside</td><td>What does the inside of the tube actually look like? Stones, tumors, strictures, prostate pushing in.</td><td>Only what's inside the tube. A 4 cm kidney mass is invisible.</td></tr>
+    <tr><td><strong>Ultrasound (renal + bladder)</strong></td><td>Kidney and bladder: their structure</td><td>Hydronephrosis, bladder volume, stones, masses</td><td>Bowel gas hides the ureter. Depends on the operator's skill.</td></tr>
+    <tr><td><strong>CT urogram</strong></td><td>Kidney, ureter and bladder: full structure of the upper tract</td><td>Stones, masses, hydronephrosis, anatomy</td><td>How well it works. A widened system could be blocked now or scarred from years ago.</td></tr>
+    <tr><td><strong>MRI pelvis</strong></td><td>Bladder, control gates and outlet: soft tissue detail</td><td>Prostate cancer staging, pelvic floor anatomy</td><td>Stones (not bright on MRI). Acute infection.</td></tr>
+    <tr><td><strong>Biopsy</strong></td><td>A tissue sample from where the problem is</td><td>What is this growth under the microscope?</td><td>Sampling error. A negative biopsy rules out cancer in the cores you took, nothing more.</td></tr>
   </tbody>
 </table>
 
 <div class="card card-orange">
   <div class="label">The pattern</div>
-  <p>Tests get more invasive as you go deeper into the conduit's interior. UA is free and reads the cargo. Cystoscopy is direct and invasive. Biopsy is tissue and committed. You earn the right to a deep test by failing to localize with a shallow one.</p>
-  <p style="margin:0;">When a senior asks "what's the next test?" they are really asking <strong>"which station are you still blind to?"</strong> Answer that and the test picks itself.</p>
+  <p>Tests get more invasive the further inside they look. A UA is cheap and only reads the urine. Cystoscopy looks directly inside and is invasive. A biopsy takes tissue and can't be undone. Move to a deeper test only when a simpler one hasn't told you where the problem is.</p>
+  <p style="margin:0;">When a senior asks "what's the next test?" they are really asking <strong>"which part can't you see yet?"</strong> Answer that and the test picks itself.</p>
 </div>
 
 <!-- ============================================================ -->
-<h2>Treatment — Fix at the Station of the Lesion</h2>
+<h2>Treat where the problem is, not where it hurts</h2>
 
-<p>This is the discipline that separates conduit thinking from symptomatic management. The temptation is to treat where the patient is uncomfortable — at the exit. The discipline is to treat where the flow first failed.</p>
+<p>This is what separates thinking about the whole tube from just treating symptoms. The temptation is to treat where the patient is uncomfortable: at the exit. The right move is to treat where the flow first stopped.</p>
 
-<h3>BPH: the canonical example</h3>
-<p>An enlarged prostate compresses the prostatic urethra (station 5). The patient presents with retention — a station 3 functional consequence and an exit complaint ("I can't go"). The bladder is innocent. It has been pumping against an outlet that won't open. Pressure builds backward through station 2 to station 1, where the kidneys are paying the bill.</p>
+<h3>BPH: the classic example</h3>
+<p>An enlarged prostate squeezes the urethra that runs through it (the outlet, station 5). The patient comes in with retention: the bladder can't empty, and the complaint is at the exit ("I can't go"). The bladder isn't the cause. It has been pushing against an outlet that won't open. Pressure builds back up through the ureters to the kidneys, and the kidneys pay the price.</p>
 
-<p>Putting a catheter in fixes the exit — urine comes out. But the prostate is still there. Stop the catheter, the retention returns. <strong>The lesion is at station 5.</strong> Treatment options all act there:</p>
+<p>A catheter fixes the exit: urine comes out. But the prostate is still there. Take the catheter out and the retention comes back. <strong>The problem is at the outlet.</strong> The treatments all act there:</p>
 <ul>
-  <li><strong>α-blocker</strong> (tamsulosin) — relaxes smooth muscle at the bladder neck and prostatic urethra. Acts on stations 4–5.</li>
-  <li><strong>5α-reductase inhibitor</strong> (finasteride) — shrinks the prostate over months. Acts on the structure itself.</li>
-  <li><strong>TURP / HoLEP / UroLift</strong> — surgically remove or retract the obstructing tissue. Definitive station 5 intervention.</li>
+  <li><strong>α-blocker</strong> (tamsulosin): relaxes smooth muscle at the bladder neck and in the prostatic urethra. Acts on the control gates and outlet.</li>
+  <li><strong>5α-reductase inhibitor</strong> (finasteride): shrinks the prostate over months. Acts on the gland itself.</li>
+  <li><strong>TURP / HoLEP / UroLift</strong> (transurethral resection of the prostate, holmium laser enucleation of the prostate, prostatic urethral lift): remove or pull back the blocking tissue with surgery. The lasting fix at the outlet.</li>
 </ul>
 
-<p>Catheter management treats the symptom. Each of the above treats the lesion. Both are sometimes appropriate — but you should always know which one you are doing and why.</p>
+<p>A catheter treats the symptom. Each of the above treats the cause. Both are sometimes right, but you should always know which one you are doing and why.</p>
 
-<h3>The principle generalizes</h3>
+<h3>The same rule for other common complaints</h3>
 
 <table>
   <thead>
-    <tr><th>Presentation</th><th>Where the patient feels it</th><th>Lesion station</th><th>Where you treat</th></tr>
+    <tr><th>Presentation</th><th>Where the patient feels it</th><th>Where the problem is</th><th>Where you treat</th></tr>
   </thead>
   <tbody>
-    <tr><td>Renal colic</td><td>Flank → groin (referred up the dermatome)</td><td>Stone at station 2</td><td>Station 2 — pass, lithotripsy, ureteroscopy, stent</td></tr>
-    <tr><td>Painless gross hematuria</td><td>Color of urine</td><td>Anywhere from station 1 to 5</td><td>Wherever the lesion is localized — never the exit unless it's there</td></tr>
-    <tr><td>Urgency / frequency</td><td>"I have to go"</td><td>Detrusor overactivity (station 3) or sensory afferent (station 3)</td><td>Station 3 — antimuscarinic, β3 agonist, behavioral, BoNT</td></tr>
-    <tr><td>Stress incontinence</td><td>Leak with cough</td><td>Sphincter / pelvic floor (station 4)</td><td>Station 4 — pelvic floor PT, sling, bulking agent</td></tr>
-    <tr><td>Recurrent UTI in a man</td><td>Dysuria</td><td>Anatomic abnormality enabling colonization — stone, residual, prostate</td><td>The enabling lesion. Antibiotics handle this episode; they don't fix the cause.</td></tr>
+    <tr><td>Renal colic</td><td>Flank → groin (referred along the nerve's skin area, the dermatome)</td><td>A stone in the ureter</td><td>The ureter: let it pass, lithotripsy, ureteroscopy, stent</td></tr>
+    <tr><td>Painless gross hematuria</td><td>Color of urine</td><td>Anywhere from kidney to outlet</td><td>Wherever the problem is found; never the exit unless it's there</td></tr>
+    <tr><td>Urgency / frequency</td><td>"I have to go"</td><td>Overactive bladder muscle or oversensitive bladder nerves (the bladder)</td><td>The bladder: antimuscarinic, β3 agonist, behavioural changes, botulinum toxin (BoNT)</td></tr>
+    <tr><td>Stress incontinence</td><td>Leak with cough</td><td>Sphincter / pelvic floor (the control gates)</td><td>The control gates: pelvic floor physiotherapy (PT), sling, bulking agent</td></tr>
+    <tr><td>Recurrent UTI in a man</td><td>Dysuria</td><td>Something in the anatomy that lets bacteria settle: a stone, leftover urine, the prostate</td><td>That underlying cause. Antibiotics treat this episode; they don't fix the cause.</td></tr>
   </tbody>
 </table>
 
 <div class="card card-purple">
-  <div class="label">The discipline</div>
-  <p style="margin:0;">"Stop the bleeding, stop the pain, drain the obstruction" is emergency medicine. It buys time. It is not the operation. Once the patient is stable, ask the question every time: <strong>which station first failed, and what treats it there?</strong> Then plan the definitive treatment at that station.</p>
+  <div class="label">The habit to build</div>
+  <p style="margin:0;">"Stop the bleeding, stop the pain, drain the blockage" is emergency care. It buys time. It is not the fix. Once the patient is stable, ask every time: <strong>where did the flow first stop, and what treats it there?</strong> Then plan the lasting treatment at that spot.</p>
 </div>
 
 <hr>
@@ -571,16 +575,16 @@
 <!-- ============================================================ -->
 <h2>A Worked Case — "I Can't Pee"</h2>
 
-<p>68-year-old man. Presents to the ED. Suprapubic fullness, hasn't urinated in 14 hours, last attempt produced "a few drops." Walk it up the conduit.</p>
+<p>A 68-year-old man comes to the emergency department (ED). His lower belly feels full, he hasn't urinated in 14 hours, and his last try produced "a few drops." Work back up the tract.</p>
 
 <div class="timeline">
 
   <div class="tl-step">
     <div class="tl-num">1</div>
     <div>
-      <div class="tl-meta">The exit complaint · station 5</div>
+      <div class="tl-meta">The complaint at the exit · outlet</div>
       <div class="tl-head">"I can't pee."</div>
-      <div class="tl-body">Flow has visibly stopped at the exit. You do not yet know what station first failed. Suprapubic fullness on exam — bladder is palpable, dull to percussion above the symphysis. The symptom is at station 5. The lesion could be anywhere from 3 upward — the bladder isn't emptying, but you don't know <em>why</em> yet.</div>
+      <div class="tl-body">Flow has visibly stopped at the exit. You don't yet know which part failed first. On exam the lower belly is full: the bladder can be felt, and it sounds dull when tapped above the pubic bone. He notices it at the outlet. The cause could be at the bladder or anywhere below it. The bladder isn't emptying, but you don't know <em>why</em> yet.</div>
       <div class="tl-finding"><strong>Decision:</strong> bladder scan before anything else.</div>
     </div>
   </div>
@@ -588,53 +592,53 @@
   <div class="tl-step">
     <div class="tl-num">2</div>
     <div>
-      <div class="tl-meta">Locate the backed-up cargo · station 3</div>
+      <div class="tl-meta">Find where the urine is backed up · bladder</div>
       <div class="tl-head">820 mL retained.</div>
-      <div class="tl-body">This is acute retention. The bladder <em>can</em> hold urine — station 3 storage is intact, in fact overworked. Back-pressure is building from station 5 backward. The lesion is downstream of the detrusor or upstream of sensation. Localization continues.</div>
-      <div class="tl-finding"><strong>Decision:</strong> decompress (Foley) and start localization in parallel. Don't lose the diagnostic window.</div>
+      <div class="tl-body">This is acute retention. The bladder <em>can</em> hold urine: its storing works, and is in fact overworked. Pressure is building back from the outlet. The problem is either below the bladder muscle or in the nerves that sense fullness. Keep looking.</div>
+      <div class="tl-finding"><strong>Decision:</strong> drain the bladder (Foley catheter) and keep looking for the cause at the same time. Don't lose the chance to find it.</div>
     </div>
   </div>
 
   <div class="tl-step ok">
     <div class="tl-num">3</div>
     <div>
-      <div class="tl-meta">Read the cargo · UA</div>
+      <div class="tl-meta">Check the urine · UA</div>
       <div class="tl-head">No leukocytes, no nitrites, no blood, trace protein.</div>
-      <div class="tl-body">Clean UA. Station 3 infection (cystitis) is off the table as the driver. No hematuria — no overt malignancy signal yet. The shallowest test has narrowed the differential by exclusion.</div>
-      <div class="tl-finding"><strong>Off the list:</strong> UTI-driven retention.</div>
+      <div class="tl-body">A clean UA. A bladder infection (cystitis) isn't driving this. No blood, so no obvious sign of cancer yet. The simplest test has already crossed causes off the list.</div>
+      <div class="tl-finding"><strong>Off the list:</strong> retention caused by a UTI.</div>
     </div>
   </div>
 
   <div class="tl-step ok">
     <div class="tl-num">4</div>
     <div>
-      <div class="tl-meta">Check the wiring · station 4 (neural)</div>
+      <div class="tl-meta">Check the wiring · nerves (control)</div>
       <div class="tl-head">No back pain, no saddle anesthesia, no leg weakness, no recent neurologic change. Diabetic but well-controlled, no neuropathy on exam. Not on anticholinergics, decongestants, or opioids.</div>
-      <div class="tl-body">Neurogenic and pharmacologic causes drop off. Cauda equina is not on the table — but you asked, because you would not forgive yourself for catheterizing a man with progressive cord compression and sending him home.</div>
-      <div class="tl-finding"><strong>Off the list:</strong> neurogenic retention, drug-induced retention.</div>
+      <div class="tl-body">Nerve and medication causes drop off the list. Cauda equina syndrome isn't the cause, but you still asked, because you'd never forgive yourself for putting in a catheter and sending home a man whose spinal cord was being squeezed.</div>
+      <div class="tl-finding"><strong>Off the list:</strong> nerve-related retention, drug-induced retention.</div>
     </div>
   </div>
 
   <div class="tl-step ok">
     <div class="tl-num">5</div>
     <div>
-      <div class="tl-meta">Targeted history · stations 3 &amp; 5</div>
+      <div class="tl-meta">Focused history · bladder &amp; outlet</div>
       <div class="tl-head">Slow stream "for years." Wakes 3× nightly. Hesitancy. Felt "incomplete" emptying for months. No prior catheterization, no instrumentation, no STIs, no trauma.</div>
-      <div class="tl-body">Months of progressive station 5 narrowing now decompensating acutely. Stricture unlikely without instrumentation or infection history. Fits prostatic enlargement compressing the prostatic urethra. The lesion isn't in the lumen of station 5 — it's the wall of station 5 being squeezed from outside.</div>
-      <div class="tl-finding"><strong>Working hypothesis:</strong> BPH causing chronic outlet obstruction, acutely decompensated.</div>
+      <div class="tl-body">Months of the outlet slowly narrowing, and now it has suddenly given out. A stricture is unlikely without past instruments or infection. This fits an enlarged prostate squeezing the urethra that runs through it. Nothing is stuck inside the urethra; its wall is being squeezed from outside.</div>
+      <div class="tl-finding"><strong>Working diagnosis:</strong> BPH causing a long-standing outlet blockage that has now suddenly worsened.</div>
     </div>
   </div>
 
   <div class="tl-step ok">
     <div class="tl-num">6</div>
     <div>
-      <div class="tl-meta">Touch the lesion station · DRE</div>
+      <div class="tl-meta">Feel the problem directly · digital rectal exam (DRE)</div>
       <div class="tl-head">Prostate symmetrically enlarged, smooth, rubbery, non-tender. No nodules.</div>
-      <div class="tl-body">Consistent with benign hyperplasia. No nodule means no immediate suspicion for prostate cancer at this exam — doesn't rule it out, and PSA still belongs in the workup once retention is decompressed (acute retention itself elevates PSA, so timing matters). No tenderness — prostatitis off the table.</div>
-      <div class="tl-finding"><strong>Off the list:</strong> acute prostatitis, palpable prostate cancer.</div>
+      <div class="tl-body">Fits benign enlargement. No nodule means no immediate suspicion of prostate cancer on this exam. That doesn't rule it out, and a prostate-specific antigen (PSA) test still belongs in the workup once the bladder is drained (acute retention itself raises PSA, so timing matters). Not tender, so prostatitis is off the list.</div>
+      <div class="tl-finding"><strong>Off the list:</strong> acute prostatitis, prostate cancer you can feel.</div>
       <figure class="fig compact" style="margin-top: 16px;">
         <img src="images/atlas2-p01.jpg" alt="Benign prostatic hyperplasia: enlarged prostate compressing the urethra and pushing into the distended bladder">
-        <figcaption><strong>What the DRE is feeling.</strong> A hyperplastic adenoma (yellow) compressing the urethral lumen and pushing up into the bladder, which has distended above it. Station 5 is the lesion. Station 3 is the consequence. <em>Burroughs Wellcome Co.</em></figcaption>
+        <figcaption><strong>What the DRE is feeling.</strong> An overgrown prostate (yellow) squeezing the urethra and pushing up into the bladder, which has swollen above it. The outlet is the problem. The swollen bladder is the result. <em>Burroughs Wellcome Co.</em></figcaption>
       </figure>
     </div>
   </div>
@@ -642,35 +646,35 @@
   <div class="tl-step ok">
     <div class="tl-num">7</div>
     <div>
-      <div class="tl-meta">Check upstream damage · stations 1–2</div>
+      <div class="tl-meta">Check for damage higher up · kidneys and ureters</div>
       <div class="tl-head">Creatinine 1.4 (baseline 1.0). Mild bilateral hydronephrosis.</div>
-      <div class="tl-body">The lesion is at station 5, but back-pressure has reached station 1. High storage pressures have transmitted retrograde through stations 4, 3, 2, into the kidneys. <strong>This is why you don't treat retention as an exit problem and walk away.</strong> The upstream stations are paying the bill. Decompression is renal protection, not just comfort.</div>
-      <div class="tl-finding"><strong>Implication:</strong> recheck creatinine after decompression. Expect post-obstructive diuresis; monitor for it.</div>
+      <div class="tl-body">The problem is at the outlet, but back-pressure has reached the kidneys. High pressure in the bladder has pushed back through the bladder neck, the bladder and the ureters into the kidneys. <strong>This is why you don't treat retention as an exit problem and walk away.</strong> The kidneys are paying the price. Draining the bladder protects the kidneys; it isn't just for comfort.</div>
+      <div class="tl-finding"><strong>What follows:</strong> recheck creatinine after draining. Expect heavy urine output once the blockage is relieved (post-obstructive diuresis); watch for it.</div>
     </div>
   </div>
 
   <div class="tl-step hit">
     <div class="tl-num">8</div>
     <div>
-      <div class="tl-meta">Lesion localized · station 5</div>
-      <div class="tl-head">Acute urinary retention from BPH. Prostate compressing the urethra at station 5. Upstream tracts mildly affected; renal function recoverable.</div>
-      <div class="tl-body">Five stations, eight steps, one lesion. Note where you stopped — you did not need urodynamics, you did not need cystoscopy, you did not need a CT. Those are the next tools if the treatment trial fails. The diagnostic depth matched the certainty you needed to act.</div>
-      <div class="tl-finding"><strong>Treat at station 5.</strong></div>
+      <div class="tl-meta">Problem found · outlet</div>
+      <div class="tl-head">Acute urinary retention from BPH. The prostate is squeezing the urethra at the outlet. Kidneys and ureters mildly affected; kidney function should recover.</div>
+      <div class="tl-body">Five stations, eight steps, one cause. Notice where you stopped: you didn't need urodynamics, cystoscopy or a CT. Those come next if the first treatment fails. You tested only as far as you needed to be sure enough to act.</div>
+      <div class="tl-finding"><strong>Treat at the outlet.</strong></div>
     </div>
   </div>
 
   <div class="tl-step">
     <div class="tl-num">Rx</div>
     <div>
-      <div class="tl-meta">Treatment · the layered plan</div>
-      <div class="tl-head">Decompress now. Treat the lesion next. Plan the definitive step.</div>
+      <div class="tl-meta">Treatment · step by step</div>
+      <div class="tl-head">Drain now. Treat the cause next. Plan the lasting fix.</div>
       <div class="tl-body">
         <ol style="padding-left: 20px;">
-          <li><strong>Foley catheter</strong> — relieves back-pressure across the conduit. Symptomatic. Buys time.</li>
-          <li><strong>Tamsulosin</strong> — station 4/5 smooth muscle relaxation. Started immediately to improve voiding-trial odds.</li>
-          <li><strong>Voiding trial in 3–7 days</strong> — test whether α-blockade alone restores function.</li>
-          <li><strong>Outpatient urology follow-up</strong> — PSA (delayed), discussion of 5-ARI vs. surgical management (TURP / HoLEP / UroLift). <strong>This is where the lesion is actually treated.</strong></li>
-          <li><strong>Renal function recheck</strong> — confirm station 1 recovers once station 5 is opened.</li>
+          <li><strong>Foley catheter</strong>: relieves the back-pressure all the way up. Treats the symptom. Buys time.</li>
+          <li><strong>Tamsulosin</strong>: relaxes the smooth muscle at the bladder neck and prostate. Started right away to improve the odds of passing a voiding trial.</li>
+          <li><strong>Voiding trial in 3–7 days</strong>: catheter out, to see whether the α-blocker alone lets him void.</li>
+          <li><strong>Outpatient urology follow-up</strong>: PSA (delayed), and a discussion of a 5α-reductase inhibitor (5-ARI) vs. surgery (TURP / HoLEP / UroLift). <strong>This is where the cause is actually treated.</strong></li>
+          <li><strong>Recheck kidney function</strong>: confirm the kidneys recover once the outlet is opened.</li>
         </ol>
       </div>
       <div class="tl-finding"><strong>The Foley is not the treatment. It is the bridge to the treatment.</strong></div>
@@ -681,69 +685,85 @@
 
 <div class="card card-green">
   <div class="label">What this case teaches</div>
-  <p style="margin:0;">The patient pointed at the exit. The bladder scan confirmed station 3 was distended. The lesion was at station 5. The damage had back-pressured to station 1. Every station mattered, but only one was the target of the operation. <strong>Ask of every patient: where did the flow first fail, and what treats it there?</strong></p>
+  <p style="margin:0;">The patient pointed at the exit. The bladder scan showed the bladder was swollen. The cause was the prostate at the outlet. The back-pressure had reached the kidneys. Every part mattered, but only one needed the definitive treatment. <strong>Ask of every patient: where did the flow first stop, and what treats it there?</strong></p>
 </div>
 
 <hr>
 
 <!-- ============================================================ -->
-<h2>The Conduit's Particular Pain — Referred Symptoms</h2>
+<h2>Where it hurts vs. where the problem is: referred pain</h2>
 
-<p>Conduits refer in characteristic ways because back-pressure damages tissue at one station while the patient feels pain dermatomally somewhere else. You will be wrong about location constantly if you trust the patient's pointing finger.</p>
+<p>For the patient, this means the spot they point to is often not where the problem is. The tube is damaged in one place, but the pain is felt in the patch of skin that shares its nerve supply (the dermatome). Trust the patient's pointing finger and you'll often be wrong about location.</p>
 
 <ul>
-  <li><strong>UPJ stone</strong> (station 1/2 boundary) → flank pain from capsular stretch of the kidney. Mimics MSK back pain.</li>
-  <li><strong>Mid-ureteral stone</strong> (station 2) → lateral abdominal pain. Mimics appendicitis on the right, diverticulitis on the left.</li>
-  <li><strong>UVJ stone</strong> (station 2/3 boundary) → groin / testicular / labial pain. Mimics hernia, torsion, epididymitis.</li>
-  <li><strong>Bladder pathology</strong> (station 3) → suprapubic, sometimes referred to tip of penis or perineum.</li>
-  <li><strong>Prostatitis</strong> (station 5-adjacent) → perineum, low back, tip of penis, testicles, rectum. Five referral zones from one inflamed structure.</li>
-  <li><strong>Renal capsular stretch</strong> (station 1) → flank, costovertebral angle. May radiate to ipsilateral shoulder if diaphragmatic irritation is involved.</li>
+  <li><strong>Stone at the UPJ</strong> (where the kidney meets the ureter) → flank pain from the kidney's capsule being stretched. Mimics musculoskeletal (MSK) back pain.</li>
+  <li><strong>Stone in the middle of the ureter</strong> → pain in the side of the abdomen. Mimics appendicitis on the right, diverticulitis on the left.</li>
+  <li><strong>Stone at the UVJ</strong> (where the ureter meets the bladder) → groin / testicular / labial pain. Mimics hernia, torsion, epididymitis.</li>
+  <li><strong>Bladder problems</strong> → pain above the pubic bone, sometimes felt at the tip of the penis or in the perineum.</li>
+  <li><strong>Prostatitis</strong> (the prostate, around the urethra) → perineum, low back, tip of penis, testicles, rectum. Five places from one inflamed gland.</li>
+  <li><strong>Kidney capsule stretch</strong> (the kidney) → flank, costovertebral angle. May spread to the shoulder on the same side if the diaphragm is irritated.</li>
 </ul>
 
-<p>The pattern: <strong>the patient's finger points to the dermatome, not the station.</strong> Same lesson you'd learn anywhere referred pain shows up. Accept the symptom, distrust the localization, image the station.</p>
+<p>The pattern: <strong>the patient's finger points to the dermatome, not the organ.</strong> It's the same lesson anywhere referred pain shows up. Believe the symptom, doubt the location, and image the part you suspect.</p>
 
 <!-- ============================================================ -->
-<h2>The Algorithm, One More Time</h2>
+<h2>The steps, in order</h2>
 
 <div class="card card-green">
-  <div class="label">Trace upstream from where flow stops</div>
+  <div class="label">Work back up from where the flow stops</div>
 <pre style="background: transparent; border: none; padding: 0; margin: 0; font-size: 13px;">
-<strong>Step 1 — Take the exit complaint at face value.</strong>
+<strong>Step 1 — Take the complaint at face value.</strong>
   → Patient says "burning," "blood," "can't go," "leaking."
-  → That names the bucket: storage / emptying / hematuria / pain.
+  → That names the group: storing / emptying / blood / pain.
 
-<strong>Step 2 — Run the shallowest test that excludes the most.</strong>
-  → UA + culture. Bladder scan if the bucket is emptying.
-  → A clean UA in a "UTI" reroutes you. A 600 mL PVR reroutes you.
+<strong>Step 2 — Start with the simplest test that rules out the most.</strong>
+  → UA + culture. Bladder scan if the problem is emptying.
+  → A clean UA in a "UTI" changes your path. So does a 600 mL PVR.
 
-<strong>Step 3 — History triages the stations.</strong>
-  → Neuro symptoms?       → above the conduit · station 4 wiring
-  → Slow stream for years? → chronic outlet · station 5
-  → Painless gross hematuria? → assume malignancy until imaged + scoped
+<strong>Step 3 — Let the history point to the part.</strong>
+  → Nerve symptoms?        → outside the tract · the nerves (control)
+  → Slow stream for years? → long-standing outlet block · prostate/urethra
+  → Painless visible blood? → assume cancer until imaged + scoped
 
-<strong>Step 4 — Exam the lesion station directly when you can.</strong>
-  → DRE for prostate. Meatal exam for st. 5 surface.
+<strong>Step 4 — Examine the suspected part directly when you can.</strong>
+  → DRE for the prostate. Look at the urethral opening (meatus).
   → Pelvic exam where appropriate.
 
-<strong>Step 5 — Image the station you are still blind to.</strong>
-  → Upper tract concern?  → CT urogram / renal US
-  → Functional concern?   → urodynamics
-  → Luminal concern?      → cystoscopy
+<strong>Step 5 — Image the part you still can't see.</strong>
+  → Kidney or ureter?     → CT urogram / renal ultrasound
+  → How it works?         → urodynamics
+  → Inside the tube?      → cystoscopy
 
-<strong>Step 6 — Tissue only when imaging cannot answer.</strong>
-  → Biopsy is the deepest test. Use last. Use targeted.
+<strong>Step 6 — Take tissue only when imaging can't answer.</strong>
+  → Biopsy is the most invasive test. Use it last, and aim it.
 
-<strong>Step 7 — Treat at the lesion station.</strong>
-  → Not where it hurts. Not at the exit. Not at the dilation upstream.
-  → At the station where flow first failed.
+<strong>Step 7 — Treat where the problem is.</strong>
+  → Not where it hurts. Not at the exit. Not at the swelling above.
+  → At the place where the flow first stopped.
 </pre>
 </div>
+
+<!-- ============================================================ -->
+<h2>Words used on this page</h2>
+<dl class="gloss">
+  <dt>Conduit</dt><dd>A one-way tube. Here, the whole path from kidney to outlet.</dd>
+  <dt>Station</dt><dd>One of the five parts of the tract: kidney (1), ureter (2), bladder (3), control: sphincters, pelvic floor and nerves (4), outlet: prostate and urethra (5).</dd>
+  <dt>Lesion</dt><dd>The spot where the tract is damaged or blocked.</dd>
+  <dt>Detrusor</dt><dd>The muscle in the bladder wall that squeezes to empty it.</dd>
+  <dt>Sphincter</dt><dd>A ring of muscle that holds urine in until it relaxes.</dd>
+  <dt>Hydronephrosis</dt><dd>A kidney swollen with urine that can't drain.</dd>
+  <dt>UPJ / UVJ</dt><dd>Where the ureter leaves the kidney (ureteropelvic junction) and where it enters the bladder (ureterovesical junction).</dd>
+  <dt>PVR</dt><dd>Post-void residual: urine left in the bladder after voiding.</dd>
+  <dt>Dyssynergia</dt><dd>The bladder squeezes while the sphincter stays shut, so pressure rises with no flow.</dd>
+  <dt>Gross hematuria</dt><dd>Blood in the urine you can see.</dd>
+  <dt>Dermatome</dt><dd>The patch of skin supplied by one spinal nerve, where referred pain is felt.</dd>
+</dl>
 
 <hr>
 
 <p style="text-align:center; color:var(--muted); font-size:13px; margin-top:40px;">
-  May 24, 2026 — for PAs, medical students, and clinical clerks<br>
-  the urinary tract is a conduit · trace upstream from the exit · treat at the station where flow first failed<br>
+  May 24, 2026 · reworded October 28, 2026 — for PAs, medical students, and clinical clerks<br>
+  the urinary tract is a one-way tube · work back up from the exit · treat where the flow first stopped<br>
   <a href="index.html" style="color: var(--muted); border-bottom: 1px dotted var(--muted); text-decoration: none;">← back to reference</a>
 </p>
 

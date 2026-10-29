@@ -56,14 +56,14 @@ export const retention = {
     {
       title: 'Day to day',
       items: [
-        { key: 'weeing_loads', q: 'Now the tube’s in I’m weeing huge amounts — is something wrong?',
+        { key: 'weeing_loads', q: 'Now the tube’s in I’m peeing huge amounts — is something wrong?',
           a: 'That can actually be expected after we relieve a bladder that’s been backed up for a while — the kidneys briefly overshoot and pour out a lot of urine while things rebalance. It’s not a sign it’s gone wrong, but because you can lose a lot of fluid and salts, we keep a close eye on your output, top up your fluids, and check your blood tests until it settles.',
           why: 'Post-obstructive diuresis — straight from redFlags/management/pearls. Reassure it’s expected, but state plainly we monitor fluids and electrolytes so it doesn’t read as “ignore it.”' },
         { key: 'living_with_catheter', q: 'How do I manage day to day if I go home with the catheter?',
-          a: 'Plenty of people go home with one for a spell and get on fine — you’ll have a bag, we’ll show you and anyone helping you how to look after it and keep it clean, and district nurses can support you. We’ll make sure you leave knowing what’s normal and what isn’t before you go.',
-          review: 'Source does not cover home catheter care specifics (bag types, hygiene, community nursing). Answer kept safely generic — clinician to confirm local discharge and district-nurse pathway.' },
+          a: 'Plenty of people go home with one for a spell and get on fine — you’ll have a bag, we’ll show you and anyone helping you how to look after it and keep it clean, and a home-care nurse, arranged through Ontario Health atHome, can support you. We’ll make sure you leave knowing what’s normal and what isn’t before you go.',
+          review: 'Source does not cover home catheter care specifics (bag types, hygiene, community nursing). Answer kept safely generic — clinician to confirm local discharge and Ontario Health atHome referral pathway.' },
         { key: 'drink_normally', q: 'Should I drink less so my bladder doesn’t fill up?',
-          a: 'No — don’t cut your fluids down. With the catheter draining, the urine has somewhere to go, and drinking normally helps keep the water works flushed and lowers the infection risk. If anything, keeping well hydrated is what we’d want.',
+          a: 'No — don’t cut your fluids down. With the catheter draining, the urine has somewhere to go, and drinking normally helps keep the bladder flushed and lowers the infection risk. If anything, keeping well hydrated is what we’d want.',
           review: 'Fluid-intake advice is safe general knowledge rather than a specific source field. Clinician to tailor if there is co-existing heart or kidney disease.' },
       ],
     },

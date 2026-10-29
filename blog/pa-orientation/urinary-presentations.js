@@ -62,7 +62,7 @@ export const PRESENTATIONS = {
     ],
     workup: [
       'Confirm it is really blood on urinalysis and send a culture — dipstick also turns positive with myoglobin/haemoglobin, and infection must be excluded as a (treatable, re-testable) cause before attributing bleeding to it',
-      'Urine cytology — positive cytology raises suspicion of urothelial (often high-grade) cancer, though a negative result does not exclude it',
+      'Urine cytology as an optional adjunct, not a required step — positive cytology raises suspicion of urothelial (often high-grade) cancer, though a negative result does not exclude it',
       'Bloods: FBC for the degree of blood loss, coagulation screen and clotting/anticoagulant review, and creatinine to gauge renal function before contrast imaging',
       'CT urogram — the upper-tract study, imaging kidneys and ureters for tumours and stones (a renal mass or ureteric filling defect changes the whole pathway)',
       'Cystoscopy — the lower-tract study, directly inspecting the bladder and urethra where CT is least sensitive; together CT urogram + cystoscopy form the complete haematuria workup',
@@ -103,16 +103,16 @@ export const PRESENTATIONS = {
       'Non-contrast CT KUB — the gold standard: it confirms the stone, its size and position (which predict spontaneous passage), and shows obstruction',
       'Ultrasound when radiation should be avoided (pregnancy, young patients) — it shows hydronephrosis and larger stones but misses small ureteric ones, so a negative scan does not exclude a stone',
     ],
-    management: '**Give prompt analgesia** — an NSAID is first-line (more effective than opioids for colic) — plus antiemetics, and most small distal stones pass spontaneously, helped by medical expulsive therapy with an α-blocker.\n\n**The non-negotiable is urgent decompression** with a ureteric stent or percutaneous nephrostomy when the kidney is obstructed and infected, or when a solitary/failing kidney is at risk — definitive stone clearance (ureteroscopy or shockwave lithotripsy) is deferred until any sepsis is controlled.',
+    management: '**Give prompt analgesia** — an NSAID is first-line (as effective as opioids for colic, with less need for rescue analgesia and less vomiting) — plus antiemetics. Most stones under 5 mm pass on their own; medical expulsive therapy with an α-blocker may help distal stones of about 5–10 mm (off-label, and its benefit is debated).\n\n**The non-negotiable is urgent decompression** with a ureteric stent or percutaneous nephrostomy when the kidney is obstructed and infected, or when a solitary/failing kidney is at risk — definitive stone clearance (ureteroscopy or shockwave lithotripsy) is deferred until any sepsis is controlled.',
     pearls: [
       'Obstruction + infection = drain it now; you decompress first and treat the stone later',
-      'Stone size and position on CT KUB predict spontaneous passage — small distal stones usually pass',
+      'Stone size and position on CT KUB predict spontaneous passage — most stones under 5 mm pass; an α-blocker may help distal stones of about 5–10 mm',
       'A normal ultrasound does not exclude a ureteric stone; CT KUB is the definitive study when radiation is acceptable',
     ],
     patient: {
       whatItIs: 'A sudden, severe, gripping pain that sweeps from the loin round to the groin — usually a kidney stone passing down the tube (the ureter) toward the bladder, often with nausea and blood in the urine.',
       whyItMatters: 'The pain comes from a stone blocking the drainage of a kidney; if that blocked kidney also becomes infected, or it is a single or already-failing kidney, the situation becomes dangerous quickly.',
-      whatIsDone: 'A **CT KUB** scan confirms the stone, its size and position; pain is treated with an **NSAID** (more effective than a strong opioid here) and small stones often pass on their own, helped by an **alpha-blocker**. A blocked, infected kidney is drained urgently with a **stent** or **nephrostomy**, and larger stones are cleared later by **ureteroscopy** or **shockwave lithotripsy (ESWL)**.',
+      whatIsDone: 'A **CT KUB** scan confirms the stone, its size and position; pain is treated with an **NSAID** (as effective as a strong opioid here, with less vomiting) and small stones often pass on their own; an **alpha-blocker** may help some slightly larger stones near the bladder pass. A blocked, infected kidney is drained urgently with a **stent** or **nephrostomy**, and larger stones are cleared later by **ureteroscopy** or **shockwave lithotripsy (ESWL)**.',
       whatToWatch: 'Fever or feeling very unwell alongside the pain means a blocked kidney may be infected — a urological emergency needing immediate drainage.',
     },
   },
@@ -208,17 +208,17 @@ export const PRESENTATIONS = {
       'Cystoscopy when the pain is bladder-centred (to assess for IC/BPS and exclude tumour/stone); in men, a symptom index (NIH-CPSI) and UPOINT phenotyping to direct treatment',
       'Screen for the comorbid drivers — mood, sleep, IBS, fibromyalgia, and a history of physical or sexual trauma — because they shape both prognosis and management',
     ],
-    management: 'Once red flags and treatable causes are excluded, manage it as a multimodal, biopsychosocial problem rather than chasing one cure.\n\n**Pelvic-floor physiotherapy is a cornerstone** — manual release and downtraining of the hypertonic floor, NOT strengthening/Kegels, which worsen the pain.\n\n**Layer on neuromodulating analgesia** (amitriptyline, gabapentin/pregabalin, or duloxetine) rather than escalating opioids, which do not help and harm; treat comorbid mood and sleep with CBT and, where indicated, an SSRI/SNRI.\n\nTrigger-point injections, mindfulness, and α-blockers (in male CPPS) are useful adjuncts.\n\n**The unifying principle is phenotype-directed care (UPOINT)** and an interprofessional team — physiotherapist, pain specialist, psychologist — because no single agent treats a centrally sensitised, multifactorial pain.',
+    management: 'Once red flags and treatable causes are excluded, manage it as a multimodal, biopsychosocial problem rather than chasing one cure.\n\n**Pelvic-floor physiotherapy is a cornerstone** — manual release and downtraining of the hypertonic floor, NOT strengthening/Kegels, which worsen the pain.\n\n**Layer on neuromodulating analgesia** rather than escalating opioids: amitriptyline has the best support, while gabapentinoids and duloxetine have weak or negative trial evidence (and gabapentinoids carry a dependence risk), so they are best used as specialist-guided trials. Opioids are reserved for after a multidisciplinary assessment once other reasonable treatments have failed, and are stopped if the pain persists; treat comorbid mood and sleep with CBT and, where indicated, an SSRI/SNRI.\n\nTrigger-point injections, mindfulness, and α-blockers (in male CPPS) are useful adjuncts.\n\n**The unifying principle is phenotype-directed care (UPOINT)** and an interprofessional team — physiotherapist, pain specialist, psychologist — because no single agent treats a centrally sensitised, multifactorial pain.',
     pearls: [
       'It is largely a diagnosis of exclusion plus central sensitisation — rule out infection, malignancy and gynae causes first',
       'Pelvic-floor physiotherapy (relaxation/downtraining) is first-line non-drug therapy — Kegels make it worse',
-      'Opioids do not work for chronic pelvic pain; use neuromodulators (amitriptyline, gabapentinoids, duloxetine) and treat comorbid mood',
+      'Avoid opioids (only after multidisciplinary assessment and failed alternatives, stopped if pain persists); amitriptyline is the best-supported neuromodulator — gabapentinoids and duloxetine have weak evidence — and treat comorbid mood',
       'Phenotype-directed, interprofessional care (UPOINT) beats one-size-fits-all',
     ],
     patient: {
       whatItIs: 'Persistent or recurrent pelvic pain lasting at least 3 to 6 months, often with no single lesion to blame — the nervous system amplifies the pain (central sensitisation), overlapping with bladder pain syndrome, irritable bowel and, in men, chronic pelvic pain syndrome (CPPS).',
       whyItMatters: 'Because there is often no single curable cause, the aim is to rule out the treatable causes (infection, cancer, gynaecological disease) and then manage the pain syndrome itself rather than chase one cure.',
-      whatIsDone: 'Urine tests, a pelvic-floor examination and a **pelvic ultrasound** (or **MRI**) exclude other causes, and **cystoscopy** is used for bladder-centred pain. Treatment is multimodal: **pelvic-floor physiotherapy** (relaxation, not Kegels) is a cornerstone, with nerve-calming medicines (**amitriptyline**, a **gabapentinoid**, or **duloxetine**) rather than opioids, plus attention to mood and sleep.',
+      whatIsDone: 'Urine tests, a pelvic-floor examination and a **pelvic ultrasound** (or **MRI**) exclude other causes, and **cystoscopy** is used for bladder-centred pain. Treatment is multimodal: **pelvic-floor physiotherapy** (relaxation, not Kegels) is a cornerstone, with a nerve-calming medicine (most often **amitriptyline**; a **gabapentinoid** or **duloxetine** is sometimes tried under specialist guidance) rather than opioids, plus attention to mood and sleep.',
       whatToWatch: 'Blood in the urine, weight loss, a lump, fever, bleeding after sex or after the menopause, or new numbness or leg weakness all need urgent assessment before settling on a pain-syndrome label.',
     },
   },
@@ -227,7 +227,7 @@ export const PRESENTATIONS = {
     complaint: 'No symptoms — blood found only on microscopy (≥3 RBC/hpf on a properly collected specimen). Dipstick alone is not enough (it also flags myoglobin/haemoglobin), so confirm on microscopy. The task is to risk-stratify, not reflexively scope everyone.',
     redFlags: [
       'Any VISIBLE (gross) haematuria — a different, higher-risk pathway that always gets the full workup',
-      'Dysmorphic RBCs, RBC casts or proteinuria → a glomerular/medical cause — refer nephrology, not urology',
+      'Dysmorphic RBCs, RBC casts or proteinuria → a glomerular/medical cause — add a nephrology workup, but still risk-stratify for urological cancer',
       'Urothelial-cancer risk factors: older age, smoking, male sex, occupational carcinogens',
     ],
     differential: [
@@ -240,21 +240,21 @@ export const PRESENTATIONS = {
     ],
     workup: [
       'Confirm true haematuria on microscopy and exclude a benign transient cause (infection, menstruation, recent vigorous exercise, instrumentation) — repeat the test',
-      'Check for glomerular features (dysmorphic RBCs, casts, proteinuria, raised creatinine); if present this is a nephrology workup, not cystoscopy',
+      'Check for glomerular features (dysmorphic RBCs, casts, proteinuria, raised creatinine); if present, add a nephrology workup — but still risk-stratify, because a high-risk patient (e.g. an older smoker) still needs cystoscopy and upper-tract imaging',
       'Risk-stratify (AUA): LOW (young never-smoker, low RBC count) → shared decision / repeat urinalysis; INTERMEDIATE → cystoscopy + renal ultrasound; HIGH (older, smoker, high RBC count, risk factors) → cystoscopy + CT urogram',
       'Cystoscopy images the bladder; CT urogram or ultrasound images the upper tracts',
     ],
-    management: 'Match the depth of workup to the risk: do not dismiss microhaematuria (cancers hide here), but do not over-investigate a low-risk young never-smoker either. Treat any cause found; if the workup is negative, follow up with a repeat urinalysis rather than immediately re-imaging. Send glomerular pictures to nephrology and higher-risk urological pictures to urology.',
+    management: 'Match the depth of workup to the risk: do not dismiss microhaematuria (cancers hide here), but do not over-investigate a low-risk young never-smoker either. Treat any cause found; if the workup is negative, follow up with a repeat urinalysis rather than immediately re-imaging. Bring in nephrology for glomerular pictures and send higher-risk urological pictures to urology — a glomerular pattern does not cancel the cancer risk assessment.',
     pearls: [
       'Confirm on MICROSCOPY (≥3 RBC/hpf) — dipstick alone over-calls (myo/haemoglobin)',
-      'Dysmorphic RBCs / casts / proteinuria = glomerular → nephrology, not cystoscopy',
+      'Dysmorphic RBCs / casts / proteinuria = glomerular → add nephrology, but still risk-stratify for cancer',
       'Risk-stratify (AUA low/intermediate/high): high-risk older smoker → cystoscopy + CT urogram',
       'Any VISIBLE haematuria skips straight to the full workup',
     ],
     patient: {
       whatItIs: 'Blood in the urine that cannot be seen and is found only under the microscope (at least 3 red cells per high-power field on a properly collected sample); a dipstick alone is not enough to confirm it.',
       whyItMatters: 'It can be harmless, but it can also be an early clue to a urinary cancer or a kidney (medical) problem, so the amount of investigation is matched to a person\'s risk rather than scoping everyone.',
-      whatIsDone: 'The finding is confirmed on microscopy and benign causes (infection, periods, vigorous exercise) are excluded, then the risk is graded. Higher-risk people (older, smokers) have a **cystoscopy** plus a **CT urogram**, while a kidney pattern (abnormal red cells, casts, protein) is sent to a kidney specialist (**nephrology**) instead.',
+      whatIsDone: 'The finding is confirmed on microscopy and benign causes (infection, periods, vigorous exercise) are excluded, then the risk is graded. Higher-risk people (older, smokers) have a **cystoscopy** plus a **CT urogram**, while a kidney pattern (abnormal red cells, casts, protein) also brings in a kidney specialist (**nephrology**) — without skipping the cancer checks in a higher-risk person.',
       whatToWatch: 'Any visible (red) blood in the urine skips the risk-grading and goes straight to the full, urgent workup.',
     },
   },
@@ -313,9 +313,9 @@ export const PRESENTATIONS = {
       'Serum calcium and PTH (exclude primary hyperparathyroidism), urate, and electrolytes/bicarbonate — a persistently alkaline urine with calcium-phosphate stones suggests renal tubular acidosis',
       'Imaging to define stone burden and any anatomical contributor',
     ],
-    management: 'Universal advice for every stone-former: high fluids (urine output >2–2.5 L/day), reduce sodium and animal protein, and keep dietary calcium normal — restricting calcium paradoxically raises oxalate absorption and stones. Then target by stone type and the 24-h abnormality.\n\n**Calcium oxalate / phosphate** — a thiazide for hypercalciuria (it boosts distal tubular calcium reabsorption, lowering urinary calcium); potassium citrate for hypocitraturia (citrate binds calcium and inhibits crystallisation, and alkalinises the urine); cut dietary oxalate for hyperoxaluria.\n\n**Uric acid** (forms in acidic urine) — urinary alkalinisation with potassium citrate is first-line and can even dissolve the stone, plus allopurinol (xanthine-oxidase inhibitor) if uric acid is high.\n\n**Struvite** — no medical prevention without source control: achieve complete stone clearance and eradicate the urease-producing infection.\n\n**Cystine** — high fluids, urinary alkalinisation, low sodium, and thiol binders (tiopronin/penicillamine) if refractory.\n\nAvoid acetazolamide (it promotes calcium-phosphate stones).',
+    management: 'Universal advice for every stone-former: high fluids (urine output ≥2.5 L/day, which lowers stone risk by about 60–80%), reduce sodium and animal protein, and keep dietary calcium normal — restricting calcium paradoxically raises oxalate absorption and stones. Then target by stone type and the 24-h abnormality.\n\n**Calcium oxalate / phosphate** — a thiazide for hypercalciuria (it boosts distal tubular calcium reabsorption, lowering urinary calcium), after correcting sodium intake — though its benefit was questioned by the NOSTONE trial (2023), so individualise; potassium citrate for hypocitraturia (citrate binds calcium and inhibits crystallisation, and alkalinises the urine); cut dietary oxalate for hyperoxaluria.\n\n**Uric acid** (forms in acidic urine) — urinary alkalinisation with potassium citrate is first-line and can even dissolve the stone, plus allopurinol (xanthine-oxidase inhibitor) if uric acid is high.\n\n**Struvite** — no medical prevention without source control: achieve complete stone clearance and eradicate the urease-producing infection.\n\n**Cystine** — high fluids, urinary alkalinisation, low sodium, and thiol binders if refractory (tiopronin preferred where available, otherwise penicillamine).\n\nAvoid acetazolamide in calcium stone-formers (it promotes calcium-phosphate stones); specialists sometimes use it as an adjunct in cystinuria.',
     pearls: [
-      'Fluids first — urine output >2–2.5 L/day prevents most recurrences',
+      'Fluids first — urine output ≥2.5 L/day lowers stone risk by about 60–80%',
       'Keep dietary calcium NORMAL — restricting it increases oxalate and stones',
       'Type drives therapy: oxalate/phosphate → thiazide + citrate; uric acid → alkalinise ± allopurinol; struvite → clear stone + treat infection; cystine → alkalinise + thiol binder',
       'Drug logic: thiazide ↓ urinary calcium · K-citrate ↑ citrate + alkalinises · allopurinol ↓ uric acid',
@@ -334,7 +334,7 @@ export const PRESENTATIONS = {
     redFlags: [
       'A hard nodule or asymmetry on DRE → refer regardless of the PSA value',
       'Very high PSA or new bone pain → suspect advanced/metastatic disease',
-      'Rapidly rising PSA (velocity) across serial tests',
+      'A sustained, substantial rise in PSA over serial tests (not velocity alone)',
     ],
     differential: [
       { caseId: 'bph', note: 'benign enlargement raises PSA in proportion to volume' },
@@ -342,7 +342,7 @@ export const PRESENTATIONS = {
       { caseId: 'prostatitis', note: 'inflammation can markedly (and transiently) raise PSA' },
     ],
     workup: [
-      'Repeat the PSA after a few weeks before acting — transient raisers include recent ejaculation, vigorous cycling/exercise, catheterisation, UTI/prostatitis, and a DRE done just before the draw',
+      'Repeat the PSA after a few weeks before acting — transient raisers include recent ejaculation, vigorous cycling/exercise, catheterisation and UTI/prostatitis (a DRE has only a small effect, but drawing the PSA before the exam is a sensible precaution)',
       'Examine the prostate (DRE) and treat any infection, then re-check',
       'If persistently elevated or DRE abnormal → multiparametric MRI of the prostate to localise and target',
       'MRI-targeted (± systematic) biopsy for suspicious lesions; risk-stratify with PSA density, MRI score and biopsy grade',
@@ -350,7 +350,7 @@ export const PRESENTATIONS = {
     management: 'Confirm and contextualise before biopsy: repeat the PSA, treat reversible causes, and counsel on the harms and benefits of biopsy. MRI-first pathways cut unnecessary biopsies. A confirmed concerning result goes to urology for biopsy and risk-stratification — and many low-risk cancers are then managed by active surveillance (see Prostate cancer).',
     pearls: [
       'PSA is prostate-specific, not cancer-specific — repeat before acting',
-      'Transient raisers: ejaculation, cycling, UTI/prostatitis, catheter, recent DRE',
+      'Transient raisers: ejaculation, cycling, UTI/prostatitis, catheter (DRE effect is small — draw PSA first)',
       'MRI-first reduces unnecessary biopsies; an abnormal DRE → refer regardless of PSA',
     ],
     patient: {
@@ -366,7 +366,7 @@ export const PRESENTATIONS = {
     redFlags: [
       'Don’t treat cloudy/smelly urine or a positive culture alone as a “UTI” when there are no urinary symptoms',
       'Genuine new urinary symptoms or systemic sepsis → that IS a UTI, treat it',
-      'Pregnancy or planned urological instrumentation → the exceptions that MUST be treated',
+      'Pregnancy or a planned urological procedure that breaches the mucosa (not routine diagnostic cystoscopy) → the exceptions that MUST be treated',
     ],
     differential: [
       { caseId: 'cystitis', note: 'symptomatic infection — the thing this is NOT' },
@@ -376,9 +376,9 @@ export const PRESENTATIONS = {
       'Confirm there are genuinely no attributable urinary symptoms — in older/confused patients, look hard for another cause of any change before blaming the urine',
       'Do not send or act on a urine culture in an asymptomatic patient unless a treat-it indication applies — this avoids overdiagnosis and antibiotic harm',
     ],
-    management: 'Treat ONLY in two situations: pregnancy (screen and treat — reduces pyelonephritis and preterm birth) and before urological procedures that breach the mucosa. Otherwise — including older adults, diabetics, catheterised patients, and before non-urological surgery — do NOT treat: antibiotics cause harm (resistance, C. difficile, side-effects) without benefit. For catheter-associated bacteriuria without symptoms, address the catheter, not the culture.',
+    management: 'Treat ONLY in two situations: pregnancy (screen once in the first trimester and treat — reduces pyelonephritis and may also reduce preterm birth/low birth weight; a weak recommendation in Canada) and before urological procedures that breach the mucosa. Otherwise — including older adults, diabetics, catheterised patients, and before non-urological surgery — do NOT treat: antibiotics cause harm (resistance, C. difficile, side-effects) without benefit. For catheter-associated bacteriuria without symptoms, address the catheter, not the culture.',
     pearls: [
-      'Treat asymptomatic bacteriuria ONLY in pregnancy or before urological instrumentation',
+      'Treat asymptomatic bacteriuria ONLY in pregnancy or before urological procedures that breach the mucosa (not diagnostic cystoscopy)',
       'Do not treat in older/catheterised/diabetic patients — antibiotics harm without benefit',
       '“Cloudy/smelly urine” is not an indication; look for a non-urinary cause of confusion',
     ],

@@ -21,7 +21,7 @@ export const MODALITIES = {
       'Check the position of any stent (curls in kidney + bladder) or drain, and the bones/bowel gas in passing',
     ],
     findings: ['staghorn_stone', 'ureteral_stone'],
-    pearls: ['~90% of stones are radio-opaque on KUB, but CT is far more sensitive', 'Best use today: tracking a known opaque stone or checking line/stent position', 'A normal KUB does not exclude a stone'],
+    pearls: ['Most stones contain calcium, but KUB detects only ~50–60% — CT is far more sensitive', 'Best use today: tracking a known opaque stone or checking line/stent position', 'A normal KUB does not exclude a stone'],
   },
   ultrasound: {
     id: 'ultrasound', label: 'Ultrasound', group: 'plain',
@@ -41,7 +41,7 @@ export const MODALITIES = {
     whatFor: 'The workhorse. A non-contrast CT KUB is the gold standard for stones (it finds almost all of them and sizes them). A CT urogram adds contrast to opacify the collecting system and ureters, the key test for haematuria to look for upper-tract tumours.',
     howRead: [
       'Non-contrast for stones: scroll the ureters top to bottom for a dense focus + secondary signs (hydronephrosis, perinephric stranding)',
-      'With contrast, follow the phases: nephrogram (renal masses enhance) then excretory (filling defects/strictures in the collecting system and ureters)',
+      'CT urogram phases: unenhanced (stones, baseline density), nephrographic (renal masses enhance), then excretory (filling defects/strictures in the collecting system and ureters)',
       'Always check both kidneys, the whole ureter, the bladder, and the surrounding fat and nodes',
     ],
     findings: ['ureteral_stone', 'renal_mass', 'urothelial_carcinoma'],

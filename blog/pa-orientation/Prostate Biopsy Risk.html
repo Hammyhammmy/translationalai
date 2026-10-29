@@ -1,0 +1,498 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<style>.cg-nav{margin:-40px -16px 32px !important}</style>
+<script src="nav.js" defer></script>
+
+<title>Prostate Biopsy Risk</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: model tabs on top; two-column bench (shared patient inputs left, sticky result card right); stacks on phones. Light-only by the user's standing choice. */
+:root {
+  --paper: #f4f0e8;
+  --sheet: #fbf8f2;
+  --ink: #1d1a17;
+  --muted: #6b6259;
+  --rule: #d9d0c2;
+  --accent: #9c3318;
+  --none: #c9bfae;
+  --low: #c98a5a;
+  --high: #9c3318;
+  --display: "Fraunces", Georgia, "Times New Roman", serif;
+  --body: "Newsreader", Georgia, "Times New Roman", serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 56px;
+}
+.wrap { max-width: 1000px; margin: 0 auto; display: grid; gap: 28px; }
+header { display: grid; gap: 6px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+h1 { font-family: var(--display); font-weight: 600; font-size: clamp(30px, 5vw, 44px); line-height: 1.05; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); margin: 0; max-width: 62ch; }
+
+.tabs { display: flex; gap: 0; border-bottom: 1.5px solid var(--ink); overflow-x: auto; }
+.tab {
+  font-family: var(--body); font-size: 17px; text-transform: none; letter-spacing: 0;
+  background: transparent; border: 0; border-radius: 0; color: var(--muted); padding: 10px 18px 9px; cursor: pointer;
+  display: grid; gap: 1px; text-align: left; white-space: nowrap; border-bottom: 3px solid transparent; margin-bottom: -1.5px;
+}
+.tab small { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--muted); }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tab[aria-selected="true"] b { color: var(--ink); }
+.tab b { font-weight: 500; font-family: var(--display); font-size: 19px; }
+
+.bench { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+@media (max-width: 780px) { .bench { grid-template-columns: minmax(0,1fr); } }
+
+form { display: grid; gap: 22px; }
+.field { display: grid; gap: 8px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.label { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 0; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.num { display: flex; align-items: baseline; gap: 8px; border-bottom: 1.5px solid var(--ink); padding-bottom: 4px; }
+.num input {
+  width: 100%; min-width: 0; border: 0; background: transparent; font-family: var(--display); font-size: 30px; color: var(--ink); padding: 0; outline: none;
+  font-variant-numeric: tabular-nums;
+}
+.num:focus-within { border-color: var(--accent); }
+.unit { font-family: var(--mono); font-size: 12px; color: var(--muted); white-space: nowrap; }
+.hint { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.hint.err { color: var(--accent); }
+
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label {
+  font-family: var(--body); font-size: 16px; padding: 7px 13px; border: 1px solid var(--rule); border-radius: 3px; background: var(--sheet); cursor: pointer; user-select: none;
+  font-variant-numeric: tabular-nums;
+}
+.seg label:hover { border-color: var(--muted); }
+.seg input:checked + label { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.seg input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.opt { display: grid; gap: 10px; padding-top: 18px; border-top: 1px solid var(--rule); }
+.check { display: flex; gap: 10px; align-items: center; cursor: pointer; }
+.check input { accent-color: var(--accent); width: 18px; height: 18px; }
+.derived { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+.result {
+  position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px);
+  background: var(--sheet); border: 1px solid var(--rule); padding: 24px; display: grid; gap: 18px;
+}
+@media (max-width: 780px) { .result { position: static; } }
+.result h2 { margin: 0; font-family: var(--mono); font-weight: 500; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.tag { color: var(--accent); }
+.hg { display: grid; gap: 2px; }
+.hg .big { font-family: var(--display); font-weight: 600; font-size: 72px; line-height: 1; color: var(--high); font-variant-numeric: tabular-nums; }
+.hg .big small { font-size: 32px; }
+.hg .cap { font-size: 16px; color: var(--ink); }
+.faces { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; }
+.faces svg { width: 100%; height: auto; display: block; }
+.faces .f { transition: fill .25s ease; }
+.faces .m { stroke: var(--sheet); stroke-width: 2.4; fill: none; stroke-linecap: round; }
+.faces .e { fill: var(--sheet); }
+@media (prefers-reduced-motion: reduce) { .faces .f { transition: none; } }
+.legend { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.legend li { display: grid; grid-template-columns: 12px 1fr auto; gap: 10px; align-items: center; }
+.sw { width: 12px; height: 12px; border-radius: 2px; }
+.legend b { font-family: var(--mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+.note { font-size: 14px; color: var(--muted); margin: 0; }
+.note.warn { color: var(--accent); }
+
+.compare { border-top: 1px solid var(--rule); padding-top: 14px; display: grid; gap: 6px; }
+.compare .label { margin-bottom: 2px; }
+.cmp-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; font-size: 15px; align-items: baseline; }
+.cmp-row b { font-family: var(--mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+.cmp-row.na b { color: var(--muted); font-weight: 400; }
+.cmp-row.cur span { color: var(--accent); }
+
+.actions { display: flex; gap: 10px; flex-wrap: wrap; }
+button.btn {
+  font-family: var(--mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; padding: 9px 14px; border-radius: 3px; cursor: pointer;
+  border: 1px solid var(--ink); background: transparent; color: var(--ink);
+}
+button.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+footer { border-top: 1px solid var(--rule); padding-top: 16px; font-size: 14px; color: var(--muted); display: grid; gap: 10px; max-width: 78ch; }
+footer h3 { font-family: var(--mono); font-weight: 500; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); margin: 0; }
+footer p { margin: 0; }
+footer a { color: var(--accent); }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">For healthcare professionals · runs offline in this page</div>
+    <h1>Prostate Biopsy Risk</h1>
+    <p class="sub">Three validated-model ports from the riskcalc.org source. Enter the patient once; switch models to compare.</p>
+  </header>
+
+  <div class="tabs" role="tablist" aria-label="Model">
+    <button class="tab" role="tab" id="t-pcpt" data-m="pcpt" aria-selected="true"><b>PCPTRC 2.0</b><small>Ankerst 2014</small></button>
+    <button class="tab" role="tab" id="t-pbcg" data-m="pbcg" aria-selected="false"><b>PBCG</b><small>Ankerst 2018</small></button>
+    <button class="tab" role="tab" id="t-tum" data-m="tum" aria-selected="false"><b>TUM-RC</b><small>MRI · beta 2023</small></button>
+  </div>
+
+  <div class="bench">
+    <form id="f" novalidate>
+      <div class="row2">
+        <div class="field">
+          <label class="label" for="age">Age</label>
+          <div class="num"><input id="age" type="number" inputmode="decimal" step="1" value="64"><span class="unit">years</span></div>
+          <span class="hint" id="age-h"></span>
+        </div>
+        <div class="field">
+          <label class="label" for="psa">PSA</label>
+          <div class="num"><input id="psa" type="number" inputmode="decimal" step="0.1" value="6.2"><span class="unit">ng/mL</span></div>
+          <span class="hint" id="psa-h"></span>
+        </div>
+      </div>
+
+      <fieldset class="field" data-in="pcpt pbcg">
+        <legend class="label">Race</legend>
+        <div class="seg">
+          <input type="radio" name="race" id="r-aa" value="1"><label for="r-aa">African ancestry</label>
+          <input type="radio" name="race" id="r-c" value="0" checked><label for="r-c">Caucasian</label>
+          <input type="radio" name="race" id="r-h" value="0"><label for="r-h">Hispanic</label>
+          <input type="radio" name="race" id="r-o" value="0"><label for="r-o">Other</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="field" data-in="pcpt pbcg">
+        <legend class="label">Family history of prostate cancer</legend>
+        <div class="seg">
+          <input type="radio" name="fam" id="f-y" value="1"><label for="f-y">Yes</label>
+          <input type="radio" name="fam" id="f-n" value="0" checked><label for="f-n">No</label>
+          <input type="radio" name="fam" id="f-u" value="u"><label for="f-u">Do not know</label>
+        </div>
+        <span class="hint">Father, brother or son</span>
+      </fieldset>
+
+      <fieldset class="field" data-in="pcpt pbcg">
+        <legend class="label">Digital rectal exam</legend>
+        <div class="seg">
+          <input type="radio" name="dre" id="d-a" value="1"><label for="d-a">Abnormal</label>
+          <input type="radio" name="dre" id="d-n" value="0" checked><label for="d-n">Normal</label>
+          <input type="radio" name="dre" id="d-u" value="u"><label for="d-u">Not performed / not sure</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="field" data-in="tum">
+        <legend class="label">PI-RADS</legend>
+        <div class="seg">
+          <input type="radio" name="pirads" id="pr-1" value="1"><label for="pr-1">1</label>
+          <input type="radio" name="pirads" id="pr-2" value="2"><label for="pr-2">2</label>
+          <input type="radio" name="pirads" id="pr-3" value="3"><label for="pr-3">3</label>
+          <input type="radio" name="pirads" id="pr-4" value="4" checked><label for="pr-4">4</label>
+          <input type="radio" name="pirads" id="pr-5" value="5"><label for="pr-5">5</label>
+        </div>
+      </fieldset>
+
+      <div class="field" data-in="tum">
+        <label class="label" for="vol">Prostate volume</label>
+        <div class="num"><input id="vol" type="number" inputmode="decimal" step="1" value="45"><span class="unit">mL</span></div>
+        <span class="hint" id="vol-h">&gt; 0 – 100 (official app limit)</span>
+      </div>
+
+      <fieldset class="field">
+        <legend class="label">Prior biopsy</legend>
+        <div class="seg">
+          <input type="radio" name="prior" id="p-n" value="0" checked><label for="p-n">Never</label>
+          <input type="radio" name="prior" id="p-y" value="1"><label for="p-y">Prior negative</label>
+          <input type="radio" name="prior" id="p-u" value="u"><label for="p-u">Not sure</label>
+        </div>
+      </fieldset>
+
+      <div class="opt" data-in="pcpt">
+        <label class="check"><input type="checkbox" id="fp-on"> Percent free PSA available</label>
+        <div class="field" id="fp-box" hidden>
+          <label class="label" for="fpsa">% Free PSA</label>
+          <div class="num"><input id="fpsa" type="number" inputmode="decimal" min="5" max="75" step="0.1" value="15"><span class="unit">%</span></div>
+          <span class="hint" id="fpsa-h">5 – 75</span>
+        </div>
+      </div>
+
+      <div class="opt" data-in="tum">
+        <label class="check"><input type="checkbox" id="dd-on"> Enter PSA density directly</label>
+        <div class="field" id="dd-box" hidden>
+          <label class="label" for="dens">PSA density</label>
+          <div class="num"><input id="dens" type="number" inputmode="decimal" step="0.01" value="0.15"><span class="unit">ng/mL²</span></div>
+          <span class="hint" id="dens-h">&gt; 0 – 10</span>
+        </div>
+        <span class="derived" id="dd-calc"></span>
+      </div>
+    </form>
+
+    <section class="result" aria-live="polite">
+      <h2><span id="r-title">Biopsy risk</span><span class="tag" id="tag">Example patient</span></h2>
+      <div class="hg">
+        <div class="big" id="hg">—<small>%</small></div>
+        <div class="cap" id="hg-cap">risk of high-grade cancer</div>
+      </div>
+      <div class="faces" id="faces" role="img" aria-label="100 men like this patient"></div>
+      <p class="note" style="margin-top:-6px">Of 100 men like this, biopsied</p>
+      <ul class="legend" id="legend"></ul>
+      <p class="note" id="msg"></p>
+      <div class="compare">
+        <span class="label">Same patient, all models</span>
+        <div class="cmp-row" id="c-pcpt"><span>PCPTRC 2.0 · high-grade</span><b>—</b></div>
+        <div class="cmp-row" id="c-pbcg"><span>PBCG · high-grade</span><b>—</b></div>
+        <div class="cmp-row" id="c-tum"><span>TUM-RC · ISUP &gt; 2</span><b>—</b></div>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn primary" id="copy">Copy result</button>
+        <button type="button" class="btn" id="reset">Clear</button>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <h3>About the models</h3>
+    <p><b>PCPTRC 2.0</b> predicts no cancer, low-grade (Gleason &lt; 7) or high-grade (Gleason ≥ 7) on biopsy. Built on PCPT placebo-arm TRUS biopsies with PSA ≤ 10. Input coding follows the live site: “Do not know” family history and “Not performed” DRE count as No/Normal. Ankerst DP et al. Urology 2014;83(6):1362–7.</p>
+    <p><b>PBCG</b> predicts the same three outcomes from contemporary North American biopsy cohorts. Unknown DRE, family history and prior biopsy each use a reduced model, as on the live site. Ankerst DP et al. Eur Urol 2018;74(2):197–203.</p>
+    <p><b>TUM-RC</b> predicts clinically significant cancer, defined in the source as ISUP &gt; 2, from age, PSA density, PI-RADS and prior negative biopsy. Logistic model fit on 603 biopsies at TUM Klinikum rechts der Isar, Munich, a referral clinic where about 35% had ISUP &gt; 2. Labelled beta in the source, which cites no publication. Not valid after a positive biopsy.</p>
+    <h3>Source and licence</h3>
+    <p>Each model is ported line for line from the riskcalc.org source code (<a href="https://github.com/ClevelandClinicQHS/riskcalc-website" target="_blank" rel="noopener">ClevelandClinicQHS/riskcalc-website</a>: PCPTRC, PBCG, Pirads) and checked against the original R on 3,000 random inputs per model with no differences. Used under the <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank" rel="noopener">PolyForm Noncommercial License 1.0.0</a>. Not affiliated with or endorsed by UT Health San Antonio, Cleveland Clinic or the Technical University of Munich.</p>
+    <p>Decision support for clinicians, not a substitute for clinical judgment.</p>
+  </footer>
+</div>
+
+<script>
+// PCPTRC 2.0 (+ optional % free PSA), ported from ClevelandClinicQHS/riskcalc-website PCPTRC/riskcalc_20180105.r
+const M = {
+  // key: priorBiopsyKnown, dreKnown, famKnown ; coef order: intercept, log2PSA, age, AA, [prior], [dre], [fam]
+  "111": [[-3.00215469,0.25613390,0.01643637,0.12172599,-0.45533257,-0.03864628,0.27197219],[-7.05304534,0.70489441,0.04753804,1.04174529,-0.21409933,0.40068434,0.22467348]],
+  "110": [[-2.89648245,0.25904098,0.01559192,0.11996693,-0.45444000,-0.03729244],[-6.96119633,0.70674359,0.04676393,1.03937720,-0.21100921,0.40319606]],
+  "101": [[-3.01529063,0.25578861,0.01654912,0.12327661,-0.45825158,0.27183869],[-6.94522156,0.70637260,0.04697087,1.02065099,-0.18320006,0.23044734]],
+  "100": [[-2.90917471,0.25872451,0.01570165,0.12141077,-0.45729181],[-6.85264083,0.70797314,0.04621214,1.01887797,-0.17972927]],
+  "011": [[-2.90933651,0.23803667,0.01447269,0.11443251,-0.06592322,0.27128248],[-6.99449483,0.69530025,0.04637911,1.03847001,0.38651649,0.22287791]],
+  "010": [[-2.80429793,0.24127801,0.01363705,0.11165777,-0.06487585],[-6.90681925,0.69720305,0.04566552,1.03622425,0.38925765]],
+  "001": [[-2.92983751,0.23714373,0.01463232,0.11765430,0.27095959],[-6.90439295,0.69799874,0.04608130,1.01787561,0.22913998]],
+  "000": [[-2.81814489,0.24044370,0.01370219,0.12000825],[-6.84249970,0.70043815,0.04574460,1.01699029]]
+};
+const FREE = { high:[4.8059009,-0.3483031,0.6452902], low:[4.9730353,-0.3856204,0.6010974], no:[4.9602101,-0.2195069,0.5154306] };
+const dnorm = (x,m,s) => Math.exp(-0.5*((x-m)/s)**2)/(s*Math.sqrt(2*Math.PI));
+// prior, dre, fam: 1, 0 or null (unknown)
+function pcpt({psa, age, aa, prior, dre, fam, fpsa}) {
+  const x = [1, Math.log2(psa), age, aa];
+  const k = [prior, dre, fam].map(v => v == null ? 0 : 1).join("");
+  for (const v of [prior, dre, fam]) if (v != null) x.push(v);
+  const [cl, ch] = M[k];
+  const dot = c => c.reduce((s, b, i) => s + b * x[i], 0);
+  const e1 = Math.exp(dot(cl)), e2 = Math.exp(dot(ch));
+  let no = 1/(1+e1+e2), low = e1/(1+e1+e2), high = 1-no-low;
+  if (fpsa != null) {
+    const lf = Math.log2(fpsa), lp = Math.log2(psa);
+    const d = c => dnorm(lf, c[0] + c[1]*lp, c[2]);
+    const ph = d(FREE.high), pl = d(FREE.low), pn = d(FREE.no);
+    const uh = high*ph/(no*pn+low*pl), ul = low*pl/(no*pn+high*ph), un = no*pn/(low*pl+high*ph);
+    low = ul/(ul+1); no = un/(un+1); high = 1-low-no;
+  }
+  const rNo = Math.round(no*100), rLow = Math.round(low*100);
+  return { no: rNo, low: rLow, high: 100 - rNo - rLow, raw: { no, low, high } };
+}
+
+
+// PBCG (Ankerst, Eur Urol 2018), ported from ClevelandClinicQHS/riskcalc-website PBCG/R_code_PBCG_risk_calculator.R
+const PBCG_M = {
+  "111": [[-2.44052108,0.13617244,0.01780617,0.78721039,-0.83613721,0.04612721,0.33233636],[-6.36851856,0.79996510,0.05566536,0.61596975,-1.27437249,0.85780143,0.61003848]],
+  "110": [[-2.29687989,0.13785591,0.01758914,0.63876791,-0.86200471,0.07193350],[-6.06621401,0.76053930,0.05509847,0.51701373,-1.38390751,0.83442202]],
+  "101": [[-2.64840984,0.13125283,0.02044166,0.81792881,-0.98610357,0.31447017],[-6.70538152,0.77635003,0.06542705,0.52401464,-1.43681965,0.55443478]],
+  "011": [[-2.16147411,0.07409519,0.01322988,0.76131045,0.05397516,0.29246219],[-5.99897055,0.70727793,0.04992968,0.56485952,0.89154384,0.56910873]],
+  "100": [[-2.49050385,0.12961272,0.02020429,0.67674970,-0.97275826],[-6.41089002,0.74110558,0.06476911,0.42814591,-1.50274350]],
+  "010": [[-2.01851079,0.06745424,0.01263369,0.63938472,0.08562844],[-5.68203352,0.65059244,0.04883786,0.49214793,0.87421554]],
+  "001": [[-2.39161580,0.06129651,0.01600515,0.81132928,0.27501639],[-6.42320154,0.67779036,0.06092178,0.50429130,0.50805684]],
+  "000": [[-2.23794923,0.05343098,0.01553627,0.69593716],[-6.13292904,0.62979529,0.06002002,0.43816016]]
+};
+function pbcg({psa, age, aa, prior, dre, fam}) {
+  const x = [1, Math.log2(psa), age, aa];
+  const k = [prior, dre, fam].map(v => v == null ? 0 : 1).join("");
+  for (const v of [prior, dre, fam]) if (v != null) x.push(v);
+  const [cl, ch] = PBCG_M[k];
+  const dot = c => c.reduce((s, b, i) => s + b * x[i], 0);
+  const e1 = Math.exp(dot(cl)), e2 = Math.exp(dot(ch));
+  const no = Math.round(100/(1+e1+e2)), low = Math.round(100*e1/(1+e1+e2));
+  return { no, low, high: 100 - no - low };
+}
+// TUM-RC (TUM, 07.11.2023, beta), ported from riskcalc-website Pirads/riskcalc.R. Outcome: ISUP > 2.
+function tum({age, density, pirads, prior}) {
+  const S = -6.1785 + 0.4933*(age/10) + 0.4688*Math.log2(density) + 0.8548*pirads - 0.8491*prior;
+  const cs = 1/(1+Math.exp(-S));
+  return { cs: Math.round(cs*100), no: 100 - Math.round(cs*100), raw: cs };
+}
+
+
+(function(){
+  const $ = id => document.getElementById(id);
+  const radio = n => document.querySelector(`input[name="${n}"]:checked`).value;
+  const labelOf = n => document.querySelector(`label[for="${document.querySelector(`input[name="${n}"]:checked`).id}"]`).textContent;
+
+  const SPEC = {
+    pcpt: { name: "PCPTRC 2.0", age: [55, 90], psa: [0, 50, true], three: true },
+    pbcg: { name: "PBCG", age: [40, 90], psa: [2, 50, false], three: true },
+    tum:  { name: "TUM-RC", age: [55, 90], psa: [0, 100, true], three: false }
+  };
+  let model = "pcpt", touched = false, last = null;
+
+  // faces
+  const MOUTH = { no: "M8 15 Q12 19 16 15", low: "M8 16 L16 16", high: "M8 17.5 Q12 13.5 16 17.5" };
+  const COL = { no: "var(--none)", low: "var(--low)", high: "var(--high)" };
+  const faces = [];
+  for (let i = 0; i < 100; i++) {
+    const d = document.createElement("div");
+    d.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle class="f" cx="12" cy="12" r="11.5" fill="var(--rule)"/><circle class="e" cx="8.6" cy="9.5" r="1.5"/><circle class="e" cx="15.4" cy="9.5" r="1.5"/><path class="m" d="M8 16 L16 16"/></svg>';
+    $("faces").appendChild(d);
+    faces.push({ f: d.querySelector(".f"), m: d.querySelector(".m") });
+  }
+
+  function num(id){ const v = parseFloat($(id).value); return Number.isFinite(v) ? v : null; }
+  function within(v, lo, hi, loEx){ return v != null && (loEx ? v > lo : v >= lo) && v <= hi; }
+
+  // Each returns {ok, r?, why?}
+  function runPCPT(){
+    const s = SPEC.pcpt, age = num("age"), psa = num("psa");
+    const why = [];
+    if (!within(age, ...s.age)) why.push("age 55–90");
+    if (!within(psa, ...s.psa)) why.push("PSA above 0 and up to 50");
+    const fpOn = $("fp-on").checked, fpsa = num("fpsa");
+    if (fpOn && !within(fpsa, 5, 75)) why.push("% free PSA 5–75");
+    if (why.length) return { ok: false, why };
+    const pr = radio("prior");
+    const r = pcpt({ psa, age, aa: +radio("race"), prior: pr === "u" ? null : +pr,
+      dre: radio("dre") === "1" ? 1 : 0, fam: radio("fam") === "1" ? 1 : 0, fpsa: fpOn ? fpsa : null });
+    return { ok: true, r, warn: psa > 10 ? "PSA above 10: PCPTRC was built on biopsies with PSA ≤ 10, so this is an extrapolation." : null };
+  }
+  function runPBCG(){
+    const s = SPEC.pbcg, age = num("age"), psa = num("psa");
+    const why = [];
+    if (!within(age, ...s.age)) why.push("age 40–90");
+    if (!within(psa, ...s.psa)) why.push("PSA 2–50");
+    if (why.length) return { ok: false, why };
+    const u = n => { const v = radio(n); return v === "u" ? null : +v; };
+    return { ok: true, r: pbcg({ psa, age, aa: +radio("race"), prior: u("prior"), dre: u("dre"), fam: u("fam") }) };
+  }
+  function density(){
+    if ($("dd-on").checked) { const d = num("dens"); return within(d, 0, 10, true) ? { d } : { err: "PSA density above 0 and up to 10" }; }
+    const psa = num("psa"), vol = num("vol");
+    if (!within(vol, 0, 100, true)) return { err: "prostate volume above 0 and up to 100 mL" };
+    if (!within(psa, 0, 100, true)) return { err: "PSA above 0 and up to 100" };
+    return { d: psa / vol, calc: true };
+  }
+  function runTUM(){
+    const age = num("age"), why = [];
+    if (!within(age, 55, 90)) why.push("age 55–90");
+    const pr = radio("prior");
+    if (pr === "u") why.push("prior biopsy status (Never or Prior negative)");
+    const de = density();
+    if (de.err) why.push(de.err);
+    if (why.length) return { ok: false, why };
+    const t = tum({ age, density: de.d, pirads: +radio("pirads"), prior: +pr });
+    return { ok: true, r: { no: t.no, low: 0, high: t.cs }, density: de.d };
+  }
+  const RUN = { pcpt: runPCPT, pbcg: runPBCG, tum: runTUM };
+
+  function paint(r){
+    faces.forEach((x, i) => {
+      const k = !r ? null : i < r.no ? "no" : i < r.no + r.low ? "low" : "high";
+      x.f.setAttribute("fill", k ? COL[k] : "var(--rule)");
+      x.m.setAttribute("d", MOUTH[k || "low"]);
+    });
+  }
+  function legend(three, r){
+    const rows = three
+      ? [["no","No cancer"],["low","Low-grade (Gleason < 7)"],["high","High-grade (Gleason ≥ 7)"]]
+      : [["no","No ISUP > 2 cancer"],["high","ISUP > 2 cancer"]];
+    $("legend").innerHTML = rows.map(([k, t]) =>
+      `<li><span class="sw" style="background:${COL[k]}"></span>${t.replace("<","&lt;")}<b>${r ? r[k] + "%" : "—"}</b></li>`).join("");
+  }
+
+  function render(){
+    const s = SPEC[model];
+    // show/hide fields
+    document.querySelectorAll("[data-in]").forEach(el => { el.hidden = !el.dataset.in.split(" ").includes(model); });
+    $("fp-box").hidden = !$("fp-on").checked;
+    $("dd-box").hidden = !$("dd-on").checked;
+    $("age-h").textContent = `${s.age[0]} – ${s.age[1]}`;
+    $("psa-h").textContent = `${s.psa[2] ? "> " + s.psa[0] : s.psa[0]} – ${s.psa[1]}`;
+    $("p-u").disabled = model === "tum";
+    $("p-u").nextElementSibling.style.opacity = model === "tum" ? .4 : 1;
+
+    // range hint colouring
+    const age = num("age"), psa = num("psa");
+    $("age-h").classList.toggle("err", $("age").value !== "" && !within(age, ...s.age));
+    $("psa-h").classList.toggle("err", $("psa").value !== "" && !within(psa, ...s.psa));
+    $("vol-h").classList.toggle("err", $("vol").value !== "" && !within(num("vol"), 0, 100, true));
+    $("fpsa-h").classList.toggle("err", $("fp-on").checked && !within(num("fpsa"), 5, 75));
+    $("dens-h").classList.toggle("err", $("dd-on").checked && !within(num("dens"), 0, 10, true));
+    const de = !$("dd-on").checked ? density() : null;
+    $("dd-calc").textContent = de && de.d ? `Calculated PSA density: ${de.d.toFixed(2)} ng/mL²` : "";
+
+    $("r-title").textContent = s.three ? "Biopsy risk" : "Clinically significant cancer";
+    $("hg-cap").textContent = s.three ? "risk of high-grade cancer (Gleason ≥ 7)" : "risk of ISUP > 2 cancer on biopsy";
+    $("tag").textContent = touched ? "" : "Example patient";
+
+    const out = RUN[model]();
+    if (!out.ok){
+      last = null;
+      $("hg").innerHTML = "—<small>%</small>"; paint(null); legend(s.three, null);
+      $("msg").className = "note"; $("msg").textContent = "Enter " + out.why.join(", ") + ".";
+    } else {
+      last = out;
+      $("hg").innerHTML = out.r.high + "<small>%</small>"; paint(out.r); legend(s.three, out.r);
+      $("msg").className = out.warn ? "note warn" : "note";
+      $("msg").textContent = out.warn || "";
+    }
+
+    // compare strip
+    for (const m of ["pcpt","pbcg","tum"]) {
+      const o = RUN[m](), row = $("c-" + m);
+      row.classList.toggle("na", !o.ok); row.classList.toggle("cur", m === model);
+      row.querySelector("b").textContent = o.ok ? o.r.high + "%" : "needs " + o.why[0].split(" (")[0];
+    }
+  }
+
+  function setModel(m, fromHash){
+    model = m;
+    document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.m === m ? "true" : "false"));
+    if (!fromHash) { try { history.replaceState(null, "", "#" + m); } catch (e) {} }
+    render();
+  }
+  document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => setModel(t.dataset.m)));
+  $("f").addEventListener("input", () => { touched = true; render(); });
+  $("f").addEventListener("change", () => { touched = true; render(); });
+  $("f").addEventListener("submit", e => e.preventDefault());
+
+  $("reset").addEventListener("click", () => {
+    $("f").reset(); ["age","psa","vol"].forEach(id => $(id).value = "");
+    $("fp-on").checked = false; $("dd-on").checked = false;
+    touched = true; render(); $("age").focus();
+  });
+
+  $("copy").addEventListener("click", async () => {
+    if (!last) return;
+    const s = SPEC[model], r = last.r, age = num("age"), psa = num("psa");
+    let t;
+    if (s.three) {
+      t = `${s.name}: high-grade ${r.high}%, low-grade ${r.low}%, no cancer ${r.no}% (age ${age}, PSA ${psa}` +
+        (model === "pcpt" && $("fp-on").checked ? `, %fPSA ${num("fpsa")}` : "") +
+        `, ${labelOf("race")}, FHx ${labelOf("fam")}, DRE ${labelOf("dre")}, prior bx ${labelOf("prior")})`;
+    } else {
+      t = `TUM-RC: ISUP > 2 risk ${r.high}% (age ${age}, PI-RADS ${radio("pirads")}, PSAD ${last.density.toFixed(2)}, prior bx ${labelOf("prior")})`;
+    }
+    const b = $("copy");
+    try { await navigator.clipboard.writeText(t); b.textContent = "Copied"; }
+    catch (e) { $("msg").className = "note"; $("msg").textContent = t; b.textContent = "Shown below"; }
+    setTimeout(() => b.textContent = "Copy result", 1600);
+  });
+
+  const h = (location.hash || "").slice(1);
+  setModel(SPEC[h] ? h : "pcpt", true);
+})();
+</script>
+
+</body></html>

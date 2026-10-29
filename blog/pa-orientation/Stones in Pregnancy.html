@@ -1,0 +1,400 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<style>.cg-nav{margin:-40px -16px 32px !important}</style>
+<script src="nav.js" defer></script>
+
+<title>Stones in Pregnancy</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single editorial column; a 40-week gestation ruler anchors the page, then numbered sections follow the clinical sequence. Light only, by the reader's standing preference. */
+:root{
+  --paper:#f4f0e8; --paper-2:#ebe5d8; --ink:#1c1a17; --ink-2:#55504a; --rule:#d6cdbc;
+  --brick:#9c3318; --brick-soft:#f0ddd4;
+  --go:#3f6b3a; --go-soft:#dfe8d6; --caution:#8a6411; --caution-soft:#f1e6c8; --stop:#9c3318;
+  --display:"Fraunces",Georgia,serif; --body:"Newsreader",Georgia,serif; --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 72px}
+.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--display);font-weight:600;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(2.2rem,6vw,3.3rem);letter-spacing:-.01em}
+h2{font-size:1.55rem}
+h3{font-size:1.12rem}
+p{margin:0}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2)}
+.label.brick{color:var(--brick)}
+header{display:flex;flex-direction:column;gap:16px;border-bottom:1px solid var(--rule);padding-bottom:28px}
+.lede{font-size:1.18rem;max-width:62ch}
+.verdict{background:var(--brick-soft);border-left:3px solid var(--brick);padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.verdict strong{font-family:var(--display);font-weight:600;font-size:1.1rem}
+section{display:flex;flex-direction:column;gap:20px}
+.sec-head{display:flex;align-items:baseline;gap:14px}
+.sec-num{font-family:var(--mono);font-size:.8rem;color:var(--brick)}
+
+/* gestation ruler */
+.ruler{display:flex;flex-direction:column;gap:8px}
+.track{position:relative;display:grid;grid-template-columns:13fr 14fr 13fr;height:58px;border:1px solid var(--rule)}
+.zone{padding:8px 10px;display:flex;flex-direction:column;justify-content:space-between;font-family:var(--mono);font-size:.7rem;letter-spacing:.04em}
+.z1{background:var(--caution-soft);color:var(--caution)}
+.z2{background:var(--go-soft);color:var(--go)}
+.z3{background:var(--caution-soft);color:var(--caution)}
+.zone b{font-weight:500;text-transform:uppercase}
+.marker{position:absolute;top:-8px;bottom:-8px;left:calc(24/40*100%);width:2px;background:var(--brick)}
+.marker span{position:absolute;top:-22px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--mono);font-size:.68rem;color:var(--brick);font-weight:500}
+.ticks{position:relative;height:16px;font-family:var(--mono);font-size:.66rem;color:var(--ink-2)}
+.ticks span{position:absolute;transform:translateX(-50%)}
+.ticks span:first-child{transform:none}
+.ticks span:last-child{transform:translateX(-100%)}
+
+/* trimester blocks */
+.tri{display:grid;grid-template-columns:110px 1fr;gap:18px;border-top:1px solid var(--rule);padding-top:20px}
+.tri-side{display:flex;flex-direction:column;gap:6px}
+.tri-weeks{font-family:var(--display);font-size:1.6rem;font-weight:600;line-height:1}
+.pill{align-self:flex-start;font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:2px}
+.pill.go{background:var(--go-soft);color:var(--go)}
+.pill.caution{background:var(--caution-soft);color:var(--caution)}
+.pill.brick{background:var(--brick-soft);color:var(--brick)}
+.tri-body{display:flex;flex-direction:column;gap:12px;min-width:0}
+.tri.here{background:var(--paper-2);padding:20px 18px;border-top:2px solid var(--brick)}
+.kv{display:grid;grid-template-columns:112px 1fr;gap:6px 14px;font-size:.97rem}
+.kv dt{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);padding-top:3px}
+.kv dd{margin:0}
+ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:4px}
+
+/* decision path */
+.path{display:flex;flex-direction:column;gap:0;counter-reset:step}
+.step{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:14px 0;border-bottom:1px dashed var(--rule)}
+.step:last-child{border-bottom:0}
+.step::before{counter-increment:step;content:counter(step);font-family:var(--mono);font-size:.8rem;color:var(--brick);border:1px solid var(--brick);width:26px;height:26px;display:grid;place-items:center;border-radius:50%}
+.step p+p{margin-top:4px;color:var(--ink-2);font-size:.95rem}
+
+/* tables */
+.tbl{overflow-x:auto;border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.94rem}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--rule)}
+th{font-family:var(--mono);font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2);font-weight:500;background:var(--paper-2)}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.cite{font-family:var(--mono);font-size:.72rem;color:var(--ink-2)}
+
+.compare{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.opt{background:var(--paper);padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.opt.pref{background:var(--brick-soft)}
+.opt ul{font-size:.92rem}
+.opt .label{color:var(--brick)}
+
+.drug{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.drug div{background:var(--paper);padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.drug ul{font-size:.93rem}
+
+.fragile{display:flex;flex-direction:column;gap:10px}
+.fragile li{padding-left:2px}
+/* dose ladder, log scale 0.001 to 1000 mGy: position = (log10(v)+3)/6 */
+.dose{display:flex;flex-direction:column;gap:10px}
+.drow{display:grid;grid-template-columns:190px 1fr;gap:12px;align-items:center}
+.drow .dl{font-size:.92rem;line-height:1.3}
+.drow .dl small{display:block;font-family:var(--mono);font-size:.66rem;color:var(--ink-2);letter-spacing:.03em}
+.dtrack{position:relative;height:14px;background:var(--paper-2)}
+.dbar{position:absolute;top:0;bottom:0;background:var(--ink-2)}
+.dbar.proc{background:var(--brick)}
+.dbar.ref{background:var(--go)}
+.dbar.harm{background:repeating-linear-gradient(45deg,var(--caution) 0 4px,var(--caution-soft) 4px 8px)}
+.daxis{display:grid;grid-template-columns:190px 1fr;gap:12px}
+.daxis .ax{position:relative;height:16px;font-family:var(--mono);font-size:.64rem;color:var(--ink-2);border-top:1px solid var(--rule)}
+.daxis .ax span{position:absolute;top:3px;transform:translateX(-50%)}
+.daxis .ax span:first-child{transform:none}
+.daxis .ax span:last-child{transform:translateX(-100%)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-family:var(--mono);font-size:.68rem;color:var(--ink-2)}
+.legend i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.split > div{background:var(--paper);padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.split ul{font-size:.93rem}
+.script{background:var(--paper-2);border-left:3px solid var(--ink);padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.script p{font-style:italic}
+.script p::before{content:"\201C"}
+.script p::after{content:"\201D"}
+@media (max-width:620px){
+  .drow,.daxis{grid-template-columns:1fr;gap:4px}
+  .daxis > span{display:none}
+  .split{grid-template-columns:1fr}
+}
+footer{border-top:1px solid var(--rule);padding-top:18px;font-size:.88rem;color:var(--ink-2);display:flex;flex-direction:column;gap:8px}
+
+@media (max-width:620px){
+  .tri{grid-template-columns:1fr;gap:10px}
+  .tri-side{flex-direction:row;align-items:center;gap:12px;flex-wrap:wrap}
+  .kv{grid-template-columns:1fr;gap:2px}
+  .kv dd{margin-bottom:8px}
+  .compare,.drug{grid-template-columns:1fr}
+  .zone{font-size:.6rem;padding:6px}
+}
+</style>
+
+<div class="wrap">
+
+<header>
+  <span class="label brick">Endourology · Obstetric urology</span>
+  <h1>Stones in Pregnancy</h1>
+  <p class="lede">Renal colic across all 40 weeks: what to do in each trimester, which intervention is preferred, and how strong the evidence behind it is.</p>
+  <div class="verdict">
+    <span class="label brick">Index case · 24 weeks, healthy</span>
+    <strong>Observe first. If she fails, definitive URS is the preferred intervention.</strong>
+    <p>Mid-second trimester is the best window for anaesthesia and surgery. URS avoids four to six months of stent exchanges. Two things switch the answer to drainage only: fever or an unconfirmed stone.</p>
+  </div>
+</header>
+
+<section aria-labelledby="s1">
+  <div class="sec-head"><span class="sec-num">01</span><h2 id="s1">The 40-week map</h2></div>
+  <div class="ruler" role="img" aria-label="Gestation timeline from 0 to 40 weeks with the second trimester marked as the preferred window for ureteroscopy and the index patient at 24 weeks">
+    <div class="track">
+      <div class="zone z1"><b>T1</b><span>temporize</span></div>
+      <div class="zone z2"><b>T2</b><span>URS window</span></div>
+      <div class="zone z3"><b>T3</b><span>case by case</span></div>
+      <div class="marker"><span>24 wk</span></div>
+    </div>
+    <div class="ticks">
+      <span style="left:0">0</span><span style="left:32.5%">13</span><span style="left:67.5%">27</span><span style="left:85%">34</span><span style="left:100%">40</span>
+    </div>
+  </div>
+  <p>Most stones present in the second and third trimesters. Rising urinary calcium and urate, plus progesterone-driven ureteral dilation, drive both stone formation and the ambiguity of ultrasound.</p>
+</section>
+
+<section aria-labelledby="s2">
+  <div class="sec-head"><span class="sec-num">02</span><h2 id="s2">Trimester by trimester</h2></div>
+
+  <div class="tri">
+    <div class="tri-side"><span class="label">First trimester</span><span class="tri-weeks">0–13</span><span class="pill caution">Temporize</span></div>
+    <div class="tri-body">
+      <dl class="kv">
+        <dt>Key risk</dt><dd>Organogenesis. Radiation and elective anaesthesia carry the most theoretical teratogenic concern, and baseline miscarriage risk is highest.</dd>
+        <dt>Preferred</dt><dd>Observation and analgesia. If drainage is needed: ultrasound-guided stent or PCN under local or light sedation.</dd>
+        <dt>URS</dt><dd>Feasible and reported as safe, but reserve it for failure of drainage or a strong reason not to carry a stent for 6+ months.</dd>
+        <dt>Downside</dt><dd>A stent placed now means the longest exchange burden of any trimester, often 5–6 exchanges before delivery.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="tri here">
+    <div class="tri-side"><span class="label brick">Second trimester</span><span class="tri-weeks">14–27</span><span class="pill go">URS preferred</span></div>
+    <div class="tri-body">
+      <dl class="kv">
+        <dt>Key risk</dt><dd>Lowest. Organogenesis is complete and the uterus is not yet obstructing access or positioning. Preterm labour risk is low.</dd>
+        <dt>Preferred</dt><dd>Definitive URS with holmium laser, stone-free in one sitting. Many leave a short stent afterward; CUA recommends post-URS stenting in pregnancy.</dd>
+        <dt>Viability</dt><dd>From about 22–24 weeks, plan with OB: fetal monitoring before and after, steroids for lung maturity only if delivery is a real prospect, and a site with NICU backup.</dd>
+        <dt>Your patient</dt><dd>24 weeks sits here. The case for URS over a stent is at its strongest in this window.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="tri">
+    <div class="tri-side"><span class="label">Third trimester</span><span class="tri-weeks">28–40</span><span class="pill caution">Case by case</span></div>
+    <div class="tri-body">
+      <dl class="kv">
+        <dt>Key risk</dt><dd>Aortocaval compression, difficult lithotomy, and instrumentation-triggered contractions. Distorted ureteral course.</dd>
+        <dt>28–34 wk</dt><dd>URS is still reasonable for a distal or mid stone in experienced hands. Drainage is equally acceptable.</dd>
+        <dt>Over 34 wk</dt><dd>Lean toward a stent or PCN. The exchange burden is short and definitive treatment waits until after delivery.</dd>
+        <dt>Monitor</dt><dd>Continuous fetal monitoring and OB present or immediately available. Left lateral tilt is required.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="tri">
+    <div class="tri-side"><span class="label">Postpartum</span><span class="tri-weeks">0–6 wk</span><span class="pill brick">Definitive</span></div>
+    <div class="tri-body">
+      <dl class="kv">
+        <dt>Preferred</dt><dd>All modalities return, including SWL and PCNL. Remove or replace any indwelling stent within the usual 4–6 week dwell.</dd>
+        <dt>Imaging</dt><dd>Non-contrast CT now resolves whatever the pregnancy imaging left uncertain.</dd>
+        <dt>Lactation</dt><dd>Most standard antibiotics are acceptable. Tamsulosin has no lactation data; milk levels are expected to be low, so breastfeeding need not stop, but monitor the infant (LactMed). Check NSAID and opioid choice against breastfeeding.</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="s3">
+  <div class="sec-head"><span class="sec-num">03</span><h2 id="s3">Decision path</h2></div>
+  <div class="path">
+    <div class="step"><div><p><strong>Confirm the stone.</strong></p><p>Ultrasound first, with resistive index and ureteral jets. Physiological hydronephrosis affects most pregnant women by the third trimester, right more than left. If unclear, use non-contrast MRU. Low-dose CT is a third-line option; fetal doses under 50 mGy are not associated with harm.</p></div></div>
+    <div class="step"><div><p><strong>Screen for infection.</strong></p><p>Fever, rising WBC, or positive urine with obstruction means drainage only: stent or PCN, antibiotics, and no definitive lithotripsy. Stent and PCN have similar obstetric outcomes, but stents had fewer UTIs, admissions, ED visits and exchanges (Mason 2023). PCN avoids general anaesthesia; a stent avoids an external tube.</p></div></div>
+    <div class="step"><div><p><strong>Trial of observation.</strong></p><p>Acetaminophen and opioids, hydration, and tamsulosin if accepted. About half to four-fifths of stones pass spontaneously; in one series of confirmed stones only 48% passed (Burgess 2011).</p></div></div>
+    <div class="step"><div><p><strong>Indications to intervene.</strong></p><p>Refractory pain, AKI or solitary kidney, persistent obstruction, contractions or preterm labour attributed to colic, or failed observation.</p></div></div>
+    <div class="step"><div><p><strong>Choose by trimester and stone.</strong></p><p>T2, afebrile, and a stone under about 1 cm in the ureter: URS. T1 or over 34 weeks, a large or renal stone, or limited endourology support: stent or PCN, with definitive treatment postpartum.</p></div></div>
+  </div>
+</section>
+
+<section aria-labelledby="sR">
+  <div class="sec-head"><span class="sec-num">04</span><h2 id="sR">Radiation and MRI: counselling anxious families</h2></div>
+  <p>Families tend to overestimate the risk of both modalities. The useful frame is that the dose ranges in stone care sit well below where harm has been shown, while an untreated obstructed or infected kidney is a known risk to the pregnancy.</p>
+
+  <h3>Fetal dose, on a log scale</h3>
+  <div class="dose" role="img" aria-label="Approximate fetal radiation doses in milligray on a logarithmic scale. Chest X-ray under 0.01, KUB about 0.1 to 3, low-dose stone CT about 1 to 10, standard abdominopelvic CT about 10 to 50. Ureteroscopy fluoroscopy is not shown because there is no good published fetal dose; it depends on screening time. No anomalies, growth restriction or loss have been reported below 50. Malformations are unlikely below about 100 to 200.">
+    <div class="drow"><div class="dl">Chest X-ray<small>under 0.01 mGy</small></div><div class="dtrack"><div class="dbar" style="left:0;width:16.67%"></div></div></div>
+    <div class="drow"><div class="dl">Natural background, whole pregnancy<small>about 0.5–1 mGy</small></div><div class="dtrack"><div class="dbar" style="left:44.98%;width:5.02%"></div></div></div>
+    <div class="drow"><div class="dl">KUB<small>about 0.1–3 mGy</small></div><div class="dtrack"><div class="dbar proc" style="left:33.33%;width:24.62%"></div></div></div>
+    <div class="drow"><div class="dl">Low-dose stone CT<small>about 1–10 mGy</small></div><div class="dtrack"><div class="dbar proc" style="left:50%;width:16.67%"></div></div></div>
+    <div class="drow"><div class="dl">Standard abdominopelvic CT<small>about 10–50 mGy</small></div><div class="dtrack"><div class="dbar proc" style="left:66.67%;width:11.65%"></div></div></div>
+    <div class="drow"><div class="dl">No anomalies, growth restriction or loss reported (ACOG)<small>below 50 mGy</small></div><div class="dtrack"><div class="dbar ref" style="left:0;width:78.32%"></div></div></div>
+    <div class="drow"><div class="dl">Malformation or IQ effects possible<small>malformations unlikely below 100–200 mGy (ICRP 84); IQ effects most sensitive at 8–15 wk, possible threshold 60–310 mGy (ACOG)</small></div><div class="dtrack"><div class="dbar harm" style="left:83.33%;width:16.67%"></div></div></div>
+    <div class="daxis"><span></span><div class="ax"><span style="left:0">0.001</span><span style="left:16.67%">0.01</span><span style="left:33.33%">0.1</span><span style="left:50%">1</span><span style="left:66.67%">10</span><span style="left:83.33%">100</span><span style="left:100%">1000 mGy</span></div></div>
+    <div class="legend"><span><i style="background:var(--brick)"></i>stone workup</span><span><i style="background:var(--ink-2)"></i>everyday comparison</span><span><i style="background:var(--go)"></i>reassurance range</span><span><i style="background:var(--caution)"></i>harm threshold</span></div>
+  </div>
+
+  <div class="split">
+    <div>
+      <span class="label brick">Radiation: the two risks</span>
+      <ul>
+        <li><strong>Deterministic</strong> (malformation, growth restriction, IQ loss): threshold effects. No anomalies, growth restriction or loss reported below 50 mGy (ACOG). Malformations are unlikely below 100–200 mGy (ICRP 84) and arise during organogenesis. CNS/IQ effects are most sensitive at 8–15 weeks, where ACOG cites a possible minimum threshold of 60–310 mGy. At 24 weeks the threshold for CNS effects is higher still.</li>
+        <li><strong>Stochastic</strong> (childhood cancer): no threshold, but tiny at these doses. Baseline childhood cancer risk is roughly 0.2–0.3%. Estimates add about 0.06% per 10 mGy (ICRP 84). A low-dose CT moves that by a few hundredths of a percent.</li>
+        <li><strong>Shielding:</strong> fetal dose from CT and fluoroscopy comes mostly from internal scatter. Current physics guidance (AAPM 2019) no longer recommends routine fetal shielding in diagnostic imaging. Collimation, pulsed low-frame fluoro and short screening time matter more. Note that the AAPM statement covers diagnostic imaging; CUA (2015) still advises a lead shield between the fluoroscopy source and the fetus during URS.</li>
+      </ul>
+    </div>
+    <div>
+      <span class="label brick">MRI: what the data show</span>
+      <ul>
+        <li><strong>Non-contrast MRI:</strong> no known fetal harm at 1.5 T in any trimester. ACR supports MRI up to 3 T in Normal Operating Mode when there is expected benefit and no other practical way to get the information.</li>
+        <li><strong>Ontario cohort</strong> (Ray et al., JAMA 2016, over 1.4 million births): first-trimester MRI was not associated with stillbirth, neonatal death, anomalies, cancer, or vision or hearing loss.</li>
+        <li><strong>Gadolinium</strong> was associated with stillbirth or neonatal death and with inflammatory skin conditions in the same study. MRU for stones does not need it. Specify non-contrast T2 (HASTE) on the requisition.</li>
+        <li><strong>Theoretical concerns</strong> are tissue heating and acoustic noise. Neither has shown harm at 1.5 T. Many centres prefer 1.5 T to limit heating (a local preference, not a guideline rule), and use left lateral tilt after about 20 weeks.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Words that work at the bedside</h3>
+  <div class="script">
+    <span class="label">Radiation</span>
+    <p>We keep X-ray time during the procedure as short as possible. Doctors have only seen harm at doses many times higher than a short X-ray run gives.</p>
+    <p>If we need a CT, we use a low-dose stone protocol. It keeps the baby's dose well within the range that has been studied and found safe.</p>
+    <span class="label">MRI</span>
+    <p>MRI uses magnets, not radiation. We will not use contrast dye. Large studies, including one from Ontario, found no effect on babies.</p>
+    <span class="label">Framing the trade-off</span>
+    <p>A blocked or infected kidney is a bigger risk to the pregnancy than any of these tests. Imaging lets us treat the right problem instead of guessing.</p>
+  </div>
+  <p class="cite">Dose ranges are approximate literature values. Your department's medical physicist can give site-specific fetal dose estimates, which families often find reassuring in writing.</p>
+</section>
+
+<section aria-labelledby="s4">
+  <div class="sec-head"><span class="sec-num">05</span><h2 id="s4">Options compared</h2></div>
+  <div class="compare">
+    <div class="opt pref">
+      <span class="label">Preferred · T2</span>
+      <h3>Ureteroscopy</h3>
+      <ul>
+        <li>One procedure, definitive</li>
+        <li>No serial exchanges</li>
+        <li>Needs GA or regional anaesthesia, plus OB coordination</li>
+        <li>Requires an experienced endourologist</li>
+      </ul>
+    </div>
+    <div class="opt">
+      <span class="label">Drainage</span>
+      <h3>Ureteral stent</h3>
+      <ul>
+        <li>Quick, can be done under ultrasound</li>
+        <li>Fast encrustation in pregnancy</li>
+        <li>Exchange every 4–6 weeks; some protocols use every 4 weeks</li>
+        <li>Stent symptoms for months</li>
+      </ul>
+    </div>
+    <div class="opt">
+      <span class="label">Drainage</span>
+      <h3>Nephrostomy</h3>
+      <ul>
+        <li>Local anaesthesia, ultrasound-guided</li>
+        <li>Best for sepsis in an unstable patient</li>
+        <li>External tube, dislodgement risk</li>
+        <li>Same exchange problem</li>
+      </ul>
+    </div>
+  </div>
+  <p><strong>Contraindicated during pregnancy:</strong> SWL is an absolute contraindication (EAU, CUA). PCNL (prone positioning, fluoroscopy, bleeding): CUA calls it contraindicated (LE 4, Grade C); EAU says it is feasible only as an individual decision in experienced centres. Both are normally deferred to postpartum.</p>
+</section>
+
+<section aria-labelledby="s5">
+  <div class="sec-head"><span class="sec-num">06</span><h2 id="s5">Evidence</h2></div>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Source</th><th>Type</th><th>Finding</th><th>Weight</th></tr></thead>
+      <tbody>
+        <tr><td>AUA, Surgical Management of Kidney and Ureteral Stones (2026; Pearle et al., J Urol, online 20 Nov 2025)</td><td>Guideline</td><td>Observation and a trial of passage first when symptoms are well controlled; URS if that fails. Coordinate with obstetrics. Ultrasound is first-line imaging.</td><td>Grades not verified</td></tr>
+        <tr><td>EAU Urolithiasis Guidelines 2025 (unchanged in 2026 pocket edition)</td><td>Guideline</td><td>Treat uncomplicated cases conservatively. Stent or PCN when intervention is needed. URS is a reasonable alternative to avoid long-term stenting, best in T2. PCNL only in experienced centres. SWL absolutely contraindicated.</td><td>Conservative: Strong; URS: LE 1b</td></tr>
+        <tr><td>CUA, Management of ureteral calculi (Ordon et al., CUAJ 2015)</td><td>Guideline</td><td>Ultrasound first. URS with laser is safe; post-URS stent recommended. SWL and PCNL contraindicated.</td><td>LE 4, Grade C</td></tr>
+        <tr><td>Semins et al., J Urol 2009;181:139</td><td>Meta-analysis</td><td>108 patients: no difference in ureteral injury or UTI rates vs non-pregnant patients.</td><td>Pooled case series</td></tr>
+        <tr><td>Laing et al., Urol Int 2012;89:380</td><td>Systematic review</td><td>116 procedures: 86% stone clearance; 2 major complications (1 perforation, 1 premature contraction) and 7 minor.</td><td>Pooled case series</td></tr>
+        <tr><td>Teleb et al., Arab J Urol 2014;12:299</td><td>Small randomized comparison</td><td>43 women: no fetal complications in either arm. Stent arm needed 7 exchanges and had 4 UTIs vs 2. Better satisfaction with URS.</td><td>Small, single-centre</td></tr>
+        <tr><td>Mason et al., World J Urol 2023;41:1721</td><td>Propensity-matched cohort</td><td>Stent vs PCN: same obstetric outcomes; stent had fewer UTIs, admissions, ED visits and exchanges.</td><td>Large, observational</td></tr>
+        <tr><td>Burgess et al., J Urol 2011;186:2280</td><td>Retrospective</td><td>23% of stone diagnoses in pregnancy were inaccurate; only 48% of confirmed stones passed spontaneously.</td><td>Retrospective</td></tr>
+        <tr><td>Theriault et al., World J Urol 2020;38:2301</td><td>Retrospective</td><td>Tamsulosin in T2/T3: no adverse maternal or infant outcomes; passage 58% vs 43%, not significant.</td><td>Retrospective</td></tr>
+        <tr><td>ACOG Committee Opinion 723 (Oct 2017)</td><td>Committee opinion</td><td>No anomalies, growth restriction or loss reported below 50 mGy. Ultrasound and MRI preferred. Limit gadolinium.</td><td>Consensus</td></tr>
+        <tr><td>ICRP Publication 84 (2000)</td><td>Radiation protection guidance</td><td>Malformations unlikely below 100–200 mGy. Baseline childhood cancer risk 0.2–0.3%; about 0.06% excess per 10 mGy.</td><td>Consensus</td></tr>
+        <tr><td>Ray et al., JAMA 2016;316:952 (Ontario)</td><td>Population cohort</td><td>First-trimester MRI: no significant increase in harm. Gadolinium: stillbirth or neonatal death (aRR 3.70) and inflammatory skin conditions (aHR 1.36).</td><td>Large, observational</td></tr>
+        <tr><td>AAPM PS 8-A (2 Apr 2019)</td><td>Physics guidance</td><td>Routine fetal and gonadal shielding in diagnostic imaging should be discontinued.</td><td>Consensus</td></tr>
+        <tr><td>FDA (15 Oct 2020); Health Canada (8 Jun 2021)</td><td>Regulatory</td><td>Avoid NSAIDs from 20 weeks (fetal renal dysfunction, oligohydramnios). Health Canada: do not use from around 20 to 28 weeks unless advised; contraindicated in the last trimester.</td><td>Regulatory</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cite">Fact-checked against primary sources on 28 Oct 2026. AUA 2026 grades and URS fluoroscopy fetal dose could not be verified.</p>
+</section>
+
+<section aria-labelledby="s6">
+  <div class="sec-head"><span class="sec-num">07</span><h2 id="s6">Drugs and the OR</h2></div>
+  <div class="drug">
+    <div>
+      <span class="label">Analgesia and MET</span>
+      <ul>
+        <li>Acetaminophen first line</li>
+        <li>Opioids short course; warn about neonatal effects near term</li>
+        <li>NSAIDs avoided from 20 weeks (FDA). Health Canada: do not use from around 20 to 28 weeks unless advised, lowest dose for shortest time if needed; contraindicated in the last trimester</li>
+        <li>Tamsulosin off-label; retrospective data show no adverse maternal or infant outcomes, but no proven benefit for passage</li>
+      </ul>
+    </div>
+    <div>
+      <span class="label">Antibiotics</span>
+      <ul>
+        <li>Safe: cephalosporins, penicillins, fosfomycin</li>
+        <li>Avoid: fluoroquinolones, tetracyclines</li>
+        <li>TMP-SMX: avoid in T1 and near term</li>
+        <li>Nitrofurantoin: avoid at term (haemolysis risk); in T1 use only when no suitable alternative (ACOG CO 717)</li>
+      </ul>
+    </div>
+    <div>
+      <span class="label">Intraop</span>
+      <ul>
+        <li>Left lateral tilt</li>
+        <li>Fluoro off or pulsed, tight collimation; ultrasound-guided wire confirmation</li>
+        <li>Low-pressure irrigation</li>
+        <li>Holmium laser; avoid EHL</li>
+      </ul>
+    </div>
+    <div>
+      <span class="label">Watch</span>
+      <ul>
+        <li>Access sheath in an oedematous, dilated ureter</li>
+        <li>VTE prophylaxis per OB</li>
+        <li>Post-op monitoring for contractions</li>
+        <li>Short stent on a string; CUA recommends a stent after URS in pregnancy</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="s7">
+  <div class="sec-head"><span class="sec-num">08</span><h2 id="s7">Where this is fragile</h2></div>
+  <ul class="fragile">
+    <li><strong>The evidence base is thin.</strong> There are no large RCTs. The URS-over-stent preference rests on pooled case series and one small randomized comparison. EAU rates URS as a reasonable alternative at LE 1b; CUA grades its pregnancy statement LE 4, Grade C.</li>
+    <li><strong>Diagnosis is the real failure point.</strong> Negative ureteroscopy happens when physiological hydro is taken for obstruction. Confirm with MRU before you go to the OR.</li>
+    <li><strong>Outcomes depend on the operator.</strong> Published series come from high-volume endourology units. A low-volume operator at a site without OB and NICU backup changes the risk calculation.</li>
+    <li><strong>Obstetric endpoints are under-reported.</strong> Preterm labour and fetal outcomes are inconsistently captured across series. Low event rates may partly reflect missing data.</li>
+  </ul>
+</section>
+
+<footer>
+  <span class="label">Reference summary</span>
+  <p>Built for decision support between colleagues. It does not replace patient-specific discussion with obstetrics and anaesthesia.</p>
+</footer>
+
+</div>
+
+</body></html>

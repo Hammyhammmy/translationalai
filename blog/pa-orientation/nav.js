@@ -4,7 +4,7 @@
 
 (function () {
   const PAGES = [
-    { href: 'Three Geometries of Failure.html', label: 'Geometries' },
+    { href: 'Three Geometries of Failure.html', label: 'Start here' },
     { href: 'The Urinary Tract.html', label: 'Urinary Tract' },
     { href: 'Urinary Interactive.html', label: 'Interactive' },
     { href: 'Urology Consults.html', label: 'Consults' },

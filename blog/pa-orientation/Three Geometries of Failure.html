@@ -5,666 +5,407 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Three Geometries of Failure</title>
 <style>
-  :root {
-    --bg: #fafaf9;
-    --card: #ffffff;
-    --border: #e7e5e4;
-    --text: #1c1917;
-    --muted: #78716c;
-    --accent: #2563eb;
-    --accent-light: #eff6ff;
-    --red: #dc2626;
-    --red-light: #fef2f2;
-    --green: #16a34a;
-    --green-light: #f0fdf4;
-    --orange: #d97706;
-    --orange-light: #fffbeb;
-    --purple: #7c3aed;
-    --purple-light: #f5f3ff;
-    --teal: #0d9488;
-    --teal-light: #f0fdfa;
-    --code-bg: #f5f5f4;
-    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    --mono: "SF Mono", "Fira Code", "Consolas", monospace;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.75; padding: 40px 20px 80px; }
-  .container { max-width: 820px; margin: 0 auto; }
-  .crumb { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 8px; }
-  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--muted); }
-  .crumb a:hover { color: var(--text); border-bottom-color: var(--text); }
-  h1 { font-size: 32px; font-weight: 800; line-height: 1.15; margin-bottom: 10px; letter-spacing: -0.02em; }
-  .subtitle { font-size: 16px; color: var(--muted); margin-bottom: 40px; border-bottom: 2px solid var(--border); padding-bottom: 24px; max-width: 700px; }
-  h2 { font-size: 22px; font-weight: 700; margin-top: 56px; margin-bottom: 16px; letter-spacing: -0.01em; }
-  h3 { font-size: 16px; font-weight: 700; margin-top: 24px; margin-bottom: 10px; }
-  h4 { font-size: 12px; font-weight: 700; margin-top: 18px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
-  p { margin-bottom: 16px; font-size: 15px; }
-  ul, ol { margin-bottom: 16px; padding-left: 20px; }
-  ul li, ol li { margin-bottom: 4px; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 20px 0; }
-  .card-accent { border-left: 4px solid var(--accent); background: var(--accent-light); }
-  .card-green { border-left: 4px solid var(--green); background: var(--green-light); }
-  .card-red { border-left: 4px solid var(--red); background: var(--red-light); }
-  .card-orange { border-left: 4px solid var(--orange); background: var(--orange-light); }
-  .card-purple { border-left: 4px solid var(--purple); background: var(--purple-light); }
-  .card-teal { border-left: 4px solid var(--teal); background: var(--teal-light); }
-  .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-  .card-accent .label { color: var(--accent); }
-  .card-green .label { color: var(--green); }
-  .card-red .label { color: var(--red); }
-  .card-orange .label { color: var(--orange); }
-  .card-purple .label { color: var(--purple); }
-  .card-teal .label { color: var(--teal); }
-  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
-  th, td { padding: 12px 14px; border: 1px solid var(--border); text-align: left; vertical-align: top; }
-  th { background: var(--code-bg); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
-  hr { border: none; border-top: 2px solid var(--border); margin: 52px 0; }
+/* Layout: one reading column (blog house style: system sans, stone neutrals). Each geometry gets the same six-part card so learners know where to look. Colours per geometry match the index: layers red, conduits blue, networks purple. */
+:root {
+  --bg: #fafaf9; --card: #ffffff; --border: #e7e5e4; --text: #1c1917; --muted: #6b635d; --soft: #f5f5f4;
+  --layers: #c2261d; --layers-bg: #fdf1f0;
+  --conduits: #1d5fd6; --conduits-bg: #eef4fe;
+  --networks: #6d33d6; --networks-bg: #f4f0fd;
+  --ok: #15803d; --ok-bg: #effaf2;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #171513; --card: #201d1a; --border: #36312c; --text: #f2efec; --muted: #a8a09a; --soft: #26221f;
+  --layers: #f07a70; --layers-bg: #2d1a18; --conduits: #7aa7f5; --conduits-bg: #182235;
+  --networks: #b293f5; --networks-bg: #231b35; --ok: #6fcf8e; --ok-bg: #16281c; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #171513; --card: #201d1a; --border: #36312c; --text: #f2efec; --muted: #a8a09a; --soft: #26221f;
+  --layers: #f07a70; --layers-bg: #2d1a18; --conduits: #7aa7f5; --conduits-bg: #182235;
+  --networks: #b293f5; --networks-bg: #231b35; --ok: #6fcf8e; --ok-bg: #16281c; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 16px; line-height: 1.65;
+  padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); padding-block: 40px 80px; }
+.wrap { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px; }
+h1, h2, h3 { margin: 0; line-height: 1.2; letter-spacing: -0.015em; text-wrap: balance; }
+h1 { font-size: clamp(28px, 6vw, 38px); font-weight: 800; }
+h2 { font-size: 24px; font-weight: 750; }
+h3 { font-size: 17px; font-weight: 700; }
+p { margin: 0; }
+section { display: flex; flex-direction: column; gap: 18px; }
+.crumb { font-size: 13px; color: var(--muted); }
+.lede { font-size: 18px; color: var(--muted); max-width: 62ch; }
+.eyebrow { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+header { display: flex; flex-direction: column; gap: 14px; padding-bottom: 28px; border-bottom: 2px solid var(--border); }
+.start { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; display: grid; gap: 8px; }
+.start ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
 
-  /* Tri-glance strip at top */
-  .triglance {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
-    margin: 28px 0 8px;
-  }
-  .tg {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 16px;
-    text-align: center;
-  }
-  .tg svg { width: 100%; height: 120px; display: block; }
-  .tg .name {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-top: 8px;
-  }
-  .tg .ask {
-    font-size: 14px;
-    font-weight: 700;
-    margin-top: 6px;
-    line-height: 1.3;
-  }
+/* three patients */
+.patients { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 680px) { .patients { grid-template-columns: minmax(0, 1fr); } }
+.pt { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: grid; gap: 10px; align-content: start; border-top: 4px solid var(--c); }
+.pt .who { font-weight: 700; }
+.pt dl { margin: 0; display: grid; gap: 6px; font-size: 14.5px; }
+.pt dt { font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.pt dd { margin: 0; }
+.pt .q { font-weight: 700; color: var(--c); }
+.L { --c: var(--layers); --cb: var(--layers-bg); } .C { --c: var(--conduits); --cb: var(--conduits-bg); } .N { --c: var(--networks); --cb: var(--networks-bg); }
+.bigidea { font-size: 20px; font-weight: 650; line-height: 1.45; padding: 18px 20px; border-radius: 12px; background: var(--soft); }
 
-  /* Geometry panel — the deep dive */
-  .geom {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    margin: 28px 0;
-  }
-  .geom-head {
-    display: grid;
-    grid-template-columns: 64px 1fr auto;
-    gap: 16px;
-    align-items: center;
-    padding: 16px 22px;
-    border-bottom: 1px solid var(--border);
-    background: var(--code-bg);
-  }
-  .geom-num {
-    width: 56px; height: 56px;
-    border-radius: 14px;
-    color: white;
-    font-weight: 800;
-    font-size: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .geom-num.layers { background: #dc2626; }
-  .geom-num.conduit { background: #2563eb; }
-  .geom-num.network { background: #7c3aed; }
-  .geom-title { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; }
-  .geom-sub { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
-  .geom-ask {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-align: right;
-    max-width: 200px;
-    line-height: 1.4;
-  }
-  .geom-body { padding: 8px 24px 24px; }
-  .geom-figure {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
-    margin: 20px 0;
-  }
-  .geom-figure svg { display: block; width: 100%; height: auto; }
-  .geom-cap {
-    font-size: 12px;
-    color: var(--muted);
-    text-align: center;
-    margin-top: 10px;
-    font-family: var(--mono);
-    letter-spacing: 0.04em;
-  }
+/* geometry cards */
+.geom { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.geom-head { display: flex; gap: 14px; align-items: center; padding: 16px 20px; background: var(--cb); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.badge { width: 44px; height: 44px; border-radius: 10px; background: var(--c); color: var(--card); font-weight: 800; font-size: 20px; display: grid; place-items: center; flex: none; }
+.geom-head .t { display: grid; gap: 2px; min-width: 0; }
+.geom-head .ask { font-weight: 700; color: var(--c); }
+.geom-body { padding: 20px; display: grid; gap: 20px; }
+.fig { background: var(--soft); border-radius: 10px; padding: 14px; overflow-x: auto; }
+.fig svg { display: block; width: 100%; min-width: 460px; height: auto; }
+.fig figcaption { font-size: 13px; color: var(--muted); margin-top: 8px; }
+figure { margin: 0; }
+.part { display: grid; gap: 6px; }
+.part > .eyebrow { color: var(--c); }
+.steps { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
+.case { border-left: 3px solid var(--c); padding: 4px 0 4px 16px; display: grid; gap: 8px; }
+.case ol { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+.trap { background: var(--cb); border-radius: 10px; padding: 12px 16px; font-size: 15px; }
+.trap b { color: var(--c); }
+.where { font-size: 14.5px; color: var(--muted); }
 
-  .splitex {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin: 16px 0;
-  }
-  .splitex > div {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 16px;
-  }
-  .splitex .k {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--muted);
-    font-weight: 700;
-    margin-bottom: 6px;
-  }
-  .splitex .v { font-size: 14px; line-height: 1.55; }
+/* cheat sheet */
+.tbl { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; background: var(--card); }
+table { border-collapse: collapse; width: 100%; min-width: 600px; font-size: 14.5px; }
+th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+th { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 500; background: var(--soft); }
+tr:last-child td { border-bottom: 0; }
+td.g { font-weight: 700; color: var(--c); white-space: nowrap; }
 
-  @media (max-width: 720px) {
-    .triglance { grid-template-columns: 1fr; }
-    .splitex { grid-template-columns: 1fr; }
-    .geom-head { grid-template-columns: 48px 1fr; }
-    .geom-ask { display: none; }
-  }
+/* practice */
+.practice { display: grid; gap: 10px; }
+.pq { background: var(--card); border: 1px solid var(--border); border-radius: 12px; }
+.pq summary { cursor: pointer; padding: 14px 16px; list-style: none; display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 12px; align-items: baseline; }
+.pq summary::-webkit-details-marker { display: none; }
+.pq .n { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.pq .reveal { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.pq[open] .reveal { visibility: hidden; }
+.pq .ans { padding: 0 16px 16px 16px; display: grid; gap: 6px; border-top: 1px dashed var(--border); padding-top: 12px; margin: 0 16px; padding-left: 0; padding-right: 0; }
+.pq .ans .g { font-weight: 700; color: var(--c); }
+.pq summary:focus-visible { outline: 2px solid var(--conduits); outline-offset: 2px; border-radius: 12px; }
+.mix { display: grid; gap: 10px; }
+.mix .row { display: grid; grid-template-columns: 110px minmax(0,1fr); gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.mix .row:last-child { border-bottom: 0; }
+.chip { display: inline-block; font-family: var(--mono); font-size: 11px; padding: 1px 7px; border-radius: 999px; background: var(--cb); color: var(--c); font-weight: 600; letter-spacing: .03em; margin-right: 4px; }
+.limits { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+dl.gloss { margin: 0; display: grid; grid-template-columns: max-content minmax(0,1fr); gap: 8px 16px; font-size: 15px; }
+dl.gloss dt { font-weight: 700; }
+dl.gloss dd { margin: 0; color: var(--muted); }
+@media (max-width: 520px) { dl.gloss { grid-template-columns: minmax(0,1fr); } dl.gloss dd { margin-bottom: 6px; } .mix .row { grid-template-columns: minmax(0,1fr); gap: 2px; } }
+footer { font-size: 13px; color: var(--muted); border-top: 2px solid var(--border); padding-top: 16px; }
+svg text { font-family: var(--font); }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="wrap">
 
-<div class="crumb"><a href="index.html">← Clinical Geometry</a> · May 24, 2026</div>
-<h1>Three Geometries of Failure</h1>
-<p class="subtitle">Every clinical structure is one of three shapes — or a combination. Each shape fails in its own way, and each failure mode demands a different diagnostic question. Learn the three, and you have a triage move for every organ system you will ever see.</p>
+<header>
+  <span class="crumb"><a href="index.html" style="color:inherit">← Clinical Geometry</a></span>
+  <span class="eyebrow">Start here · 10-minute read · for PA students, medical students and clerks</span>
+  <h1>Three Geometries of Failure</h1>
+  <p class="lede">Where a patient feels the problem is often not where the problem is. This page gives you one question to ask first, before you think about which disease it could be: <strong>what shape of structure has failed?</strong></p>
+</header>
 
-<!-- ============================================================ -->
-<h2>The Three at a Glance</h2>
-
-<p>Before any specifics: this is the entire taxonomy on one screen. The diagram is the doc. Everything below is annotation.</p>
-
-<div class="triglance">
-
-  <!-- LAYERS mini -->
-  <div class="tg">
-    <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-label="Layers geometry">
-      <rect x="20" y="14" width="160" height="14" fill="#fef2f2"/>
-      <rect x="20" y="14" width="4" height="14" fill="#ef4444"/>
-      <rect x="20" y="32" width="160" height="14" fill="#fff7ed"/>
-      <rect x="20" y="32" width="4" height="14" fill="#f97316"/>
-      <rect x="20" y="50" width="160" height="14" fill="#fefce8"/>
-      <rect x="20" y="50" width="4" height="14" fill="#eab308"/>
-      <rect x="20" y="68" width="160" height="14" fill="#f0fdf4"/>
-      <rect x="20" y="68" width="4" height="14" fill="#22c55e"/>
-      <rect x="20" y="86" width="160" height="14" fill="#eff6ff"/>
-      <rect x="20" y="86" width="4" height="14" fill="#3b82f6"/>
-      <!-- defect marker -->
-      <circle cx="120" cy="75" r="6" fill="#1c1917"/>
-      <line x1="120" y1="20" x2="120" y2="69" stroke="#1c1917" stroke-width="1" stroke-dasharray="2 2" opacity="0.45"/>
-      <!-- surface symptom -->
-      <circle cx="120" cy="21" r="4" fill="#dc2626"/>
-    </svg>
-    <div class="name">Layers</div>
-    <div class="ask">Which depth?</div>
-  </div>
-
-  <!-- CONDUIT mini -->
-  <div class="tg">
-    <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-label="Conduit geometry">
-      <!-- stations -->
-      <line x1="22" y1="60" x2="178" y2="60" stroke="#e7e5e4" stroke-width="3"/>
-      <circle cx="28" cy="60" r="9" fill="#22c55e"/>
-      <circle cx="58" cy="60" r="9" fill="#22c55e"/>
-      <circle cx="88" cy="60" r="9" fill="#eab308"/>
-      <!-- blockage -->
-      <circle cx="118" cy="60" r="11" fill="#dc2626"/>
-      <text x="118" y="64" text-anchor="middle" fill="white" font-size="11" font-weight="bold">×</text>
-      <!-- downstream greyed -->
-      <circle cx="148" cy="60" r="9" fill="#d6d3d1"/>
-      <circle cx="178" cy="60" r="9" fill="#d6d3d1"/>
-      <!-- flow arrow -->
-      <polygon points="42,60 50,56 50,64" fill="#16a34a"/>
-      <polygon points="72,60 80,56 80,64" fill="#16a34a"/>
-      <!-- upstream backed-up -->
-      <text x="88" y="44" text-anchor="middle" font-size="9" fill="#d97706">↑ pressure</text>
-    </svg>
-    <div class="name">Conduits</div>
-    <div class="ask">Which station?</div>
-  </div>
-
-  <!-- NETWORK mini -->
-  <div class="tg">
-    <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-label="Network geometry">
-      <!-- root -->
-      <line x1="100" y1="18" x2="60" y2="46" stroke="#a78bfa" stroke-width="2"/>
-      <line x1="100" y1="18" x2="140" y2="46" stroke="#a78bfa" stroke-width="2"/>
-      <!-- level 2 left -->
-      <line x1="60" y1="46" x2="38" y2="80" stroke="#a78bfa" stroke-width="2"/>
-      <line x1="60" y1="46" x2="82" y2="80" stroke="#a78bfa" stroke-width="2"/>
-      <!-- level 2 right - occluded -->
-      <line x1="140" y1="46" x2="118" y2="80" stroke="#d6d3d1" stroke-width="2"/>
-      <line x1="140" y1="46" x2="162" y2="80" stroke="#d6d3d1" stroke-width="2"/>
-      <!-- nodes -->
-      <circle cx="100" cy="18" r="7" fill="#7c3aed"/>
-      <circle cx="60" cy="46" r="6" fill="#a78bfa"/>
-      <circle cx="140" cy="46" r="8" fill="#dc2626"/>
-      <text x="140" y="49" text-anchor="middle" fill="white" font-size="10" font-weight="bold">×</text>
-      <circle cx="38" cy="84" r="5" fill="#a78bfa"/>
-      <circle cx="82" cy="84" r="5" fill="#a78bfa"/>
-      <!-- downstream ischemic territory -->
-      <circle cx="118" cy="84" r="5" fill="#d6d3d1"/>
-      <circle cx="162" cy="84" r="5" fill="#d6d3d1"/>
-      <!-- territory shading -->
-      <ellipse cx="140" cy="92" rx="40" ry="14" fill="#d6d3d1" opacity="0.3"/>
-      <text x="140" y="111" text-anchor="middle" font-size="9" fill="#78716c">territory</text>
-    </svg>
-    <div class="name">Networks</div>
-    <div class="ask">Which territory?</div>
-  </div>
-
+<div class="start">
+  <span class="eyebrow">What you'll be able to do</span>
+  <ul>
+    <li>Sort a body structure into one of three shapes: <b>layers</b>, <b>conduits</b> or <b>networks</b>.</li>
+    <li>Ask the question that shape needs: <i>which depth</i>, <i>which station</i>, or <i>which territory</i>.</li>
+    <li>Use the answer to pick where to look next on exam and imaging.</li>
+  </ul>
+  <p class="where">This is a memory aid for <em>localising</em> a problem. It sits on top of the usual history, exam and differential diagnosis; it doesn't replace them.</p>
 </div>
 
-<div class="card card-accent" style="margin-top: 14px;">
-  <div class="label">The whole thing in one paragraph</div>
-  <p style="margin:0;"><strong>Layers stack.</strong> Failures are about depth — you go deeper until you find the defect. <strong>Conduits flow.</strong> Failures are about stations — you trace upstream from where the flow stalls. <strong>Networks branch.</strong> Failures are about territories — you map the distribution of the deficit and infer the branch point. Every anatomical structure is one of these three, or a combination of them. Get the geometry right and the diagnostic question writes itself.</p>
-</div>
-
-<hr>
-
-<!-- ============================================================ -->
-<h2>1 — Layers</h2>
-
-<div class="geom">
-  <div class="geom-head">
-    <div class="geom-num layers">1</div>
-    <div>
-      <div class="geom-title">Layers</div>
-      <div class="geom-sub">parallel depth · all present simultaneously</div>
-    </div>
-    <div class="geom-ask">Which depth?</div>
+<section>
+  <h2>Three patients, one shift</h2>
+  <p>Each of these patients points to one place. In each, the problem is somewhere else, and the shape of the structure tells you where.</p>
+  <div class="patients">
+    <article class="pt L">
+      <span class="who">A lump in the groin</span>
+      <dl>
+        <dt>They point to</dt><dd>A bulge under the skin that comes out when they cough.</dd>
+        <dt>The problem is</dt><dd>A weak spot several layers deeper, in the abdominal wall.</dd>
+        <dt>Ask</dt><dd class="q">Which depth?</dd>
+      </dl>
+    </article>
+    <article class="pt C">
+      <span class="who">Pain in the flank</span>
+      <dl>
+        <dt>They point to</dt><dd>The side of the back, where the kidney is.</dd>
+        <dt>The problem is</dt><dd>A stone lower down in the ureter. The kidney is swollen because urine can't get past.</dd>
+        <dt>Ask</dt><dd class="q">Which station?</dd>
+      </dl>
+    </article>
+    <article class="pt N">
+      <span class="who">A weak right arm</span>
+      <dl>
+        <dt>They point to</dt><dd>The arm, and words that won't come out right.</dd>
+        <dt>The problem is</dt><dd>One blocked artery branch in the left side of the brain.</dd>
+        <dt>Ask</dt><dd class="q">Which territory?</dd>
+      </dl>
+    </article>
   </div>
-  <div class="geom-body">
+  <p class="bigidea">The symptom shows up where the body can feel or notice it. The cause sits wherever the structure actually broke. The shape of the structure tells you how to get from one to the other.</p>
+</section>
 
-    <p>A layered structure is a stack of parallel planes, all present at the same time at the same location. The skin and the transversalis fascia exist together, separated by depth, not by route. A defect at one depth shows up as a symptom at the surface — but the symptom does not tell you the depth. The job is to localize <em>how deep</em>.</p>
-
-    <div class="geom-figure">
-      <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" aria-label="Layered structure with deep defect and surface symptom">
-        <!-- layers -->
-        <g font-family="-apple-system, BlinkMacSystemFont, sans-serif">
-          <rect x="60" y="20" width="480" height="36" fill="#fef2f2"/>
-          <rect x="60" y="20" width="5" height="36" fill="#ef4444"/>
-          <text x="78" y="43" font-size="13" font-weight="600">Layer 1 — surface</text>
-
-          <rect x="60" y="62" width="480" height="36" fill="#fff7ed"/>
-          <rect x="60" y="62" width="5" height="36" fill="#f97316"/>
-          <text x="78" y="85" font-size="13" font-weight="600">Layer 2</text>
-
-          <rect x="60" y="104" width="480" height="36" fill="#fefce8"/>
-          <rect x="60" y="104" width="5" height="36" fill="#eab308"/>
-          <text x="78" y="127" font-size="13" font-weight="600">Layer 3</text>
-
-          <rect x="60" y="146" width="480" height="36" fill="#f0fdf4"/>
-          <rect x="60" y="146" width="5" height="36" fill="#22c55e"/>
-          <text x="78" y="169" font-size="13" font-weight="600">Layer 4 — defect lives here</text>
-
-          <rect x="60" y="188" width="480" height="36" fill="#eff6ff"/>
-          <rect x="60" y="188" width="5" height="36" fill="#3b82f6"/>
-          <text x="78" y="211" font-size="13" font-weight="600">Layer 5</text>
-
-          <rect x="60" y="230" width="480" height="36" fill="#f5f3ff"/>
-          <rect x="60" y="230" width="5" height="36" fill="#8b5cf6"/>
-          <text x="78" y="253" font-size="13" font-weight="600">Layer 6 — source of truth</text>
-        </g>
-
-        <!-- symptom marker -->
-        <circle cx="420" cy="38" r="9" fill="#dc2626"/>
-        <text x="438" y="42" font-size="11" fill="#dc2626" font-weight="700">symptom</text>
-
-        <!-- defect marker -->
-        <circle cx="420" cy="164" r="10" fill="#1c1917"/>
-        <text x="424" y="168" font-size="11" fill="white" font-weight="bold" text-anchor="middle">×</text>
-        <text x="438" y="168" font-size="11" fill="#1c1917" font-weight="700">defect</text>
-
-        <!-- dotted line connecting -->
-        <line x1="420" y1="48" x2="420" y2="154" stroke="#1c1917" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.5"/>
-
-        <!-- depth arrow -->
-        <line x1="40" y1="20" x2="40" y2="266" stroke="#78716c" stroke-width="2"/>
-        <polygon points="36,258 44,258 40,270" fill="#78716c"/>
-        <text x="30" y="143" font-size="11" fill="#78716c" transform="rotate(-90 30 143)" text-anchor="middle">depth →</text>
-      </svg>
-      <div class="geom-cap">defect at depth · symptom at the surface · localize by going deeper</div>
+<!-- LAYERS -->
+<section class="L" id="layers">
+  <div class="geom">
+    <div class="geom-head">
+      <div class="badge">1</div>
+      <div class="t"><h2>Layers</h2><span class="ask">The question: which depth?</span></div>
     </div>
-
-    <div class="splitex">
-      <div>
-        <div class="k">Anatomical examples</div>
-        <div class="v">Abdominal wall (skin → fascia → muscle → transversalis → peritoneum). Skin and its appendages. Meninges (dura → arachnoid → pia). Cornea. Bowel wall histologic layers. Any structure where the diagnostic question is "<em>how deep is the lesion</em>."</div>
+    <div class="geom-body">
+      <div class="part">
+        <span class="eyebrow">Everyday picture</span>
+        <p>A wall in a house: paint, plaster, drywall, insulation, studs. A damp patch shows on the paint, but the leak is in a pipe behind the drywall. Repainting won't fix it. You have to find the layer where it starts.</p>
       </div>
-      <div>
-        <div class="k">Software parallel</div>
-        <div class="v">The rendering stack. A request passes through every layer at once on its way out — HTML → DOM bindings → state store → cache → network → server. A bug at one layer manifests as wrong pixels at the surface. You localize by inspecting each depth in turn.</div>
+      <figure class="fig">
+        <svg viewBox="0 0 560 190" role="img" aria-label="Six stacked layers. A defect sits in layer four; an arrow shows the symptom appearing at the surface.">
+          <g font-size="12">
+            <rect x="20" y="14" width="360" height="26" rx="4" fill="var(--layers-bg)" stroke="var(--border)"/><text x="32" y="32" fill="var(--text)">Skin (surface)</text>
+            <rect x="20" y="42" width="360" height="26" rx="4" fill="var(--card)" stroke="var(--border)"/><text x="32" y="60" fill="var(--text)">Fat</text>
+            <rect x="20" y="70" width="360" height="26" rx="4" fill="var(--card)" stroke="var(--border)"/><text x="32" y="88" fill="var(--text)">Muscle and its sheath</text>
+            <rect x="20" y="98" width="360" height="26" rx="4" fill="var(--layers-bg)" stroke="var(--layers)" stroke-width="2"/><text x="32" y="116" fill="var(--text)" font-weight="700">Transversalis fascia: the weak spot</text>
+            <rect x="20" y="126" width="360" height="26" rx="4" fill="var(--card)" stroke="var(--border)"/><text x="32" y="144" fill="var(--text)">Peritoneum</text>
+            <rect x="20" y="154" width="360" height="26" rx="4" fill="var(--card)" stroke="var(--border)"/><text x="32" y="172" fill="var(--text)">Bowel</text>
+            <circle cx="350" cy="111" r="9" fill="var(--layers)"/><text x="346" y="115" fill="var(--card)" font-weight="700">×</text>
+            <path d="M350 100 V 30" stroke="var(--layers)" stroke-width="2" stroke-dasharray="4 3" fill="none"/>
+            <path d="M344 34 L350 22 L356 34 Z" fill="var(--layers)"/>
+            <text x="400" y="32" fill="var(--layers)" font-weight="700">Symptom: a bulge</text>
+            <text x="400" y="48" fill="var(--muted)">felt at the skin</text>
+            <text x="400" y="116" fill="var(--layers)" font-weight="700">Cause: a gap</text>
+            <text x="400" y="132" fill="var(--muted)">four layers down</text>
+          </g>
+        </svg>
+        <figcaption>All the layers are there at once, stacked at the same spot. The bulge appears at the top; the gap is deeper.</figcaption>
+      </figure>
+      <div class="part">
+        <span class="eyebrow">In the body</span>
+        <p>The abdominal wall, skin, the meninges around the brain, the wall of the bowel or bladder, the eye's cornea. Anywhere tissue is stacked in sheets.</p>
       </div>
-    </div>
-
-    <h4>Diagnostic logic</h4>
-    <p>Start at the symptom. Move one layer deeper. Ask: <em>is the data correct at this depth?</em> If yes, the lesion is shallower than you thought; if no, keep going. You stop at the first boundary where normal becomes abnormal — that is the lesion. Treatment happens at that depth, not at the surface where the symptom appeared.</p>
-
-    <div class="card card-red" style="margin-bottom: 0;">
-      <div class="label">Failure signature</div>
-      <p style="margin:0;">A layer defect produces <strong>referred symptoms at the surface</strong>. Indirect hernia (defect at transversalis fascia) bulges through the skin. The patient points to skin; you fix the fascia.</p>
+      <div class="part">
+        <span class="eyebrow">How to find the problem</span>
+        <ol class="steps">
+          <li>Start at the symptom on the surface.</li>
+          <li>Go one layer deeper and ask: is this layer normal?</li>
+          <li>Keep going until you reach the first layer that isn't. That's the lesion.</li>
+          <li>Treat at that depth, not at the surface.</li>
+        </ol>
+      </div>
+      <div class="case">
+        <h3>Worked case: indirect inguinal hernia</h3>
+        <ol>
+          <li>A 45-year-old man has a groin bulge that appears when he coughs or lifts.</li>
+          <li>The skin over it is normal, so the problem is deeper than the skin.</li>
+          <li>The bulge follows the inguinal canal toward the scrotum, which points to the deep inguinal ring, an opening in the transversalis fascia.</li>
+          <li>Repair reinforces that deep layer (usually with mesh). Nothing is done to the skin except the incision.</li>
+        </ol>
+      </div>
+      <p class="trap"><b>Common trap:</b> treating the layer you can see. A skin ointment for a bulge, or a cream for a wound that's really tunnelling deeper, leaves the real defect untouched.</p>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ============================================================ -->
-<h2>2 — Conduits</h2>
-
-<div class="geom">
-  <div class="geom-head">
-    <div class="geom-num conduit">2</div>
-    <div>
-      <div class="geom-title">Conduits</div>
-      <div class="geom-sub">serial stations · flow moves through sequentially</div>
+<!-- CONDUITS -->
+<section class="C" id="conduits">
+  <div class="geom">
+    <div class="geom-head">
+      <div class="badge">2</div>
+      <div class="t"><h2>Conduits</h2><span class="ask">The question: which station?</span></div>
     </div>
-    <div class="geom-ask">Which station?</div>
-  </div>
-  <div class="geom-body">
-
-    <p>A conduit is a series of functional stations connected by directional flow. Production at one end, expulsion at the other. Every station does a job. When the flow stalls or the cargo is contaminated, the symptom appears at the exit — but the lesion is at the station where flow first failed. The job is to localize <em>which station</em>, by tracing upstream from where the flow visibly breaks.</p>
-
-    <div class="geom-figure">
-      <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" aria-label="Conduit with stations, blockage at station 4, upstream pressure">
-        <g font-family="-apple-system, BlinkMacSystemFont, sans-serif">
-
-          <!-- conduit line -->
-          <line x1="60" y1="120" x2="540" y2="120" stroke="#e7e5e4" stroke-width="6" stroke-linecap="round"/>
-
-          <!-- upstream backed-up halo -->
-          <ellipse cx="180" cy="120" rx="155" ry="38" fill="#fffbeb" stroke="#d97706" stroke-width="1" stroke-dasharray="4 3" opacity="0.85"/>
-
-          <!-- stations -->
-          <!-- 1: production -->
-          <circle cx="80" cy="120" r="22" fill="#22c55e"/>
-          <text x="80" y="125" text-anchor="middle" font-size="13" font-weight="700" fill="white">1</text>
-          <text x="80" y="170" text-anchor="middle" font-size="11" font-weight="600">production</text>
-
-          <!-- 2 -->
-          <circle cx="170" cy="120" r="22" fill="#22c55e"/>
-          <text x="170" y="125" text-anchor="middle" font-size="13" font-weight="700" fill="white">2</text>
-          <text x="170" y="170" text-anchor="middle" font-size="11" font-weight="600">collection</text>
-
-          <!-- 3 -->
-          <circle cx="260" cy="120" r="22" fill="#eab308"/>
-          <text x="260" y="125" text-anchor="middle" font-size="13" font-weight="700" fill="white">3</text>
-          <text x="260" y="170" text-anchor="middle" font-size="11" font-weight="600">transport</text>
-
-          <!-- 4: BLOCKAGE -->
-          <circle cx="350" cy="120" r="26" fill="#dc2626"/>
-          <text x="350" y="126" text-anchor="middle" font-size="20" font-weight="700" fill="white">×</text>
-          <text x="350" y="173" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">lesion</text>
-
-          <!-- 5 -->
-          <circle cx="440" cy="120" r="22" fill="#d6d3d1"/>
-          <text x="440" y="125" text-anchor="middle" font-size="13" font-weight="700" fill="white">5</text>
-          <text x="440" y="170" text-anchor="middle" font-size="11" font-weight="600" fill="#a8a29e">control</text>
-
-          <!-- 6 -->
-          <circle cx="530" cy="120" r="22" fill="#d6d3d1"/>
-          <text x="530" y="125" text-anchor="middle" font-size="13" font-weight="700" fill="white">6</text>
-          <text x="530" y="170" text-anchor="middle" font-size="11" font-weight="600" fill="#a8a29e">expulsion</text>
-
-          <!-- flow arrows (upstream of blockage) -->
-          <polygon points="118,114 130,120 118,126" fill="#16a34a"/>
-          <polygon points="208,114 220,120 208,126" fill="#16a34a"/>
-          <polygon points="298,114 310,120 298,126" fill="#d97706"/>
-
-          <!-- no flow downstream (faded) -->
-          <polygon points="388,114 400,120 388,126" fill="#d6d3d1"/>
-          <polygon points="478,114 490,120 478,126" fill="#d6d3d1"/>
-
-          <!-- pressure label -->
-          <text x="180" y="80" text-anchor="middle" font-size="11" font-weight="700" fill="#d97706">↑ pressure / upstream damage</text>
-
-          <!-- symptom indicator at exit (referred) -->
-          <text x="530" y="200" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">"no output"</text>
-
-          <!-- flow direction arrow on top -->
-          <line x1="80" y1="40" x2="510" y2="40" stroke="#78716c" stroke-width="1.5"/>
-          <polygon points="500,36 515,40 500,44" fill="#78716c"/>
-          <text x="295" y="32" text-anchor="middle" font-size="11" fill="#78716c">flow direction</text>
-        </g>
-      </svg>
-      <div class="geom-cap">flow stops at station 4 · pressure backs up to stations upstream · symptom shows at the exit</div>
-    </div>
-
-    <div class="splitex">
-      <div>
-        <div class="k">Anatomical examples</div>
-        <div class="v">The urinary tract (production → collection → transport → storage → control → expulsion). The biliary tree. The GI tract. The airway. CSF flow. Anywhere with a defined source, sequential processing, and an exit.</div>
+    <div class="geom-body">
+      <div class="part">
+        <span class="eyebrow">Everyday picture</span>
+        <p>A kitchen sink. If the pipe under it clogs, the sink fills up (above the clog) and nothing reaches the drain (below it). You don't fix it by scrubbing the sink. You find the clog, and the full sink tells you it's somewhere below.</p>
       </div>
-      <div>
-        <div class="k">Software parallel</div>
-        <div class="v">Data processing pipelines, CI/CD, upload → transform → store. A failed deploy at the "test" stage halts everything downstream; everything upstream queues. You localize by walking the pipeline view from the failed stage upward — same move as tracing hydronephrosis up the ureter to the stone.</div>
+      <figure class="fig">
+        <svg viewBox="0 0 560 170" role="img" aria-label="Five urinary stations in a row: kidney, ureter, bladder, sphincters, urethra. A stone blocks the ureter. Stations above it are swollen; stations below are empty.">
+          <g font-size="12">
+            <rect x="10" y="40" width="96" height="56" rx="8" fill="var(--conduits-bg)" stroke="var(--conduits)" stroke-width="2"/><text x="58" y="64" text-anchor="middle" fill="var(--text)" font-weight="700">1 Kidney</text><text x="58" y="82" text-anchor="middle" fill="var(--muted)">makes urine</text>
+            <rect x="120" y="40" width="96" height="56" rx="8" fill="var(--conduits-bg)" stroke="var(--conduits)" stroke-width="2"/><text x="168" y="64" text-anchor="middle" fill="var(--text)" font-weight="700">2 Ureter</text><text x="168" y="82" text-anchor="middle" fill="var(--muted)">carries it</text>
+            <rect x="230" y="40" width="96" height="56" rx="8" fill="var(--card)" stroke="var(--border)"/><text x="278" y="64" text-anchor="middle" fill="var(--text)" font-weight="700">3 Bladder</text><text x="278" y="82" text-anchor="middle" fill="var(--muted)">stores it</text>
+            <rect x="340" y="40" width="96" height="56" rx="8" fill="var(--card)" stroke="var(--border)"/><text x="388" y="64" text-anchor="middle" fill="var(--text)" font-weight="700">4 Control</text><text x="388" y="82" text-anchor="middle" fill="var(--muted)">sphincters</text>
+            <rect x="450" y="40" width="96" height="56" rx="8" fill="var(--card)" stroke="var(--border)"/><text x="498" y="64" text-anchor="middle" fill="var(--text)" font-weight="700">5 Outlet</text><text x="498" y="82" text-anchor="middle" fill="var(--muted)">prostate, urethra</text>
+            <circle cx="206" cy="68" r="10" fill="var(--conduits)"/><text x="202" y="72" fill="var(--card)" font-weight="700">×</text>
+            <path d="M20 120 H 540" stroke="var(--muted)" stroke-width="1.5"/><path d="M534 115 L546 120 L534 125 Z" fill="var(--muted)"/>
+            <text x="20" y="140" fill="var(--muted)">urine flows this way →</text>
+            <text x="20" y="26" fill="var(--conduits)" font-weight="700">Swollen above the block (hydronephrosis)</text>
+            <text x="300" y="26" fill="var(--muted)">Quiet below the block</text>
+            <text x="150" y="160" fill="var(--conduits)" font-weight="700">Stone where the ureter meets the bladder</text>
+          </g>
+        </svg>
+        <figcaption>The five stations of the urinary tract, as used throughout this reference. Everything above the block swells; everything below goes quiet.</figcaption>
+      </figure>
+      <div class="part">
+        <span class="eyebrow">In the body</span>
+        <p>The urinary tract, the bile ducts, the gut, the airway, the flow of fluid around the brain. Anything with a start, a series of steps, and an exit.</p>
       </div>
-    </div>
-
-    <h4>Diagnostic logic</h4>
-    <p>Find where the flow visibly stops. Trace upstream. Every station above the blockage shows back-pressure damage (dilation, distention, parenchymal injury). Every station below shows under-perfusion (atrophy, no output, downstream dependents starved). The lesion is at the station where flow first fails — not at the symptomatic exit and not at the dilated stations above.</p>
-
-    <div class="card card-orange" style="margin-bottom: 0;">
-      <div class="label">Failure signature</div>
-      <p style="margin:0;">A conduit lesion produces <strong>upstream back-pressure and downstream absence</strong>. Renal stone at the UVJ (station 3): hydronephrosis above (stations 1-2 distended), empty ureter below, patient pointing at the flank where the dilated kidney capsule hurts.</p>
+      <div class="part">
+        <span class="eyebrow">How to find the problem</span>
+        <ol class="steps">
+          <li>Find where the flow visibly stops (no output, a full bladder, a swollen kidney on ultrasound).</li>
+          <li>Look upstream: those stations are swollen from back-pressure.</li>
+          <li>Look downstream: those stations are empty or quiet.</li>
+          <li>The lesion is at the boundary between swollen and empty. Treat there.</li>
+        </ol>
+      </div>
+      <div class="case">
+        <h3>Worked case: a stone in the ureter</h3>
+        <ol>
+          <li>A 38-year-old has waves of severe flank pain spreading to the groin.</li>
+          <li>Ultrasound shows a swollen kidney (station 1 distended), so the block is below the kidney.</li>
+          <li>CT shows a dilated ureter down to a 6 mm stone where it enters the bladder, and a normal ureter below it. Station 2 is the lesion.</li>
+          <li>Treatment is aimed at the stone: let it pass, or remove it with a scope. The kidney recovers once urine can flow again.</li>
+        </ol>
+      </div>
+      <p class="trap"><b>Common trap:</b> treating the swollen station. The kidney hurts and looks abnormal, but it's the victim. The cause is the first station where flow stopped.</p>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ============================================================ -->
-<h2>3 — Networks</h2>
-
-<div class="geom">
-  <div class="geom-head">
-    <div class="geom-num network">3</div>
-    <div>
-      <div class="geom-title">Networks</div>
-      <div class="geom-sub">branching · distributed · multiple redundant paths</div>
+<!-- NETWORKS -->
+<section class="N" id="networks">
+  <div class="geom">
+    <div class="geom-head">
+      <div class="badge">3</div>
+      <div class="t"><h2>Networks</h2><span class="ask">The question: which territory?</span></div>
     </div>
-    <div class="geom-ask">Which territory?</div>
-  </div>
-  <div class="geom-body">
-
-    <p>A network is a tree of branches descending from one or more sources, fanning out to a wide territory. A signal or supply travels along multiple paths simultaneously, and a defect at any branch starves only the territory it served — leaving the rest of the network functional. The deficit is the map. The job is to read which branch was lost <em>by reading what's missing downstream</em>.</p>
-
-    <div class="geom-figure">
-      <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg" aria-label="Branching network with one occluded branch and downstream territory">
-        <g font-family="-apple-system, BlinkMacSystemFont, sans-serif">
-
-          <!-- Territory shading (downstream of occlusion) -->
-          <path d="M 350 110 Q 390 200 380 290 L 540 290 Q 530 200 470 110 Z" fill="#e7e5e4" opacity="0.55"/>
-          <text x="455" y="305" text-anchor="middle" font-size="11" fill="#78716c" font-style="italic">affected territory</text>
-
-          <!-- root -->
-          <circle cx="300" cy="40" r="14" fill="#7c3aed"/>
-          <text x="300" y="44" text-anchor="middle" fill="white" font-weight="700" font-size="12">S</text>
-          <text x="320" y="44" font-size="11" fill="#78716c">source</text>
-
-          <!-- level 2 -->
-          <line x1="300" y1="54" x2="180" y2="110" stroke="#a78bfa" stroke-width="3"/>
-          <line x1="300" y1="54" x2="300" y2="110" stroke="#a78bfa" stroke-width="3"/>
-          <!-- occluded branch -->
-          <line x1="300" y1="54" x2="420" y2="110" stroke="#dc2626" stroke-width="3" stroke-dasharray="5 4"/>
-          <!-- occlusion marker -->
-          <circle cx="368" cy="84" r="13" fill="#dc2626"/>
-          <text x="368" y="89" text-anchor="middle" fill="white" font-weight="700" font-size="14">×</text>
-          <text x="382" y="92" font-size="10" fill="#dc2626" font-weight="700">occluded</text>
-
-          <circle cx="180" cy="110" r="11" fill="#a78bfa"/>
-          <circle cx="300" cy="110" r="11" fill="#a78bfa"/>
-          <circle cx="420" cy="110" r="11" fill="#d6d3d1"/>
-
-          <!-- level 3 -->
-          <line x1="180" y1="121" x2="120" y2="180" stroke="#a78bfa" stroke-width="2"/>
-          <line x1="180" y1="121" x2="220" y2="180" stroke="#a78bfa" stroke-width="2"/>
-          <line x1="300" y1="121" x2="260" y2="180" stroke="#a78bfa" stroke-width="2"/>
-          <line x1="300" y1="121" x2="340" y2="180" stroke="#a78bfa" stroke-width="2"/>
-          <!-- downstream from occluded -->
-          <line x1="420" y1="121" x2="380" y2="180" stroke="#d6d3d1" stroke-width="2"/>
-          <line x1="420" y1="121" x2="470" y2="180" stroke="#d6d3d1" stroke-width="2"/>
-
-          <circle cx="120" cy="180" r="9" fill="#a78bfa"/>
-          <circle cx="220" cy="180" r="9" fill="#a78bfa"/>
-          <circle cx="260" cy="180" r="9" fill="#a78bfa"/>
-          <circle cx="340" cy="180" r="9" fill="#a78bfa"/>
-          <circle cx="380" cy="180" r="9" fill="#d6d3d1"/>
-          <circle cx="470" cy="180" r="9" fill="#d6d3d1"/>
-
-          <!-- level 4 - endpoints / territory cells -->
-          <line x1="120" y1="189" x2="90" y2="240" stroke="#a78bfa" stroke-width="1.5"/>
-          <line x1="120" y1="189" x2="150" y2="240" stroke="#a78bfa" stroke-width="1.5"/>
-          <line x1="220" y1="189" x2="200" y2="240" stroke="#a78bfa" stroke-width="1.5"/>
-          <line x1="220" y1="189" x2="250" y2="240" stroke="#a78bfa" stroke-width="1.5"/>
-          <line x1="260" y1="189" x2="270" y2="240" stroke="#a78bfa" stroke-width="1.5"/>
-          <line x1="340" y1="189" x2="330" y2="240" stroke="#a78bfa" stroke-width="1.5"/>
-          <line x1="380" y1="189" x2="360" y2="240" stroke="#d6d3d1" stroke-width="1.5"/>
-          <line x1="380" y1="189" x2="400" y2="240" stroke="#d6d3d1" stroke-width="1.5"/>
-          <line x1="470" y1="189" x2="450" y2="240" stroke="#d6d3d1" stroke-width="1.5"/>
-          <line x1="470" y1="189" x2="500" y2="240" stroke="#d6d3d1" stroke-width="1.5"/>
-
-          <circle cx="90" cy="244" r="5" fill="#a78bfa"/>
-          <circle cx="150" cy="244" r="5" fill="#a78bfa"/>
-          <circle cx="200" cy="244" r="5" fill="#a78bfa"/>
-          <circle cx="250" cy="244" r="5" fill="#a78bfa"/>
-          <circle cx="270" cy="244" r="5" fill="#a78bfa"/>
-          <circle cx="330" cy="244" r="5" fill="#a78bfa"/>
-          <circle cx="360" cy="244" r="5" fill="#d6d3d1"/>
-          <circle cx="400" cy="244" r="5" fill="#d6d3d1"/>
-          <circle cx="450" cy="244" r="5" fill="#d6d3d1"/>
-          <circle cx="500" cy="244" r="5" fill="#d6d3d1"/>
-
-        </g>
-      </svg>
-      <div class="geom-cap">one branch occluded · the deficit reveals the branch point · map the territory, find the lesion</div>
-    </div>
-
-    <div class="splitex">
-      <div>
-        <div class="k">Anatomical examples</div>
-        <div class="v">Vasculature (arteries and veins). Lymphatics. The peripheral and central nervous system. Bronchial tree. Hepatic portal system. Anywhere a single source supplies a fan of dependent territories through branches.</div>
+    <div class="geom-body">
+      <div class="part">
+        <span class="eyebrow">Everyday picture</span>
+        <p>The electrical circuits in a house. When one breaker trips, one room goes dark and the rest stay on. The dark room tells you which breaker it was. You read the problem from the pattern of what's missing.</p>
       </div>
-      <div>
-        <div class="k">Software parallel</div>
-        <div class="v">Event systems, pub/sub, webhooks, auth propagation. An auth token touches middleware, route guards, WebSocket connections, multiple endpoints. A failure in token refresh doesn't stall at one station — it causes simultaneous failure across every downstream consumer. The diagnostic is "what's the territory served by this branch?"</div>
+      <figure class="fig">
+        <svg viewBox="0 0 560 190" role="img" aria-label="A branching tree from one source. One branch is blocked and the territory it supplies is shaded; the rest of the tree is normal.">
+          <g font-size="12" fill="none" stroke-width="2.5" stroke-linecap="round">
+            <path d="M60 95 H 150" stroke="var(--muted)"/>
+            <path d="M150 95 L 250 45" stroke="var(--muted)"/><path d="M150 95 L 250 95" stroke="var(--muted)"/><path d="M150 95 L 250 145" stroke="var(--networks)"/>
+            <path d="M250 45 L 330 25" stroke="var(--muted)"/><path d="M250 45 L 330 65" stroke="var(--muted)"/>
+            <path d="M250 95 L 330 85" stroke="var(--muted)"/><path d="M250 95 L 330 108" stroke="var(--muted)"/>
+            <path d="M250 145 L 330 130" stroke="var(--networks)" stroke-dasharray="4 4" opacity=".6"/><path d="M250 145 L 330 168" stroke="var(--networks)" stroke-dasharray="4 4" opacity=".6"/>
+          </g>
+          <rect x="336" y="118" width="120" height="62" rx="8" fill="var(--networks-bg)" stroke="var(--networks)"/>
+          <g font-size="12">
+            <circle cx="46" cy="95" r="14" fill="var(--soft)" stroke="var(--muted)"/><text x="46" y="99" text-anchor="middle" fill="var(--text)" font-weight="700">S</text>
+            <text x="20" y="130" fill="var(--muted)">source (heart)</text>
+            <circle cx="200" cy="120" r="10" fill="var(--networks)"/><text x="196" y="124" fill="var(--card)" font-weight="700">×</text>
+            <text x="346" y="140" fill="var(--networks)" font-weight="700">Territory lost</text>
+            <text x="346" y="158" fill="var(--muted)">face, arm, speech</text>
+            <text x="346" y="30" fill="var(--muted)">other branches</text>
+            <text x="346" y="46" fill="var(--muted)">still working</text>
+            <text x="150" y="182" fill="var(--networks)" font-weight="700">one blocked branch</text>
+          </g>
+        </svg>
+        <figcaption>One branch fails; only the area it supplies stops working. The shape of that area points back to the branch.</figcaption>
+      </figure>
+      <div class="part">
+        <span class="eyebrow">In the body</span>
+        <p>Arteries and veins, nerves, the lymphatics, the branching airways. Anything where one source fans out to supply many separate areas.</p>
       </div>
-    </div>
-
-    <h4>Diagnostic logic</h4>
-    <p>Read the deficit. The pattern of what is missing — which muscles are weak, which sensory dermatome is numb, which microservice stopped responding — defines the territory. The territory defines the branch. You localize by inversion: the network is intact except for one downstream area, so the lesion is at the last branch point upstream of that area.</p>
-
-    <div class="card card-purple" style="margin-bottom: 0;">
-      <div class="label">Failure signature</div>
-      <p style="margin:0;">A network lesion produces <strong>distributed simultaneous failure of a single territory</strong>, sparing everything else. Stroke of the MCA: contralateral face and arm weakness, expressive aphasia if left-sided. The territory <em>is</em> the diagnosis.</p>
+      <div class="part">
+        <span class="eyebrow">How to find the problem</span>
+        <ol class="steps">
+          <li>Map exactly what's missing: which muscles are weak, which skin is numb, which part is cold or pale.</li>
+          <li>Ask which single branch supplies all of that, and nothing else.</li>
+          <li>The lesion is at that branch point, upstream of the whole affected area.</li>
+          <li>Treat the branch: reopen it, or protect what it supplies while collaterals take over.</li>
+        </ol>
+      </div>
+      <div class="case">
+        <h3>Worked case: a stroke</h3>
+        <ol>
+          <li>A 72-year-old suddenly can't lift their right arm, the right side of the face droops, and they can't find words.</li>
+          <li>Right face, right arm and language together is one territory: the left side of the brain supplied by the left middle cerebral artery.</li>
+          <li>The legs and vision are spared, which fits one branch rather than the whole brain.</li>
+          <li>CT angiography confirms a blocked left middle cerebral artery. Treatment aims to reopen it, and every minute counts.</li>
+        </ol>
+      </div>
+      <p class="trap"><b>Common trap:</b> examining the part that stopped working. The weak arm is normal; the territory map is what points you to the brain.</p>
     </div>
   </div>
-</div>
+</section>
 
-<hr>
+<section>
+  <h2>The cheat sheet</h2>
+  <p>If you remember one thing from this page, remember this table.</p>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Shape</th><th>Ask</th><th>Find it by</th><th>Treat</th></tr></thead>
+      <tbody>
+        <tr class="L"><td class="g">Layers</td><td>Which depth?</td><td>Going deeper until a layer is abnormal.</td><td>At that depth, not at the surface.</td></tr>
+        <tr class="C"><td class="g">Conduits</td><td>Which station?</td><td>Finding where swollen meets empty.</td><td>At the station where flow first stopped.</td></tr>
+        <tr class="N"><td class="g">Networks</td><td>Which territory?</td><td>Mapping what's missing, then the branch that supplies it.</td><td>At the branch, or support what it supplied.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
-<!-- ============================================================ -->
-<h2>The Diagnostic Question Table</h2>
+<section>
+  <h2>Most organs mix the shapes</h2>
+  <p>Real organs combine all three. Naming which shape a problem belongs to tells you which question to ask about it.</p>
+  <div class="mix">
+    <div class="row"><b>Kidney</b><p><span class="chip" style="--c:var(--networks);--cb:var(--networks-bg)">Network</span> a clot in a renal artery branch kills a wedge of kidney. <span class="chip" style="--c:var(--conduits);--cb:var(--conduits-bg)">Conduit</span> a stone blocks the outflow. <span class="chip" style="--c:var(--layers);--cb:var(--layers-bg)">Layers</span> in some kidney diseases the filter itself leaks protein, at one layer of its wall.</p></div>
+    <div class="row"><b>Lung</b><p><span class="chip" style="--c:var(--conduits);--cb:var(--conduits-bg)">Conduit</span> a mucus plug blocks an airway. <span class="chip" style="--c:var(--networks);--cb:var(--networks-bg)">Network</span> a pulmonary embolus cuts off a branch of the blood supply. <span class="chip" style="--c:var(--layers);--cb:var(--layers-bg)">Layers</span> pneumonia fills the air sacs.</p></div>
+    <div class="row"><b>Skin</b><p><span class="chip" style="--c:var(--layers);--cb:var(--layers-bg)">Layers</span> a burn or a pressure injury is graded by how deep it goes. <span class="chip" style="--c:var(--networks);--cb:var(--networks-bg)">Network</span> red streaks running up a limb follow the lymphatic channels.</p></div>
+  </div>
+</section>
 
-<p>Pinned, because this is the thing to memorize. Every clinical encounter starts with naming the geometry of the structure involved — then the diagnostic question is determined.</p>
+<section>
+  <h2>Try it</h2>
+  <p>Name the shape and the question before you open each answer.</p>
+  <div class="practice">
+    <details class="pq C"><summary><span class="n">1</span><span>A 74-year-old man hasn't passed urine for 10 hours. His bladder is palpable up to his umbilicus.</span><span class="reveal">Show</span></summary>
+      <div class="ans"><span class="g">Conduit · which station?</span><p>The bladder (station 3) is full, so the block is below it: the outlet (station 5), most often an enlarged prostate. A catheter bypasses the block.</p></div></details>
+    <details class="pq L"><summary><span class="n">2</span><span>Two burns side by side: one is red, blistered and very painful; the other is white, leathery and painless.</span><span class="reveal">Show</span></summary>
+      <div class="ans"><span class="g">Layers · which depth?</span><p>The painful one is partial thickness: the nerve endings in the dermis still work. The painless one has gone through the full thickness of the skin and destroyed them, so it is deeper and more serious.</p></div></details>
+    <details class="pq N"><summary><span class="n">3</span><span>After an elbow injury, the little finger and half the ring finger are numb, and finger-spreading is weak.</span><span class="reveal">Show</span></summary>
+      <div class="ans"><span class="g">Network · which territory?</span><p>That exact sensory and muscle pattern is the territory of the ulnar nerve, which runs behind the elbow. The lesion is at the elbow, not in the hand.</p></div></details>
+    <details class="pq C"><summary><span class="n">4</span><span>Yellow skin and eyes, dark urine, pale stools. Ultrasound shows widened bile ducts inside the liver.</span><span class="reveal">Show</span></summary>
+      <div class="ans"><span class="g">Conduit · which station?</span><p>Ducts are swollen above a block, and pale stools mean bile isn't reaching the gut below it. Look at the common bile duct for a stone or a tumour.</p></div></details>
+    <details class="pq N"><summary><span class="n">5</span><span>A cold, pale left foot and calf. The femoral pulse at the groin is normal; there are no pulses below the knee.</span><span class="reveal">Show</span></summary>
+      <div class="ans"><span class="g">Network · which territory?</span><p>Normal above, missing below: the blocked branch sits between the groin and the knee, likely the femoral or popliteal artery. This is an emergency.</p></div></details>
+    <details class="pq L"><summary><span class="n">6</span><span>A painful bulge near an old abdominal surgery scar, worse when standing.</span><span class="reveal">Show</span></summary>
+      <div class="ans"><span class="g">Layers · which depth?</span><p>An incisional hernia: the skin healed, but the fascia underneath didn't hold. The repair is at the fascia.</p></div></details>
+  </div>
+</section>
 
-<table>
-  <thead>
-    <tr>
-      <th>Geometry</th>
-      <th>The diagnostic question</th>
-      <th>Find the lesion by</th>
-      <th>Treatment principle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Layers</strong></td>
-      <td>"Which depth?"</td>
-      <td>Going deeper until normal becomes abnormal.</td>
-      <td>Treat at the depth of the defect — not at the surface where the symptom appears.</td>
-    </tr>
-    <tr>
-      <td><strong>Conduits</strong></td>
-      <td>"Which station?"</td>
-      <td>Tracing upstream from where flow visibly stops.</td>
-      <td>Treat at the station where flow first failed — not at the upstream dilation or the silent exit.</td>
-    </tr>
-    <tr>
-      <td><strong>Networks</strong></td>
-      <td>"Which territory?"</td>
-      <td>Mapping what's missing; inferring the branch point upstream of it.</td>
-      <td>Treat the branch — sometimes by reopening it, sometimes by accepting the territory and supporting collaterals.</td>
-    </tr>
-  </tbody>
-</table>
+<section>
+  <h2>Where this model stops working</h2>
+  <ul class="limits">
+    <li><b>Whole-body problems.</b> Sepsis, diabetes, low sodium or a drug side effect don't live at one depth, station or branch. Use the usual approach for those.</li>
+    <li><b>It finds the place, not the cause.</b> Knowing the block is in the ureter doesn't tell you it's a stone rather than a tumour. That's the next step.</li>
+    <li><b>Organs mix shapes.</b> If one shape doesn't explain everything you see, try another, or two together.</li>
+    <li><b>It's a teaching frame.</b> Clinicians already localise this way, especially in neurology. This page just names the three patterns so they are easier to learn.</li>
+  </ul>
+</section>
 
-<!-- ============================================================ -->
-<h2>Combinations</h2>
+<section>
+  <h2>Words used on this page</h2>
+  <dl class="gloss">
+    <dt>Lesion</dt><dd>The spot where the structure is damaged or blocked.</dd>
+    <dt>Fascia</dt><dd>A tough sheet of connective tissue; the transversalis fascia lines the inside of the abdominal wall.</dd>
+    <dt>Hydronephrosis</dt><dd>A kidney swollen with urine that can't drain.</dd>
+    <dt>Ureter</dt><dd>The tube that carries urine from each kidney to the bladder.</dd>
+    <dt>Territory</dt><dd>The area of tissue that one artery or nerve branch supplies.</dd>
+    <dt>Collaterals</dt><dd>Back-up vessels that can take over some of a blocked branch's job.</dd>
+  </dl>
+</section>
 
-<p>Pure geometries are rare. Most organs are combinations. Recognizing the mix is part of the skill.</p>
+<section>
+  <h2>Where to go next</h2>
+  <p>This reference uses the urinary tract as its worked example of a conduit. Read <a href="The Urinary Tract.html">The Urinary Tract</a> next, then try the <a href="Urinary Interactive.html">Interactive Model</a> to watch back-pressure travel up the stations.</p>
+</section>
 
-<ul>
-  <li><strong>Kidney</strong> — a conduit at the macro level (it sits at the head of the urinary tract), but internally a layered network: glomerulus → tubule → collecting duct (layers of filtration physiology) supplied by a branching vasculature. Renal infarct is a network problem; nephrotic syndrome is a layer problem; obstruction at the UPJ is a conduit problem. <em>One organ, three geometries, three diagnostic moves.</em></li>
-  <li><strong>Skin</strong> — primarily layers (epidermis / dermis / subcutaneous), but vascularized by a branching network and drained by lymphatics. Cellulitis is mostly layer; lymphangitis is a network read; necrotizing fasciitis is layers <em>plus</em> a network catastrophe inside them.</li>
-  <li><strong>Lung</strong> — bronchial tree is a network of conduits ending in alveolar layers. Pneumonia is a layer problem at the alveolus; PE is a network problem at the pulmonary artery; mucus plugging is a conduit problem in a bronchus.</li>
-</ul>
-
-<div class="card card-teal">
-  <div class="label">The interview question</div>
-  <p style="margin:0;">When you don't know what to do, ask: <strong>"what geometry am I looking at, and what's the corresponding diagnostic question?"</strong> If you can answer that, the next test usually picks itself. If you can't, you don't understand the anatomy well enough to act yet — and the right move is to stop and figure that out, not to keep ordering things.</p>
-</div>
-
-<!-- ============================================================ -->
-<h2>How This Reference Is Organized</h2>
-
-<p>Each subsection of this reference covers one geometry and one specialty as its exemplar. Start with the foundational geometry doc, then read the specialty as a worked example of that pattern in clinical practice.</p>
-
-<table>
-  <thead>
-    <tr><th>Geometry</th><th>Specialty exemplar</th><th>What you'll learn there</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Layers</strong></td>
-      <td>The abdominal wall (in progress)</td>
-      <td>Hernia anatomy and the layer-by-layer diagnostic approach. The original case study.</td>
-    </tr>
-    <tr>
-      <td><strong>Conduits</strong></td>
-      <td><a href="The Urinary Tract.html">The urinary tract</a></td>
-      <td>Production → expulsion as a six-station pipeline. Obstruction, infection, malignancy, neurogenic failure — all framed as station-level lesions.</td>
-    </tr>
-    <tr>
-      <td><strong>Networks</strong></td>
-      <td>Vascular trees (planned)</td>
-      <td>Stroke, MI, peripheral arterial disease, deep vein thrombosis. Territory reading as the diagnostic skill.</td>
-    </tr>
-  </tbody>
-</table>
-
-<hr>
-
-<p style="text-align:center; color:var(--muted); font-size:13px; margin-top:40px;">
-  <a href="index.html" style="color: var(--muted); border-bottom: 1px dotted var(--muted); text-decoration: none;">← back to reference</a><br>
-  written May 24, 2026 · for PAs, medical students, and clinical clerks
-</p>
-
+<footer>Reworked October 28, 2026 · for PAs, medical students and clinical clerks · Clinical Geometry</footer>
 </div>
 <script src="nav.js" defer></script>
 </body>
