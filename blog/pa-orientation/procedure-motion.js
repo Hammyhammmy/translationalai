@@ -3,32 +3,18 @@
 // catheter, needle or irrigation moves along the anatomy, and the red options act
 // out the page's own "what goes wrong" warnings. Step wording mirrors the card text.
 // Respects prefers-reduced-motion (steps jump to their end state). No dependencies.
+// The loop, visibility, callouts, particles and test hook live in ../shared/motion/.
+import { REDUCE, mk, set, clamp, lerpRaw as lerp, easeInOut as ease, callouts, stream, nearestLen, onFrame, onVisible, injectCSS, testHook } from '../shared/motion/motion-core.js';
 
-const NS='http://www.w3.org/2000/svg';
 // the player being drawn right now (frames run one player at a time)
-let svg=null,COS={},RATE=null,cur=null;
-const mk=(t,a={},parent)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(parent)parent.appendChild(e);return e;};
-const set=(e,a)=>{for(const k in a)e.setAttribute(k,a[k]);};
-const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
-const lerp=(a,b,t)=>a+(b-a)*t;
-const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
-const REDUCE=(()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){return false;}})();
+let svg=null,RATE=null,cur=null;
 const URINE='#d99a1e';
 
-// pill callouts, reused per key
-function co(key,text,color,x,y){let g=COS[key];
-  if(!g||g._t!==text){if(g)g.remove();g=mk('g',{},svg);g._t=text;g._w=text.length*6.1+14;
-    mk('rect',{x:0,y:-11,width:g._w,height:20,rx:6,fill:color},g);const t=mk('text',{x:7,y:3,'font-size':11,'font-weight':700,fill:'#fff'},g);t.textContent=text;COS[key]=g;}
-  g._on=true;g.setAttribute('transform',`translate(${Math.max(4,Math.min(x,416-g._w))},${y})`);svg.appendChild(g);}
-function coBegin(){for(const k in COS)COS[k]._on=false;}
-function coEnd(){for(const k in COS)COS[k].style.display=COS[k]._on?'':'none';}
+// pill callouts, reused per key (kept above the drawing)
+const co=(...a)=>cur.C.co(...a), coBegin=()=>cur.C.begin(), coEnd=()=>cur.C.end();
 function label(x,y,t,anchor='start'){const e=mk('text',{x,y,'font-size':11,fill:'#78716c','text-anchor':anchor},svg);e.textContent=t;return e;}
 // particles that ride a path
-function flow(path,n,color,r=2.8){const g=mk('g',{},svg);const L=path.getTotalLength();
-  const ps=Array.from({length:n},(_,i)=>({t:i/n,el:mk('circle',{r,fill:color,stroke:'#fff','stroke-width':1},g)}));
-  return{g,L,ps,step(dt,speed,vis=true,col){g.style.display=vis?'':'none';ps.forEach(p=>{p.t=(p.t+speed*dt/L*60)%1;if(p.t<0)p.t+=1;
-    const q=path.getPointAtLength(p.t*L);set(p.el,{cx:q.x,cy:q.y});if(col)p.el.setAttribute('fill',col);});}};}
-function nearestLen(path,x,y){const L=path.getTotalLength();let best=0,bd=1e9;for(let s=0;s<=L;s+=1){const q=path.getPointAtLength(s);const d=(q.x-x)**2+(q.y-y)**2;if(d<bd){bd=d;best=s;}}return best;}
+const flow=(path,n,color,r)=>stream(svg,path,n,color,r);
 
 // ---------- shared sagittal pelvis (patient facing left) ----------
 function pelvis(o){
@@ -354,13 +340,13 @@ const CULTURE={label:'Urine culture',title:'Urine collection for culture',
       o.syrFill=mk('rect',{x:2,y:-6,width:0,height:12,fill:URINE},o.syr);
       o.syrBugs=[0,1,2].map(k=>mk('rect',{x:10+k*16,y:-2,width:7,height:3,rx:1.5,fill:'#15803d',style:'display:none'},o.syr));
     }},
-  frame(o,v,i,p,dt){coBegin();
+  frame(o,v,i,p,dt){coBegin();o.T=(o.T||0)+dt; // engine time: stops when paused or off screen
     if(v==='midstream'||v==='firstvoid'){const first=v==='firstvoid';
       // stream runs the whole time; bacteria ride the first part
       o.drops.step(dt,3,!(v==='midstream'&&i===3));
       const flush=(i===0)||(first&&i<=1);
       o.bugs.forEach((b,k)=>{const show=flush&&!(v==='midstream'&&i>0);b.style.display=show?'':'none';
-        const t=((performance.now()/1000*0.9)+k/6)%1;set(b,{x:206+((k%2)?6:-8),y:60+t*300});});
+        const t=((o.T*0.9)+k/6)%1;set(b,{x:206+((k%2)?6:-8),y:60+t*300});});
       // cup position: under the stream only when collecting
       const inStream=first?1:(i===1?ease(p):i===2?1-ease(p)*.0:0);
       const cx=first?210:(i===0?340:i===1?lerp(340,210,ease(p)):i===2?lerp(210,340,ease(p)):340),cy=first?300:300;
@@ -387,7 +373,7 @@ const CULTURE={label:'Urine culture',title:'Urine collection for culture',
 
 const PROCS={foley:FOLEY,spa:SPA,cbi:CBI,stoma:STOMA,culture:CULTURE};
 const STEP_S=2.4,players=[];
-function use(pl){cur=pl;svg=pl.svg;COS=pl.COS;RATE=pl.rate;}
+function use(pl){cur=pl;svg=pl.svg;RATE=pl.rate;}
 
 const CSS=`
 .pm{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;padding:14px 20px 4px;border-bottom:1px solid var(--border)}
@@ -423,8 +409,8 @@ function mount(host){const id=host.dataset.proc,P=PROCS[id];if(!P)return;
     <div class="pm-rate" hidden><span>Irrigation rate</span><input type="range" min="0" max="100" value="45" aria-label="Irrigation rate"><span class="pm-ratetxt"></span></div>
     <div class="pm-note" aria-live="polite"></div></div>`;
   const q=s=>host.querySelector(s);
-  const pl={P,host,svg:q('svg'),COS:{},rate:q('input'),rateTxt:q('.pm-ratetxt'),v:P.vars[0][0],idx:0,prog:0,playing:false,hold:0,obj:{},visible:true};
-  pl.build=()=>{use(pl);pl.svg.innerHTML='';pl.COS={};COS=pl.COS;pl.obj={};P.build(pl.obj,pl.v);};
+  const pl={P,host,svg:q('svg'),C:null,rate:q('input'),rateTxt:q('.pm-ratetxt'),v:P.vars[0][0],idx:0,prog:0,playing:false,hold:0,obj:{},visible:true};
+  pl.build=()=>{pl.svg.innerHTML='';pl.C=callouts(pl.svg,{maxX:416,raise:true});use(pl);pl.obj={};P.build(pl.obj,pl.v);};
   pl.side=()=>{const vb=q('.pm-vars');vb.innerHTML='';
     P.vars.forEach(([vid,lab,bad])=>{const b=document.createElement('button');b.textContent=lab;if(bad)b.className='bad';b.setAttribute('aria-pressed',String(vid===pl.v));b.onclick=()=>{pl.v=vid;pl.build();pl.side();pl.go(0);};vb.appendChild(b);});
     const n=P.note(pl.v),ne=q('.pm-note');ne.className='pm-note'+(n&&n[0]==='stop'?' stop':'');ne.textContent=n?n[1]:'';
@@ -442,20 +428,17 @@ function mount(host){const id=host.dataset.proc,P=PROCS[id];if(!P)return;
   pl.build();pl.side();pl.go(0);
   players.push(pl);return pl;}
 
-function start(){const st=document.createElement('style');st.textContent=CSS;document.head.appendChild(st);
+function start(){injectCSS('procedure-player',CSS);
   document.querySelectorAll('[data-proc]').forEach(mount);
   // only animate players on screen
-  if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{const pl=players.find(p=>p.host===e.target);if(pl)pl.visible=e.isIntersecting;}));players.forEach(p=>io.observe(p.host));}
-  let last=0;
-  const loop=ts=>{const dt=Math.min((ts-last)/1000,.05)||.016;last=ts;
+  players.forEach(p=>onVisible(p.host,v=>{p.visible=v;}));
+  onFrame(dt=>{
     for(const pl of players){if(!pl.visible)continue;use(pl);
       if(pl.prog<1)pl.prog=Math.min(1,pl.prog+dt/STEP_S);
       else if(pl.playing){pl.hold+=dt;if(pl.hold>1.1){const n=pl.P.steps(pl.v).length;if(pl.idx<n-1)pl.go(pl.idx+1);else pl.setPlaying(false);}}
-      pl.P.frame(pl.obj,pl.v,pl.idx,pl.prog,dt);}
-    requestAnimationFrame(loop);};
-  requestAnimationFrame(loop);
-  // test hook: #pm-<proc>-<variant>-<step> jumps that player to an end state and scrolls to it
-  const m=location.hash.match(/^#pm-(\w+)-(\w+)-(\d+)$/);
-  if(m){const pl=players.find(p=>p.host.dataset.proc===m[1]);if(pl){if(pl.P.vars.some(x=>x[0]===m[2])){pl.v=m[2];pl.build();pl.side();}pl.go(+m[3]);pl.prog=1;pl.host.scrollIntoView();}}
+      pl.P.frame(pl.obj,pl.v,pl.idx,pl.prog,dt);}});
+  // test hook: ?m=<proc>-<variant>-<step> jumps that player to the end of that step
+  const h=testHook();
+  if(h){const pl=players.find(p=>p.host.dataset.proc===h.key);if(pl){const[v,k]=h.args;if(pl.P.vars.some(x=>x[0]===v)){pl.v=v;pl.build();pl.side();}pl.go(+k||0);pl.prog=1;if(!h.noscroll)pl.host.scrollIntoView();}}
 }
 start();

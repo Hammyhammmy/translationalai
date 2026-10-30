@@ -2,25 +2,20 @@
 // becomes a small step-by-step player that sits beside the consult it teaches.
 // Same drawing language as the Interactive model (kidneys, ureters, bladder, pill callouts).
 // Clinical numbers in captions come only from the Consults page's own text.
-// No libraries. prefers-reduced-motion → paused on the most instructive frame.
-const NS='http://www.w3.org/2000/svg';
+// The loop, visibility, reduced motion, controls and test hook live in ../shared/motion/.
+import { kit, callouts, C01, lerp, smooth as ease, mix } from '../shared/motion/motion-core.js';
+import { mountStepPlayers } from '../shared/motion/motion-player.js';
+import { KIDNEY_R, KIDNEY_L, URETER_R, URETER_L, GEO, bladderSize } from '../shared/motion/anatomy.js';
 
 // One closure per player, so the six players never share state or element ids.
 function makeScenario(id,pre){
-  const $=id=>document.getElementById(pre+id);
-  const mk=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
-  const S=(id,a)=>{const e=typeof id==='string'?$(id):id;if(!e)return;for(const k in a)e.setAttribute(k,a[k]);};
-  const show=(id,on)=>{const e=$(id);if(e)e.style.display=on?'':'none';};
-  const C01=t=>Math.max(0,Math.min(1,t)), lerp=(a,b,t)=>a+(b-a)*C01(t), ease=t=>{t=C01(t);return t*t*(3-2*t);};
-  const hex=c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16));
-  const mix=(a,b,t)=>{const A=hex(a),B=hex(b);return'#'+A.map((v,i)=>Math.round(v+(B[i]-v)*C01(t)).toString(16).padStart(2,'0')).join('');};
+  const {$,S,show,path,at,parts,place,flow}=kit(pre);
+  let C=null;const pills=()=>C||(C=callouts($('co')));
+  const co=(...a)=>pills().co(...a), coBegin=()=>pills().begin(), coEnd=()=>pills().end();
   const URINE='#d99a1e',BLOOD='#b91c1c',PUS='#8a9a2c',ABX='#2563eb',SALINE='#38bdf8';
 
   // ---- shared pieces ----
-  const KID_A="M100,76 C68,76 54,110 54,142 C54,178 70,208 102,208 C128,208 144,192 142,176 C140,164 128,156 128,142 C128,128 140,120 142,108 C144,90 128,76 100,76 Z";
-  const KID_B="M300,76 C332,76 346,110 346,142 C346,178 330,208 298,208 C272,208 256,192 258,176 C260,164 272,156 272,142 C272,128 260,120 258,108 C256,90 272,76 300,76 Z";
-  const UR_A="M128,156 C146,232 136,300 148,360 C154,400 166,436 184,466";
-  const UR_B="M272,156 C254,232 264,300 252,360 C246,400 234,436 216,466";
+  const KID_A=KIDNEY_R,KID_B=KIDNEY_L,UR_A=URETER_R,UR_B=URETER_L;
   function tract(){return `
   <path d="${KID_A}" fill="#e9c3b8" stroke="#b9786a" stroke-width="2"/>
   <path id="kidB" d="${KID_B}" fill="#e9c3b8" stroke="#b9786a" stroke-width="2"/>
@@ -37,25 +32,9 @@ function makeScenario(id,pre){
   <rect x="196.5" y="508" width="7" height="108" rx="3.5" fill="#efe3c2" stroke="#b8a77c"/>
   <rect x="183" y="553" width="17" height="9" rx="3" fill="#7c3aed"/><rect x="200" y="553" width="17" height="9" rx="3" fill="#7c3aed"/>
   <g font-size="11" fill="#78716c"><text x="100" y="64" text-anchor="middle">right kidney</text><text x="300" y="64" text-anchor="middle">left kidney</text><text x="66" y="486">bladder</text></g>`;}
-  function bladder(f,opt={}){const ry=26+38*f,rx=38+40*f,cy=508-ry;S('bl',{rx,ry,cy,fill:opt.fill||'#f2d675',stroke:opt.stroke||'#c97a6a','stroke-width':opt.w||5});return{rx,ry,cy};}
+  function bladder(f,opt={}){const {ry,rx}=bladderSize(f),cy=GEO.male.neck-ry;S('bl',{rx,ry,cy,fill:opt.fill||'#f2d675',stroke:opt.stroke||'#c97a6a','stroke-width':opt.w||5});return{rx,ry,cy};}
   function dilate(a,b,cutB=null){S('pelA',{rx:9+13*a,ry:12+16*a});S('pelB',{rx:9+13*b,ry:12+16*b});
     S('dilA',{opacity:a>.05?1:0,'stroke-width':5+6*a});const L=path('urB').L;S('dilB',{opacity:b>.05?1:0,'stroke-width':5+6*b,'stroke-dasharray':cutB==null?`${L} 0`:`${cutB*L} ${2*L}`});}
-  function parts(gid,n,fill,r=3){const g=$(gid);return Array.from({length:n},(_,i)=>{const c=mk('circle',{r,fill,stroke:'#fff','stroke-width':1});g.appendChild(c);return{el:c,t:i/n,i};});}
-  const P={};function path(id){if(!P[id]){const e=$(id);P[id]={e,L:e.getTotalLength()};}return P[id];}
-  function at(id,t){const p=path(id);const q=p.e.getPointAtLength(C01(t)*p.L);return[q.x,q.y];}
-  function place(pt,xy,vis=true,fill){pt.el.setAttribute('cx',xy[0]);pt.el.setAttribute('cy',xy[1]);pt.el.style.display=vis?'':'none';if(fill)pt.el.setAttribute('fill',fill);}
-  // flow particles along a path; cap = stop point (they queue behind it)
-  function flow(arr,id,dt,speed,{cap=null,vis=true,fill=null,rev=false}={}){arr.forEach(p=>{
-    p.t+=speed*dt;if(cap!=null){const c=cap-.03-.028*(p.i%6);if(p.t>c)p.t=Math.max(0,c);}else if(p.t>=1)p.t-=1;
-    place(p,at(id,rev?1-p.t:p.t),vis,fill);});}
-  // callout pills, pooled
-  const CO={};
-  function co(key,text,color,x,y){let g=CO[key];
-    if(!g||g._t!==text){if(g)g.remove();g=mk('g');g._t=text;g._w=text.length*6.1+14;
-      g.append(mk('rect',{x:0,y:-11,width:g._w,height:20,rx:6,fill:color}));
-      const t=mk('text',{x:7,y:3,'font-size':11,'font-weight':700,fill:'#fff'});t.textContent=text;g.append(t);$('co').append(g);CO[key]=g;}
-    g._on=true;g.setAttribute('transform',`translate(${Math.max(4,Math.min(x,396-g._w))},${y})`);}
-  const coBegin=()=>{for(const k in CO)CO[k]._on=false;}, coEnd=()=>{for(const k in CO)CO[k].style.display=CO[k]._on?'':'none';};
 
   // ---------------- scenarios ----------------
   const SC={};
@@ -345,57 +324,5 @@ function makeScenario(id,pre){
   return SC[id];
 }
 
-const prefixIds=(html,pre)=>html.replace(/id="([^"]+)"/g,`id="${pre}$1"`).replace(/url\(#([^)]+)\)/g,`url(#${pre}$1)`);
 
-const CSS=`
-.cmotion{border:1px solid var(--border);border-radius:12px;background:var(--bg);margin:6px 0 18px;padding:12px;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:16px;align-items:start}
-.cmotion svg{display:block;width:100%;height:auto;background:#fff;border-radius:10px}
-.cm-side{display:flex;flex-direction:column;gap:10px;min-width:0}
-.cm-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.cm-k{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.cm-play{margin-left:auto;font:inherit;font-size:12px;border:1px solid var(--border);background:var(--card);border-radius:7px;padding:3px 10px;cursor:pointer;color:var(--text)}
-.cm-steps{display:flex;flex-wrap:wrap;gap:6px}
-.cm-steps button{font:inherit;font-size:12px;line-height:1.4;border:1px solid var(--border);background:var(--card);border-radius:7px;padding:4px 9px;cursor:pointer;color:var(--text);text-align:left}
-.cm-steps button[aria-current="true"]{background:var(--accent-light);border-color:var(--accent);color:var(--accent);font-weight:600}
-.cm-cap{font-size:14px;line-height:1.55;min-height:3.2em}
-.cm-cap b{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-@media(max-width:640px){.cmotion{grid-template-columns:1fr}.cmotion svg{max-width:340px;margin:0 auto}}
-`;
-
-let REDUCE=false;try{REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
-
-function mount(host,n){
-  const pre='cm'+n+'-',cur=makeScenario(host.dataset.scenario,pre);if(!cur)return;
-  host.innerHTML=`<svg viewBox="0 0 400 680" role="img" aria-label="Animation: ${cur.title.replace(/^\d+\.\s*/,'')}">${prefixIds(cur.build()+'<g id="co"></g>',pre)}</svg>
-    <div class="cm-side"><div class="cm-top"><span class="cm-k">Watch it happen</span><button class="cm-play">Pause</button></div>
-    <div class="cm-steps">${cur.steps.map((s,i)=>`<button data-i="${i}">${i+1}. ${s.n}</button>`).join('')}</div>
-    <div class="cm-cap" aria-live="polite"></div></div>`;
-  cur.init();
-  const playBtn=host.querySelector('.cm-play'),cap=host.querySelector('.cm-cap'),btns=[...host.querySelectorAll('.cm-steps button')];
-  let k=0,st=0,T=0,playing=false,userPaused=REDUCE,visible=false,done=false;
-  const caption=()=>{cap.innerHTML=`<b>Step ${k+1} of ${cur.steps.length}</b>${cur.steps[k].c}`;btns.forEach((b,i)=>b.setAttribute('aria-current',String(i===k)));};
-  const frame=(dt,force)=>{T+=dt;if(playing||force){st+=dt;const d=cur.steps[k].d;
-    if(st>d&&!force){if(k<cur.steps.length-1){k++;st=0;caption();}else{st=d;done=true;setPlay(false);}}}
-    cur.draw({k,st,dt,T});};
-  const jump=(i,sec)=>{k=Math.max(0,Math.min(i,cur.steps.length-1));st=0;done=false;const m=Math.round(sec*30);for(let j=0;j<m;j++)frame(1/30,true);frame(0,true);caption();};
-  const setPlay=on=>{playing=on;playBtn.textContent=on?'Pause':(done?'Replay':'Play');};
-  const want=()=>setPlay(visible&&!userPaused&&!done);
-  playBtn.onclick=()=>{if(done){jump(0,0);userPaused=false;setPlay(true);}else if(playing){userPaused=true;setPlay(false);}else{userPaused=false;setPlay(true);}};
-  btns.forEach(b=>b.onclick=()=>{jump(+b.dataset.i,0);userPaused=REDUCE;if(!REDUCE)setPlay(true);});
-  if(REDUCE)jump(cur.poster[0],cur.poster[1]);else jump(0,0);
-  // only animate while on screen
-  if('IntersectionObserver' in window)new IntersectionObserver(es=>{visible=es[0].isIntersecting;want();},{threshold:.35}).observe(host);
-  else{visible=true;want();}
-  let last=0;const loop=ts=>{const dt=Math.min((ts-last)/1000,.05)||.016;last=ts;if(playing)frame(dt);requestAnimationFrame(loop);};
-  requestAnimationFrame(loop);
-  return{jump,host,pause(){userPaused=true;setPlay(false);}};
-}
-
-const hosts=[...document.querySelectorAll('.cmotion[data-scenario]')];
-if(hosts.length){const st=document.createElement('style');st.textContent=CSS;document.head.appendChild(st);}
-const players=hosts.map((h,i)=>mount(h,i));
-// test hook: ?cm=scenario-step-seconds → jump that player, pause it, scroll it into view
-const q=new URLSearchParams(location.search).get('cm');
-if(q){const[sc,s,sec]=q.split('-');const p=players.find(p=>p&&p.host.dataset.scenario===sc);
-  if(p){p.jump(+s||0,+(sec||0));p.pause();p.host.dataset.top=Math.round(p.host.getBoundingClientRect().top+scrollY);
-    if(!new URLSearchParams(location.search).has('noscroll'))p.host.scrollIntoView({block:'start'});}}
+mountStepPlayers({selector:'.cmotion[data-scenario]',keyAttr:'scenario',makeScene:makeScenario,prefix:'cm',viewBox:'0 0 400 680'});

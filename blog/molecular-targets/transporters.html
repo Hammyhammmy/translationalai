@@ -472,7 +472,9 @@
 
 </div>
 
-<script>
+<script type="module">
+// The loop, visibility, reduced motion and test hook live in ../shared/motion/.
+import { REDUCE, C01, easeInOut, onFrame, onVisible, testHook } from '../shared/motion/motion-core.js';
 /* ---------- ion glyph helper ---------- */
 const C = {na:'#9c3318',k:'#2f6b6b',glu:'#b07d12',ca:'#6b4a8a',cl:'#4a7a4a',h:'#5a5248',ink:'#2a2520',block:'#b3261e',terra:'#9c3318',muted:'#6b6256'};
 
@@ -786,7 +788,6 @@ const PILE={
   7:{ions:[C.ca],from:'above',ox:85},                // L-type channel: Ca²⁺ stays outside (beside the door, clear of the header)
   8:{ions:[C.na],from:'below'}                       // digoxin: Na⁺ builds up inside
 };
-const REDUCE=(()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){return false;}})();
 function addMotion(svg,panel,mode){
   const g=svgEl('g',{'pointer-events':'none'});svg.appendChild(g);
   // labels stay on top of the moving ions, with a soft halo so they read over them
@@ -808,17 +809,15 @@ function drawMotion(svg,dt){svg._t=(svg._t||0)+dt;const T=svg._t;
     if(p.kind==='flow'){const t=REDUCE?(p.ph*.8+.1):(T*.42+p.ph)%1,tr=p.tr;
       p.c.setAttribute('cx',tr.x1+(tr.x2-tr.x1)*t);p.c.setAttribute('cy',tr.y1+(tr.y2-tr.y1)*t);
       p.c.setAttribute('opacity',REDUCE?1:Math.min(1,t*6,(1-t)*6));}
-    else{const cyc=REDUCE?2:((T-p.ph)%5+5)%5,u=Math.max(0,Math.min(1,cyc/1.2)),e=u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;
+    else{const cyc=REDUCE?2:((T-p.ph)%5+5)%5,u=C01(cyc/1.2),e=easeInOut(u);
       const jig=REDUCE?0:(u>=1?Math.sin(T*9+p.ph*20)*1.2:0);
       p.c.setAttribute('cx',p.x+jig);p.c.setAttribute('cy',p.y0+(p.y1-p.y0)*e);
       p.c.setAttribute('opacity',REDUCE?1:Math.min(1,cyc*4,(5-cyc)*3));}}
 }
 // animate only the diagrams on screen
 const onScreen=new Set();
-if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{const s=e.target.querySelector('svg');if(e.isIntersecting)onScreen.add(s);else onScreen.delete(s);}));
-  document.querySelectorAll('.stage').forEach(st=>io.observe(st));}
-else document.querySelectorAll('.stage svg').forEach(s=>onScreen.add(s));
-if(!REDUCE){let last=0;const loop=ts=>{const dt=Math.min((ts-last)/1000,.05)||.016;last=ts;onScreen.forEach(s=>drawMotion(s,dt));requestAnimationFrame(loop);};requestAnimationFrame(loop);}
+document.querySelectorAll('.stage').forEach(st=>onVisible(st,on=>{const s=st.querySelector('svg');if(on)onScreen.add(s);else onScreen.delete(s);}));
+if(!REDUCE)onFrame(dt=>onScreen.forEach(s=>drawMotion(s,dt)));
 
 /* ============================================================
    WIRE UP
@@ -846,8 +845,9 @@ document.querySelectorAll('.toggle button').forEach(btn=>{
 });
 // initial render
 for(let i=1;i<=8;i++) render(i,'native');
-// test hook: #all-drug shows every diagram with its drug on
-if(location.hash==='#all-drug')for(let i=1;i<=8;i++) render(i,'drug');
+// test hook: ?m=all-drug shows every diagram with its drug on
+const hook=testHook();
+if(hook&&hook.key==='all'&&hook.args[0]==='drug')for(let i=1;i<=8;i++) render(i,'drug');
 </script>
 <script src="nav.js" defer></script>
 </body>
