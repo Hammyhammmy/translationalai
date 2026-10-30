@@ -5,6 +5,8 @@
 // The loop, visibility, reduced motion, controls and test hook live in ../shared/motion/.
 import { kit, callouts, C01, lerp, smooth as ease, mix } from '../shared/motion/motion-core.js';
 import { mountStepPlayers } from '../shared/motion/motion-player.js';
+import { targetTags } from '../shared/motion/target-tags.js';
+import { TARGETS } from './targets.js';
 import { KIDNEY_R, KIDNEY_L, URETER_R, URETER_L, GEO, bladderSize } from '../shared/motion/anatomy.js';
 
 // One closure per player, so the six players never share state or element ids.
@@ -12,6 +14,8 @@ function makeScenario(id,pre){
   const {$,S,show,path,at,parts,place,flow}=kit(pre);
   let C=null;const pills=()=>C||(C=callouts($('co')));
   const co=(...a)=>pills().co(...a), coBegin=()=>pills().begin(), coEnd=()=>pills().end();
+  // receptor tags (targets.js), drawn where a step starts a drug
+  let RX=null;const tagsAt=st=>{if(!RX)RX=targetTags($('rx'),TARGETS);RX.update(st);};
   const URINE='#d99a1e',BLOOD='#b91c1c',PUS='#8a9a2c',ABX='#2563eb',SALINE='#38bdf8';
 
   // ---- shared pieces ----
@@ -57,7 +61,7 @@ function makeScenario(id,pre){
       <circle id="ball" cx="200" cy="496" r="0" fill="#93c5fd" stroke="#2563eb" stroke-width="1.5"/>
       <g id="bag"><rect x="290" y="560" width="58" height="76" rx="8" fill="#fff" stroke="#94a3b8" stroke-width="2"/><rect id="bagf" x="292" y="634" width="54" height="0" rx="6" fill="#f2d675"/><text x="319" y="654" text-anchor="middle" font-size="11" fill="#78716c">bag</text></g>
       <g id="probe"><path id="fan" d="M200,0 L150,70 Q200,90 250,70 Z" fill="#93c5fd" opacity=".35"/><rect x="186" y="-18" width="28" height="20" rx="5" fill="#475569"/></g>
-      <g id="pD"></g><text x="230" y="534" font-size="11" fill="#78716c">prostate</text>`;},
+      <g id="pD"></g><text x="230" y="534" font-size="11" fill="#78716c">prostate</text><g id="rx"></g>`;},
     init(){this.a=parts('pA',9,URINE);this.b=parts('pB',9,URINE);this.dr=parts('pD',10,URINE);},
     draw({k,st,dt,T}){let f,dil,cath=0,ball=0,drain=0,surge=false,bag=0;
       if(k===0){f=lerp(.7,1.3,st/4);dil=lerp(0,.8,(st-1)/3);}
@@ -75,7 +79,8 @@ function makeScenario(id,pre){
       if(k===0){co('a','can\'t pee','#b45309',8,cy-ry-16);if(dil>.5)co('b','back-pressure on both kidneys','#b45309',150,232);}
       if(k===1)co('s',`scan: ${ml} mL · over 300 = retention`,'#2563eb',8,cy-ry-62);
       if(k===2)co('f','Foley drains it first','#2563eb',214,600);
-      if(k===3){co('d','urine surges: post-obstructive diuresis','#b45309',8,260);co('t','start tamsulosin','#16a34a',8,300);}
+      if(k===3){co('d','urine surges: post-obstructive diuresis','#b45309',8,260);co('t','tamsulosin blocks α1A','#16a34a',8,556);}
+      tagsAt(k===3?{A1A:{x:128,y:524,to:[[189,509],[174,530]],lit:true,focus:true}}:{});
       coEnd();}};
 
   // 2. Renal colic

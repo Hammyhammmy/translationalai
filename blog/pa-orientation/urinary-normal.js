@@ -2,7 +2,9 @@
 // written at teaching depth — enough to talk a student through each structure with the
 // "why", with a `pearls` summary. `molecules` is the physiology→pharmacology bridge:
 // each key molecule + the drug class that targets it, so normal physiology previews
-// treatment. DRAFT — pending clinician review. Not medical advice.
+// treatment. Receptor and enzyme rows come from targets.js (one source with the figure's
+// tags). DRAFT — pending clinician review. Not medical advice.
+import { moleculeRow } from './targets.js';
 
 export const NORMAL_TEACH = {
   overview: {
@@ -74,7 +76,8 @@ export const NORMAL_TEACH = {
     anatomy: '25–30 cm muscular tubes carrying urine from the renal pelvis down to the bladder. They have three natural narrowings — the pelvi-ureteric junction (PUJ) where the pelvis becomes ureter, the pelvic brim where the ureter crosses the iliac vessels, and the vesico-ureteric junction (VUJ) where it enters the bladder. These are the three classic points where stones lodge, because a stone travels until the lumen narrows below its diameter.',
     physiology: 'Urine does not just fall down the ureter — smooth-muscle PERISTALSIS actively propels it in waves, one-way, even against gravity. At the bladder the ureter runs obliquely through the muscular wall, so that as the bladder fills and its pressure rises, the wall pinches the tunnel shut: a FLAP-VALVE that prevents reflux of urine back toward the kidney. A stone stretching the ureter triggers intense peristaltic spasm — the colicky, loin-to-groin pain — and the back-pressure of obstruction is what endangers the kidney behind it.',
     molecules: [
-      { target: 'Ureteric smooth muscle (Ca channels, prostaglandins)', action: 'peristalsis; spasm causes colic pain', drug: 'NSAIDs (reduce pressure/pain); α1 blockers (expulsive therapy)' },
+      { target: 'Ureteric smooth muscle (Ca channels, prostaglandins)', action: 'peristalsis; spasm causes colic pain', drug: 'NSAIDs (reduce pressure/pain)' },
+      moleculeRow('A1D'),
     ],
     pearls: [
       'Three narrowings (PUJ, pelvic brim, VUJ) are the classic stone-arrest points.',
@@ -94,8 +97,8 @@ export const NORMAL_TEACH = {
     anatomy: 'A hollow, distensible muscular reservoir. Its wall is the DETRUSOR — smooth muscle whose fibres interweave in all directions so it can squeeze the bladder down to empty completely — lined inside by a specialised, impermeable UROTHELIUM that protects underlying tissue from urine. On the floor is the TRIGONE, a smooth triangular area between the two ureteric orifices and the bladder neck; it is sensory-rich and developmentally distinct from the rest of the bladder.',
     physiology: 'The bladder has two opposite jobs, and does them one at a time. Storing: it accommodates ~400–500 mL while keeping pressure LOW — this COMPLIANCE (the wall relaxing as volume rises) is the key property, because if storage pressure stays high it back-pressures the ureters and kidneys and causes upper-tract damage. Emptying: when socially appropriate, the detrusor contracts as a coordinated unit to expel urine under voluntary control. Much of bladder disease is a failure of one of these two modes — an overactive detrusor that contracts during storage (urgency), or a bladder that cannot generate or sustain the emptying contraction (retention).',
     molecules: [
-      { target: 'M3 muscarinic (detrusor)', action: 'detrusor contraction', drug: 'antimuscarinics (oxybutynin, solifenacin) — overactive bladder' },
-      { target: 'β3 adrenergic (detrusor)', action: 'detrusor relaxation during storage', drug: 'β3 agonist (mirabegron) — overactive bladder' },
+      moleculeRow('M3'),
+      moleculeRow('B3'),
     ],
     pearls: [
       'Two jobs in alternation: low-pressure storage and complete, voluntary emptying.',
@@ -115,8 +118,8 @@ export const NORMAL_TEACH = {
     anatomy: 'Continence depends on two sphincters in series. The INTERNAL urethral sphincter is smooth muscle at the bladder neck — involuntary, under autonomic control. The EXTERNAL urethral sphincter is striated muscle around the membranous urethra — voluntary, under somatic control via the pudendal nerve. Their on/off coordination is orchestrated by the PONTINE MICTURITION CENTRE in the brainstem, which acts as the master switch flipping the system between storage and voiding.',
     physiology: 'The clean way to learn it is two opposing modes. STORAGE is sympathetic (T10–L2): the detrusor is relaxed (β3), the internal sphincter is held closed (α1), and the external sphincter keeps a tonic voluntary squeeze — bladder open to fill, outlet shut. VOIDING is parasympathetic (S2–S4): the detrusor contracts (M3) AND the sphincters relax, simultaneously — squeeze the bladder, open the outlet. The two must be coordinated: if the sphincter contracts while the detrusor contracts (detrusor-sphincter DYSSYNERGIA, e.g. in spinal cord injury) you get high pressure with no flow — the dangerous combination that back-pressures the kidneys.',
     molecules: [
-      { target: 'α1 adrenergic (bladder neck, prostate)', action: 'smooth-muscle contraction (outlet/continence)', drug: 'α1 blockers (tamsulosin) — relax the outlet in BPH/retention' },
-      { target: 'Pudendal/nicotinic (external sphincter)', action: 'voluntary striated tone', drug: 'pelvic-floor training (not pharmacological)' },
+      moleculeRow('A1A'),
+      moleculeRow('N'),
     ],
     pearls: [
       'Internal sphincter = smooth/involuntary (α1); external = striated/voluntary (pudendal nerve).',
@@ -136,9 +139,9 @@ export const NORMAL_TEACH = {
     anatomy: 'The urethra is the final exit conduit carrying urine out of the bladder — short in women, long in men where it runs through three regions, the first of which is the PROSTATIC urethra encircled by the prostate gland. The prostate sits just below the bladder neck and completely surrounds this segment, which is exactly why prostate enlargement strangles urine flow.',
     physiology: 'The prostate is a sex-accessory gland that adds fluid to semen, and its growth is driven by androgens — testosterone converted to the more potent DHT by 5α-reductase. With age, benign growth (BPH) and smooth-muscle tone narrow the prostatic urethra, obstructing flow and producing lower-urinary-tract symptoms (weak stream, hesitancy, incomplete emptying). The urethra simply conducts urine out, but because it is the last segment, obstruction HERE raises pressure through the entire tract behind it — bladder, ureters and ultimately the kidneys — so it is treated seriously. Treatment logically attacks both components of obstruction: the static (glandular bulk, shrunk by blocking DHT) and the dynamic (smooth-muscle tone, relaxed by α1 blockade).',
     molecules: [
-      { target: '5α-reductase (testosterone → DHT, prostate)', action: 'drives prostate growth', drug: '5α-reductase inhibitors (finasteride) — shrink the prostate' },
-      { target: 'α1 adrenergic (prostatic smooth muscle)', action: 'prostatic urethra tone', drug: 'α1 blockers (tamsulosin)' },
-      { target: 'PDE5 (NO/cGMP, smooth muscle)', action: 'smooth-muscle relaxation', drug: 'PDE5 inhibitors (tadalafil) — LUTS/ED' },
+      moleculeRow('AR5'),
+      moleculeRow('A1A'),
+      moleculeRow('PDE5'),
     ],
     pearls: [
       'The prostate encircles the prostatic urethra — so BPH directly obstructs flow.',

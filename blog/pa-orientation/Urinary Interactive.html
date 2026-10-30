@@ -118,6 +118,8 @@
   ul.steps li::before{content:counter(s);position:absolute;left:0;top:3px;width:18px;height:18px;border-radius:50%;background:var(--code-bg);border:1px solid var(--border);font-family:var(--mono);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;color:var(--muted)}
   ul.flags{margin:0;padding-left:18px}ul.flags li{font-size:13.5px;line-height:1.5;color:var(--red);margin-bottom:3px}
   .mol{font-size:13px;line-height:1.5;margin-bottom:6px}.mol .t{font-weight:700}.mol .d{color:var(--accent)}
+  .mol .mtag{display:inline-block;min-width:30px;text-align:center;color:#fff;border-radius:5px;padding:0 5px;font-size:11px;margin-right:4px}
+  .fightoggle[aria-pressed="true"]{color:var(--text);border-color:var(--text)}
   .tx{display:grid;grid-template-columns:128px 1fr;gap:10px;font-size:13.5px;line-height:1.5;margin-bottom:7px}
   .tx .k{font-weight:700;color:var(--text)}.tx .k .dr{display:block;font-weight:500;color:var(--accent);font-size:12.5px}
   .wrow{display:grid;grid-template-columns:74px 1fr;gap:10px;margin-bottom:7px;font-size:13.5px;line-height:1.5}.wrow .wk{font-weight:700}
@@ -183,7 +185,7 @@
   <div class="nav" id="nav"></div>
   <div class="main">
     <div class="figure" id="figure">
-      <div class="figbar"><span class="figcap" id="cap">normal flow</span><span class="figtools"><span class="sexsw" role="group" aria-label="Anatomy"><button id="sexF" aria-pressed="false">Female</button><button id="sexM" aria-pressed="true">Male</button></span><button class="fightoggle" id="figplay">Pause</button><button class="fightoggle" id="figplate" hidden>Textbook plate</button><button class="fightoggle" id="figtoggle">Hide</button></span></div>
+      <div class="figbar"><span class="figcap" id="cap">normal flow</span><span class="figtools"><span class="sexsw" role="group" aria-label="Anatomy"><button id="sexF" aria-pressed="false">Female</button><button id="sexM" aria-pressed="true">Male</button></span><button class="fightoggle" id="figrx" aria-pressed="true" title="Show where each nerve acts, and the drugs that target it">Receptors</button><button class="fightoggle" id="figplay">Pause</button><button class="fightoggle" id="figplate" hidden>Textbook plate</button><button class="fightoggle" id="figtoggle">Hide</button></span></div>
       <img id="figimg" alt="Reference plate for the selected concept" style="display:none">
       <svg id="stage" viewBox="0 0 400 690" role="img" aria-label="Animated diagram of the urinary tract">
         <!-- Clinical Geometry schematic. Facing the reader: the viewer's right is the patient's LEFT. -->
@@ -236,9 +238,10 @@
           <text id="lbTes" x="256" y="664">testes</text>
           <text id="lbUt" x="240" y="392" style="display:none">uterus</text>
         </g>
-        <g id="bp"></g><g id="lesion"></g><g id="hot"></g><g id="callouts"></g>
+        <g id="bp"></g><g id="lesion"></g><g id="hot"></g><g id="rx"></g><g id="callouts"></g>
       </svg>
       <div class="fignote" id="fignote"></div>
+      <div class="rxkey" id="rxkey" hidden></div>
     </div>
     <div class="content" id="content"></div>
   </div>
@@ -266,7 +269,9 @@ import { prose } from './prose.js';
 import { patientHTML, patientCopyText } from './patient.js';
 import { qaHTML } from './qa.js';
 import { createTract } from './tract-motion.js';
-import { REDUCE, mk, onFrame } from '../shared/motion/motion-core.js';
+import { keyRow } from './targets.js';
+import { REDUCE, mk, onFrame, injectCSS } from '../shared/motion/motion-core.js';
+import { targetKeyHTML, lightKey, TARGET_KEY_CSS } from '../shared/motion/target-tags.js';
 import { GEO, anchors } from '../shared/motion/anatomy.js';
 import { HARDWARE, HW_GROUPS, hardwareFor } from './urinary-hardware.js';
 import { MODALITIES, FINDINGS, MOD_GROUPS, modalityFor, findingFor } from './urinary-imaging.js';
@@ -308,7 +313,16 @@ let showPlate=false, plateKey='';
 
 // ---- motion: the animated tract lives in tract-motion.js; the loop in ../shared/motion/ ----
 let scene=NORMAL_SCENE,sceneKey='',moving=true,paused=REDUCE;
-const tract=createTract({scene:()=>scene,sex:()=>sex,moving:()=>moving,lock:()=>lock,showTip:()=>tab==='conditions'&&!!selC});
+let rxOn=true;try{rxOn=localStorage.getItem('cg-rx')!=='off';}catch(e){}
+injectCSS('target-key',TARGET_KEY_CSS);
+const tract=createTract({scene:()=>scene,sex:()=>sex,moving:()=>moving,lock:()=>lock,showTip:()=>tab==='conditions'&&!!selC,showTargets:()=>rxOn});
+// the receptor key under the figure follows the tags drawn on it
+let keyIds='';
+function syncKey(){const sh=tract.shownTargets(),k=el('rxkey');
+  const vis=!!sh&&el('figure').style.display!=='none'&&el('stage').style.display!=='none'&&!el('figure').classList.contains('collapsed');
+  k.hidden=!vis;if(!vis)return;const ids=sh.ids.join();
+  if(ids!==keyIds){keyIds=ids;k.innerHTML=targetKeyHTML(sh.ids.map(keyRow));}
+  lightKey(k,sh.lit,sh.focus);}
 const M=tract.M;
 const tagh=(t,c)=>`<span class="tag ${c||''}">${t}</span>`;
 const pearlsHTML=p=>(p&&p.length)?`<div class="h">Teaching pearls</div><ul class="pearls">${p.map(x=>`<li>${x}</li>`).join('')}</ul>`:'';
@@ -424,7 +438,7 @@ function renderNormal(){const t=NORMAL_TEACH[selN],c=el('content');
   let html=`<div class="card lead"><div class="c-title">${t.label}</div>`+
     `<div class="h">Anatomy</div><div class="c-body">${prose(t.anatomy)}</div>`+
     `<div class="h">Physiology</div><div class="c-body">${prose(t.physiology)}</div>`;
-  if(t.molecules.length) html+=`<div class="h">Molecular basis → treatment <span class="draft">draft</span></div>`+t.molecules.map(m=>`<div class="mol"><span class="t">${m.target}</span> — ${m.action} → <span class="d">${m.drug}</span></div>`).join('');
+  if(t.molecules.length) html+=`<div class="h">Molecular basis → treatment <span class="draft">draft</span></div>`+t.molecules.map(m=>`<div class="mol">${m.tag?`<b class="mtag" style="background:${m.color}">${m.tag}</b>`:''}<span class="t">${m.target}</span> — ${m.action} → <span class="d">${m.drug}</span></div>`).join('');
   html+=pearlsHTML(t.pearls);
   html+=`</div>`;  // close the lead card
   // storage/voiding is a lower-tract (bladder + outlet) function — only show the state machine where it's the actual physiology, not on the kidney/nephron/ureter
@@ -543,6 +557,7 @@ function wireCopy(c,patient){const b=c.querySelector('.pat-copy');if(!b||!patien
 
 function tick(dt){
   if(el('stage').style.display!=='none'&&el('figure').style.display!=='none'&&!paused)tract.tick(dt);
+  syncKey();
   const ml=Math.round(Math.min(M.f,1.12)*450);
   const live=moving&&el('stage').style.display!=='none';
   el('cap').textContent=live?(M.phase==='void'?`voiding · ${ml} mL · parasympathetic: squeeze, sphincters open`:M.phase==='urge'?`urge · ${ml} mL · bladder squeezing early`:`filling · ${ml} mL · sympathetic: relaxed, sphincters shut`)
@@ -552,6 +567,8 @@ el('t-cond').onclick=()=>{tab='conditions';render();};el('t-onc').onclick=()=>{t
 let userSex=sex;
 el('sexF').onclick=()=>{userSex='female';try{localStorage.setItem('cg-sex','female');}catch(e){}render();};
 el('sexM').onclick=()=>{userSex='male';try{localStorage.setItem('cg-sex','male');}catch(e){}render();};
+el('figrx').setAttribute('aria-pressed',String(rxOn));
+el('figrx').onclick=()=>{rxOn=!rxOn;try{localStorage.setItem('cg-rx',rxOn?'on':'off');}catch(e){}el('figrx').setAttribute('aria-pressed',String(rxOn));tract.draw();syncKey();};
 el('figplay').onclick=()=>{paused=!paused;el('figplay').textContent=paused?'Play':'Pause';};
 el('figplate').onclick=()=>{showPlate=!showPlate;render();};
 el('figtoggle').onclick=()=>{const f=el('figure');const c=f.classList.toggle('collapsed');el('figtoggle').textContent=c?'Show diagram':'Hide diagram';};

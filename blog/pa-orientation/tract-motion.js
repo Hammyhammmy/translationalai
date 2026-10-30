@@ -4,10 +4,12 @@
 // this file owns the motion. The loop and reduced motion come from ../shared/motion/.
 import { kit, callouts, mk } from '../shared/motion/motion-core.js';
 import { GEO, bladderSize, anchors } from '../shared/motion/anatomy.js';
+import { targetTags } from '../shared/motion/target-tags.js';
+import { TARGETS, CYCLE_TARGETS, isActive } from './targets.js';
 
 const URINE='#d99a1e',BLOODC='#b91c1c',REFLUXC='#ea7a12';
 
-// ctx: { scene(), sex(), moving(), lock(), showTip() } — read fresh on every call
+// ctx: { scene(), sex(), moving(), lock(), showTip(), showTargets() } — read fresh on every call
 export function createTract(ctx){
 const {$:el,parts}=kit('');
 const setA=(id,a)=>{const e=el(id);for(const k in a)e.setAttribute(k,a[k]);};
@@ -20,6 +22,21 @@ const sync=()=>{scene=ctx.scene();moving=ctx.moving();lock=ctx.lock();sex=ctx.se
 // callouts: one pill per key, reused across frames
 const C=callouts(el('callouts'),{maxX:396});
 const co=C.co;
+// receptor tags: the four cycle receptors always, plus whatever the scene is treated through
+const tags=targetTags(el('rx'),TARGETS);let shown=null;
+function drawTargets(s,m,g,cy,ry,prx){
+  if(!moving||!ctx.showTargets()){tags.update({});shown=null;return;}
+  const male=sex==='male',focus=new Set(s.targets||[]),A=anchors(sex);
+  const ids=[...CYCLE_TARGETS,...(s.targets||[]).filter(id=>!CYCLE_TARGETS.includes(id))].filter(id=>!TARGETS[id].male||male);
+  const yb=cy-ry*.38,st={},lit=new Set();
+  for(const id of ids){const on=isActive(id,m.phase);if(on)lit.add(id);const b={lit:on,focus:focus.has(id)};
+    if(id==='M3')st[id]={...b,x:183,y:yb};
+    else if(id==='B3')st[id]={...b,x:217,y:yb};
+    else if(id==='A1A')st[id]={...b,x:128,y:g.neck+8,to:[[189,g.neck+1],...(male?[[200-prx*.8,530]]:[])]};
+    else if(id==='N')st[id]={...b,x:128,y:g.ext+4,to:[[183-5*m.ext,g.ext+4]]};
+    else if(id==='A1D'){const[x,y]=A.distalUreter;/* below the stone callout */st[id]={...b,x:x+84,y:y+30,to:[[x+3,y+2]]};}
+    else if(id==='AR5')st[id]={...b,x:272,y:g.neck+2,to:[[200+prx*.8,524]]};}
+  tags.update(st);shown={ids:ids.filter(id=>st[id]),lit,focus};}
 function mReset(){sync();Object.assign(M,{f:scene.outlet&&scene.outlet.kind==='bph'?.4:.15,phase:'fill',hold:0,c:0,ext:0,dA:0,dB:0,T:0,coughT:0,urgeT:0,dripT:0,div:0});
   [pA,pB,pU].forEach(a=>a.forEach((p,i)=>p.t=i/a.length));}
 // static marks that depend only on the scene (ureter block, outlet block)
@@ -118,6 +135,7 @@ function mDraw(){sync();const s=scene,m=M,fx=mFx,g=GEO[sex],blood=moving?s.blood
     else co('tip',tip,s.blood||s.mass?'#9f1239':'#b45309',8,cy-ry-16);
     if(m.dB>.5&&!kid)co('hydro','hydronephrosis','#b45309',290,246);
     if((s.outlet||s.cycle==='dsd')&&m.phase==='fill'&&m.f<.65)co('resid','urine left behind','#b45309',8,cy-ry-16);}
+  drawTargets(s,m,g,cy,ry,20+13*p);
   C.end();}
 function setA2(e,x,y,fill){e.setAttribute('cx',x);e.setAttribute('cy',y);e.setAttribute('fill',fill);}
 // still frame for reduced motion: run the scene forward to its teaching moment
@@ -128,5 +146,6 @@ return{M,
   build:mBuild,          // draw the scene's fixed marks (ureter / outlet blocks)
   tick(dt){mFx=mStep(dt);mDraw();},
   draw:mDraw,
+  shownTargets:()=>shown, // {ids, lit, focus} for the key under the figure, or null
   poster:mPoster};       // reduced motion: jump to the scene's teaching moment
 }

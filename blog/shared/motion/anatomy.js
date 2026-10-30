@@ -24,5 +24,6 @@ export function anchors(sex) {
   return {
     kidney: [300, 142], nephron: [300, 142], ureter: [256, 320], bladder: [200, 470], sphincters: [200, g.ext + 4],
     prostate: [200, 530], urethra: [200, (g.ext + m) / 2 + 6], exit: [200, m], testis: [234, 652], neural: [200, 470], overview: [200, 330],
+    bladderNeck: [200, g.neck], distalUreter: [222, 455],   // distal ureter: the patient's left, just above the UVJ
   };
 }
