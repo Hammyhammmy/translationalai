@@ -1,5 +1,5 @@
 // Build the site-wide search index from source.
-//   node blog/pa-orientation/search-index-build.mjs   → writes search-index.json
+//   node blog/pa-orientation/search-index-build.mjs   → regenerates the targets.js page regions, then writes search-index.json
 //   import { buildIndex } from './search-index-build.mjs'  → returns the array (tests)
 //
 // Two content sources:
@@ -126,6 +126,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const path = await import('node:path');
   const url = await import('node:url');
   const here = path.dirname(url.fileURLToPath(import.meta.url));
+  await import('./targets-build.mjs');      // receptor text on the static pages comes from targets.js first
   const index = await buildIndex();
   await fs.writeFile(path.join(here, 'search-index.json'), JSON.stringify(index, null, 0) + '\n');
   console.log(`wrote search-index.json (${index.length} entries)`);

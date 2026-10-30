@@ -8,6 +8,7 @@ import { TARGETS, CYCLE_TARGETS, isActive, moleculeRow, keyRow } from './targets
 import { SCENES } from './urinary-motion.js';
 import { NORMAL_TEACH } from './urinary-normal.js';
 import { anchors } from '../shared/motion/anatomy.js';
+import { PAGES, REGIONS, render, regionsIn } from './targets-pages.js';
 
 const read = f => readFileSync(new URL(f, import.meta.url), 'utf8');
 
@@ -42,7 +43,7 @@ test('conditions only name targets the figure can draw', () => {
 
 test('the Normal tab rows for receptors and enzymes come from targets.js', () => {
   const rows = Object.values(NORMAL_TEACH).flatMap(t => t.molecules);
-  for (const id of Object.keys(TARGETS)) {
+  for (const id of Object.keys(TARGETS).filter(id => TARGETS[id].normal !== false)) {
     const r = rows.find(m => m.id === id);
     assert.ok(r, `Normal tab has no ${id} row`);
     assert.deepEqual(r, moleculeRow(id));
@@ -60,4 +61,14 @@ test('every drug the figure names is covered on the Medications page', () => {
 
 test('the engines that draw the tags load (a syntax slip blanks the whole figure)', async () => {
   for (const m of ['./tract-motion.js', '../shared/motion/target-tags.js']) await import(m);
+});
+
+test('the Medications and Urinary Tract receptor text is generated from targets.js and up to date', () => {
+  const seen = [];
+  for (const p of PAGES) {
+    const html = read('./' + p);
+    assert.equal(render(html), html, `${p} is stale: run node targets-build.mjs`);
+    seen.push(...regionsIn(html));
+  }
+  for (const k of Object.keys(REGIONS)) assert.equal(seen.filter(x => x === k).length, 1, `region ${k} should appear once`);
 });

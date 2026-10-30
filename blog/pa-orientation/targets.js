@@ -20,43 +20,49 @@
 // drugs[].act: what the drug does to the target
 export const TARGETS = {
   M3: {
-    tag: 'M3', name: 'Muscarinic M3', kind: 'receptor', where: 'detrusor', at: ['bladder'], color: '#b45309',
+    tag: 'M3', name: 'Muscarinic M3', kind: 'receptor', where: 'detrusor', at: ['bladder'], color: '#b45309', short: 'contracts',
+    alsoIn: 'salivary glands, gut, eye and brain',
     nerve: 'Pelvic nerve', system: 'parasympathetic', level: 'S2–S4', messenger: 'acetylcholine',
     effect: 'the bladder squeezes', during: ['urge', 'void'],
     drugs: [{ act: 'block', cls: 'Antimuscarinics', examples: ['oxybutynin', 'solifenacin'], use: 'overactive bladder' }],
   },
   B3: {
-    tag: 'β3', name: 'Beta-3 adrenergic', kind: 'receptor', where: 'detrusor', at: ['bladder'], color: '#2563eb',
+    tag: 'β3', name: 'Beta-3 adrenergic', kind: 'receptor', where: 'detrusor', at: ['bladder'], color: '#2563eb', short: 'relaxes',
     nerve: 'Hypogastric nerve', system: 'sympathetic', level: 'T10–L2', messenger: 'noradrenaline',
     effect: 'the bladder relaxes, so it fills at low pressure', during: ['fill'],
     drugs: [{ act: 'stimulate', cls: 'β3 agonists', examples: ['mirabegron'], use: 'overactive bladder' }],
   },
   A1A: {
-    tag: 'α1A', name: 'Alpha-1A adrenergic', kind: 'receptor', where: 'bladder neck and prostate', at: ['bladderNeck', 'prostate'], color: '#0f766e',
+    tag: 'α1A', name: 'Alpha-1A adrenergic', kind: 'receptor', where: 'bladder neck and prostate', at: ['bladderNeck', 'prostate'], color: '#0f766e', short: 'tightens',
     nerve: 'Hypogastric nerve', system: 'sympathetic', level: 'T10–L2', messenger: 'noradrenaline',
     effect: 'the bladder neck and prostate tighten', during: ['fill', 'urge'],
     drugs: [{ act: 'block', cls: 'α1-blockers', examples: ['tamsulosin', 'silodosin'], use: 'BPH symptoms; a voiding trial after retention' }],
   },
   N: {
-    tag: 'N', name: 'Nicotinic', kind: 'receptor', where: 'external sphincter', at: ['sphincters'], color: '#7c3aed',
+    tag: 'N', name: 'Nicotinic', kind: 'receptor', where: 'external sphincter', at: ['sphincters'], color: '#7c3aed', short: 'voluntary hold',
     nerve: 'Pudendal nerve', system: 'somatic', level: 'S2–S4', messenger: 'acetylcholine',
     effect: 'the external sphincter tightens: the voluntary hold', during: ['fill', 'urge'],
     drugs: [], care: 'pelvic-floor training, not a drug',
   },
   A1D: {
-    tag: 'α1D', name: 'Alpha-1D adrenergic (with α1A)', kind: 'receptor', where: 'distal ureter', at: ['distalUreter'], color: '#0e7490',
+    tag: 'α1D', name: 'Alpha-1D adrenergic (with α1A)', kind: 'receptor', where: 'distal ureter', at: ['distalUreter'], color: '#0e7490', short: 'tightens around a stone',
     effect: 'distal ureter smooth muscle tightens around a stone', during: null,
     drugs: [{ act: 'block', cls: 'α1-blockers', examples: ['tamsulosin'], use: 'helping a distal stone pass (medical expulsive therapy)' }],
   },
   AR5: {
-    tag: '5α-R', name: '5α-reductase', kind: 'enzyme', where: 'prostate', at: ['prostate'], color: '#a16207', male: true,
+    tag: '5α-R', name: '5α-reductase', kind: 'enzyme', where: 'prostate', at: ['prostate'], color: '#a16207', male: true, short: 'drives gland growth',
     effect: 'turns testosterone into DHT, which grows the prostate', during: null,
     drugs: [{ act: 'inhibit', cls: '5α-reductase inhibitors', examples: ['finasteride', 'dutasteride'], use: 'shrinking a large prostate over months' }],
   },
   PDE5: {
-    tag: 'PDE5', name: 'Phosphodiesterase-5', kind: 'enzyme', where: 'prostate and bladder neck smooth muscle', at: ['prostate'], color: '#be185d', male: true,
+    tag: 'PDE5', name: 'Phosphodiesterase-5', kind: 'enzyme', where: 'smooth muscle of the penis, prostate and bladder neck', at: ['prostate'], color: '#be185d', male: true, short: 'sets smooth-muscle tone',
     effect: 'breaks down cGMP, so smooth muscle stays tighter', during: null,
     drugs: [{ act: 'inhibit', cls: 'PDE5 inhibitors', examples: ['tadalafil'], use: 'BPH symptoms and erectile dysfunction' }],
+  },
+  A1B: {
+    tag: 'α1B', name: 'Alpha-1B adrenergic', kind: 'receptor', where: 'blood vessels', at: [], color: '#64748b', short: 'vessel tone',
+    effect: 'blood vessels tighten, holding blood pressure up', during: null, offTarget: true, normal: false,
+    drugs: [{ act: 'block', cls: 'α1-blockers', examples: ['tamsulosin'], use: 'the unwanted effect: low blood pressure and dizziness on standing, least with the uroselective drugs' }],
   },
 };
 

@@ -2,7 +2,7 @@
 // riding the real ureter paths, and each condition's mechanism (scenes in urinary-motion.js).
 // The page owns its state (tab, condition, sex, phase lock) and passes it in through ctx;
 // this file owns the motion. The loop and reduced motion come from ../shared/motion/.
-import { kit, callouts, mk } from '../shared/motion/motion-core.js';
+import { kit, callouts, mk, advance } from '../shared/motion/motion-core.js';
 import { GEO, bladderSize, anchors } from '../shared/motion/anatomy.js';
 import { targetTags } from '../shared/motion/target-tags.js';
 import { TARGETS, CYCLE_TARGETS, isActive } from './targets.js';
@@ -76,13 +76,12 @@ function mStep(dt){sync();const s=scene,m=M;m.T+=dt;const fill=.15;let cough=fal
   if(s.diverticulum)m.div+=((m.phase==='void'?.75:m.f)-m.div)*Math.min(1,dt*(m.phase==='void'?.3:1));
   if(!moving)return{cough:false,drip:false};
   const refl=s.reflux&&m.phase==='void',blk=s.ureter?s.ureter.at:null;
-  pA.forEach(p=>{p.t=(p.t+.16*dt)%1;});
-  pB.forEach(p=>{if(refl){p.t-=.32*dt;if(p.t<0)p.t+=1;}else{p.t+=.16*dt;
-    if(blk!=null){const cap=blk-.03-.028*(p.i%6);p.t=Math.max(0,Math.min(p.t,cap));}else if(p.t>=1)p.t-=1;}});
+  pA.forEach(p=>advance(p,dt,.16));
+  pB.forEach(p=>advance(p,dt,refl?-.32:.16,refl?null:blk));
   const thin=!!ob||s.cycle==='dsd';
   const gate=ob?Math.sin(m.T*3.1)>-.25:s.bladderStone?Math.sin(m.T*1.7)>0:true;
   const stream=m.phase==='void'&&m.ext>.4&&gate;
-  pU.forEach(p=>{p.t=(p.t+((cough||drip)?.9:thin?.55:1.15)*dt)%1;
+  pU.forEach(p=>{advance(p,dt,(cough||drip)?.9:thin?.55:1.15);
     p.vis=(stream&&(!thin||p.i%2===0))||((cough||drip)&&p.i%4===0&&p.t>.35);});
   return{cough,drip};}
 function mDraw(){sync();const s=scene,m=M,fx=mFx,g=GEO[sex],blood=moving?s.blood:null;

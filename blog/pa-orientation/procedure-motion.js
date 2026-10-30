@@ -4,7 +4,7 @@
 // out the page's own "what goes wrong" warnings. Step wording mirrors the card text.
 // Respects prefers-reduced-motion (steps jump to their end state). No dependencies.
 // The loop, visibility, callouts, particles and test hook live in ../shared/motion/.
-import { REDUCE, mk, set, clamp, lerpRaw as lerp, easeInOut as ease, callouts, stream, nearestLen, onFrame, onVisible, injectCSS, testHook } from '../shared/motion/motion-core.js';
+import { REDUCE, mk, set, clamp, lerpRaw as lerp, easeInOut as ease, callouts, dots, ride, pxRate, nearestLen, onFrame, onVisible, injectCSS, testHook } from '../shared/motion/motion-core.js';
 
 // the player being drawn right now (frames run one player at a time)
 let svg=null,RATE=null,cur=null;
@@ -13,8 +13,9 @@ const URINE='#d99a1e';
 // pill callouts, reused per key (kept above the drawing)
 const co=(...a)=>cur.C.co(...a), coBegin=()=>cur.C.begin(), coEnd=()=>cur.C.end();
 function label(x,y,t,anchor='start'){const e=mk('text',{x,y,'font-size':11,fill:'#78716c','text-anchor':anchor},svg);e.textContent=t;return e;}
-// particles that ride a path
-const flow=(path,n,color,r)=>stream(svg,path,n,color,r);
+// dots that ride a path at a steady on-screen speed: step(dt, px per 60 fps frame, visible, colour)
+const flow=(path,n,color,r=2.8)=>{const g=mk('g',{},svg),L=path.getTotalLength(),ps=dots(g,n,color,r);
+  return{g,L,ps,step(dt,speed,vis=true,col){ride(ps,path,L,dt,pxRate(speed*60,L),{vis,fill:col,group:g});}};};
 
 // ---------- shared sagittal pelvis (patient facing left) ----------
 function pelvis(o){

@@ -8,7 +8,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { KIDNEY_R, KIDNEY_L, URETER_R, URETER_L, anchors } from './anatomy.js';
-import { lerp, lerpRaw, smooth, easeInOut, mix, scopeIds, clamp } from './motion-core.js';
+import { lerp, lerpRaw, smooth, easeInOut, mix, scopeIds, clamp, advance, pxRate } from './motion-core.js';
 
 const BLOG = fileURLToPath(new URL('../../', import.meta.url));
 const OWN = /requestAnimationFrame\s*\(|new\s+IntersectionObserver\s*\(/;
@@ -63,4 +63,19 @@ test('the Interactive page draws the shared anatomy outlines, not its own copy',
 test('named points move with the outlet', () => {
   assert.deepEqual(anchors('male').sphincters, [200, 557]);
   assert.deepEqual(anchors('female').exit, [200, 562]);
+});
+
+test('one rule moves every dot: wraps forward and back, queues behind a block', () => {
+  const p = { t: .95, i: 0 }; advance(p, .5, .2); assert.ok(Math.abs(p.t - .05) < 1e-12, 'wraps past the end');
+  const q = { t: .02, i: 0 }; advance(q, .5, -.2); assert.ok(Math.abs(q.t - .92) < 1e-12, 'wraps backwards');
+  const r = { t: .5, i: 2 }; advance(r, 1, 1, .6); assert.ok(Math.abs(r.t - (.6 - .03 - .056)) < 1e-12, 'queues behind the cap, staggered by index');
+  assert.equal(pxRate(120, 240), .5, 'a steady on-screen speed is px per second over the path length');
+});
+
+test('no player keeps its own copy of the dot rules', () => {
+  for (const f of ['pa-orientation/consult-motion.js', 'pa-orientation/procedure-motion.js', 'pa-orientation/tract-motion.js']) {
+    const src = readFileSync(join(BLOG, f), 'utf8');
+    assert.doesNotMatch(src, /getTotalLength\(\)\s*\*\s*60|dt\s*\/\s*L\s*\*\s*60/, `${f}: px-per-frame maths belongs in pxRate`);
+    assert.doesNotMatch(src, /cap\s*-\s*\.03\s*-\s*\.028/, `${f}: queueing behind a block belongs in advance()`);
+  }
 });

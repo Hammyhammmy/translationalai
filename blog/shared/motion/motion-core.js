@@ -60,32 +60,40 @@ export function kit(pre = '') {
   const P = {};
   const path = id => { if (!P[id]) { const e = $(id); P[id] = { e, L: e.getTotalLength() }; } return P[id]; };
   const at = (id, t) => { const p = path(id); const q = p.e.getPointAtLength(C01(t) * p.L); return [q.x, q.y]; };
-  const parts = (gid, n, fill, r = 3) => { const g = $(gid); return Array.from({ length: n }, (_, i) => { const c = mk('circle', { r, fill, stroke: '#fff', 'stroke-width': 1 }); g.appendChild(c); return { el: c, t: i / n, i }; }); };
+  const parts = (gid, n, fill, r = 3) => dots($(gid), n, fill, r);
   const place = (pt, xy, vis = true, fill) => { pt.el.setAttribute('cx', xy[0]); pt.el.setAttribute('cy', xy[1]); pt.el.style.display = vis ? '' : 'none'; if (fill) pt.el.setAttribute('fill', fill); };
-  // move particles along a path at `speed` (path lengths per second); cap = a block they queue behind
-  const flow = (arr, id, dt, speed, { cap = null, vis = true, fill = null, rev = false } = {}) => {
-    arr.forEach(p => {
-      p.t += speed * dt;
-      if (cap != null) { const c = cap - .03 - .028 * (p.i % 6); if (p.t > c) p.t = Math.max(0, c); } else if (p.t >= 1) p.t -= 1;
-      place(p, at(id, rev ? 1 - p.t : p.t), vis, fill);
-    });
-  };
+  // move dots along the path with this id (see ride)
+  const flow = (arr, id, dt, speed, opts) => { const p = path(id); ride(arr, p.e, p.L, dt, speed, opts); };
   return { $, mk, S, show, path, at, parts, place, flow };
 }
 
-// Particles that ride an SVG path at `speed` (about px per frame at 60 fps); used by the
-// procedure players. step(dt, speed, vis, colour) moves them; negative speed runs backwards.
-export function stream(parent, path, n, color, r = 2.8) {
-  const g = mk('g', {}, parent); const L = path.getTotalLength();
-  const ps = Array.from({ length: n }, (_, i) => ({ t: i / n, el: mk('circle', { r, fill: color, stroke: '#fff', 'stroke-width': 1 }, g) }));
-  return {
-    g, L, ps,
-    step(dt, speed, vis = true, col) {
-      g.style.display = vis ? '' : 'none';
-      ps.forEach(p => { p.t = (p.t + speed * dt / L * 60) % 1; if (p.t < 0) p.t += 1; const q = path.getPointAtLength(p.t * L); set(p.el, { cx: q.x, cy: q.y }); if (col) p.el.setAttribute('fill', col); });
-    },
-  };
+// ---------- dots that ride a path: one rule for every diagram ----------
+// A dot is {el, t, i}: t is how far along its path it is (0..1), i its index.
+export function dots(group, n, fill, r = 3) {
+  return Array.from({ length: n }, (_, i) => ({ el: mk('circle', { r, fill, stroke: '#fff', 'stroke-width': 1 }, group), t: i / n, i }));
 }
+// Move one dot. rate is in path lengths per second (negative runs backwards). With cap set,
+// dots queue behind that point (a stone, a clot) instead of wrapping round.
+export function advance(p, dt, rate, cap = null) {
+  p.t += rate * dt;
+  if (cap != null) { const c = cap - .03 - .028 * (p.i % 6); if (p.t > c) p.t = Math.max(0, c); }
+  else { p.t %= 1; if (p.t < 0) p.t += 1; }
+}
+// Move dots along an SVG path and place them. rate as in advance(); for a constant speed on
+// screen whatever the path's length, pass pxRate(px per second, L). vis hides the dots one by
+// one, or their whole group when `group` is given; fill recolours them; rev mirrors the path.
+export function ride(arr, pathEl, L, dt, rate, { cap = null, vis = true, fill = null, rev = false, group = null } = {}) {
+  if (group) group.style.display = vis ? '' : 'none';
+  for (const p of arr) {
+    advance(p, dt, rate, cap);
+    const q = pathEl.getPointAtLength(C01(rev ? 1 - p.t : p.t) * L);
+    p.el.setAttribute('cx', q.x); p.el.setAttribute('cy', q.y);
+    if (!group) p.el.style.display = vis ? '' : 'none';
+    if (fill) p.el.setAttribute('fill', fill);
+  }
+}
+export const pxRate = (pxPerSecond, L) => pxPerSecond / L;
+
 // distance along a path (1 px resolution) of the point nearest (x, y)
 export function nearestLen(path, x, y) { const L = path.getTotalLength(); let best = 0, bd = 1e9; for (let s = 0; s <= L; s += 1) { const q = path.getPointAtLength(s); const d = (q.x - x) ** 2 + (q.y - y) ** 2; if (d < bd) { bd = d; best = s; } } return best; }
 
